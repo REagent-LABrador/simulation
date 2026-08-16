@@ -1,0 +1,784 @@
+{
+  "_fixture": "INTEGRATION FIXTURE, NOT A VALIDATOR-CALIBRATION EXAMPLE AND NOT A CONTRACT. First real dossier exercising verdict='not_tractable' with a defensible both-axis basis. RhoA (P61586), the canonical undruggable small GTPase. Snapshot of the pipeline as of 2026-08-16; it will go stale on re-run. If this file and a fresh run disagree, the fresh run is right. Do NOT calibrate the validator or rubric against this file.",
+  "_pipeline_state": {
+    "run_date": "2026-08-16",
+    "pocket_scan": "Modal deployed app druggability-pocket-scan (fpocket 4.2.3 conda-forge + P2Rank 2.5.1), D swept {1.6,2.4}, ensemble 6V6U;5C4M;1A2B chains asserted =A (rule 2b), site anchored on caller switch-I/II residues 28-40+60-78 -> site_signature_overlap, partners 1TX4(RhoGAP)+1XCG(LARG-RhoGEF) for interface classification. Called via modal.Function.from_name (deployed, no app.run closure).",
+    "rules_in_force": "1a-1f modality; 2b chains asserted; 4.0 druggability within-structure/rank-only; 4a volume primary at D=1.6, 210/240 guide retracted; 4e; 6 assay provenance; 13 null axes; 14 count reconciliation; 15 Paperclip signatures.",
+    "known_stale_risk": "ChEMBL/PDB grow; distinct_actives=71 and 131 PDB reconciled 2026-08-16. Foldseek pdb100 and RCSB ligand attribution are point-in-time."
+  },
+  "input": {
+    "uniprot_accession": "P61586",
+    "as_of_date": null,
+    "disease_context": "Cancer metastasis and RhoA-driven cytoskeletal signalling",
+    "interaction_to_disrupt": "RhoA activation by RhoGEFs / RhoA-effector engagement at the switch I/II interface",
+    "mechanism_hypothesis": "orthosteric"
+  },
+  "target": {
+    "uniprot_accession": "P61586",
+    "gene_symbol": "RHOA",
+    "protein_name": "Transforming protein RhoA",
+    "organism": "Homo sapiens",
+    "sequence_length": 193,
+    "sources": [
+      "uniprot_v.proteins WHERE accession='P61586' (paperclip_sql -s proteins): gene RHOA, 193 aa, Homo sapiens"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "not_tractable",
+  "verdict_basis": "both",
+  "axis_conflict": "Retrieved: 71 distinct small-molecule actives but best potency is only IC50 1240 nM (~1.2 uM, pChEMBL 5.91) from a crude 'Inhibition of rhoA expressed in E. coli BL21' readout (uncharacterised), and bioactivity is dominated by RhoC/RhoA-C CELL assays (top assay 29.9% measures RhoC, a different protein; 68% of activity is RhoC/RhoA-C mixed) -- so the actives count reads higher than the target-specific, characterised signal warrants; 0 approved and 0 clinical-stage small molecules; no approved biologic (intracellular). Computed: the orthosteric switch-I/II effector/RhoGEF groove is a shallow, pre-formed (non-cryptic) site (D=1.6 volume 120-273 A^3, druggability 0.001-0.169). The two axes AGREE that direct small-molecule engagement is poor; the conflict flagged here is that a naive reading of '71 actives' and 'the Ras family has a drug (KRAS)' could be mistaken for tractability, when both dissolve on inspection -- the actives are indirect/RhoC-contaminated and weak, and the KRAS precedent is a mutation-specific cryptic pocket absent in wild-type RhoA.",
+  "target_precedent": {
+    "chembl_target_id": null,
+    "distinct_actives": 71,
+    "compound_modality_split": {
+      "_note": "Rule 1b/1c. Classified from SMILES via precedent-lookup/modality.py (RDKit), NOT molecule_type. All 71 actives (compounds with a pChEMBL value) classify small_molecule; 0 unknown.",
+      "small_molecule": 71,
+      "peptide": 0,
+      "macrocyclic_peptide": 0,
+      "oligonucleotide": 0,
+      "oligosaccharide": 0,
+      "protein_or_antibody": 0,
+      "modality_unknown": 0
+    },
+    "modality_unknown_count": 0,
+    "assay_concentration": {
+      "top_assay_description": "Inhibition of RhoC-mediated pathway in human PC3 cells",
+      "top_assay_share_pct": 29.9,
+      "measures_a_different_target": true,
+      "assay_type_split": {
+        "binding_B": 355,
+        "functional_F": 0,
+        "_note": "ChEMBL assay_type is 355 B / 0 F, but the label is coarse (rule 6): the top three assays (68% of activity) are CELL-based RhoC- or RhoA/C-mixed transcriptional readouts, not direct RhoA binding. assay_type=B does not separate a binding measurement from a cellular readout."
+      }
+    },
+    "best_potency_nm": 1240.0,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "Inhibition of rhoA expressed in Escherichia coli BL21 after 1 hr (assay_type B, pChEMBL 5.91)",
+    "best_potency_characterised": false,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [],
+    "patents": {
+      "count": null,
+      "source": null
+    },
+    "terminated_programs": [],
+    "as_of_leakage": [],
+    "sources": [
+      "distinct_actives: 71 distinct molregno with a pChEMBL value, reconciled against COUNT(DISTINCT molregno)=71 (chembl_v.compounds_by_accession WHERE accession='P61586' AND best_pchembl_value IS NOT NULL, paperclip_sql -s proteins)",
+      "compound total: 158 rows = 158 distinct molregno (COUNT(*)=COUNT(DISTINCT molregno)=158, same predicate)",
+      "modality: precedent-lookup/modality.py classify_smiles over 71 actives -> 71 small_molecule / 0 unknown",
+      "best_potency: MAX(best_pchembl_value)=5.91 -> IC50 1240 nM; top pChEMBL rows via bioactivities_by_accession ORDER BY pchembl_value DESC",
+      "assay share: bioactivities_by_accession GROUP BY LEFT(assay_description,60) -> top 'Inhibition of RhoC-mediated pathway in human PC3 cells' 106/355 = 29.9%",
+      "assay_type: bioactivities_by_accession GROUP BY assay_type -> B=355, F=0",
+      "drugs: COUNT(*)=0 and COUNT(DISTINCT molregno)=0 (chembl_v.drugs_by_accession WHERE accession='P61586')",
+      "clinical: 0 rows with max_phase>=1 (chembl_v.compounds_by_accession WHERE accession='P61586' AND max_phase>=1)",
+      "chembl_target_name='Transforming protein RhoA' (SINGLE PROTEIN, n_target_components=1); bioactivities_by_accession exposes no target_chembl_id column"
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "Presence of an approved biologic is target validation, NOT small-molecule tractability. RhoA is an intracellular GTPase; no approved biologic targets it directly (drugs_by_accession=0; no antibody entity)."
+  },
+  "family_precedent": {
+    "pfam": null,
+    "family_actives": null,
+    "best_family_potency_nm": null,
+    "best_family_potency_modality": null,
+    "best_family_target": null,
+    "_note": "Ras small-GTPase superfamily (Pfam Ras, PF00071 by annotation, not retrieved here). Family precedent EXISTS but does NOT transfer to this target: the superfamily has an approved small molecule (KRAS G12C covalent inhibitors, e.g. sotorasib), but that exploits a MUTATION-SPECIFIC switch-II cryptic pocket created by the G12C mutation and absent in wild-type RhoA. Do not read a drugged family member as RhoA tractability (rule 9b). Numeric family aggregation not run: cross_references reliably hit the Paperclip statement timeout (rule 15, Kind A).",
+    "sources": []
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek pdb100, query 6V6U chain A. The CLOSEST structural neighbours are RhoA paralogs (RhoC 2GCO tm 0.93, RhoB 6SGE tm 0.94) and Rho regulator complexes (RhoGAP 1TX4/5IRC, RhoGEF 3KZ1, RhoGDI 1CC0, anillin 4XOI) -- ALL nucleotide- or protein-partner-bound, NONE with a drug-like small-molecule holo. has_druglike_holo=False is read from the Foldseek target_title (nucleotide cofactor / protein-partner complexes), NOT from a per-neighbour ligand_filter run. The drugged Ras-superfamily precedent (KRAS) is a MORE DISTANT fold neighbour and is mutation-specific (see family_precedent).",
+    "method": "foldseek-search (Proto, 3diaa + tmalign, pdb100, in-process via proto_tools)",
+    "query_structure": "6V6U",
+    "neighbours": [
+      {
+        "pdb_id": "6V6V",
+        "tm_score": 0.9967,
+        "evalue": 1.674e-36,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "oncogenic RhoA mutant G14V (RhoA paralog/mutant; nucleotide only)"
+      },
+      {
+        "pdb_id": "2GCO",
+        "tm_score": 0.9311,
+        "evalue": 1.334e-32,
+        "has_druglike_holo": false,
+        "ligand": "GNP",
+        "_title": "human RhoC-GppNHp (paralog; GppNHp nucleotide)"
+      },
+      {
+        "pdb_id": "6SGE",
+        "tm_score": 0.9387,
+        "evalue": 1.421e-32,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "human RHOB-GTP complex (paralog)"
+      },
+      {
+        "pdb_id": "1TX4",
+        "tm_score": 0.9418,
+        "evalue": 4.01e-33,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "RhoA/RhoGAP/GDP.AlF4 complex (protein partner)"
+      },
+      {
+        "pdb_id": "5IRC",
+        "tm_score": 0.9442,
+        "evalue": 1.831e-32,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "p190A GAP domain / RhoA complex (protein partner)"
+      },
+      {
+        "pdb_id": "3KZ1",
+        "tm_score": 0.9443,
+        "evalue": 1.421e-32,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "PDZ-RhoGEF DH/PH / RhoA complex (protein partner)"
+      },
+      {
+        "pdb_id": "1CC0",
+        "tm_score": 0.9257,
+        "evalue": 1.613e-32,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "RhoA.GDP-RhoGDI complex (protein partner)"
+      },
+      {
+        "pdb_id": "4XOI",
+        "tm_score": 0.931,
+        "evalue": 4.849e-33,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "hsAnillin bound with RhoA(Q63L) (protein partner)"
+      }
+    ],
+    "sources": [
+      "foldseek_neighbours(6V6U.cif, pdb100) via structure-select/neighbour_precedent.py: 997 hits, exec 13.5 s; tm_score from a second tmalign search joined on target_id (see gotcha 2)"
+    ]
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "Rule 13: the pocket-neighbour transfer axis depends on a cofolding model (cofold_transfer), and none is available in this deployment. Axis not computed.",
+    "candidates": [],
+    "sources": []
+  },
+  "structure": {
+    "tier": "apo_experimental",
+    "pdb_id": "6V6U",
+    "resolution_a": 1.16,
+    "biological_unit_used": "monomer (assembly1)",
+    "bound_ligand": {
+      "comp_id": "GDP",
+      "heavy_atoms": null,
+      "is_druglike": false,
+      "is_known_frequent_hitter": false,
+      "_note": "RhoA crystals carry the GDP/GTP nucleotide cofactor (and Mg2+), classified non-druglike by ligand_filter; pocket_scan holo_call.is_holo=False on all three scanned structures -> tier apo."
+    },
+    "total_pdb_structures": 131,
+    "holo_count": 0,
+    "apo_count": null,
+    "ensemble_used": [
+      "6V6U",
+      "5C4M",
+      "1A2B"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "_holo_attribution": "holo_count=0 means zero PDB entries with an OPTIMISED drug-like small-molecule inhibitor bound to RhoA at its functional site. The drug-like ligands in RhoA-containing entries are attributable to PARTNERS or are artifacts: F9M(572Da)/XQ3(655Da)/XPW(460Da) are TRPV4 channel modulators (8JVI/8JVJ/8FC7/8FC8/8FCB/8J1B/8J1F; RhoA present only as the bound partner); the 200-260 Da fragment series (KLU/Z3O/ZBH/RA0 etc.) comes from fragment screens on RhoA-RhoGEF complexes (7G8U/7G91/7G9H), and KLU (a chloroacetyl covalent fragment) also appears in unrelated creatine kinases (7TUN/9B16) -- promiscuous, weak, non-progressing.",
+    "sources": [
+      "total_pdb_structures: COUNT(DISTINCT entry_id)=131 (pdb_v.structures_by_accession WHERE accession='P61586'); release 1998-03-18..2026-04-01",
+      "holo_count: 0 optimised drug-like SM on RhoA (see _holo_attribution); ligand attribution via pdb_v.entry_ligands joined to structures_by_accession, comp_type/formula_weight and per-entry polymer entities (paperclip_sql -s proteins)",
+      "pdb_id 6V6U resolution 1.16 A (structures_by_accession)"
+    ]
+  },
+  "tractability": {
+    "pocket_volume_a3": {
+      "min": 120.038,
+      "max": 1110.576,
+      "spread_pct": 89.2,
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": 207.077,
+      "site_pocket_selected_by": "site_signature_overlap",
+      "_primary_note": "primary_d1_6_a3 is the D=1.6 site volume for 6V6U (the highest-resolution structure and the Foldseek query). Across the 3 apo structures the reproducible D=1.6 site volume is 120.0-273.1 A^3 (5C4M 120.0, 6V6U 207.1, 1A2B 273.1). The pooled max of 1110.6 A^3 is a D=2.4 MERGE artifact (>1000 A^3, rule 4a): at D=2.4 the site merges with neighbouring cavities (533-1111 A^3). The 210/240 A^3 guide is RETRACTED (rule 4a) and this volume carries no verdict by threshold; it is reported as an absolute cavity measurement, and it is shallow."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "site_pocket_selected_by": "site_signature_overlap",
+      "load_bearing": false,
+      "_comparability": "NOT REPORTED as a pooled value. min/max are null because pooling druggability across the 3 structures is not a measurement (rule 4.0 clause 2 -- the score is min-max normalised inside each structure). The reportable form is tractability.site_pocket_rank.",
+      "_per_structure_across_d": "Within-structure D-sweep (D1.6 -> D2.4): 6V6U 0.169 -> 0.416; 5C4M 0.001 -> 0.748; 1A2B 0.01 -> 0.924. The reproducible D=1.6 values are 0.001-0.169 (all low); the high D=2.4 values are merge artifacts (volume > 1000 A^3, rule 4a) and are not the site's druggability.",
+      "_false_negative_rate": "Reported, never load-bearing, never compared across structures. fpocket druggability is a within-structure rank and reads low on holo pockets with a drug bound (e.g. JAK1 median 0.009 across nine approved drugs; EGFR 6LUD osimertinib 0.013). Here it is not carrying the verdict -- the negative verdict rests on the retrieved failed-effort axis and the shallow D=1.6 volume, not on this score.",
+      "_do_not_max": "site_signature_overlap (caller switch I/II residues) anchored the site; max_druggability_no_ligand_site (rule 4.0 banned) was NOT used."
+    },
+    "site_pocket_rank": {
+      "fpocket": 2,
+      "prank": 2,
+      "n_pockets": 9,
+      "structure_pdb_id": "6V6U",
+      "_note": "The switch-region site pocket at D=1.6: 6V6U rank 2 of 9 (prank 2); 1A2B rank 1 of 7 (prank 2); 5C4M rank 6 of 7 (prank 4). It is not consistently a top-ranked pocket across the ensemble."
+    },
+    "ensemble_consensus_fraction": {
+      "n_structures": 3,
+      "n_measurements": 6,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null,
+      "_note": "3 structures x 2 clustering values = 6 measurements. pocket_scan does not emit a strong-hotspot consensus fraction, so fraction_with_strong_pocket and meets_consensus_criterion are null."
+    },
+    "pocket_hydrophobic_density": 12.0,
+    "pocket_residues": [
+      "A/23",
+      "A/28",
+      "A/29",
+      "A/30",
+      "A/33",
+      "A/35",
+      "A/38",
+      "A/39",
+      "A/40",
+      "A/42"
+    ],
+    "site_hypothesis_basis": "Caller site_residues: RhoA switch I (res 28-40) + switch II (res 60-78), the effector/RhoGEF interface derived from mechanism_hypothesis=orthosteric. Matched by site_signature_overlap in all 3 apo structures. Not established via a holo ligand (none exists for RhoA).",
+    "mdpocket_site_definition_used": "none",
+    "site_centroid_to_ligand_distance_a": null,
+    "site_centroid_to_ligand_note": "No drug-like/holo ligand exists for RhoA, so there is no donor ligand centroid to measure against; the site was anchored by caller switch I/II residues, not by a transferred ligand. mdpocket ran (ok, 3 structures) and returned only site_from_density (persistence cavity, ligand_anchored=false), which was NOT used as the site (rule 4b).",
+    "annotated_binding_site_overlap": null,
+    "ligand_site_jaccard": null,
+    "disorder_fraction": 0.0,
+    "cryptic_pocket_risk": "low",
+    "cryptic_mechanism": "none",
+    "cryptic_evidence": {
+      "is_cryptic": false,
+      "n_apo_examined": 3,
+      "n_apo_site_absent": 0,
+      "site_present_in_apo_ensemble": true,
+      "basis": "site_signature_overlap located the switch I/II site in all 3 apo structures (6V6U,5C4M,1A2B); the orthosteric groove is pre-formed, not ligand-induced. The full apo/holo cryptic census (rule 5) could not be run: no drug-like holo of RhoA exists to pair against.",
+      "definition": "Vajda 2018: cryptic only if the site is absent in all, or nearly all, unbound structures. Here it is present in all 3 apo structures -> not cryptic.",
+      "source": "pocket_scan cryptic stage (not_run: 0 holo reference, 3 apo) + site_signature_overlap presence across the apo ensemble"
+    },
+    "cryptic_potency_prior": {
+      "expected_ceiling": "micromolar_at_best",
+      "basis": "Shallow, pre-formed PPI/effector groove on a small GTPase; 71 small-molecule actives plateaued at ~1.2 uM (best IC50 1240 nM) with no sub-uM direct binder -- consistent with a flat interface site."
+    },
+    "pocket_vs_interface": {
+      "_note": "Measured against RhoGEF/GAP complexes containing the partner. Overlap 0.5-0.875 at D=1.6 across the 3 structures against the LARG-RhoGEF interface (1XCG); also tested against 1TX4 (RhoGAP).",
+      "classification": "orthosteric_candidate",
+      "classifications_seen": [
+        "orthosteric_candidate"
+      ],
+      "interface_residues": [
+        "B:ARG5",
+        "B:LYS7",
+        "B:THR19",
+        "B:LYS27",
+        "B:VAL33",
+        "B:TYR34",
+        "B:VAL35",
+        "B:PRO36",
+        "B:THR37",
+        "B:VAL38",
+        "B:PHE39",
+        "B:GLU40",
+        "B:ASN41",
+        "B:TYR42",
+        "B:VAL43",
+        "B:ASP45",
+        "B:GLU54",
+        "B:ALA56",
+        "B:TRP58",
+        "B:ASP59",
+        "B:ALA61",
+        "B:GLY62",
+        "B:GLN63",
+        "B:TYR66",
+        "B:ASP67",
+        "B:ARG68",
+        "B:LEU69",
+        "B:ARG70",
+        "B:LEU72",
+        "B:SER73",
+        "B:PRO75",
+        "B:ASP76",
+        "B:PRO96",
+        "B:GLU97",
+        "B:LYS98",
+        "B:PRO101"
+      ],
+      "pocket_interface_overlap": 0.583,
+      "partner_pdb_id": "1XCG",
+      "matches_mechanism_hypothesis": true
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": null,
+    "caveat": "The negative verdict rests on the retrieved failed-effort axis (71 SM actives, best only ~1.2 uM from an uncharacterised/cell-contaminated readout, 0 approved/clinical SM) and the shallow, pre-formed D=1.6 site (120-273 A^3, druggability 0.001-0.169), NOT on the druggability score (rule 4.0: not load-bearing). At D=2.4 the site merges (volume up to 1110 A^3, druggability up to 0.924) -- a clustering merge artifact (rule 4a), not evidence of a druggable cavity. The site is present in all 3 apo structures (not cryptic), but no drug-like holo of RhoA exists, so the full apo/holo cryptic census could not be run.",
+    "sources": [
+      "fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 via Modal deployed app druggability-pocket-scan; ensemble 6V6U,5C4M,1A2B; volume/druggability/rank from ensemble.volume_a3 and structures.<id>.by_clustering",
+      "disorder_fraction 0.0: metapredict==3.0.2 (local, CPU), full-length UniProt P61586, 193 residues",
+      "pocket_vs_interface: interface_analysis vs partners 1XCG (LARG-RhoGEF) and 1TX4 (RhoGAP); overlap per structure 6V6U 0.583 / 5C4M 0.875 / 1A2B 0.5 at D=1.6",
+      "site anchored by caller site_residues (switch I 28-40 + switch II 60-78) -> site_signature_overlap"
+    ],
+    "method": {
+      "tool": "fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 rescore",
+      "version": "fpocket 4.2.3",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "6V6U",
+        "5C4M",
+        "1A2B"
+      ],
+      "chains_used": {
+        "6V6U": [
+          "A"
+        ],
+        "5C4M": [
+          "A"
+        ],
+        "1A2B": [
+          "A"
+        ]
+      }
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": []
+  },
+  "falsification": {
+    "checks_run": [
+      "Do all reported actives trace to a single assay, lab or chemical series?",
+      "Do the drug-like co-crystals in RhoA entries bind RhoA or a partner?",
+      "Are RhoA's own small-molecule co-crystals specific leads or promiscuous fragment-screen hits?",
+      "Is the scored pocket a crystallisation artifact, a single crystal form, or a clustering merge?",
+      "Were there terminated clinical RhoA small-molecule programmes?",
+      "Does the drugged family member (KRAS) transfer to wild-type RhoA?"
+    ],
+    "findings": [
+      "Bioactivity is dominated by RhoC/RhoA-C CELL assays: the top assay (29.9%) measures RhoC (P08134), and 2 of the next 3 (RhoA/C-mixed transcriptional readouts) push ~68% of activity off direct RhoA measurement.",
+      "The drug-like co-crystals in RhoA-containing entries bind a PARTNER, not RhoA: F9M/XQ3/XPW (460-655 Da) are TRPV4 channel modulators (8JVI/8JVJ/8FC7/8FC8/8FCB/8J1B/8J1F), RhoA present only as the bound partner.",
+      "RhoA's own SM co-crystals are weak, promiscuous fragment-screen hits on RhoA-RhoGEF complexes (KLU/Z3O/ZBH, 7G8U/7G91/7G9H); KLU (a chloroacetyl covalent fragment) also appears in unrelated creatine kinases (7TUN/9B16).",
+      "The scored orthosteric groove is present in all 3 apo structures (site_signature_overlap; not one crystal form) and is not a crystallisation additive -- but it merges at D=2.4 (volume->1110 A^3, druggability->0.924), a clustering artifact (rule 4a); the reproducible D=1.6 site is shallow (120-273 A^3, druggability 0.001-0.169).",
+      "No RhoA-direct small-molecule programme reached clinical development (0 clinical-stage, 0 approved): the failure is at discovery, not a terminated trial, so terminated_programs is empty (a finding, not a gap).",
+      "Family precedent does NOT transfer: the closest Foldseek neighbours (RhoC 2GCO, RhoB 6SGE, Rho-GAP/GEF/GDI complexes) carry no drug-like holo; the drugged member KRAS (sotorasib) exploits a mutation-specific G12C switch-II cryptic pocket absent in wild-type RhoA."
+    ],
+    "survived": true
+  },
+  "next_experiment": {
+    "description": "Run a mixed-solvent MD / bioemu ensemble on the RhoA switch I/II region and re-scan for a transient sub-pocket invisible to static fpocket, AND counter-screen the ~71 reported actives in a direct biophysical RhoA binding assay (SPR/ITC) to separate genuine RhoA binders from RhoC/RhoA-C cell-assay artifacts.",
+    "rationale": "The computed site is shallow and pre-formed (not cryptic) and the retrieved potency is weak and dominated by RhoC/cell readouts -- both consistent with not_tractable. The two things that could overturn it are a cryptic sub-pocket that static geometry misses and a genuine sub-uM direct binder hidden in the cell-assay-contaminated set.",
+    "resolves": "Whether the negative small-molecule verdict is real or an artifact of (a) static pocket geometry missing a cryptic site and (b) RhoC/cell-assay contamination masking a direct RhoA binder."
+  },
+  "not_found": [
+    {
+      "field": "target_precedent.chembl_target_id",
+      "reason": "chembl_v.bioactivities_by_accession exposes target_chembl_name ('Transforming protein RhoA', SINGLE PROTEIN) but no target_chembl_id column; the retrieval is keyed on UniProt accession P61586.",
+      "signature": "schema: no target_chembl_id column"
+    },
+    {
+      "field": "target_precedent.patents",
+      "reason": "Rule 13: Paperclip returns 'Patents sources are not available.'",
+      "signature": "rule 13"
+    },
+    {
+      "field": "family_precedent.pfam",
+      "reason": "uniprot_v.cross_references (Pfam) timed out on every attempt.",
+      "signature": "[error] Request timed out"
+    },
+    {
+      "field": "family_precedent.family_actives",
+      "reason": "Family-wide bioactivity aggregation needs the same cross_references join, which hits the Paperclip statement timeout (rule 15).",
+      "signature": "[error] Request timed out"
+    },
+    {
+      "field": "structure.apo_count",
+      "reason": "Full holo/apo census of all 131 PDB entries was not run; 3 high-resolution apo structures (6V6U,5C4M,1A2B) were used for the scan.",
+      "signature": "census not run"
+    },
+    {
+      "field": "pocket_neighbour_precedent",
+      "reason": "Rule 13: the pocket-neighbour transfer axis needs a cofolding model (cofold_transfer) and none is available.",
+      "signature": "rule 13"
+    },
+    {
+      "field": "affinity",
+      "reason": "Rule 13: no affinity predictor available; the rule-12 positive control is unsatisfiable and is nulled rather than predicted.",
+      "signature": "rule 13"
+    },
+    {
+      "field": "structure.cofold_control",
+      "reason": "Rule 13: no cofolding model available.",
+      "signature": "rule 13"
+    },
+    {
+      "field": "tractability.pocket_druggability",
+      "reason": "No pooled druggability value reported: pooling across structures is not a measurement (rule 4.0); the reportable form is tractability.site_pocket_rank and per-structure D-sweep values in _per_structure_across_d.",
+      "signature": "rule 4.0"
+    },
+    {
+      "field": "tractability.annotated_binding_site_overlap",
+      "reason": "Not computed this pass (no UniProt binding-site feature overlap calculation was run against the scored pocket).",
+      "signature": "not computed"
+    },
+    {
+      "field": "tractability.ligand_site_jaccard",
+      "reason": "Undefined: no drug-like/holo ligand exists for RhoA, so there is no ligand site to compute a Jaccard against.",
+      "signature": "no ligand"
+    },
+    {
+      "field": "tractability.max_backbone_ca_displacement_a",
+      "reason": "The cryptic apo/holo superposition could not be run: no drug-like holo of RhoA exists to superpose the apo structures against.",
+      "signature": "cryptic census not run (0 holo)"
+    },
+    {
+      "field": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket",
+      "reason": "pocket_scan does not emit a strong-hotspot consensus fraction; the denominators (3 structures / 6 measurements) are reported instead.",
+      "signature": "not computed"
+    }
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: P61586 (RHOA)",
+      "result": "not_tractable",
+      "plain_language": "RhoA reads not tractable for a small molecule: 71 SM actives but best only ~1.2 uM from an uncharacterised/RhoC-contaminated readout, 0 approved and 0 clinical small molecules, and the orthosteric switch I/II groove is a shallow, pre-formed cavity (D=1.6 volume 120-273 A^3).",
+      "status": "QUALIFIED",
+      "basis": [
+        "OBSERVED",
+        "INFERRED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.distinct_actives",
+        "label": "Distinct small-molecule actives",
+        "value": 71,
+        "unit": "compounds",
+        "display": "71 compounds",
+        "meaning": "Distinct small molecules with a measured pChEMBL value (rule 1b/14); a compound count, not an assay count.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.top_assay_rhoc"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 1240.0,
+        "unit": "nM",
+        "display": "1240 nM (~1.2 uM)",
+        "meaning": "Best measured small-molecule potency (IC50, pChEMBL 5.91). No sub-uM direct binder despite decades of effort.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.top_assay_rhoc_share_pct",
+        "label": "Top-assay share (RhoC)",
+        "value": 29.9,
+        "unit": "percent",
+        "display": "29.9%",
+        "meaning": "Share of bioactivity from the single largest assay, which measures RhoC (a different protein); ~68% of activity is RhoC/RhoA-C cell readouts (rule 6).",
+        "direction": "negative",
+        "evidence_ids": [
+          "evidence.top_assay_rhoc"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on RhoA (drugs_by_accession=0, reconciled).",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Small molecules that reached clinical development against RhoA (0 rows with max_phase>=1).",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.holo_count",
+        "label": "Drug-like holo structures on RhoA",
+        "value": 0,
+        "unit": "structures",
+        "display": "0 structures",
+        "meaning": "PDB entries with an optimised drug-like SM inhibitor on RhoA at its functional site; the drug-like ligands in RhoA entries are partner-bound (TRPV4) or promiscuous fragment-screen hits.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.holo_attribution"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.pocket_volume_d16_a3",
+        "label": "Site volume at D=1.6",
+        "value": 207.077,
+        "unit": "A^3",
+        "display": "207 A^3 (ensemble 120-273)",
+        "meaning": "D=1.6 orthosteric switch-groove volume for 6V6U; shallow. Absolute quantity, no verdict by threshold (210/240 guide retracted, rule 4a).",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.pocket_scan"
+        ],
+        "assumption_ids": [
+          "assumption.site_residues"
+        ]
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.0,
+        "unit": "fraction",
+        "display": "0.00",
+        "meaning": "Fraction of sequence predicted disordered (metapredict); RhoA is well-folded, so the shallow site is not a disorder artifact.",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Two independent axes reported separately and never averaged (rules 4/9/9b); the verdict summarises them.",
+        "formula": "not_tractable when retrieved SM effort is substantial-but-failed AND the functional site is shallow/non-cryptic; druggability is NOT load-bearing (rule 4.0), volume + retrieved carry it.",
+        "inputs": [
+          {
+            "path": "target_precedent.distinct_actives",
+            "value": 71,
+            "unit": "compounds"
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 1240.0,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.pocket_volume_a3.primary_d1_6_a3",
+            "value": 207.077,
+            "unit": "A^3"
+          },
+          {
+            "path": "structure.holo_count",
+            "value": 0,
+            "unit": "structures"
+          }
+        ],
+        "result": {
+          "value": "not_tractable",
+          "unit": null,
+          "basis": "both"
+        },
+        "evidence_ids": [
+          "evidence.best_potency_assay",
+          "evidence.pocket_scan"
+        ],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis",
+          "assumption.site_residues"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Best small-molecule potency against RhoA.",
+        "source_type": "assay",
+        "source_id": "Inhibition of rhoA expressed in Escherichia coli BL21 after 1 hr (chembl_v.bioactivities_by_accession WHERE accession='P61586', IC50 1240 nM, pchembl 5.91, assay_type B)",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "MODERATE",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.top_assay_rhoc",
+        "claim": "Bioactivity is dominated by RhoC / RhoA-C cell assays, not direct RhoA binding.",
+        "source_type": "assay",
+        "source_id": "bioactivities_by_accession GROUP BY assay_description: top 'Inhibition of RhoC-mediated pathway in human PC3 cells' 106/355=29.9%; next two RhoA/C-mixed cell readouts (~68% total)",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.holo_attribution",
+        "claim": "No optimised drug-like small molecule is co-crystallised with RhoA at its functional site.",
+        "source_type": "structure",
+        "source_id": "pdb_v.entry_ligands x structures_by_accession (P61586): drug-like F9M/XQ3/XPW are TRPV4 modulators (8JVI/8JVJ/8FC7/8FC8/8FCB/8J1B/8J1F, RhoA is the bound partner); 200-260 Da fragments (KLU/Z3O/ZBH) are RhoA-RhoGEF fragment-screen hits (7G8U/7G91/7G9H), KLU also in creatine kinases (7TUN/9B16)",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pocket_scan",
+        "claim": "The orthosteric switch I/II groove is shallow and pre-formed across the apo ensemble.",
+        "source_type": "computation",
+        "source_id": "Modal druggability-pocket-scan (fpocket 4.2.3 + P2Rank 2.5.1), ensemble 6V6U/5C4M/1A2B chains=A, D {1.6,2.4}, site_signature_overlap on switch I/II: D=1.6 volume 120-273 A^3, druggability 0.001-0.169; orthosteric_candidate vs 1XCG",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "MODERATE",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.foldseek",
+        "claim": "Closest structural neighbours carry no drug-like holo; the drugged family member (KRAS) is distant and mutation-specific.",
+        "source_type": "computation",
+        "source_id": "foldseek_neighbours(6V6U.cif, pdb100), 997 hits: RhoC 2GCO tm0.93, RhoB 6SGE tm0.94, Rho-GAP/GEF/GDI complexes, all nucleotide/partner-bound",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "MODERATE",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": "orthosteric",
+        "unit": "category",
+        "basis": "Fixture-constructed caller request (integration fixture; see _fixture). Determines that the site is the switch I/II effector/RhoGEF interface.",
+        "synthetic": true
+      },
+      {
+        "id": "assumption.site_residues",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "switch I 28-40 + switch II 60-78",
+        "unit": "residues",
+        "basis": "Mechanism-derived orthosteric interface residues supplied to pocket_scan as site_residues; matched by site_signature_overlap in all 3 apo structures (not a holo-ligand anchor).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering sweep D {1.6,2.4} across a 3-structure apo ensemble; no Monte Carlo / probabilistic model.",
+      "intervals": [],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "Ranges are clustering/ensemble scenarios, not confidence intervals. Druggability is a within-structure rank and is never pooled or compared across structures (rule 4.0). D=2.4 values (volume up to 1110 A^3, druggability up to 0.924) are merge artifacts, rule 4a."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "CRYPTIC_CENSUS_INCOMPLETE",
+        "severity": "WARNING",
+        "message": "No drug-like holo of RhoA exists, so the full apo/holo cryptic census (rule 5) and max_backbone_ca_displacement could not be run. The site is present in all 3 apo structures (site_signature_overlap) -> classified not cryptic, but a cryptic sub-pocket invisible to static fpocket cannot be excluded without MD.",
+        "field_path": "output.tractability.max_backbone_ca_displacement_a"
+      },
+      {
+        "code": "DRUGGABILITY_NOT_POOLABLE",
+        "severity": "INFO",
+        "message": "Pooled druggability min/max are null: pooling a within-structure-normalised score across 3 structures is not a measurement (rule 4.0). Reportable form is site_pocket_rank; per-structure D-sweep in _per_structure_across_d.",
+        "field_path": "output.tractability.pocket_druggability"
+      },
+      {
+        "code": "ASSAY_CONTAMINATION",
+        "severity": "WARNING",
+        "message": "~68% of bioactivity is RhoC or RhoA/C-mixed CELL readouts (top assay 29.9% measures RhoC); the 71 actives and the headline potency are not clean direct-RhoA measurements.",
+        "field_path": "output.target_precedent.assay_concentration"
+      },
+      {
+        "code": "FAMILY_AGGREGATION_TIMEOUT",
+        "severity": "INFO",
+        "message": "Pfam and family-actives not retrieved: cross_references hit the Paperclip statement timeout (rule 15). The KRAS mutation-specific precedent is recorded qualitatively.",
+        "field_path": "output.family_precedent"
+      },
+      {
+        "code": "NULLED_AXES",
+        "severity": "INFO",
+        "message": "affinity, structure.cofold_control and pocket_neighbour_precedent.cofold_transfer are null: no predictor / cofolding model in this deployment (rule 13).",
+        "field_path": "output.affinity"
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "Confirm a sub-uM, characterised, direct RhoA binder (SPR/ITC) that is not a RhoC/RhoA-C cell-assay artifact.",
+        "result": "Would move the retrieved axis toward tractable and undercut the not_tractable verdict.",
+        "meaning": "The current best potency (~1.2 uM) is weak and cell-assay-contaminated; a genuine potent direct binder is the single retrieved fact that would overturn the verdict."
+      },
+      {
+        "change": "Find a cryptic sub-pocket at switch I/II via mixed-solvent MD / bioemu that static fpocket misses.",
+        "result": "Would move the computed axis toward tractable.",
+        "meaning": "Geometric scoring is blind to cryptic sites (rule 3); the site is pre-formed and shallow here, but MD could reveal a transient pocket."
+      },
+      {
+        "change": "Treat the drugged family member KRAS (sotorasib) as transferable precedent.",
+        "result": "No change to the verdict.",
+        "meaning": "KRAS G12C inhibitors exploit a mutation-specific switch-II cryptic pocket absent in wild-type RhoA; family precedent does not transfer (rule 9b)."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability",
+          "output.structure"
+        ],
+        "transformation": "Two independent axes (retrieved precedent + computed tractability) reported separately and combined by rule into not_tractable; never averaged (rules 4/9)."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": "71 SM actives, best ~1.2 uM (uncharacterised/RhoC-contaminated), 0 approved, 0 clinical, 0 biologic -> failed SM effort.",
+        "computed_tractability": "shallow pre-formed orthosteric switch groove (D=1.6 120-273 A^3, druggability 0.001-0.169), not cryptic, 0 drug-like holo on RhoA."
+      },
+      "trace": [
+        "paperclip precedent (ChEMBL/PDB, reconciled)",
+        "modality.py classification (71/71 SM)",
+        "structure-select (apo ensemble)",
+        "Modal pocket_scan (fpocket+P2Rank, D sweep, interface vs 1XCG/1TX4)",
+        "foldseek neighbours",
+        "falsification sweep",
+        "assemble-dossier"
+      ],
+      "next_experiment": "MSMD/bioemu cryptic re-scan of switch I/II + direct biophysical counter-screen of the 71 actives.",
+      "figure": null,
+      "identifiers": {
+        "uniprot": "P61586",
+        "gene": "RHOA",
+        "query_structure": "6V6U"
+      },
+      "cache_key": "P61586|orthosteric|null"
+    }
+  }
+}

@@ -1,0 +1,784 @@
+{
+  "_example": "TNF-alpha (P01375), measured end-to-end. Two things at once. (1) The axis_conflict worked example: zero approved small molecules against five approved biologics, and an oral small molecule in phase 2 anyway. (2) The REFUSAL worked example, and this is now the more instructive half. A full six-entry pocket run completed successfully and produced a volume range, a druggability range and a fold-range \u2014 and none of it is in the dossier body, because 10 of the 12 measurements were selected by site_signature_unreliable_homooligomer, a basis that by construction cannot tell one protomer's site from another's on a C3-symmetric trimer. Pooling them anyway yields a druggability fold-range of exactly 651.0, which is the withdrawn '651-fold spread' reappearing from the same cause. The tool did not fail; it reported honestly that it could not identify the site, and the dossier is obliged to stop there. Compare jak1_P23458.json, where the same tool on the same day returned 4 of 4 by ligand_site_jaccard and the numbers ARE reported.",
+  "_retrieved": "2026-08-15",
+  "input": {
+    "_note": "Verbatim echo of the request, never inferred and never back-filled. This run was invoked with the accession only; every other contract field was absent and is null here because it was not supplied, not because it could not be retrieved. `target.uniprot_accession` is the RESOLVED accession; this one is what the caller said.",
+    "uniprot_accession": "P01375",
+    "as_of_date": null,
+    "disease_context": null,
+    "interaction_to_disrupt": null,
+    "mechanism_hypothesis": null
+  },
+  "target": {
+    "uniprot_accession": "P01375",
+    "gene_symbol": "TNF",
+    "protein_name": "Tumor necrosis factor",
+    "organism": "Homo sapiens",
+    "sequence_length": 233,
+    "sources": [
+      "UniProt P01375 (uniprot_v.proteins)"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "small_molecule_tractable",
+  "verdict_basis": "both",
+  "axis_conflict": "The two axes point in opposite directions and neither is wrong. RETRIEVED: zero approved small molecules against five approved biologics, and the 2,582-compound figure is not what it looks like \u2014 45.0% of all bioactivity comes from an IRAK4 monocyte assay that measures a different protein and uses TNF only as a cellular readout. The headline 0.03 nM Ki sits behind an assay described only as 'Inhibition assay using TNF-alpha', which is unusable, so the reported potency here is the weaker but characterised SPR Kd of 1.3 nM. COMPUTED: refused. The pocket run completed but could not identify the site across the ensemble, so no volume, no D=1.6 primary and no druggability are reported here. An earlier version of this field called TNF 'the strongest pocket signal in the fixture set, exceeding JAK1 on every metric' - that superlative is WITHDRAWN 2026-08-15. It ranked targets against a calibration whose anchors did not measure their targets, and TNF's own 207 A^3 anchor was one of the compromised ones (on TNF, but zero residue overlap with its only drug-anchored pocket). Nothing in this dossier ranks TNF's pocket against another target's. The reconciliation is mechanistic, not statistical: the site is a cavity on the trimer 3-fold axis reached by displacing a subunit, so it is invisible to any preparation that takes one chain, it is occluded rather than cryptic, and its one co-crystallised ligand (307 in 2AZ5) is a known promiscuous frequent hitter. Do not average these. The live fact that settles the direction without settling the magnitude: balinatunfib (SAR441566) is an oral small molecule in clinical development that stabilises a receptor-incompetent trimer. So 'zero approved small molecules' is true and 'no small molecule can work' is false.",
+  "target_precedent": {
+    "chembl_target_id": "CHEMBL1825",
+    "distinct_actives": 2582,
+    "assay_concentration": {
+      "top_assay_description": "IRAK4 Monocyte TNFalpha Cell Based Assay",
+      "top_assay_share_pct": 45.0,
+      "measures_a_different_target": true,
+      "assay_type_split": {
+        "binding_B": 5830,
+        "functional_F": 617
+      }
+    },
+    "best_potency_nm": 1.3,
+    "best_potency_assay": "CHEMBL4775686 \u2014 SPR against biotinylated TNF-alpha trimer 77-233, compound CHEMBL4793441",
+    "best_potency_characterised": true,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [
+      {
+        "name": "balinatunfib (SAR441566)",
+        "phase": 2,
+        "modality": "small_molecule",
+        "mechanism": "oral; stabilises a receptor-incompetent TNF trimer rather than blocking the TNF/TNFR interface",
+        "source": "fixtures/rheumatoid_arthritis.json biologic_only.TNF.live_nuance"
+      }
+    ],
+    "patents": {
+      "count": null,
+      "source": null
+    },
+    "terminated_programs": [],
+    "as_of_leakage": [],
+    "sources": [
+      "CHEMBL1825 (chembl_v.bioactivities_by_accession, compounds_by_accession, drugs_by_accession)",
+      "chembl.molecule_dictionary.molecule_type, read per drug",
+      "measured run 2026-08-15"
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [
+      {
+        "name": "infliximab",
+        "modality": "antibody",
+        "year": 1998,
+        "source": "chembl_v.drugs_by_accession first_approval; molecule_type Antibody / structure_type SEQ"
+      },
+      {
+        "name": "etanercept",
+        "modality": "fusion_protein",
+        "year": 1998,
+        "source": "chembl_v.drugs_by_accession first_approval; molecule_type Protein / structure_type SEQ"
+      },
+      {
+        "name": "adalimumab",
+        "modality": "antibody",
+        "year": 2002,
+        "source": "chembl_v.drugs_by_accession first_approval; molecule_type Antibody / structure_type SEQ"
+      },
+      {
+        "name": "certolizumab pegol",
+        "modality": "antibody",
+        "year": 2008,
+        "source": "chembl_v.drugs_by_accession first_approval; molecule_type Antibody / structure_type SEQ"
+      },
+      {
+        "name": "golimumab",
+        "modality": "antibody",
+        "year": 2009,
+        "source": "chembl_v.drugs_by_accession first_approval; molecule_type Antibody / structure_type SEQ"
+      }
+    ],
+    "note": "Presence of an approved biologic is target validation, NOT small-molecule tractability. Five approvals here and none of them counts toward the small-molecule axis."
+  },
+  "family_precedent": {
+    "pfam": null,
+    "family_actives": null,
+    "best_family_potency_nm": null,
+    "best_family_target": null,
+    "sources": []
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek neighbours, NOT sequence family.",
+    "method": "foldseek-search (Proto, CPU, in-process)",
+    "query_structure": null,
+    "neighbours": [],
+    "sources": []
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "Not run. Worth flagging what it must NOT be used for: IL-17A is the nearest cytokine by family and its small-molecule site is a groove at a homodimer interface, mechanically unrelated to a cavity on a trimer 3-fold axis. Family similarity transfers nothing here.",
+    "candidates": [],
+    "sources": []
+  },
+  "structure": {
+    "tier": "holo_experimental",
+    "pdb_id": "2AZ5",
+    "resolution_a": null,
+    "biological_unit_used": "homotrimer, all three subunits \u2014 the site IS the trimer and does not exist on one chain",
+    "bound_ligand": {
+      "comp_id": "307",
+      "heavy_atoms": 40,
+      "is_druglike": true,
+      "is_known_frequent_hitter": true
+    },
+    "total_pdb_structures": 52,
+    "holo_count": 17,
+    "apo_count": 35,
+    "ensemble_used": [
+      "2AZ5",
+      "1TNF",
+      "1A8M",
+      "2E7A",
+      "2ZJC",
+      "5TSW"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "_note": "When BOTH a crystal structure and a cofold exist, score the cofold against the crystal. This measures whether cofolding can be trusted FOR THIS TARGET \u2014 same discipline as the affinity positive control.",
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "pdb_v.structures_by_accession + entry_ligands for P01375",
+      "2AZ5 (SPD304, ligand comp_id 307, 550 Da, released 2005-11-29) per fixtures/targets.json",
+      "measured run 2026-08-15: 17 holo / 35 apo"
+    ]
+  },
+  "tractability": {
+    "_primary": "pocket_volume_a3.primary_d1_6_a3 is THE computed-axis number REPORTED, but it is a cavity measurement and carries no verdict: the AUC 1.000 separation over 15 targets is RETRACTED (rule 4a, 2026-08-15) because the calibration anchors did not measure the proteins they were attributed to - four of five hard anchors are compromised, and the bootstrap CI of [1.000, 1.000] was degenerate by construction since resampling a perfectly separated set cannot create an inversion. A co-crystal flag alone separates the same groups at AUC 0.900 with no structural measurement, so the label and the measurement share a cause. Do not compare this volume to 210 or 240 A^3. druggability is reported and load-bearing on nothing. TNF's own 207 A^3 calibration anchor was one of the compromised ones - it sits on TNF but has zero residue overlap with the only genuinely drug-anchored pocket.",
+    "pocket_volume_a3": {
+      "min": null,
+      "max": null,
+      "spread_pct": null,
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": null,
+      "site_pocket_selected_by": [
+        "ligand_site_jaccard",
+        "site_signature_unreliable_homooligomer"
+      ],
+      "_primary_note": "primary_d1_6_a3 is the site volume at D=1.6 ONLY, not the pooled min/max. D=1.6 specifically: at D=2.4 volumes exceed 1000 A^3 and sites merge with neighbouring cavities. THE 210/240 A^3 GUIDE IS RETRACTED, NOT MERELY UNCALIBRATED - see rule 4a, 2026-08-15. It previously read as a real separation (>=240 A^3 entirely druggable, <=210 A^3 entirely hard, a 17% margin fitted post hoc on n=15); that is WITHDRAWN, because four of the five hard anchors it was fitted on did not measure their target protein - MYC's pocket is 100% MAX (P61244), IL-11's is 100% IL-11 receptor alpha (Q14626), CD20's anchor ligand is a detergent and TL1A had no anchor at all - and the bootstrap CI of [1.000, 1.000] was degenerate by construction. A co-crystal flag alone separates the same groups at AUC 0.900 with no structural measurement. Report the volume; do not classify with it, do not compare it to 210 or 240 A^3, and do not revive the guide from the constants in validate_dossier.py."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "site_pocket_selected_by": [
+        "ligand_site_jaccard",
+        "site_signature_unreliable_homooligomer"
+      ],
+      "load_bearing": false,
+      "_provenance": "shipped fpocket: 3-descriptor logistic regression fitted on 21 positives. A weak prior, not a probability. mean_loc_hyd_dens_norm is min-max normalised across the OTHER pockets of the same structure, so this is a property of a pocket relative to its detected population, not of the pocket.",
+      "_false_negative_rate": "REPORTED, NEVER LOAD-BEARING. Measured over 15 targets / 67 structures / 134 measurements: on holo structures with a drug-like ligand bound and the pocket anchored to it, median 0.320 and a large fraction below 0.1 - EGFR 6LUD with osimertinib bound scores 0.013, JAK1's median is 0.009 across nine approved drugs. DENOMINATOR UNDER AUDIT (2026-08-15): the rate was reported as 25/37 below 0.5 and 15/37 (41%) below 0.1, but at least one of those 37 was not a certain positive - RORgt 6C1P contains no RORgt and was anchored on CHAPSO, a detergent - so the clean denominator is 36, and the other 36 have never been audited at residue level. The direction is not in doubt and the demotion does not turn on that case; the percentage is pending audit, so quote the named cases rather than the rate. Target-level AUC 0.720 (95% CI 0.44-0.94, includes chance) at D=1.6 and 0.520 at D=2.4. It may not carry a not_tractable or insufficient_evidence verdict on its own."
+    },
+    "site_pocket_rank": {
+      "_note": "PRANK rank is a SITE-FINDING aid reported beside fpocket rank, never a quality value. n=70 ligand-anchored: promotes 79%, demotes 1% (6OIM D=1.6, the one KRAS negative, kept visible). Median rank 5 -> 1, top-3 recall 37% -> 91%. As a druggability classifier its rank is INVERTED, AUC 0.25.",
+      "fpocket": null,
+      "prank": null,
+      "n_pockets": null
+    },
+    "ensemble_consensus_fraction": {
+      "_note": "Published criterion: ~70% of structures showing a strong hot spot, ~50% meeting all criteria. One good conformer out of five is a negative result.",
+      "n_structures": 6,
+      "n_measurements": 12,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null,
+      "source": "pocket-scan Modal run 2026-08-15: ensemble.n_structures 6, site_pockets_pooled 12 (6 entries x D in {1.6, 2.4}). The tool emits no consensus fraction \u2014 see not_found."
+    },
+    "pocket_hydrophobic_density": null,
+    "pocket_residues": [],
+    "site_hypothesis_basis": "not_established across the ensemble. It IS established on the one holo entry: 2AZ5's site pocket was selected by ligand_site_jaccard at both clustering values (overlap 0.069 at D=1.6, 0.636 at D=2.4) against the 307 ligand site. It is NOT established on any of the five apo entries \u2014 all ten of their measurements fell back to site_signature_unreliable_homooligomer, because the signature is a set of residue numbers with chain identity discarded and 2AZ5's 22 site residues collapse to 14 distinct numbers across four identical chains.",
+    "mdpocket_site_definition_used": "site_from_ligand",
+    "site_centroid_to_ligand_distance_a": 29.57,
+    "site_centroid_to_ligand_note": "THE OFF-SITE CHECK FIRED, and harder than the case rule 4b was written from. mdpocket returned both site definitions. site_from_ligand \u2014 grid points within 3.0 A of 2AZ5's 307 ligand, transferred by superposition \u2014 is the ligand site by construction and is the definition used here. site_from_density, the largest cavity open in all six structures and the one found WITHOUT reference to any ligand, has its centroid 29.57 A from the 307 centroid. The tool raised off_site_warning verbatim: 'this site's centroid is 29.57 A from the 2AZ5 ligand centroid, past the 4.0 A proposed (NOT calibrated) warning distance. At 7.73 A on apo TNF-alpha this is a different pocket \u2014 the on-axis cavity, the one the retracted matcher reported as the SPD304 site. Do not report this volume or druggability as the ligand site.' So the two definitions do not merely disagree, they disagree by nearly four times the previously recorded error. That is why no site_from_density number appears anywhere in this dossier, and it is the concrete reason this field must be read before any geometry is quoted. On JAK1 the same field reads 1.86 A and the check passes.",
+    "annotated_binding_site_overlap": null,
+    "ligand_site_jaccard": null,
+    "disorder_fraction": null,
+    "cryptic_pocket_risk": "low",
+    "cryptic_mechanism": "subunit_occlusion",
+    "cryptic_evidence": {
+      "_note": "The apo census the cryptic call rests on. Vajda 2018: cryptic only if the site is absent in all, or nearly all, unbound structures.",
+      "is_cryptic": false,
+      "n_apo_examined": 5,
+      "n_apo_site_absent": 1,
+      "site_present_in_apo_ensemble": true,
+      "basis": "Measured on this run, not inherited. The cryptic stage compared 2AZ5 against each of the five apo entries and returned mechanism subunit_occlusion and is_cryptic false for every one, with max backbone C-alpha displacement at the site of 1.55, 1.61, 1.75, 1.83 and 1.82 A and site C-alpha RMSD 0.80 to 1.01 A \u2014 an order of magnitude below KRAS's 8.8 A, and all below the 2 A CryptoBench cutoff. It is OCCLUDED, not collapsed: across the five apo entries ZERO of the 60 to 67 clashing atom pairs at 2.0 A are backbone; 23 to 27 are side-chain (the Tyr119 pairs) and 37 to 42 come from the subunit the ligand displaces. Removing both recovers 98.9 to 99.9 per cent of the ligand's van der Waals volume, against 60.9 to 63.3 per cent in the intact apo trimer. NOTE THE ONE CORRECTION to the earlier in-repo calibration, which said the site was recovered in ALL FIVE apo structures: measured at the transferred ligand site, 1TNF returns a volume of 0.00 A^3. So n_apo_site_absent is 1, not 0. One of five is far below the 'all or nearly all' the definition requires, so the call is unchanged \u2014 but the census behind it is now 4 of 5, not 5 of 5, and that is written down rather than smoothed over.",
+      "definition": "Vajda et al. 2018 \u2014 cryptic only if the pocket is absent in all, or nearly all, unbound structures; CryptoBench operationalises it as pocket-residue RMSD above 2 A",
+      "source": "pocket-scan Modal run 2026-08-15, cryptic stage status ok, 5 apo against holo 2AZ5/307; mdpocket site_from_ligand volumes per structure. Prior figures from in-repo calibration, fixtures/pocket_calibration.json and CLAUDE.md rule 5."
+    },
+    "cryptic_potency_prior": {
+      "_note": "Mechanism is a prior on achievable potency. Loop-motion sites: 25 of 27 reached nanomolar. Side-chain sites: all measured ones were low-micromolar at best.",
+      "expected_ceiling": "micromolar_at_best",
+      "basis": "subunit and side-chain occlusion sit in the poor-prognosis regime: across the CryptoSite set, of 18 side-chain-motion sites only 10 had any affinity data and every one bound low micromolar at best, because side chains reorient on 1e-11 to 1e-10 s and compete with the ligand for its own site. Recorded tension: balinatunfib reached the clinic against this target by a trimer-stabilisation mechanism, which is a live counter-example to this prior rather than a confirmation of it. The prior is reported as a prior, not as a prediction about that compound.",
+      "source": "Lazou, Kozakov, Joseph-McCarthy and Vajda, Drug Discov Today 2024"
+    },
+    "pocket_vs_interface": {
+      "_note": "Measured, not assumed. Requires a complex structure containing the partner.",
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": null,
+      "matches_mechanism_hypothesis": null
+    },
+    "max_backbone_ca_displacement_a": 1.83,
+    "max_backbone_ca_displacement_note": "Read the protocol before comparing this to any other TNF-alpha displacement figure, because three different numbers circulate and they are not the same quantity. This 1.83 A is the MAXIMUM across a five-structure apo ensemble, from the deployed zero-knowledge default on the 2026-08-15 run; the per-structure values are 1.55, 1.61, 1.75, 1.83 and 1.82 A. The 1.55 A reproduces the deployed single-pair figure in rule 5 exactly. Separately, 1.62 A is the in-repo HAND-calibration figure, from a protocol with auto-trim and residue-name matching disabled and the mobile regions named by hand; it must never be presented as pipeline output. All three agree to two significant figures at roughly 1.6 A, mechanism and is_cryptic are identical under every protocol, and the finding is the order-of-magnitude separation from KRAS (~8.8 A hand calibration, 8.65 A deployed, against ~1.6 A here) \u2014 not the decimals.",
+    "max_backbone_ca_displacement_protocol": "deployed_default_max_over_apo_ensemble",
+    "clash_attribution": "Across the five apo entries at 2.0 A: ZERO backbone clashes in every one; 23 to 27 side-chain atoms, being the Tyr119 pairs (5TSW additionally chain C residue 151); and 37 to 42 atoms from the subunit the ligand displaces, out of 60 to 67 total pairs. Free volume for the 426.3 A^3 ligand goes from 0.609-0.633 in the intact apo trimer to 0.842-0.855 with the displaced chains removed, 0.750-0.771 with the clashing side chains trimmed, and 0.989-0.999 with both. Classification is on displacement, not on clash composition \u2014 see rule 5, where keying on clashes inverts the answer on KRAS.",
+    "caveat": "No mechanism_hypothesis was supplied. The pocket is reported for the biological assembly because the site does not exist on one chain, and no pocket is asserted to be the relevant one. The interface classification is NOT destabiliser_candidate despite the mechanism being known from the literature, because no partner complex was analysed and rule 2b requires that classification be measured. WHY NO POCKET GEOMETRY IS REPORTED, despite a run that completed with every stage ok. Of the 12 site pockets found, only 2 \u2014 both on the holo entry 2AZ5 \u2014 were selected by ligand_site_jaccard. The other 10, every measurement on every apo entry, fell back to site_signature_unreliable_homooligomer. Rule 4 says values on that basis must be reported per structure and never pooled, and here is what pooling them anyway produces: a volume range of 126.9 to 809.5 A^3 and a druggability fold-range of 651.0. That last figure is the withdrawn '651-fold spread across five apo TNF-alpha structures of the same site' regenerating from the identical cause, which is as clean a confirmation of the retraction as we are going to get. Three independent controls agree the pool is not one site: max_radius_difference_a is 14.43 A at D=1.6 and 16.49 A at D=2.4, against 2.29 A on JAK1 and comparable to the 16.61 A that flagged the invalid IL-17A pool; 2AZ5's own site pocket centroid moves 18.43 A between the two clustering values and 1TNF's moves 12.27 A; and mdpocket's ligand-free site definition sits 29.57 A from the ligand. Even the two trustworthy 2AZ5 values are not reported as a range, because one structure at two clustering values fails the ensemble half of rule 4 \u2014 for the record they are volume 126.9 and 318.2 A^3 and druggability 0.003 and 0.587, and note that the D=1.6 value of 0.003 reproduces the documented 0.002 false negative at the site of a co-crystallised 570 Da ligand. So: the computed axis is REFUSED here, not weak. A refusal is not a low score, and it must not be read as one when it sits beside TNF's zero approved small molecules.",
+    "sources": [
+      "pocket-scan Modal function `pocket_scan`, measured run 2026-08-15 on 2AZ5 + 1TNF + 1A8M + 2E7A + 2ZJC + 5TSW, ligand code 307, D in {1.6, 2.4}",
+      "fpocket 4.2.3 (conda-forge), P2Rank 2.5.1 rescore (rescore_2024), mdpocket, cryptic_analysis.py (gemmi + numpy)",
+      "in-repo TNF-alpha calibration (CLAUDE.md rules 4, 4b and 5)"
+    ],
+    "method": {
+      "tool": "fpocket",
+      "version": "4.2.3 (conda-forge; binary banner self-reports 4.0 \u2014 cosmetic upstream mismatch). Rescoring P2Rank 2.5.1 (rescore_2024); site fixed by construction with mdpocket, superposition reference 2AZ5 over 129 core C-alpha positions, per-structure RMSD 1.05 to 1.35 A. Prep: protein only, altloc A/blank, hydrogens stripped, mmCIF via gemmi.",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "2AZ5",
+        "1TNF",
+        "1A8M",
+        "2E7A",
+        "2ZJC",
+        "5TSW"
+      ],
+      "chains_used": "assembly1 as deposited: A-B-C for each of the five apo trimers, and A-B-C-D for 2AZ5, whose assembly1 returns FOUR chains \u2014 two independent dimers in the asymmetric unit, not one trimer. The run used it as-is and its chain map to the apo entries is not the identity (2E7A maps A->A, C->B; 2ZJC maps C->A, A->B), with one chain left unmapped in every apo entry. That is a second, independent reason the apo pool cannot be treated as one site."
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": []
+  },
+  "falsification": {
+    "checks_run": [
+      "single-assay dominance",
+      "best potency from a characterised assay",
+      "cross-accession check on the top assay",
+      "actives collapse to one series or one lab",
+      "holo ligand drug-likeness and frequent-hitter status",
+      "pocket present in more than one crystal form",
+      "accession mapping is real",
+      "terminated clinical programs and their stated reasons",
+      "look-alike drugs counted against the wrong entity"
+    ],
+    "findings": [
+      {
+        "check": "single-assay dominance",
+        "result": "FOUND \u2014 the top assay is 45.0% of all bioactivity and it measures IRAK4, not TNF. The 2,582-compound figure is a statement about that assay. assay_type is no defence: the split is B 5830 / F 617, about 90% binding, and the IRAK4 cellular assay is in the B bucket.",
+        "source": "CHEMBL1825, measured run 2026-08-15"
+      },
+      {
+        "check": "best potency from a characterised assay",
+        "result": "FOUND \u2014 the headline 0.03 nM Ki (CHEMBL3640299, assay CHEMBL3705047) has the description 'Inhibition assay using TNF-alpha' and nothing else. Rejected as uncharacterised. The reported figure is instead the SPR Kd of 1.3 nM against immobilised trimer, three orders weaker and characterised.",
+        "source": "CHEMBL1825, assay CHEMBL3705047 and CHEMBL4775686"
+      },
+      {
+        "check": "holo ligand drug-likeness and frequent-hitter status",
+        "result": "FOUND \u2014 the one holo ligand, 307 (SPD304) in 2AZ5, is a bis-electrophilic compound widely regarded as a promiscuous and cytotoxic frequent hitter. There IS a holo structure and it is exactly the misleading kind. The pocket it defines is real; the evidence that it is a productive drug site is not.",
+        "source": "fixtures/targets.json slot_5_precedent_structure_conflict.structure_caveat"
+      },
+      {
+        "check": "look-alike drugs counted against the wrong entity",
+        "result": "clean for the biologics listed, but the adjacent trap is live across this fixture set: anakinra targets the IL-1 receptor rather than IL-1beta, and brodalumab targets IL-17RA rather than IL-17A. Precedent must be attributed to the entity the drug binds.",
+        "source": "fixtures/rheumatoid_arthritis.json and fixtures/targets.json"
+      },
+      {
+        "check": "pocket present in more than one crystal form",
+        "result": "FOUND, and it corrects an earlier 'clean'. Measured at the transferred 307 ligand site across the six-entry ensemble, the site volume is 533.7 A^3 on the holo entry 2AZ5 and 0.00, 83.2, 45.2, 37.3 and 50.3 A^3 on 1TNF, 1A8M, 2E7A, 2ZJC and 5TSW. So the site is present in four of five apo crystal forms, absent in one, and an order of magnitude smaller in every apo form than in the holo \u2014 which is exactly what steric occlusion by the third subunit predicts, and is why the coefficient of variation across all six is 161.7%. The earlier statement that it was recovered in ALL five is wrong at the ligand site. It remains true that this is occlusion rather than collapse: zero backbone clashes in all five, displacement 1.55 to 1.83 A.",
+        "source": "pocket-scan Modal run 2026-08-15, mdpocket site_from_ligand volume_a3_by_structure and structures_without_volume; supersedes the in-repo TNF-alpha calibration figure"
+      },
+      {
+        "check": "terminated clinical programs",
+        "result": "none retrieved in this run. Not evidence that none exist; no trials registry was queried.",
+        "source": "measured run 2026-08-15"
+      }
+    ],
+    "survived": false
+  },
+  "next_experiment": {
+    "description": "Two things, in this order. (1) Re-run the pocket scan supplying holo_chains explicitly and a chain-aware site definition, so the five apo entries stop falling back to site_signature_unreliable_homooligomer \u2014 and prepare 2AZ5 as ONE trimer rather than the four-chain assembly1 the run consumed, which is two independent dimers in the asymmetric unit. Only that turns the ten refused measurements into poolable ones. (2) Re-derive the actives count with the IRAK4 monocyte assay excluded.",
+    "rationale": "The computed axis is no longer short of data \u2014 a six-entry, twelve-measurement run completed with every stage ok. It is short of SITE IDENTITY, which is a different problem and is not fixed by measuring more. Ten of twelve values cannot be attributed to a pocket, three independent controls agree they are not one site (max_radius_difference_a 14.4 to 16.5 A, per-structure centroid drift up to 18.4 A between clustering values, and a ligand-free site definition 29.57 A from the ligand), and pooling them regenerates the withdrawn 651-fold figure. The retrieved axis is separately unusable because 45% of the count is one assay measuring IRAK4.",
+    "resolves": "Whether the axial cavity has reproducible geometry across crystal forms once chain identity is preserved \u2014 the question the current run could not answer rather than answered negatively \u2014 and whether the direct-binder count against TNF is in the tens or the thousands."
+  },
+  "not_found": [
+    {
+      "field": "tractability.pocket_druggability",
+      "reason": "REFUSED, not missing. The 2026-08-15 run produced twelve druggability values spanning 0.001 to 0.651, a 651.0-fold range. Ten of the twelve, being every measurement on every apo entry, carry site_pocket_selected_by = site_signature_unreliable_homooligomer, which rule 4 says must not be pooled: the signature discards chain identity and 2AZ5's 22 site residues collapse to 14 distinct numbers across four identical chains, so any pocket carrying those numbers matches and the value cannot be attributed to a site. That the pooled fold-range comes out at 651.0 is not a coincidence \u2014 it is the withdrawn 651-fold figure regenerating from the identical defect. The two attributable values, both on 2AZ5 by ligand_site_jaccard, are 0.003 at D=1.6 and 0.587 at D=2.4; they are not reported as a range either, because one structure at two clustering values fails the ensemble half of rule 4. Note also what the earlier version of this file recorded: a maximum of 0.992 with no minimum, from a different run. That figure is superseded and is not the same measurement as anything here."
+    },
+    {
+      "field": "tractability.pocket_volume_a3",
+      "reason": "REFUSED for the same reason and on the same twelve measurements: pooled it would read 126.9 to 809.5 A^3, spread 84.3%. Volume is the more reliable number than druggability, but reliability of the ESTIMATOR does not rescue a spread whose members are not the same pocket. Three controls say they are not: max_radius_difference_a 14.43 A at D=1.6 and 16.49 A at D=2.4 (JAK1's is 2.29 A; the IL-17A pool that was ruled invalid was 16.61 A); per-structure centroid drift between clustering values of 18.43 A on 2AZ5 and 12.27 A on 1TNF; and mdpocket's ligand-free site definition 29.57 A from the ligand. The mdpocket site_from_ligand volumes ARE attributable, since that grid is the ligand site by construction \u2014 533.7 A^3 on 2AZ5 and 0.00 to 83.2 A^3 on the five apo \u2014 but with a CV of 161.7% and one structure at zero they describe an occlusion gradient rather than a pocket size, and are reported in the falsification block where that is the point. RULE 4a: tractability.pocket_volume_a3.primary_d1_6_a3 is refused on exactly the same grounds and by the same twelve measurements \u2014 the D=1.6 site volume is no more attributable to one site than the pooled spread is. Refusing the primary number is not a low value for it."
+    },
+    {
+      "field": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket and meets_consensus_criterion",
+      "reason": "pocket_scan does not emit a consensus fraction \u2014 the string 'consensus' does not appear anywhere in its output. Deriving one would need a 'strong hot spot' threshold this pipeline does not define, and here it would be doubly wrong, because ten of the twelve measurements cannot be attributed to the site the fraction would be about. The denominators are now known and reported (6 structures, 12 measurements). This supersedes an earlier '4 of 4' figure from a different run on an unnamed ensemble."
+    },
+    {
+      "field": "tractability.pocket_hydrophobic_density",
+      "reason": "the run emits mean local hydrophobic density per pocket per clustering value \u2014 2.0 to 18.0 across the twelve \u2014 but no single ensemble figure, and the template field is a scalar. The same attribution problem applies to ten of them regardless."
+    },
+    {
+      "field": "tractability.disorder_fraction",
+      "reason": "metapredict 3.0.2 DID run and returned 0.0496, but over the wrong sequence: no UniProt accession was passed, so it read the 141-residue sequence off 2AZ5 rather than P01375's full 233. The app's own caveat calls a structure-derived figure a LOWER BOUND, and TNF's transmembrane and pro-domain regions are absent from the crystal entirely. Reporting it as the protein's disorder fraction would be a scoping error, so the field is null."
+    },
+    {
+      "field": "tractability.annotated_binding_site_overlap",
+      "reason": "UniProt binding-site features were not retrieved for P01375."
+    },
+    {
+      "field": "tractability.ligand_site_jaccard",
+      "reason": "computed for the holo entry only \u2014 2AZ5 scores 0.069 at D=1.6 and 0.636 at D=2.4 against the 307 site \u2014 and undefined for all five apo entries, which have no ligand to define a site from. The template field is a scalar and there is no honest single value: 0.069 and 0.636 on the SAME structure at two clustering values is itself the rule 4 lesson about D, and averaging them would erase it."
+    },
+    {
+      "field": "structure.resolution_a",
+      "reason": "not retrieved for 2AZ5. The ligand's heavy-atom count IS now measured at 40 by the pocket run, and its 550 Da is separately attested."
+    },
+    {
+      "field": "target_precedent.patents",
+      "reason": "no patent source was queried."
+    },
+    {
+      "field": "family_precedent",
+      "reason": "not retrieved, and it would be the weakest axis here anyway. The TNF superfamily shares a fold; it does not share a small-molecule story."
+    },
+    {
+      "field": "affinity",
+      "reason": "no affinity predictor was run, so no positive control exists. Rule 12: a prediction without its control is not a measurement."
+    },
+    {
+      "field": "tractability.site_pocket_rank",
+      "reason": "Not recorded. The run predates rule 4d and relayed neither fpocket's rank for the site pocket nor a PRANK rescore. Both are site-finding information only \u2014 PRANK promotes the true site in 79% of 70 ligand-anchored measurements but is INVERTED as a quality classifier at AUC 0.25 \u2014 so their absence removes no evidence about tractability and adds none. NOT a finding that the site ranked poorly."
+    }
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: P01375",
+      "result": "small_molecule_tractable",
+      "plain_language": "Small-molecule tractable for P01375: 2582 actives; best 1.3 nM; 1 clinical-stage small molecules.",
+      "status": "SUPPORTED",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 1.3,
+        "unit": "nM",
+        "display": "1.3 nM",
+        "meaning": "Best measured potency of a small molecule against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay",
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.distinct_actives",
+        "label": "Distinct small-molecule actives",
+        "value": 2582,
+        "unit": "compounds",
+        "display": "2582 compounds",
+        "meaning": "Distinct small molecules with measured activity; a count of compounds, not of assays (rules 1b, 14).",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 1,
+        "unit": "molecules",
+        "display": "1 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "both",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 1.3,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": null,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "small_molecule_tractable",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.chembl_target",
+        "claim": "Measured bioactivity records for the target in ChEMBL.",
+        "source_type": "database",
+        "source_id": "ChEMBL:CHEMBL1825",
+        "source_url": "https://www.ebi.ac.uk/chembl/target_report_card/CHEMBL1825/",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "CHEMBL4775686 \u2014 SPR against biotinylated TNF-alpha trimer 77-233, compound CHEMBL4793441",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pdb.2AZ5",
+        "claim": "Experimental structure 2AZ5 used for the computed axis.",
+        "source_type": "structure",
+        "source_id": "PDB:2AZ5",
+        "source_url": "https://www.rcsb.org/structure/2AZ5",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": null,
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "not_established across the ensemble. It IS established on the one holo entry: 2AZ5's site pocket was selected by ligand_site_jaccard at both clustering values (overlap 0.069 at D=1.6, 0.636 at D=2.4) against the 307 ligand site. It is NOT established on any of the five apo entries \u2014 all ten of their measurements fell back to site_signature_unreliable_homooligomer, because the signature is a set of residue numbers with chain identity discarded and 2AZ5's 22 site residues collapse to 14 distinct numbers across four identical chains.",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "No probabilistic uncertainty model was run; ranges, where present, are clustering scenarios or heuristic scores, never confidence intervals."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "REFUSED, not missing. The 2026-08-15 run produced twelve druggability values spanning 0.001 to 0.651, a 651.0-fold range. Ten of the twelve, being every measurement on every apo entry, carry site_pocket_selected_by = site_signature_unreliable_homooligomer, which rule 4 says must not be pooled: the signature discards chain identity and 2AZ5's 22 site residues collapse to 14 distinct numbers across four identical chains, so any pocket carrying those numbers matches and the value cannot be attributed to a site. That the pooled fold-range comes out at 651.0 is not a coincidence \u2014 it is the withdrawn 651-fold figure regenerating from the identical defect. The two attributable values, both on 2AZ5 by ligand_site_jaccard, are 0.003 at D=1.6 and 0.587 at D=2.4; they are not reported as a range either, because one structure at two clustering values fails the ensemble half of rule 4. Note also what the earlier version of this file recorded: a maximum of 0.992 with no minimum, from a different run. That figure is superseded and is not the same measurement as anything here.",
+        "field_path": "output.tractability.pocket_druggability"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "REFUSED for the same reason and on the same twelve measurements: pooled it would read 126.9 to 809.5 A^3, spread 84.3%. Volume is the more reliable number than druggability, but reliability of the ESTIMATOR does not rescue a spread whose members are not the same pocket. Three controls say they are not: max_radius_difference_a 14.43 A at D=1.6 and 16.49 A at D=2.4 (JAK1's is 2.29 A; the IL-17A pool that was ruled invalid was 16.61 A); per-structure centroid drift between clustering values of 18.43 A on 2AZ5 and 12.27 A on 1TNF; and mdpocket's ligand-free site definition 29.57 A from the ligand. The mdpocket site_from_ligand volumes ARE attributable, since that grid is the ligand site by construction \u2014 533.7 A^3 on 2AZ5 and 0.00 to 83.2 A^3 on the five apo \u2014 but with a CV of 161.7% and one structure at zero they describe an occlusion gradient rather than a pocket size, and are reported in the falsification block where that is the point. RULE 4a: tractability.pocket_volume_a3.primary_d1_6_a3 is refused on exactly the same grounds and by the same twelve measurements \u2014 the D=1.6 site volume is no more attributable to one site than the pooled spread is. Refusing the primary number is not a low value for it.",
+        "field_path": "output.tractability.pocket_volume_a3"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "pocket_scan does not emit a consensus fraction \u2014 the string 'consensus' does not appear anywhere in its output. Deriving one would need a 'strong hot spot' threshold this pipeline does not define, and here it would be doubly wrong, because ten of the twelve measurements cannot be attributed to the site the fraction would be about. The denominators are now known and reported (6 structures, 12 measurements). This supersedes an earlier '4 of 4' figure from a different run on an unnamed ensemble.",
+        "field_path": "output.tractability.ensemble_consensus_fraction.fraction_with_strong_pocket and meets_consensus_criterion"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "the run emits mean local hydrophobic density per pocket per clustering value \u2014 2.0 to 18.0 across the twelve \u2014 but no single ensemble figure, and the template field is a scalar. The same attribution problem applies to ten of them regardless.",
+        "field_path": "output.tractability.pocket_hydrophobic_density"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "ERROR",
+        "message": "metapredict 3.0.2 DID run and returned 0.0496, but over the wrong sequence: no UniProt accession was passed, so it read the 141-residue sequence off 2AZ5 rather than P01375's full 233. The app's own caveat calls a structure-derived figure a LOWER BOUND, and TNF's transmembrane and pro-domain regions are absent from the crystal entirely. Reporting it as the protein's disorder fraction would be a scoping error, so the field is null.",
+        "field_path": "output.tractability.disorder_fraction"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "UniProt binding-site features were not retrieved for P01375.",
+        "field_path": "output.tractability.annotated_binding_site_overlap"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "computed for the holo entry only \u2014 2AZ5 scores 0.069 at D=1.6 and 0.636 at D=2.4 against the 307 site \u2014 and undefined for all five apo entries, which have no ligand to define a site from. The template field is a scalar and there is no honest single value: 0.069 and 0.636 on the SAME structure at two clustering values is itself the rule 4 lesson about D, and averaging them would erase it.",
+        "field_path": "output.tractability.ligand_site_jaccard"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "not retrieved for 2AZ5. The ligand's heavy-atom count IS now measured at 40 by the pocket run, and its 550 Da is separately attested.",
+        "field_path": "output.structure.resolution_a"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no patent source was queried.",
+        "field_path": "output.target_precedent.patents"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "not retrieved, and it would be the weakest axis here anyway. The TNF superfamily shares a fold; it does not share a small-molecule story.",
+        "field_path": "output.family_precedent"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no affinity predictor was run, so no positive control exists. Rule 12: a prediction without its control is not a measurement.",
+        "field_path": "output.affinity"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Not recorded. The run predates rule 4d and relayed neither fpocket's rank for the site pocket nor a PRANK rescore. Both are site-finding information only \u2014 PRANK promotes the true site in 79% of 70 ligand-anchored measurements but is INVERTED as a quality classifier at AUC 0.25 \u2014 so their absence removes no evidence about tractability and adds none. NOT a finding that the site ranked poorly.",
+        "field_path": "output.tractability.site_pocket_rank"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "No mechanism_hypothesis was supplied. The pocket is reported for the biological assembly because the site does not exist on one chain, and no pocket is asserted to be the relevant one. The interface classification is NOT destabiliser_candidate despite the mechanism being known from the literature, because no partner complex was analysed and rule 2b requires that classification be measured. WHY NO POCKET GEOMETRY IS REPORTED, despite a run that completed with every stage ok. Of the 12 site pockets found, only 2 \u2014 both on the holo entry 2AZ5 \u2014 were selected by ligand_site_jaccard. The other 10, every measurement on every apo entry, fell back to site_signature_unreliable_homooligomer. Rule 4 says values on that basis must be reported per structure and never pooled, and here is what pooling them anyway produces: a volume range of 126.9 to 809.5 A^3 and a druggability fold-range of 651.0. That last figure is the withdrawn '651-fold spread across five apo TNF-alpha structures of the same site' regenerating from the identical cause, which is as clean a confirmation of the retraction as we are going to get. Three independent controls agree the pool is not one site: max_radius_difference_a is 14.43 A at D=1.6 and 16.49 A at D=2.4, against 2.29 A on JAK1 and comparable to the 16.61 A that flagged the invalid IL-17A pool; 2AZ5's own site pocket centroid moves 18.43 A between the two clustering values and 1TNF's moves 12.27 A; and mdpocket's ligand-free site definition sits 29.57 A from the ligand. Even the two trustworthy 2AZ5 values are not reported as a range, because one structure at two clustering values fails the ensemble half of rule 4 \u2014 for the record they are volume 126.9 and 318.2 A^3 and druggability 0.003 and 0.587, and note that the D=1.6 value of 0.003 reproduces the documented 0.002 false negative at the site of a co-crystallised 570 Da ligand. So: the computed axis is REFUSED here, not weak. A refusal is not a low score, and it must not be read as one when it sits beside TNF's zero approved small molecules.",
+        "field_path": "output.tractability.caveat"
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "Two things, in this order. (1) Re-run the pocket scan supplying holo_chains explicitly and a chain-aware site definition, so the five apo entries stop falling back to site_signature_unreliable_homooligomer \u2014 and prepare 2AZ5 as ONE trimer rather than the four-chain assembly1 the run consumed, which is two independent dimers in the asymmetric unit. Only that turns the ten refused measurements into poolable ones. (2) Re-derive the actives count with the IRAK4 monocyte assay excluded.",
+        "result": "Whether the axial cavity has reproducible geometry across crystal forms once chain identity is preserved \u2014 the question the current run could not answer rather than answered negatively \u2014 and whether the direct-binder count against TNF is in the tens or the thousands.",
+        "meaning": "The computed axis is no longer short of data \u2014 a six-entry, twelve-measurement run completed with every stage ok. It is short of SITE IDENTITY, which is a different problem and is not fixed by measuring more. Ten of twelve values cannot be attributed to a pocket, three independent controls agree they are not one site (max_radius_difference_a 14.4 to 16.5 A, per-structure centroid drift up to 18.4 A between clustering values, and a ligand-free site definition 29.57 A from the ligand), and pooling them regenerates the withdrawn 651-fold figure. The retrieved axis is separately unusable because 45% of the count is one assay measuring IRAK4."
+      },
+      {
+        "change": "If the falsification check 'single-assay dominance' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'best potency from a characterised assay' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'cross-accession check on the top assay' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'actives collapse to one series or one lab' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'holo ligand drug-likeness and frequent-hitter status' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'pocket present in more than one crystal form' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'accession mapping is real' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'terminated clinical programs and their stated reasons' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'look-alike drugs counted against the wrong entity' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": "CHEMBL1825",
+          "best_potency_nm": 1.3,
+          "best_potency_characterised": true,
+          "distinct_actives": 2582,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 1,
+          "terminated_programs": 0
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "not_run",
+          "site_hypothesis_basis": "not_established across the ensemble. It IS established on the one holo entry: 2AZ5's site pocket was selected by ligand_site_jaccard at both clustering values (overlap 0.069 at D=1.6, 0.636 at D=2.4) against the 307 ligand site. It is NOT established on any of the five apo entries \u2014 all ten of their measurements fell back to site_signature_unreliable_homooligomer, because the signature is a set of residue numbers with chain identity discarded and 2AZ5's 22 site residues collapse to 14 distinct numbers across four identical chains.",
+          "structure_pdb_id": null,
+          "fpocket_rank": null,
+          "prank_rank": null,
+          "n_pockets": null,
+          "pocket_volume_d16_a3": null,
+          "ligand_site_jaccard": null,
+          "cryptic_pocket_risk": "low",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved P01375",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "holo_experimental \u2014 2AZ5",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "no reportable site",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "2582 actives",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "checks recorded",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "small_molecule_tractable / both",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "Two things, in this order. (1) Re-run the pocket scan supplying holo_chains explicitly and a chain-aware site definition, so the five apo entries stop falling back to site_signature_unreliable_homooligomer \u2014 and prepare 2AZ5 as ONE trimer rather than the four-chain assembly1 the run consumed, which is two independent dimers in the asymmetric unit. Only that turns the ten refused measurements into poolable ones. (2) Re-derive the actives count with the IRAK4 monocyte assay excluded.",
+        "rationale": "The computed axis is no longer short of data \u2014 a six-entry, twelve-measurement run completed with every stage ok. It is short of SITE IDENTITY, which is a different problem and is not fixed by measuring more. Ten of twelve values cannot be attributed to a pocket, three independent controls agree they are not one site (max_radius_difference_a 14.4 to 16.5 A, per-structure centroid drift up to 18.4 A between clustering values, and a ligand-free site definition 29.57 A from the ligand), and pooling them regenerates the withdrawn 651-fold figure. The retrieved axis is separately unusable because 45% of the count is one assay measuring IRAK4.",
+        "resolves": "Whether the axial cavity has reproducible geometry across crystal forms once chain identity is preserved \u2014 the question the current run could not answer rather than answered negatively \u2014 and whether the direct-binder count against TNF is in the tens or the thousands."
+      },
+      "figure": {
+        "kind": "none",
+        "path": null,
+        "caption": null,
+        "present": false,
+        "note": "No figure applies to this run."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "2AZ5",
+          "1TNF",
+          "1A8M",
+          "2E7A",
+          "2ZJC",
+          "5TSW"
+        ],
+        "chembl_target_id": "CHEMBL1825",
+        "uniprot_accession": "P01375",
+        "tools": [
+          "fpocket",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:8099d4019ada5cd65c7180072fc94ecdd08cb9ac0113b92c9a5f600a940b60bd"
+    }
+  }
+}

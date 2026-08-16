@@ -1,0 +1,881 @@
+{
+  "_fixture": "INTEGRATION FIXTURE / real end-to-end run for P2RX7 (UniProt Q99572), mechanism_hypothesis=allosteric. Snapshot of the pipeline on 2026-08-16; not a validator-calibration example. Re-run rather than trust it if the pipeline has changed. jak1_P23458.json and tnf_P01375.json are the calibration examples; this is not one of them.",
+  "_pipeline_state": {
+    "run_date": "2026-08-16",
+    "pocket_scan": "Modal app .claude/skills/pocket-scan/modal_app.py (deployed druggability-pocket-scan), fpocket 4.2.3 + PRANK, D swept {1.6, 2.4}, mdpocket site-fixed-by-construction, disorder; cryptic/interface not run (see fields). chains asserted A,B,C on both holo antagonist structures.",
+    "rules_in_force": [
+      "rule 1: molecule_type decides DRUGS only (rule 1a, corroborated MOL); compound modality from structure via precedent-lookup/modality.py (rule 1b)",
+      "rule 4/4.0/4a: druggability is a WITHIN-STRUCTURE rank, load_bearing=false; volume comparable across structures but carries no verdict; 210/240 A^3 guide retracted",
+      "rule 2b: chain selection asserted through pocket_scan --chains (inter-subunit allosteric site needs >1 protomer)",
+      "rule 6: uncharacterised 'unknown origin' assay excluded from the potency claim",
+      "rule 7: clinical failure (AZD9056/CE-224535 in RA) recorded in terminated_programs, does NOT lower tractability",
+      "rule 14: every count reconciled against an independently issued aggregate",
+      "rule 15: Paperclip failure signatures distinguished; timeouts/preview-caps are not zeros"
+    ]
+  },
+  "input": {
+    "_note": "Verbatim echo of the caller's request. mechanism_hypothesis is the caller's bare value 'allosteric'; the parenthetical '(verify - antagonists bind an allosteric inter-subunit site)' in the brief is an instruction to this station, not part of the caller's value, and is schema-invalid as an enum member. It WAS verified: the antagonist site is a ligand-confirmed inter-subunit cleft (lining chains A/B and A/C). target.uniprot_accession is the resolved accession; input.uniprot_accession is what the caller said.",
+    "uniprot_accession": "Q99572",
+    "as_of_date": null,
+    "disease_context": "rheumatoid arthritis",
+    "interaction_to_disrupt": "ATP-gated P2X7 cation-channel activation",
+    "mechanism_hypothesis": "allosteric"
+  },
+  "target": {
+    "uniprot_accession": "Q99572",
+    "gene_symbol": "P2RX7",
+    "protein_name": "P2X purinoceptor 7",
+    "organism": "Homo sapiens",
+    "sequence_length": 595,
+    "sources": [
+      "uniprot_v.proteins WHERE accession='Q99572' (paperclip sql -s proteins, run 2026-08-16): gene_name P2RX7, protein_name 'P2X purinoceptor 7', organism Homo sapiens, sequence_length 595 (single-row lookup)"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "small_molecule_tractable",
+  "verdict_basis": "retrieved_precedent",
+  "axis_conflict": null,
+  "_verdict_reasoning": "THE TWO AXES ARE REPORTED SEPARATELY AND THEY DO NOT CONFLICT. (1) RETRIEVED PRECEDENT carries the verdict: 6,340 distinct compounds on Q99572, best CHARACTERISED antagonist potency 0.05 nM (CHEMBL550030, conf 9, a named human-THP1 functional antagonist assay, small_molecule by structure), and five clinical-stage small-molecule antagonists across at least three chemotypes (CE-224535 Ph2, AZD9056 Ph2, JNJ-54175446 Ph2, ZANVIPIXANT Ph2, GSK1482160 Ph1; all Small molecule/MOL, rule 1a). This is direct measured small-molecule tractability. (2) COMPUTED TRACTABILITY is reported and is CONCORDANT but NOT load-bearing: the allosteric antagonist site is a real, ligand-confirmed inter-subunit pocket captured in two antagonist-bound cryo-EM structures (9E3O A1BD8, 9E3P A1BD9), ligand-anchored (Jaccard 0.42-0.47 at D=1.6), all-on-target (on_target_residue_fraction 1.0), pre-formed and occupied by a sub-nanomolar antagonist. fpocket nonetheless scores it LOW druggability (0.003-0.013 at D=1.6) and buries it at fpocket rank 69 - the textbook DRUG-BOUND-POCKET FALSE NEGATIVE that rule 4.0 describes; a potent antagonist is literally bound in the pocket the score calls undruggable. AXIS_CONFLICT DECISION = null (no genuine conflict). The low fpocket druggability is NOT a competing 'not-tractable' claim: druggability is a within-structure rank, is not load-bearing (rule 4.0/4a), and here exhibits the exact false-negative rule 4 warns against, so treating it as a disagreement would BE the error. This is a within-computed-axis caveat, not an axis_conflict. Volume (D=1.6 154-259 A^3 fpocket / 767 A^3 mdpocket site_from_ligand at CV 3.2%) is modest but real and also points to a bindable cavity. Both axes therefore agree the site is bindable. CLINICAL FAILURE IS NOT AN AXIS AND DOES NOT ENTER THE VERDICT. AZD9056 and CE-224535 both failed Phase 2 in rheumatoid arthritis for lack of efficacy; per rule 7 these are recorded in terminated_programs as a within-precedent caveat and MUST NOT lower the tractability number. Clinical efficacy in RA is a different question owned by other stations. as_of_date is null, so there is no as_of_leakage entry; the terminations live in terminated_programs.",
+  "target_precedent": {
+    "_site_attribution_note": "Potency and clinical figures are measured on accession Q99572 and the characterised assays behind them are P2X7 functional-antagonist / binding assays - the mechanism this dossier is about. The MAX pchembl (0.01 nM, CHEMBL2324343) comes from an 'Inhibition of P2X7 receptor (unknown origin)' assay and is EXCLUDED per rule 6.",
+    "chembl_target_id": null,
+    "distinct_actives": null,
+    "compound_modality_split": {
+      "_note": "Rule 1b/1c. Full split over all 6,340 distinct compounds NOT completed - the transport renders <=~60 SMILES rows per call before collapsing to a 5-row preview (rule 15 Kind B), and paged pulls timed out under the shared 10-connection budget. BOUNDED FINDING instead: the most-potent compounds were retrieved with per-row LENGTH verification (max SMILES length 96, no truncation) and classified from structure via modality.py - all small_molecule (7 spanning the potency top classified explicitly, incl. the 0.05 nM CHEMBL550030 and clinical CE-224535). The potent end is NOT peptidic (the failure mode rule 1b exists to catch). The full split is null rather than extrapolated.",
+      "small_molecule": null,
+      "peptide": null,
+      "macrocyclic_peptide": null,
+      "oligonucleotide": null,
+      "oligosaccharide": null,
+      "protein_or_antibody": null,
+      "modality_unknown": null
+    },
+    "modality_unknown_count": null,
+    "assay_concentration": {
+      "top_assay_description": "Evaluation of a Human P2X7 Receptor Inhibitory Activity (P2X7 functional inhibition assay)",
+      "top_assay_share_pct": 12.1,
+      "measures_a_different_target": false,
+      "assay_type_split": {
+        "binding_B": 29505,
+        "functional_F": 1116
+      },
+      "_note": "GROUP BY assay_description with a window-function share over all 30,621 activities. Top single assay 3,696 rows = 12.1% (a human-P2X7 inhibitory-activity assay - measures P2X7 itself, not a different protein), next 6.5% / 5.1% / 4.9%. Nothing approaches rule 6's ~30% single-assay concentration. NOTE: LEFT(assay_description,50) collapsed two full descriptions to the same 50-char prefix, so 12.1% is the top contributor whether they are one assay or two adjacent ones - either way well under 30%."
+    },
+    "best_potency_nm": 0.05,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "IC50 = 0.05 nM (standard_value 0.05012), standard_relation '=', pchembl 10.30, confidence_score 9, compound CHEMBL550030, assay 'Antagonist activity at P2X7 receptor in human THP1 cells' - a named cellular functional antagonist assay. EXCLUDED as the headline: CHEMBL2324343 IC50 0.01 nM (pchembl 11.0, the MAX) from 'Inhibition of P2X7 receptor (unknown origin)', an uncharacterised readout (rule 6). A cluster of conf-9 characterised antagonist assays spans 0.05-0.09 nM (CHEMBL550030 0.05 THP1; CHEMBL3415305 0.06 LPS/IFN-g; CHEMBL560506 0.079 THP1; CHEMBL3679059 0.09 FLIPR). The prior partial run cited the 0.09 nM FLIPR value (CHEMBL3679059); a fuller fresh pull surfaces several equally-characterised, more-potent conf-9 measurements, so I report the most potent characterised (0.05 nM). The sub-0.1 nM characterised antagonist potency is robust regardless of which of these is quoted.",
+    "best_potency_characterised": true,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [
+      {
+        "name": "CE-224535",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 1173912 CHEMBL1823817, molecule_type 'Small molecule' / structure_type 'MOL' (corroborated, rule 1a); max_phase 2.0; best pchembl 9.12 (~0.76 nM) on Q99572. Pfizer P2X7 antagonist, tested Phase 2 in rheumatoid arthritis."
+      },
+      {
+        "name": "AZD9056",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 1926957 CHEMBL3545108, 'Small molecule' / 'MOL' (rule 1a); max_phase 2.0; best pchembl 8.46 (~3.5 nM). AstraZeneca P2X7 antagonist, Phase 2 rheumatoid arthritis (failed - see terminated_programs)."
+      },
+      {
+        "name": "JNJ-54175446",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 2219150 CHEMBL4079239, 'Small molecule' / 'MOL' (rule 1a); max_phase 2.0; best pchembl 8.52 (~3.0 nM). Janssen P2X7 antagonist."
+      },
+      {
+        "name": "ZANVIPIXANT",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "chembl.molecule_dictionary molregno 2124228 CHEMBL3914857, 'Small molecule' / 'MOL' (rule 1a); max_phase 2.0; best pchembl 8.32 (~4.8 nM) on Q99572. ABSENT from drugs_by_accession (under-reported, rule 2d); found via the compounds max_phase>=1 path."
+      },
+      {
+        "name": "GSK1482160",
+        "phase": 1.0,
+        "modality": "small_molecule",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 689324 CHEMBL1222883, 'Small molecule' / 'MOL' (rule 1a); max_phase 1.0; best pchembl 8.51 (~3.1 nM). GSK P2X7 antagonist."
+      }
+    ],
+    "patents": {
+      "count": null,
+      "source": "Paperclip returns 'Patents sources are not available.' (rule 13). Null, never 0."
+    },
+    "terminated_programs": [
+      {
+        "program": "CE-224535 (Pfizer P2X7 antagonist, Phase 2 rheumatoid arthritis)",
+        "year": 2012,
+        "stated_reason": "Not efficacious versus placebo for RA in methotrexate-inadequate responders; acceptable safety/tolerability. Efficacy failure, not a safety signal (rule 7: does not lower tractability).",
+        "source": "paperclip search -s pmc,abstracts: Stock T. et al., 'Efficacy and Safety of CE-224,535, an Antagonist of P2X7 Receptor, in Treatment of Patients with Rheumatoid Arthritis Inadequately Controlled by Methotrexate', J Rheumatol 2012, DOI 10.3899/jrheum.110874 (abstracts oa_W2326948553): 'CE-224,535 was not efficacious, compared with placebo, for the treatment of RA...'."
+      },
+      {
+        "program": "AZD9056 (AstraZeneca P2X7 antagonist, Phase 2 rheumatoid arthritis)",
+        "year": null,
+        "stated_reason": "P2X7-antagonist RA program did not advance beyond Phase 2; the class showed lack of clinical efficacy in RA. Efficacy failure, not a safety signal (rule 7).",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 1926957 (max_phase 2.0, stalled). Class-level failure: paperclip search -s pmc: Cheah J.S.Y. et al. 2025, 'Genetic Variations in the P2X7 Receptor: Opportunities and Challenges for Drug Development', PMC12607368 ('...genetic variability... likely contribute to the lack of clinical efficacy for P2X7R antagonists'); Baroja-Mazo & Pelegrin 2012, J Osteoporosis, DOI 10.1155/2012/408242 (PMC3399340). The AZD9056 RA trial primary report was NOT in the paperclip corpus, so its DOI is deliberately not asserted here."
+      }
+    ],
+    "as_of_leakage": [],
+    "sources": [
+      "paperclip sql -s proteins over chembl_v.* and chembl.molecule_dictionary, accession Q99572, run 2026-08-16",
+      "compounds: COUNT(*) = COUNT(DISTINCT molregno) = 6,340 and MAX(best_pchembl_value) = 11.00 over chembl_v.compounds_by_accession WHERE accession='Q99572' (single-row server-side aggregate, cannot be row-capped; rule 14).",
+      "bioactivity total: COUNT(*) = 30,621 reconciles exactly against the assay_type GROUP BY (B 29,505 + F 1,116 = 30,621; rule 14).",
+      "best_potency: chembl_v.bioactivities_by_accession, pchembl DESC, standard_relation='=' only; MAX row 0.01 nM (CHEMBL2324343) excluded as 'unknown origin' (rule 6); best characterised 0.05 nM (CHEMBL550030, conf 9).",
+      "clinical molecules: chembl_v.drugs_by_accession (AZD9056, CE-224535, JNJ-54175446, GSK1482160, EVT401) cross-checked against chembl_v.compounds_by_accession max_phase>=1 and chembl.molecule_dictionary by inline molregno (rule 2d, rule 15 inline-literal path); molecule_type/structure_type read for each.",
+      "assay_concentration: GROUP BY assay_description with window-function share over 30,621 activities; top 12.1%.",
+      "chembl_target_id NOT retrieved: chembl_v.target_proteins query returned a schema error then timed out (rule 15); all figures above are accession-keyed via chembl_v.*_by_accession, which do not require the target id."
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "Presence of an approved biologic is target validation, NOT small-molecule tractability. P2X7 has no biologic precedent here: every drug/clinical molecule returned on Q99572 (chembl_v.drugs_by_accession and the compounds max_phase>=1 path) is typed 'Small molecule' with structure_type 'MOL' - no Antibody, Protein, Enzyme, Cell, Oligonucleotide, Oligosaccharide, Vaccine component, Gene or ADC row exists on this accession. The empty list is a retrieved finding (the queries returned rows, none of them a biologic), not a failed query. This target is small-molecule-drugged throughout."
+  },
+  "family_precedent": {
+    "pfam": "PF00864 (ATP_P2X - P2X receptor family)",
+    "family_actives": 7464,
+    "best_family_potency_nm": 0.048,
+    "best_family_potency_modality": null,
+    "best_family_target": "P2RX3 / P2X3 (P56373)",
+    "_note": "Reported separately from target_precedent, never merged (rule 9b). The human P2X paralog slice (a narrower, reconciled substitute for the whole PF00864 family, which spans 29 UniProt members across species). The family is strongly small-molecule tractable - P2X3 (P56373) carries 5,694 compounds and best pchembl 10.32 (~0.048 nM), and the P2X3 antagonist class is clinically advanced/approved. best_family_potency_modality is null because the specific best-potency P2X3 compound's structure was not classified in this run (rule 1d honesty); do not read the 0.048 nM as an asserted small-molecule figure without that classification.",
+    "sources": [
+      "PF00864 membership: uniprot_v.cross_references WHERE database='Pfam' AND xref_id='PF00864', COUNT(*) = 29 (server-side aggregate).",
+      "human paralog slice (inline literals, one GROUP BY aggregate, 6 rows, not row-capped): P2RX3 P56373 5,694 compounds best pchembl 10.32; P2RX2 Q9UBL9 1,077 / 8.43; P2RX4 Q99571 433 / 8.70; P2RX1 P51575 203 / 8.70; P2RX5 Q93086 52 / 5.78; P2RX6 O15547 5 / 4.60. family_actives 7,464 = sum of the six server-side COUNTs (excludes P2X7 itself). best_family_potency 0.048 nM = 10^(9-10.32), at P2X3."
+    ]
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek fold neighbours, NOT sequence family. NOT RUN this session.",
+    "method": "foldseek (neighbour_precedent.py, Proto) - not executed",
+    "query_structure": null,
+    "neighbours": [],
+    "sources": [],
+    "_why_empty": "NOT RUN, not 'no neighbours found'. neighbour_precedent.py depends on proto_tools/Foldseek and was not executed in this session; per rule 13's conditional case the axis is nulled and recorded here rather than reported as an absence. See not_found."
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "The strongest transfer axis, because the pocket is the unit that transfers. Not run here.",
+    "candidates": [],
+    "sources": [],
+    "_why_empty": "NOT RUN, not 'no candidates found'. Needs a pocket-descriptor similarity index across other targets' scored pockets (no such index in this pipeline) and the cofold transfer that turns similarity into a falsifiable prediction, which is unavailable per rule 13 (no cofolding model). See not_found."
+  },
+  "structure": {
+    "tier": "holo_experimental",
+    "pdb_id": "9E3P",
+    "resolution_a": 2.53,
+    "biological_unit_used": "assembly1, homotrimer chains A,B,C - ASSERTED (not defaulted) via pocket_scan --chains '9E3O=A,B,C;9E3P=A,B,C'. The allosteric antagonist site is INTER-SUBUNIT (lines two protomers), so the trimeric assembly is the correct unit; a single protomer would not contain the site. Rule 2b.",
+    "bound_ligand": {
+      "comp_id": "A1BD9",
+      "heavy_atoms": 25,
+      "is_druglike": true,
+      "is_known_frequent_hitter": null
+    },
+    "total_pdb_structures": 4,
+    "holo_count": 3,
+    "apo_count": 1,
+    "ensemble_used": [
+      "9E3O",
+      "9E3P"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "_note": "No cofolding model in this deployment (rule 13).",
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "paperclip sql -s proteins over pdb_v.structures_by_accession / entry_ligands, accession Q99572, run 2026-08-16.",
+      "total_pdb_structures: COUNT(DISTINCT entry_id) = 4 (server-side aggregate; rule 14). All four are human P2X7 cryo-EM entries deposited 2025-09-24 (one study): 9E3M (2.48 A), 9E3N (2.95 A), 9E3O (2.76 A), 9E3P (2.53 A).",
+      "holo/apo split (3/1) by full enumeration of all four entries' ligands (24 ligand rows, well under any cap; rule 14): HOLO = 9E3O (A1BD8, drug-like allosteric antagonist), 9E3P (A1BD9, drug-like allosteric antagonist), 9E3N (ATP, orthosteric agonist); APO(for-drug) = 9E3M (only Y01 cholesteryl hemisuccinate DETERGENT, GDP, palmitate, glycan, Zn - no bioactive antagonist/agonist).",
+      "structure.pdb_id 9E3P chosen as headline: best resolution (2.53 A) of the two antagonist-bound structures; bound_ligand A1BD9 = (1s,3R,4R,6r,8S,9S)-N'-(2-chlorophenyl)-3,4,8,9-tetramethyltetracyclo[4.4.0.0~3,9~.0~4,8~]decane-1-carbohydrazide, C21 H27 Cl N2 O, 25 heavy atoms; pocket_scan holo_call verdict 'druglike'.",
+      "9E3O antagonist A1BD8 = (3s,5s,7s)-N'-(2-chlorophenyl)adamantane-1-carbohydrazide, C17 H21 Cl N2 O, 21 heavy atoms."
+    ]
+  },
+  "tractability": {
+    "_primary": "Volume is an absolute physical quantity (comparable across structures, carries no verdict). Druggability is a WITHIN-STRUCTURE rank; reportable form is site_pocket_rank. This is a DRUG-BOUND-POCKET FALSE NEGATIVE case (rule 4.0): fpocket scores the ligand-occupied antagonist site 0.003-0.013 at D=1.6 and ranks it 69th, with a sub-nM antagonist physically bound.",
+    "pocket_volume_a3": {
+      "min": 154.538,
+      "max": 3974.445,
+      "spread_pct": 96.1,
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": 154.538,
+      "site_pocket_selected_by": "ligand_site_jaccard",
+      "_primary_note": "primary_d1_6_a3 = 154.5 A^3 is the ligand-anchored antagonist site pocket of the HEADLINE holo entry 9E3P at D=1.6 ONLY (Jaccard 0.421 vs the A1BD9 contact set). The other holo entry 9E3O gives 258.9 A^3 at D=1.6 (Jaccard 0.474). min/max pool BOTH structures AND both clustering values (legitimate for volume, which is absolute): at D=2.4 BOTH structures merge into the central vestibule - 9E3O 3170.0 A^3, 9E3P 3974.4 A^3, merge_suspected=True, ligand_site Jaccard collapses to 0.23/0.18 and the lining expands from two protomers to A/B/C - so the D=2.4 volumes are a merged-site artifact, not the antagonist pocket. mdpocket site_from_ligand (site fixed by construction, one grid over both structures) gives the antagonist pocket at 767 A^3 (749.4/784.6, CV 3.2%) - the reproducible cross-check. THE 210/240 A^3 GUIDE IS WITHDRAWN (rule 4a); do not classify with the volume."
+    },
+    "pocket_druggability": {
+      "min": 0.013,
+      "max": 0.984,
+      "fold_range": 75.7,
+      "site_pocket_selected_by": "ligand_site_jaccard",
+      "load_bearing": false,
+      "_comparability": "WITHIN ONE STRUCTURE (9E3P), ACROSS THE D SWEEP - the only legitimate range. 0.013 at D=1.6 and 0.984 at D=2.4, both the ligand-anchored antagonist site pocket. This is NOT pooled across structures (that would be the rule-4.0 type error). The 76-fold move is the clustering knob, not biology: at D=2.4 the pocket has MERGED into the >3000 A^3 central vestibule (merge_suspected=True, Jaccard 0.42->0.18), so the 0.984 is a merged-site artifact, not a druggable-site score. 9E3O shows the same pattern (0.003 -> 0.991).",
+      "_provenance": "shipped fpocket 4.2.3: 3-descriptor logistic regression fitted on 21 positive pockets. Its dominant term is min-max normalised over the CURRENT STRUCTURE'S own pocket list (pocket.c:736-756; 132-161 pockets per structure here), so the score answers 'how does this pocket rank against the others in this file', never 'how druggable is this pocket'. A weak prior, not a probability.",
+      "_false_negative_rate": "REPORTED, NEVER LOAD-BEARING, NEVER COMPARED ACROSS STRUCTURES. Named case, not a percentage (the 41% figure's denominator is under audit): THIS RUN IS a clean drug-bound false negative - 9E3O and 9E3P are 2.5-2.8 A cryo-EM holo structures with a sub-nanomolar allosteric antagonist physically bound (Jaccard 0.42-0.47, on_target_residue_fraction 1.0), and fpocket scores that ligand-occupied pocket 0.003 and 0.013 at D=1.6 and ranks it 69th of 132/134. Druggability may not carry a not_tractable or insufficient_evidence verdict on its own.",
+      "_do_not_max": "max_druggability_no_ligand_site did NOT fire: all four measurements were anchored by ligand_site_jaccard (on_target_residue_fraction 1.0, no off-target lining chains at D=1.6)."
+    },
+    "site_pocket_rank": {
+      "_note": "THE REPORTABLE FORM OF DRUGGABILITY. Claim: 'fpocket rank 69 of 134 in 9E3P at D=1.6; PRANK rank 7'. Two within-structure orderings on the same footing; they DISAGREE and the disagreement is reported - PRANK promotes the ligand-anchored antagonist site (9E3P 69->7, 9E3O 69->10 at D=1.6; both ->1 at D=2.4 where the pocket has merged), the n=70 pattern (promotes 79%). Even after PRANK the site is not rank 1 at D=1.6 - a shallow inter-subunit allosteric cleft that binds sub-nM antagonists yet does not rank as a top geometric pocket.",
+      "fpocket": 69,
+      "prank": 7,
+      "n_pockets": 134,
+      "structure_pdb_id": "9E3P"
+    },
+    "ensemble_consensus_fraction": {
+      "_note": "Published criterion kept as an anti-cherry-picking control, NOT read as a tractability signal (AUC 0.560).",
+      "n_structures": 2,
+      "n_measurements": 4,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null,
+      "source": "pocket_scan Modal run 2026-08-16: ensemble.n_structures 2 (9E3O, 9E3P) x D in {1.6,2.4} = 4 measurements. The ligand-anchored antagonist site pocket was located and ligand-confirmed in 4 of 4 (ensemble.site_pockets_ligand_confirmed = 4). The tool emits no consensus fraction and 'strong hot spot' has no threshold this pipeline sets, so the fraction is null (see not_found), not invented."
+    },
+    "pocket_hydrophobic_density": 18.0,
+    "pocket_residues": [
+      "A/73",
+      "A/88",
+      "A/92",
+      "A/105",
+      "A/108",
+      "A/110",
+      "A/297",
+      "A/310",
+      "C/298"
+    ],
+    "site_hypothesis_basis": "holo ligand site - 9E3O:A1BD8 and 9E3P:A1BD9, drug-like allosteric antagonists auto-classified 'druglike' by pocket_scan and asserted as the anchor. Selected per structure by ligand_site_jaccard (0.474 for 9E3O, 0.421 for 9E3P at D=1.6). The site is inter-subunit: 9E3P D=1.6 pocket lines chain A (8 residues) plus C/298; 9E3O lines chain A plus B/95; the full antagonist contact shell spans chains A, B and C. lining_chain_accessions confirm every lining chain is Q99572 (a homotrimer, no foreign polymer).",
+    "mdpocket_site_definition_used": "site_from_ligand",
+    "site_centroid_to_ligand_distance_a": 9.31,
+    "site_centroid_to_ligand_note": "The reported volumes/ranks are fpocket's; the mdpocket cross-check used site_from_ligand (the ligand site by construction, distance 0 - volume 767 A^3, CV 3.2%). The 9.31 A recorded here is rule 4b's off-site check on the OTHER definition, site_from_density: the most persistent cavity in the ensemble sits 9.31 A from the 9E3O antagonist centroid, PAST the proposed (not calibrated) 4 A threshold, carries off_site_warning, and is the on-axis central vestibule (volume ~5,560 A^3) - correctly NOT used as the antagonist site. Reporting site_from_density as the ligand site would reproduce the retracted TNF-alpha 7.7 A error; it was avoided.",
+    "annotated_binding_site_overlap": null,
+    "ligand_site_jaccard": 0.421,
+    "disorder_fraction": 0.0941,
+    "cryptic_pocket_risk": "undetermined",
+    "cryptic_mechanism": "undetermined",
+    "cryptic_evidence": {
+      "_note": "The apo census a cryptic call would rest on (Vajda 2018).",
+      "is_cryptic": null,
+      "n_apo_examined": null,
+      "n_apo_site_absent": null,
+      "site_present_in_apo_ensemble": null,
+      "basis": "NOT RUN. pocket_scan's cryptic stage is a pairwise apo-vs-holo superposition and needs at least one apo and one holo in the ensemble; the ensemble here is two antagonist-HOLO structures (0 apo), so cryptic_status='not_run' and no census was made. is_cryptic is null (unmeasured), NOT false. Whether the antagonist pocket is pre-formed or forms only in the closed/antagonist state is genuinely open - the ATP-agonist structure 9E3N and the detergent-only 9E3M could serve as the apo/alternate state in a follow-up (see next_experiment).",
+      "definition": "Vajda et al. 2018 stringent form (cryptic only if absent in all/nearly all unbound structures), CryptoBench pocket-residue RMSD > 2 A - not evaluable here without an apo comparator.",
+      "source": "pocket_scan cryptic stage, 2026-08-16: cryptic_status 'not_run', reason 'needs both an apo and a holo structure; got 1 holo reference and 0 apo'."
+    },
+    "cryptic_potency_prior": {
+      "_note": "Mechanism is a prior on achievable potency; not evaluable without the cryptic census.",
+      "expected_ceiling": "unknown",
+      "basis": "Not evaluable: the cryptic census was not run (holo-only ensemble). The OBSERVED antagonist potency is empirical and sub-nanomolar (0.05 nM characterised), independent of any cryptic prior."
+    },
+    "pocket_vs_interface": {
+      "_note": "Measured, not assumed. Requires a complex containing the partner.",
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": null,
+      "matches_mechanism_hypothesis": null,
+      "_why": "The interface stage was not run: no partner_structures were supplied, and pocket_scan refuses to assert orthosteric/allosteric without a complex containing the partner. The mechanism is nonetheless supported structurally without this module: the antagonist pocket is inter-subunit (lines two protomers of the homotrimer) and is a DISTINCT site from the ATP orthosteric agonist site (captured separately in 9E3N), consistent with allosteric antagonism. A formal classification against the ATP site is a follow-up (see next_experiment). There is no heterologous protein partner - the disrupted interaction is a nucleotide agonist (ATP), analogous to the IRAK4 orthosteric case that also used no_partner_structure."
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": null,
+    "caveat": "Read the computed axis with three things in mind. (1) It is REPORTED but does NOT carry the verdict (verdict_basis = retrieved_precedent). Read on its own it says: a real, ligand-confirmed, pre-formed inter-subunit antagonist pocket of 154-259 A^3 (fpocket, D=1.6) / 767 A^3 (mdpocket site_from_ligand, CV 3.2%), occupied by a sub-nanomolar antagonist. (2) fpocket's LOW druggability here (0.003-0.013, rank 69) is a DRUG-BOUND-POCKET FALSE NEGATIVE (rule 4.0), not evidence against the site - a potent antagonist is physically bound in it. Druggability is a within-structure rank and is not load-bearing; it is NOT an axis_conflict with the retrieved precedent, it is the documented blind spot. (3) D=2.4 is unusable for this site: both structures merge into the >3000 A^3 central vestibule (merge_suspected, Jaccard collapse), so the D=1.6 numbers and the mdpocket site_from_ligand volume are the site measurements. Chain selection was ASSERTED (A,B,C) because the site is inter-subunit; a single protomer would not contain it. Cryptic/interface stages were not run (holo-only ensemble; no partner complex) - see those fields.",
+    "sources": [
+      "pocket_scan Modal run 2026-08-16, deployed app druggability-pocket-scan (modal run .claude/skills/pocket-scan/modal_app.py --pdb-ids 9E3O,9E3P --chains '9E3O=A,B,C;9E3P=A,B,C' --ligand-codes A1BD8,A1BD9 --uniprot-accession Q99572), fpocket 4.2.3 (conda-forge) + PRANK, D swept {1.6,2.4}.",
+      "per-measurement (structures.<PDB>.by_clustering.<D>.site_pocket): 9E3O D1.6 druggability 0.003 / volume 258.9 / fpocket rank 69 of 132 / PRANK 10 / Jaccard 0.474 / lining chains A,B; 9E3P D1.6 druggability 0.013 / volume 154.5 / fpocket 69 of 134 / PRANK 7 / Jaccard 0.421 / lining chains A,C; D2.4 both merged (9E3O 3170.0 A^3, 9E3P 3974.4 A^3, merge_suspected=True). on_target_residue_fraction 1.0 on all four; ensemble.site_centroid_control.max_radius_difference_a 8.53 A (the D=1.6-vs-D=2.4 merge displacement).",
+      "mdpocket: site_from_ligand volume 766.95 A^3 (CV 3.2%, 749.4/784.6), site_from_density 9.31 A off the ligand centroid (off_site_warning, ~5,560 A^3 central vestibule) - not used.",
+      "disorder 0.0941 over the full-length 595-residue UniProt sequence: metapredict (scope full_length_uniprot, uniprot_accession supplied).",
+      "pocket_residues from 9E3P D=1.6 site_pocket.residues; pocket_hydrophobic_density = that pocket's mean_local_hydrophobic_density 18.0."
+    ],
+    "method": {
+      "tool": "fpocket",
+      "version": "fpocket 4.2.3 (conda-forge) + PRANK; mdpocket characterisation mode",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "9E3O",
+        "9E3P"
+      ],
+      "chains_used": {
+        "9E3O": [
+          "A",
+          "B",
+          "C"
+        ],
+        "9E3P": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": [],
+    "_why_null": "Rule 13: no affinity predictor in this deployment, so rule 12's mandatory positive control is unsatisfiable rather than skipped - a null with a stated reason, never a prediction without a control. P2X7 has excellent controls to hand (e.g. CHEMBL550030, 0.05 nM characterised) had a predictor existed."
+  },
+  "falsification": {
+    "checks_run": [
+      "1. Do the actives collapse to one assay/lab? GROUP BY assay_description with a window-function share over 30,621 activities. Top single assay is a human-P2X7 inhibitory-activity assay at 3,696 rows = 12.1%; next 6.5%/5.1%/4.9%. Nothing near rule 6's ~30%. CHECK RUN, NOTHING FOUND.",
+      "1b. Is the dominant assay measuring a different protein? No - the 12.1% assay measures human P2X7 itself (the target), unlike the TNF-alpha/IRAK4 cross-readout case. measures_a_different_target = false. CHECK RUN, NOTHING FOUND.",
+      "2. Is the best potency from a characterised assay? The MAX pchembl (0.01 nM, CHEMBL2324343) is from 'Inhibition of P2X7 receptor (unknown origin)' - UNCHARACTERISED, excluded per rule 6 (the same failure mode as MYC's 0.2 nM 'unknown origin'). The reported best (0.05 nM, CHEMBL550030) is a conf-9 named human-THP1 functional antagonist assay; a cluster of conf-9 characterised antagonist assays spans 0.05-0.09 nM. FOUND (excluded one uncharacterised MAX), verdict stands on characterised data.",
+      "3. Do the actives collapse to one series or one lab? Not fully resolvable to chemotype in this run (the GROUP BY assay_id / full-SMILES census is blocked by the transport preview-cap and shared-connection timeouts), but bounded: the potent end spans at least three unrelated chemotypes visible in the top-60 SMILES - adamantane/tetracyclic carbohydrazides, isoquinolinone adamantane-acetamides, and cyanoguanidine/triazole antagonists - and five distinct clinical assets from five companies (Pfizer, AstraZeneca, Janssen, GSK, +ZANVIPIXANT). A single-series artifact cannot produce that. PARTIALLY RUN.",
+      "4/5. Is the structure a single-crystal-form or additive artifact? The antagonist site appears in BOTH holo structures (9E3O A1BD8, 9E3P A1BD9), ligand-anchored (Jaccard 0.42-0.47) in all D=1.6 measurements - not one crystal form. DETERGENT TRAP CHECKED: all four entries contain Y01 (cholesteryl hemisuccinate, a detergent) and GDP; pocket_scan correctly classified Y01 'lipid_or_detergent' and GDP 'cofactor' and anchored to the antagonist A1BD8/A1BD9, avoiding the RORgt-6C1P/CD20 detergent-anchor error. FOUND (Y01 present) AND CORRECTLY NOT USED.",
+      "6. Are frequent hitters / PAINS being counted? Not checked against a PAINS/aggregator database, so structure.bound_ligand.is_known_frequent_hitter stays null (not false). The bound antagonists (adamantane/tetracyclic carbohydrazides) are established med-chem, not obvious PAINS. PARTIALLY RUN.",
+      "7. Were clinical programs terminated, and why? FOUND: CE-224535 (Pfizer, Ph2 RA) 'not efficacious versus placebo' (Stock 2012, J Rheumatol, DOI 10.3899/jrheum.110874) and AZD9056 (AstraZeneca, Ph2 RA) stalled with the class showing lack of RA efficacy (Cheah 2025, PMC12607368). Both recorded in terminated_programs. Per rule 7 these are efficacy failures and DO NOT lower the tractability verdict; RA efficacy is another station's question.",
+      "8. Are off-target / repurposing look-alikes being counted as P2X7 drugs? FOUND, AND IT IS THE SHARPEST RESULT. The compounds max_phase>=1 path (rule 2d, high-recall/low-precision) returns BRILLIANT BLUE G and CANNABIDIOL at max_phase 4.0 and SURAMIN at 3.0 - all 'Small molecule'/'MOL' but approved/advanced for OTHER uses (BBG is a dye, cannabidiol an anticonvulsant, suramin an antiparasitic), with weak/no P2X7 pchembl (BBG 6.27, suramin 4.48). None is an approved P2X7 drug: approved_small_molecules_count = 0. OXATOMIDE, IMD-0354, BERBERINE similarly off-target. EVT401 (in drugs_by_accession) is molecule_type 'Unknown'/'NONE' -> modality_unknown, NOT counted as a small molecule (rule 1a). FOUND (all excluded).",
+      "9. Is the low computed druggability being read as evidence against tractability? Watched for and explicitly rejected: fpocket 0.003-0.013 at D=1.6 is a drug-bound-pocket false negative (rule 4.0), a within-structure non-load-bearing rank, NOT an axis_conflict with the sub-nM retrieved precedent. It did not enter the verdict. CHECK RUN, NOTHING FOUND (the number is correctly non-load-bearing)."
+    ],
+    "findings": [
+      "The MAX potency (0.01 nM, CHEMBL2324343) is an uncharacterised 'unknown origin' readout and is excluded (rule 6); the reported best (0.05 nM) is a conf-9 characterised antagonist assay.",
+      "All four human-P2X7 cryo-EM entries carry Y01 (cholesteryl hemisuccinate, a detergent); the scan anchored to the antagonist, not the detergent - the RORgt/CD20 trap was avoided.",
+      "Off-target/repurposing molecules (Brilliant Blue G and cannabidiol at max_phase 4, suramin at 3) inflate the compounds path but are not approved P2X7 drugs; approved P2X7 small molecules = 0.",
+      "EVT401 (in drugs_by_accession) is molecule_type 'Unknown'/structure_type 'NONE' - stays modality_unknown, not counted as a small molecule (rule 1a, no Open Targets cross-check per rule 13).",
+      "CE-224535 and AZD9056 both failed Phase 2 in rheumatoid arthritis for lack of efficacy - a within-precedent caveat (rule 7), not evidence against small-molecule tractability."
+    ],
+    "survived": true
+  },
+  "next_experiment": {
+    "description": "On the tractability axis the question is already answered on retrieved precedent (sub-0.1 nM characterised antagonist, five clinical-stage small molecules). The experiments worth running characterise the site, not the verdict: (a) run pocket_scan's cryptic stage with the ATP-agonist structure 9E3N (or the detergent-only 9E3M) as the apo/alternate comparator to test whether the allosteric antagonist pocket is pre-formed or forms only in the closed/antagonist state; (b) run the interface stage against 9E3N to formally classify the pocket as allosteric relative to the ATP orthosteric site; (c) complete the full 6,340-compound modality census and the GROUP BY assay_id chemotype-provenance query, both blocked here by the Paperclip transport (preview-cap and shared-connection timeouts).",
+    "rationale": "More computed-tractability evidence would not change a verdict already carried by direct measured small-molecule precedent. The residual uncertainty is the site's state-dependence (cryptic vs pre-formed) and the breadth of the chemical matter, neither of which alters the tractability call and the first of which the drug-bound false negative makes worth characterising.",
+    "resolves": "Whether the inter-subunit allosteric antagonist pocket is conformationally gated, its formal allosteric-vs-orthosteric classification, and whether the small-molecule precedent is broad across chemotypes or concentrated - none of which changes the small_molecule_tractable verdict, and rule 7 forbids letting the RA clinical failures change it."
+  },
+  "not_found": [
+    "target_precedent.distinct_actives, compound_modality_split.*, modality_unknown_count: NULL because the full modality census over all 6,340 distinct compounds (reconciled COUNT) did not complete - the transport renders <=~60 SMILES rows per call then collapses to a 5-row preview (rule 15 Kind B) and paged pulls timed out under the shared 10-connection budget. BOUNDED CLAIM instead: the most-potent compounds were retrieved with per-row LENGTH verification and classified via modality.py as small_molecule (incl. the 0.05 nM best and clinical CE-224535); enough to attribute best_potency_modality and establish the potent end is not peptidic, NOT the full split.",
+    "target_precedent.chembl_target_id: NOT retrieved - chembl_v.target_proteins returned a schema error ('unknown column') then a client-side timeout (rule 15). Not fabricated from memory. All target_precedent figures are accession-keyed and do not require it.",
+    "target_precedent.patents.count: Paperclip returns 'Patents sources are not available.' (rule 13). Null, never 0.",
+    "structure.bound_ligand.is_known_frequent_hitter: no PAINS/aggregator/frequent-hitter database was queried; the antagonist chemistry was inspected and looks unremarkable, but inspection is not a database check, so null rather than false.",
+    "structural_neighbour_precedent (neighbours, query_structure): NOT RUN - neighbour_precedent.py/Foldseek (proto_tools) not executed this session; rule 13 conditional case, nulled and disclosed rather than reported as 'no neighbours'.",
+    "pocket_neighbour_precedent.candidates: NOT RUN - needs a cross-target pocket-descriptor index (none in this pipeline) and a cofold transfer (unavailable, rule 13). Empty list means unmeasured.",
+    "affinity.* (whole block incl. rule 12 positive control): no affinity predictor in this deployment (rule 13). Unsatisfiable, not skipped.",
+    "structure.cofold_control.*: no cofolding model in this deployment (rule 13).",
+    "tractability.annotated_binding_site_overlap: NOT computed - UniProt binding-site features for Q99572 annotate the ATP ORTHOSTERIC site (lower body); the allosteric antagonist pocket is a distinct upper-body inter-subunit site, so a UniProt-annotated-binding-site overlap is not the relevant comparison for this mechanism and was not computed. Null, not 0.",
+    "tractability.max_backbone_ca_displacement_a: NOT measured - the cryptic stage did not run (holo-only ensemble, 0 apo), so no apo/holo superposition displacement exists. Null, not 0.",
+    "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket / meets_consensus_criterion: pocket_scan emits no consensus fraction and 'strong hot spot' has no threshold this pipeline sets. n_structures (2) and n_measurements (4) are given; the fraction is not invented.",
+    "tractability.cryptic_evidence (is_cryptic and the census counts): NOT RUN - cryptic_status 'not_run' (needs an apo comparator; the ensemble is two antagonist-holo structures). is_cryptic is null (unmeasured), not false; cryptic_pocket_risk and cryptic_mechanism are 'undetermined'.",
+    "tractability.pocket_vs_interface (substantive classification): interface stage not run (no partner_structures); classification is no_partner_structure. The disrupted interaction is a nucleotide agonist, not a protein partner."
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: Q99572",
+      "result": "small_molecule_tractable",
+      "plain_language": "Small-molecule tractable for Q99572: actives not retrieved; best 0.05 nM; 5 clinical-stage small molecules.",
+      "status": "SUPPORTED",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 0.05,
+        "unit": "nM",
+        "display": "0.05 nM",
+        "meaning": "Best measured potency of a small molecule against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 5,
+        "unit": "molecules",
+        "display": "5 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "positive",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.druggability_rank",
+        "label": "Druggability rank",
+        "value": 69,
+        "unit": "rank",
+        "display": "rank 69 of 134 in 9E3P",
+        "meaning": "fpocket rank of the site pocket AMONG that structure's pockets \u2014 a within-structure ordering, never compared across structures (rule 4). Not load-bearing.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.9E3P"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      },
+      {
+        "id": "metric.pocket_volume_d16",
+        "label": "Pocket volume (D=1.6)",
+        "value": 154.538,
+        "unit": "A^3",
+        "display": "154.538 A^3",
+        "meaning": "Absolute site volume at clustering D=1.6. Comparable across structures, but its clustering sensitivity travels with it; the 210/240 A^3 tractability guide is withdrawn (rule 4a).",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.9E3P"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.ligand_site_jaccard",
+        "label": "Ligand-site Jaccard",
+        "value": 0.421,
+        "unit": "fraction",
+        "display": "0.421",
+        "meaning": "Overlap between the scored pocket and the co-crystal ligand site.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.pdb.9E3P"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.0941,
+        "unit": "fraction",
+        "display": "0.0941",
+        "meaning": "Fraction of the sequence predicted disordered; high disorder disfavours a stable small-molecule pocket.",
+        "direction": "negative",
+        "evidence_ids": [],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "retrieved_precedent",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 0.05,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": 69,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "small_molecule_tractable",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      },
+      {
+        "id": "step.druggability_rank",
+        "label": "Within-structure druggability rank",
+        "method": "fpocket pocket scoring at clustering D=1.6; report the site pocket's rank among the structure's pockets.",
+        "formula": "rank of site pocket among n_pockets by fpocket score",
+        "inputs": [
+          {
+            "path": "tractability.site_pocket_rank.n_pockets",
+            "value": 134,
+            "unit": "pockets"
+          },
+          {
+            "path": "tractability.site_hypothesis_basis",
+            "value": "holo ligand site - 9E3O:A1BD8 and 9E3P:A1BD9, drug-like allosteric antagonists auto-classified 'druglike' by pocket_scan and asserted as the anchor. Selected per structure by ligand_site_jaccard (0.474 for 9E3O, 0.421 for 9E3P at D=1.6). The site is inter-subunit: 9E3P D=1.6 pocket lines chain A (8 residues) plus C/298; 9E3O lines chain A plus B/95; the full antagonist contact shell spans chains A, B and C. lining_chain_accessions confirm every lining chain is Q99572 (a homotrimer, no foreign polymer).",
+            "unit": null
+          }
+        ],
+        "result": {
+          "value": 69,
+          "unit": "rank"
+        },
+        "evidence_ids": [
+          "evidence.pdb.9E3P"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "IC50 = 0.05 nM (standard_value 0.05012), standard_relation '=', pchembl 10.30, confidence_score 9, compound CHEMBL550030, assay 'Antagonist activity at P2X7 receptor in human THP1 cells' - a named cellular functional antagonist assay. EXCLUDED as the headline: CHEMBL2324343 IC50 0.01 nM (pchembl 11.0, the MAX) from 'Inhibition of P2X7 receptor (unknown origin)', an uncharacterised readout (rule 6). A cluster of conf-9 characterised antagonist assays spans 0.05-0.09 nM (CHEMBL550030 0.05 THP1; CHEMBL3415305 0.06 LPS/IFN-g; CHEMBL560506 0.079 THP1; CHEMBL3679059 0.09 FLIPR). The prior partial run cited the 0.09 nM FLIPR value (CHEMBL3679059); a fuller fresh pull surfaces several equally-characterised, more-potent conf-9 measurements, so I report the most potent characterised (0.05 nM). The sub-0.1 nM characterised antagonist potency is robust regardless of which of these is quoted.",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pdb.9E3P",
+        "claim": "Experimental structure 9E3P used for the computed axis.",
+        "source_type": "structure",
+        "source_id": "PDB:9E3P",
+        "source_url": "https://www.rcsb.org/structure/9E3P",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": "allosteric",
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "holo ligand site - 9E3O:A1BD8 and 9E3P:A1BD9, drug-like allosteric antagonists auto-classified 'druglike' by pocket_scan and asserted as the anchor. Selected per structure by ligand_site_jaccard (0.474 for 9E3O, 0.421 for 9E3P at D=1.6). The site is inter-subunit: 9E3P D=1.6 pocket lines chain A (8 residues) plus C/298; 9E3O lines chain A plus B/95; the full antagonist contact shell spans chains A, B and C. lining_chain_accessions confirm every lining chain is Q99572 (a homotrimer, no foreign polymer).",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [
+        {
+          "metric_id": "metric.pocket_volume_d16",
+          "low": 154.538,
+          "central": 154.538,
+          "high": 3974.445,
+          "unit": "A^3",
+          "confidence_level": null
+        }
+      ],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "The pocket-volume interval is a clustering-parameter SCENARIO range (fpocket D sweep), not a confidence interval or a percentile."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "target_precedent.distinct_actives, compound_modality_split.*, modality_unknown_count: NULL because the full modality census over all 6,340 distinct compounds (reconciled COUNT) did not complete - the transport renders <=~60 SMILES rows per call then collapses to a 5-row preview (rule 15 Kind B) and paged pulls timed out under the shared 10-connection budget. BOUNDED CLAIM instead: the most-potent compounds were retrieved with per-row LENGTH verification and classified via modality.py as small_molecule (incl. the 0.05 nM best and clinical CE-224535); enough to attribute best_potency_modality and establish the potent end is not peptidic, NOT the full split.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT retrieved - chembl_v.target_proteins returned a schema error ('unknown column') then a client-side timeout (rule 15). Not fabricated from memory. All target_precedent figures are accession-keyed and do not require it.",
+        "field_path": "output.target_precedent.chembl_target_id"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Paperclip returns 'Patents sources are not available.' (rule 13). Null, never 0.",
+        "field_path": "output.target_precedent.patents.count"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no PAINS/aggregator/frequent-hitter database was queried; the antagonist chemistry was inspected and looks unremarkable, but inspection is not a database check, so null rather than false.",
+        "field_path": "output.structure.bound_ligand.is_known_frequent_hitter"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "structural_neighbour_precedent (neighbours, query_structure): NOT RUN - neighbour_precedent.py/Foldseek (proto_tools) not executed this session; rule 13 conditional case, nulled and disclosed rather than reported as 'no neighbours'.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT RUN - needs a cross-target pocket-descriptor index (none in this pipeline) and a cofold transfer (unavailable, rule 13). Empty list means unmeasured.",
+        "field_path": "output.pocket_neighbour_precedent.candidates"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "affinity.* (whole block incl. rule 12 positive control): no affinity predictor in this deployment (rule 13). Unsatisfiable, not skipped.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no cofolding model in this deployment (rule 13).",
+        "field_path": "output.structure.cofold_control.*"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT computed - UniProt binding-site features for Q99572 annotate the ATP ORTHOSTERIC site (lower body); the allosteric antagonist pocket is a distinct upper-body inter-subunit site, so a UniProt-annotated-binding-site overlap is not the relevant comparison for this mechanism and was not computed. Null, not 0.",
+        "field_path": "output.tractability.annotated_binding_site_overlap"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT measured - the cryptic stage did not run (holo-only ensemble, 0 apo), so no apo/holo superposition displacement exists. Null, not 0.",
+        "field_path": "output.tractability.max_backbone_ca_displacement_a"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket / meets_consensus_criterion: pocket_scan emits no consensus fraction and 'strong hot spot' has no threshold this pipeline sets. n_structures (2) and n_measurements (4) are given; the fraction is not invented.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.cryptic_evidence (is_cryptic and the census counts): NOT RUN - cryptic_status 'not_run' (needs an apo comparator; the ensemble is two antagonist-holo structures). is_cryptic is null (unmeasured), not false; cryptic_pocket_risk and cryptic_mechanism are 'undetermined'.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.pocket_vs_interface (substantive classification): interface stage not run (no partner_structures); classification is no_partner_structure. The disrupted interaction is a nucleotide agonist, not a protein partner.",
+        "field_path": null
+      },
+      {
+        "code": "ACTIVES_NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Distinct small-molecule actives were not retrieved (null, not zero); the count is unknown, not absent.",
+        "field_path": "output.target_precedent.distinct_actives"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "Read the computed axis with three things in mind. (1) It is REPORTED but does NOT carry the verdict (verdict_basis = retrieved_precedent). Read on its own it says: a real, ligand-confirmed, pre-formed inter-subunit antagonist pocket of 154-259 A^3 (fpocket, D=1.6) / 767 A^3 (mdpocket site_from_ligand, CV 3.2%), occupied by a sub-nanomolar antagonist. (2) fpocket's LOW druggability here (0.003-0.013, rank 69) is a DRUG-BOUND-POCKET FALSE NEGATIVE (rule 4.0), not evidence against the site - a potent antagonist is physically bound in it. Druggability is a within-structure rank and is not load-bearing; it is NOT an axis_conflict with the retrieved precedent, it is the documented blind spot. (3) D=2.4 is unusable for this site: both structures merge into the >3000 A^3 central vestibule (merge_suspected, Jaccard collapse), so the D=1.6 numbers and the mdpocket site_from_ligand volume are the site measurements. Chain selection was ASSERTED (A,B,C) because the site is inter-subunit; a single protomer would not contain it. Cryptic/interface stages were not run (holo-only ensemble; no partner complex) - see those fields.",
+        "field_path": "output.tractability.caveat"
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.approved_small_molecules carries no evidence or assumption link.",
+        "field_path": null
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.clinical_stage_small_molecules carries no evidence or assumption link.",
+        "field_path": null
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.disorder_fraction carries no evidence or assumption link.",
+        "field_path": null
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "On the tractability axis the question is already answered on retrieved precedent (sub-0.1 nM characterised antagonist, five clinical-stage small molecules). The experiments worth running characterise the site, not the verdict: (a) run pocket_scan's cryptic stage with the ATP-agonist structure 9E3N (or the detergent-only 9E3M) as the apo/alternate comparator to test whether the allosteric antagonist pocket is pre-formed or forms only in the closed/antagonist state; (b) run the interface stage against 9E3N to formally classify the pocket as allosteric relative to the ATP orthosteric site; (c) complete the full 6,340-compound modality census and the GROUP BY assay_id chemotype-provenance query, both blocked here by the Paperclip transport (preview-cap and shared-connection timeouts).",
+        "result": "Whether the inter-subunit allosteric antagonist pocket is conformationally gated, its formal allosteric-vs-orthosteric classification, and whether the small-molecule precedent is broad across chemotypes or concentrated - none of which changes the small_molecule_tractable verdict, and rule 7 forbids letting the RA clinical failures change it.",
+        "meaning": "More computed-tractability evidence would not change a verdict already carried by direct measured small-molecule precedent. The residual uncertainty is the site's state-dependence (cryptic vs pre-formed) and the breadth of the chemical matter, neither of which alters the tractability call and the first of which the drug-bound false negative makes worth characterising."
+      },
+      {
+        "change": "If the falsification check '1. Do the actives collapse to one assay/lab? GROUP BY assay_description with a window-function share over 30,621 activities. Top single assay is a human-P2X7 inhibitory-activity assay at 3,696 rows = 12.1%; next 6.5%/5.1%/4.9%. Nothing near rule 6's ~30%. CHECK RUN, NOTHING FOUND.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '1b. Is the dominant assay measuring a different protein? No - the 12.1% assay measures human P2X7 itself (the target), unlike the TNF-alpha/IRAK4 cross-readout case. measures_a_different_target = false. CHECK RUN, NOTHING FOUND.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2. Is the best potency from a characterised assay? The MAX pchembl (0.01 nM, CHEMBL2324343) is from 'Inhibition of P2X7 receptor (unknown origin)' - UNCHARACTERISED, excluded per rule 6 (the same failure mode as MYC's 0.2 nM 'unknown origin'). The reported best (0.05 nM, CHEMBL550030) is a conf-9 named human-THP1 functional antagonist assay; a cluster of conf-9 characterised antagonist assays spans 0.05-0.09 nM. FOUND (excluded one uncharacterised MAX), verdict stands on characterised data.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '3. Do the actives collapse to one series or one lab? Not fully resolvable to chemotype in this run (the GROUP BY assay_id / full-SMILES census is blocked by the transport preview-cap and shared-connection timeouts), but bounded: the potent end spans at least three unrelated chemotypes visible in the top-60 SMILES - adamantane/tetracyclic carbohydrazides, isoquinolinone adamantane-acetamides, and cyanoguanidine/triazole antagonists - and five distinct clinical assets from five companies (Pfizer, AstraZeneca, Janssen, GSK, +ZANVIPIXANT). A single-series artifact cannot produce that. PARTIALLY RUN.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '4/5. Is the structure a single-crystal-form or additive artifact? The antagonist site appears in BOTH holo structures (9E3O A1BD8, 9E3P A1BD9), ligand-anchored (Jaccard 0.42-0.47) in all D=1.6 measurements - not one crystal form. DETERGENT TRAP CHECKED: all four entries contain Y01 (cholesteryl hemisuccinate, a detergent) and GDP; pocket_scan correctly classified Y01 'lipid_or_detergent' and GDP 'cofactor' and anchored to the antagonist A1BD8/A1BD9, avoiding the RORgt-6C1P/CD20 detergent-anchor error. FOUND (Y01 present) AND CORRECTLY NOT USED.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '6. Are frequent hitters / PAINS being counted? Not checked against a PAINS/aggregator database, so structure.bound_ligand.is_known_frequent_hitter stays null (not false). The bound antagonists (adamantane/tetracyclic carbohydrazides) are established med-chem, not obvious PAINS. PARTIALLY RUN.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '7. Were clinical programs terminated, and why? FOUND: CE-224535 (Pfizer, Ph2 RA) 'not efficacious versus placebo' (Stock 2012, J Rheumatol, DOI 10.3899/jrheum.110874) and AZD9056 (AstraZeneca, Ph2 RA) stalled with the class showing lack of RA efficacy (Cheah 2025, PMC12607368). Both recorded in terminated_programs. Per rule 7 these are efficacy failures and DO NOT lower the tractability verdict; RA efficacy is another station's question.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '8. Are off-target / repurposing look-alikes being counted as P2X7 drugs? FOUND, AND IT IS THE SHARPEST RESULT. The compounds max_phase>=1 path (rule 2d, high-recall/low-precision) returns BRILLIANT BLUE G and CANNABIDIOL at max_phase 4.0 and SURAMIN at 3.0 - all 'Small molecule'/'MOL' but approved/advanced for OTHER uses (BBG is a dye, cannabidiol an anticonvulsant, suramin an antiparasitic), with weak/no P2X7 pchembl (BBG 6.27, suramin 4.48). None is an approved P2X7 drug: approved_small_molecules_count = 0. OXATOMIDE, IMD-0354, BERBERINE similarly off-target. EVT401 (in drugs_by_accession) is molecule_type 'Unknown'/'NONE' -> modality_unknown, NOT counted as a small molecule (rule 1a). FOUND (all excluded).' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '9. Is the low computed druggability being read as evidence against tractability? Watched for and explicitly rejected: fpocket 0.003-0.013 at D=1.6 is a drug-bound-pocket false negative (rule 4.0), a within-structure non-load-bearing rank, NOT an axis_conflict with the sub-nM retrieved precedent. It did not enter the verdict. CHECK RUN, NOTHING FOUND (the number is correctly non-load-bearing).' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      },
+      {
+        "output_path": "output.tractability.site_pocket_rank.fpocket",
+        "input_paths": [
+          "output.structure.pdb_id",
+          "output.tractability.site_hypothesis_basis"
+        ],
+        "transformation": "fpocket within-structure ranking at D=1.6 over the selected structure's pockets."
+      },
+      {
+        "output_path": "output.tractability.pocket_volume_a3.primary_d1_6_a3",
+        "input_paths": [
+          "output.structure.pdb_id"
+        ],
+        "transformation": "mdpocket site volume at clustering D=1.6."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": null,
+          "best_potency_nm": 0.05,
+          "best_potency_characterised": true,
+          "distinct_actives": null,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 5,
+          "terminated_programs": 2
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "insufficient",
+          "site_hypothesis_basis": "holo ligand site - 9E3O:A1BD8 and 9E3P:A1BD9, drug-like allosteric antagonists auto-classified 'druglike' by pocket_scan and asserted as the anchor. Selected per structure by ligand_site_jaccard (0.474 for 9E3O, 0.421 for 9E3P at D=1.6). The site is inter-subunit: 9E3P D=1.6 pocket lines chain A (8 residues) plus C/298; 9E3O lines chain A plus B/95; the full antagonist contact shell spans chains A, B and C. lining_chain_accessions confirm every lining chain is Q99572 (a homotrimer, no foreign polymer).",
+          "structure_pdb_id": "9E3P",
+          "fpocket_rank": 69,
+          "prank_rank": 7,
+          "n_pockets": 134,
+          "pocket_volume_d16_a3": 154.538,
+          "ligand_site_jaccard": 0.421,
+          "cryptic_pocket_risk": "undetermined",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved Q99572",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "holo_experimental \u2014 9E3P",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "rank 69 of 134 in 9E3P",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "Actives not retrieved",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "survived",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "small_molecule_tractable / retrieved_precedent",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "On the tractability axis the question is already answered on retrieved precedent (sub-0.1 nM characterised antagonist, five clinical-stage small molecules). The experiments worth running characterise the site, not the verdict: (a) run pocket_scan's cryptic stage with the ATP-agonist structure 9E3N (or the detergent-only 9E3M) as the apo/alternate comparator to test whether the allosteric antagonist pocket is pre-formed or forms only in the closed/antagonist state; (b) run the interface stage against 9E3N to formally classify the pocket as allosteric relative to the ATP orthosteric site; (c) complete the full 6,340-compound modality census and the GROUP BY assay_id chemotype-provenance query, both blocked here by the Paperclip transport (preview-cap and shared-connection timeouts).",
+        "rationale": "More computed-tractability evidence would not change a verdict already carried by direct measured small-molecule precedent. The residual uncertainty is the site's state-dependence (cryptic vs pre-formed) and the breadth of the chemical matter, neither of which alters the tractability call and the first of which the drug-bound false negative makes worth characterising.",
+        "resolves": "Whether the inter-subunit allosteric antagonist pocket is conformationally gated, its formal allosteric-vs-orthosteric classification, and whether the small-molecule precedent is broad across chemotypes or concentrated - none of which changes the small_molecule_tractable verdict, and rule 7 forbids letting the RA clinical failures change it."
+      },
+      "figure": {
+        "kind": "pocket_render",
+        "path": "figures/9E3P_pocket.png",
+        "caption": "9E3P ligand-anchored pocket",
+        "present": false,
+        "note": "Reference only; the image file is not packaged with this dossier."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "9E3P",
+          "9E3O"
+        ],
+        "chembl_target_id": null,
+        "uniprot_accession": "Q99572",
+        "tools": [
+          "fpocket",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:73d64953cb98a8aa529a75ab416cba0a687819160fe75ba8203d43b03ed7202f"
+    }
+  }
+}

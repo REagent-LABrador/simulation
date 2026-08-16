@@ -1,0 +1,804 @@
+{
+  "_fixture": "NOTCH3 (Q9UM47). Produced 2026-08-16 by a real pipeline run in the prototyping session \u2014 NOT a calibration example; do not calibrate the validator or rubric against it. If a fresh run disagrees, the fresh run is right (see integration-fixtures/README.md).",
+  "_pipeline_state": "Rules in force: modality-from-structure (1b, modality.py), assay attribution (6), within-structure druggability (4.0/4a \u2014 volume the reported computed number, druggability never load-bearing), pocket_scan chains/site_residues (2b), rule 13 nulls (affinity/cofold/patents/OpenTargets), rule 14/15 count reconciliation. pocket_scan run via the DEPLOYED Modal app druggability-pocket-scan (fpocket 4.2.3 + P2Rank 2.5.1 + mdpocket, D swept {1.6,2.4}); Paperclip proteins (uniprot_v/pdb_v/chembl_v + raw chembl.*); metapredict disorder; Foldseek (proto_tools, public server).",
+  "_headline": "The druggable ENTITY here is gamma-secretase, a DIFFERENT protein, not a pocket on NOTCH3. Every small-molecule 'active' at this accession is gamma-secretase-inhibitor chemistry read out through a Notch intracellular-domain cleavage reporter or undefined patent boilerplate; the top compound is equipotent (1.0 nM) on NOTCH1 and NOTCH3 via identical reporters. No ChEMBL assay measures binding to a NOTCH3 pocket; all 6 PDB structures are apo. Tractable-looking chemistry, poor selectivity, wrong target.",
+  "input": {
+    "uniprot_accession": "Q9UM47",
+    "as_of_date": null,
+    "disease_context": null,
+    "interaction_to_disrupt": "Notch3 signalling via gamma-secretase cleavage of the receptor",
+    "mechanism_hypothesis": "unknown",
+    "_disease_context_reasoning": "Left null per 'null if unclear \u2014 don't invent'. The retrieved small-molecule/clinical precedent is oncology (anti-NOTCH2/3 antibody tarextumab in pancreatic/SCLC; gamma-secretase-inhibitor chemistry), which does not cleanly match a stromal/vascular context (NOTCH3's Mendelian disease CADASIL), so the evidence does not settle a single disease context and none is invented.",
+    "_mechanism_hypothesis_reasoning": "'unknown' is the least-wrong enum because this is NOT a NOTCH3-pocket question at all. Disrupting 'Notch3 signalling via gamma-secretase cleavage' with a small molecule means inhibiting gamma-secretase (a separate multi-subunit intramembrane protease), not binding an orthosteric/allosteric/oligomer site on NOTCH3. orthosteric/allosteric/oligomer_destabilisation all presuppose a NOTCH3 pocket that the retrieved chemistry never engages; 'unknown' records that the site is not on NOTCH3."
+  },
+  "target": {
+    "uniprot_accession": "Q9UM47",
+    "gene_symbol": "NOTCH3",
+    "protein_name": "Neurogenic locus notch homolog protein 3",
+    "organism": "Homo sapiens",
+    "sequence_length": 2321,
+    "sources": [
+      "uniprot_v.proteins WHERE accession='Q9UM47' (paperclip_sql -s proteins): NOTCH3, Homo sapiens, sequence_length 2321"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "insufficient_evidence",
+  "verdict_basis": "retrieved_precedent",
+  "axis_conflict": "The retrieved-precedent axis LOOKS tractable (57 distinct small molecules, best 1.0 nM IC50) but collapses on attribution: 62.7% of activity is patent boilerplate ('pharmacological properties of the compounds of this invention', assay 1641354, no defined molecular mechanism) and 33.9% is a NICD3 cellular reporter ('Inhibition of Notch3 intracellular domain fragment transfected in HeLa', assay 1468308) \u2014 a readout of gamma-secretase cleavage, not binding to a NOTCH3 pocket. The single best-potency compound (CHEMBL3410169) is equipotent 1.0 nM on NOTCH1 AND NOTCH3 via identical intracellular-domain reporters, the signature of a pan-Notch gamma-secretase inhibitor. The computed axis independently finds all 6 PDB structures apo (heteroatoms only Ca2+, NAG glycan, glycerol/acetate/EDO/chloride) and no anchorable small-molecule site on the NRR. The two axes agree that NOTCH3-direct small-molecule tractability is NOT established; they disagree only in that a naive read of the precedent count would call it tractable. The druggable entity implied by the interaction is gamma-secretase, a different protein.",
+  "target_precedent": {
+    "chembl_target_id": "tid 109578 (SINGLE PROTEIN, Q9UM47, n_target_components=1); a separate pan-Notch family target tid 119724 ('Notch receptor', n_target_components=4) also maps to this accession",
+    "distinct_actives": 57,
+    "compound_modality_split": {
+      "_note": "From SMILES via precedent-lookup/modality.py (RDKit 2D), NOT molecule_type. All 57 distinct compounds classified small_molecule (max SMILES length 95 chars, no truncation; selftest PASS, 0 false small-molecule calls). molecule_type agreed on 56/57 (1 'Unknown'/MOL), resolved to small_molecule by structure.",
+      "small_molecule": 57,
+      "peptide": 0,
+      "macrocyclic_peptide": 0,
+      "oligonucleotide": 0,
+      "oligosaccharide": 0,
+      "protein_or_antibody": 0,
+      "modality_unknown": 0
+    },
+    "modality_unknown_count": 0,
+    "assay_concentration": {
+      "top_assay_description": "Biological Assay: The pharmacological properties of the compounds of this invention (assay_id 1641354, type B, confidence 8, n_target_components=1) \u2014 patent boilerplate with no defined molecular-target mechanism",
+      "top_assay_share_pct": 62.7,
+      "measures_a_different_target": true,
+      "_measures_a_different_target_basis": "No assay at this accession measures binding to a NOTCH3 pocket. 62.7% is undefined patent boilerplate; 33.9% (assay 1468308) is a NICD3 cellular reporter that reads out gamma-secretase cleavage of Notch3, not NOTCH3 binding; 3.4% (assay 2139074) is attributed to the pan-Notch FAMILY target (ntc=4). The compounds are gamma-secretase inhibitors \u2014 CHEMBL3410169 is equipotent 1.0 nM on NOTCH1 and NOTCH3 via identical intracellular-domain reporters. So the potency measured is that of a different molecular target (gamma-secretase) acting on the whole Notch family.",
+      "assay_type_split": {
+        "binding_B": 59,
+        "functional_F": 0
+      }
+    },
+    "best_potency_nm": 1.0,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "Inhibition of Notch3 intracellular domain fragment transfected in human HeLa cells (assay_id 1468308, IC50, standard_relation '=') \u2014 a NICD3 cellular cleavage reporter, i.e. a functional readout of gamma-secretase activity, NOT a direct NOTCH3-binding measurement",
+    "best_potency_characterised": false,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [
+      {
+        "name": "VAREGACESTAT",
+        "phase": 2,
+        "modality": "small_molecule",
+        "source": "chembl_v.compounds_by_accession CHEMBL3911164, max_phase 2.0, molecule_type 'Small molecule', best_pchembl 8.07 (paperclip_sql). NOTE: varegacestat is a gamma-secretase inhibitor; it appears under NOTCH3 only because its activity is measured via the NICD cleavage reporter. Its molecular target is gamma-secretase, not a NOTCH3 pocket."
+      }
+    ],
+    "patents": {
+      "count": null,
+      "source": "Paperclip returns 'Patents sources are not available.' \u2014 not retrievable (CLAUDE.md rule 13)"
+    },
+    "terminated_programs": [
+      {
+        "program": "TAREXTUMAB (OMP-59R5), anti-NOTCH2/3 monoclonal antibody (OncoMed/GSK) \u2014 a BIOLOGIC, listed here as the clinical history of the target, not as small-molecule precedent",
+        "year": 2019,
+        "stated_reason": "Reached Phase 2 (randomized Phase 2 in untreated metastatic pancreatic cancer, nab-paclitaxel/gemcitabine +/- tarextumab; and Phase 1/2 solid tumours/SCLC) and was not advanced/approved; ChEMBL first_approval NULL, max_phase 2. The antibody targets the NRR epitope, a different modality from any small molecule.",
+        "source": "paperclip grep /papers/: 'A randomized phase II trial of nab-paclitaxel and gemcitabine with tarextumab or placebo in patients with untreated metastatic pancreatic cancer. Cancer Med 2019;8:5148-57'; 'A phase 1 dose escalation and expansion study of Tarextumab (OMP-59R5) in patients with solid tumors. Invest New Drugs 2019;37(4):722-730, doi 10.1007/S10637-018-0714-6'; chembl_v.drugs_by_accession (max_phase 2.0, first_approval NULL, molecule_type Antibody)"
+      }
+    ],
+    "as_of_leakage": [],
+    "sources": [
+      "chembl_v.bioactivities_by_accession WHERE accession='Q9UM47' (paperclip_sql -s proteins): 59 activities / 57 distinct compounds; COUNT(*)=59, COUNT(DISTINCT molregno)=57 reconciled by server-side aggregate (single-row, not row-cappable, rule 14).",
+      "target-component split (GROUP BY n_target_components): ntc=1 (NOTCH3 SINGLE PROTEIN) 57 act / 55 cpd; ntc=4 (pan-Notch family) 2 act / 2 cpd.",
+      "assay split (GROUP BY assay_description): 1641354 patent boilerplate 37 (62.7%); 1468308 NICD3 reporter 20 (33.9%); 2139074 'Notch assay' (ntc=4) 2 (3.4%). All type B.",
+      "modality: precedent-lookup/modality.py over all 57 SMILES -> 57 small_molecule, 0 unknown.",
+      "best potency: MAX(pchembl_value)=9.00 -> 1.0 nM IC50, CHEMBL3410169/CHEMBL3410162/CHEMBL3410153/CHEMBL3410167 from assay 1468308.",
+      "cross-accession (falsification 2b): CHEMBL3410169 registers IC50 1.0 nM on NOTCH1 (P46531) AND 1.0 nM on NOTCH3 (Q9UM47), identical intracellular-domain reporters.",
+      "drugs_by_accession: TAREXTUMAB only row (Antibody, max_phase 2). clinical compounds max_phase>=1: VAREGACESTAT (Small molecule, phase 2)."
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "NOTCH3 has ZERO approved drugs of any modality. The most advanced agent directly targeting NOTCH3 is TAREXTUMAB (OMP-59R5), an anti-NOTCH2/3 monoclonal antibody (chembl.molecule_dictionary.molecule_type = 'Antibody') that reached Phase 2 and was not advanced \u2014 a clinical biologic, not approved, and biologic engagement of the NRR epitope is target validation, NOT evidence of small-molecule tractability. It is recorded in target_precedent.terminated_programs as the clinical history. Every small-molecule entry at this accession is gamma-secretase-inhibitor chemistry read out via a Notch cleavage reporter."
+  },
+  "family_precedent": {
+    "pfam": "PF00066 (LNR domain / Notch), PF06816 (NOTCH protein NOD), PF07684 (NOTCH protein NODP)",
+    "family_actives": 137,
+    "best_family_potency_nm": 1.0,
+    "best_family_potency_modality": "small_molecule",
+    "best_family_target": "NOTCH1 (P46531)",
+    "_family_note": "Family = the four Notch receptors. Per-target reconciled COUNT(DISTINCT molregno): NOTCH1 (P46531) 137, NOTCH2 (Q04721) 3, NOTCH4 (Q99466) 3. family_actives reports NOTCH1, the dominant/best-characterised sibling; the deduplicated union across NOTCH1/2/4 could not be issued (statement-timeout, rule-15 Kind A), and a naive sum (143) would double-count shared compounds. NOTCH1's best-potency compounds are the SAME benzodiazepine-dipeptide gamma-secretase-inhibitor scaffold as NOTCH3's (e.g. molregno 1836928 appears against both), measured via the identical 'Inhibition of Notch1 intracellular domain fragment' cleavage reporter. So family precedent is the SAME pan-Notch gamma-secretase chemistry, not independent NOTCH3-direct evidence \u2014 this is the selectivity problem, measured.",
+    "sources": [
+      "chembl_v.bioactivities_by_accession GROUP BY accession over P46531/Q04721/Q99466/Q9UM47 (paperclip_sql): NOTCH1 164 act/137 cpd/best pchembl 9.00; NOTCH2 3/3/9.00; NOTCH3 59/57/9.00; NOTCH4 3/3/8.52.",
+      "NOTCH1 top compounds (P46531, pchembl>=8.9): benzodiazepine-dipeptide GSI scaffold via 'Inhibition of Notch1 intracellular domain fragment' reporter.",
+      "Pfam from pdb_v.polymer_entity_pfam WHERE entry_id='4ZLP'."
+    ]
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek fold neighbours (proto_tools, public search.foldseek.com server), NOT sequence family.",
+    "method": "foldseek-search (proto_tools, remote server, pdb100, 3diaa + TM-score) on 5CZX chain A (NRR)",
+    "query_structure": "5CZX_A (NOTCH3 NRR, UniProt 1378-1640)",
+    "neighbours": [],
+    "sources": [
+      "proto_tools foldseek_search on /tmp/5CZX_A.pdb, database pdb100 \u2014 see not_found: the public Foldseek server queue did not return within the session; the axis is NOT reported as 'no neighbours found'."
+    ]
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "The strongest transfer axis in principle, but its sharp test (cofold the neighbour's ligand into our pocket) needs a cofolding model, which is unavailable in this deployment (CLAUDE.md rule 13). No pocket-neighbour candidates were computed.",
+    "candidates": [],
+    "sources": [
+      "not computed \u2014 no cofolding model available (rule 13); see not_found"
+    ]
+  },
+  "structure": {
+    "tier": "apo_experimental",
+    "pdb_id": "5CZX",
+    "resolution_a": 2.1,
+    "biological_unit_used": "NOTCH3 Negative Regulatory Region (NRR: LNR-A/B/C + heterodimerization domain HD, UniProt residues 1378-1640), chain A. 5CZX is crystallised with an antibody Fab (chains H/L); no small-molecule ligand is present.",
+    "bound_ligand": {
+      "comp_id": null,
+      "heavy_atoms": null,
+      "is_druglike": false,
+      "is_known_frequent_hitter": null
+    },
+    "_heteroatoms_present": "Across all 6 entries the only heteroatoms are CA (calcium ion, structural to the EGF/LNR modules), NAG (N-glycan, 221 Da, the largest), GOL/EDO (glycerol/ethylene glycol cryoprotectant), ACT (acetate buffer), CL (chloride). None is drug-like; 6WQU and 8OS0 carry none. Verified via pdb_v.entry_ligands and by the pocket_scan ligand classifier (all 4 NRR entries -> tier apo).",
+    "total_pdb_structures": 6,
+    "holo_count": 0,
+    "apo_count": 6,
+    "ensemble_used": [
+      "4ZLP",
+      "5CZV",
+      "5CZX",
+      "6XSW"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "pdb_v.structures_by_accession WHERE accession='Q9UM47' (paperclip_sql): 6 rows, COUNT(DISTINCT entry_id)=6 reconciled. Entries 4ZLP(2.48A), 5CZV(3.19A), 5CZX(2.1A), 6XSW(2.98A) span the NRR (UniProt 1378-1640/1620); 6WQU(2.41A, res 1665-1682) and 8OS0(NMR, res 1642-1665) are short TM/juxtamembrane fragments, excluded from the pocket ensemble.",
+      "pdb_v.entry_ligands WHERE entry_id IN (6 entries): only CA/NAG/GOL/ACT/EDO/CL -> holo_count 0.",
+      "pdb_v.uniprot_alignment_ranges for domain ranges."
+    ]
+  },
+  "tractability": {
+    "_primary": "No small-molecule site could be anchored on NOTCH3, so the computed axis reports NO site quantity. site_hypothesis_basis = not_established. This is honest, not a null-with-no-reason: there is no holo ligand, no partner structure for the (enzymatic, gamma-secretase) interaction, and the scanned region is an extracellular autoinhibitory domain, not the intramembrane cleavage machinery. Documentary geometry is in the caveat.",
+    "pocket_volume_a3": {
+      "min": null,
+      "max": null,
+      "spread_pct": null,
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": null,
+      "site_pocket_selected_by": null,
+      "_documentary": "Not reported as a site volume because no site was established. For the record, fpocket on the apo NRR found 15-24 pockets per structure at D=1.6 (largest 293-514 A^3) merging above 1000 A^3 at D=2.4; mdpocket's persistent cavity (site_from_density) measured 465-704 A^3 across the 4 structures but is ligand-UNANCHORED (no holo donor), so its identity is unverified (rule 4b) and it is not adopted as the site."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "site_pocket_selected_by": null,
+      "load_bearing": false,
+      "_comparability": "Not reported: no site was anchored, so any pocket rank would be max_druggability_no_ligand_site ('most druggable pocket anywhere'), which rule 4.0 bans as a reportable value. fpocket druggability is a within-structure quantity and carries no verdict here.",
+      "_false_negative_rate": "Not applicable \u2014 no druggability value is reported. In general a large fraction of pockets with a drug physically bound score below 0.1 (e.g. EGFR 6LUD with osimertinib 0.013; JAK1 median 0.009 across nine approved drugs), so a low druggability is never evidence against a site; the demoted number carries no negative verdict (rule 4.0/4a)."
+    },
+    "site_pocket_rank": {
+      "fpocket": null,
+      "prank": null,
+      "n_pockets": null,
+      "structure_pdb_id": null
+    },
+    "ensemble_consensus_fraction": {
+      "_note": "No site to score for consensus; denominators recorded for the scan that ran.",
+      "n_structures": 4,
+      "n_measurements": 8,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null
+    },
+    "pocket_hydrophobic_density": null,
+    "pocket_residues": [],
+    "site_hypothesis_basis": "not_established",
+    "mdpocket_site_definition_used": "none",
+    "site_centroid_to_ligand_distance_a": null,
+    "site_centroid_to_ligand_note": "mdpocket returned only a ligand-unanchored site_from_density (no holo structure in the ensemble carried a drug-like ligand and no mdpocket_site_donor was supplied); distance_to_donor_ligand_centroid_a is null and the site identity is unverified (rule 4b off_site_warning). Not adopted as the dossier's site.",
+    "annotated_binding_site_overlap": null,
+    "ligand_site_jaccard": null,
+    "disorder_fraction": 0.2581,
+    "cryptic_pocket_risk": "high",
+    "cryptic_mechanism": "undetermined",
+    "cryptic_evidence": {
+      "_note": "Vajda 2018 census the cryptic call would rest on.",
+      "is_cryptic": null,
+      "n_apo_examined": 6,
+      "n_apo_site_absent": null,
+      "site_present_in_apo_ensemble": null,
+      "basis": "All 6 PDB structures are apo (no drug-like ligand). No holo reference exists, so backbone C-alpha displacement at any candidate site cannot be measured and geometric scoring is blind to cryptic sites (CLAUDE.md rules 3 and 5); cryptic_pocket_risk is therefore high but the cryptic call itself (is_cryptic) is not made.",
+      "definition": "Vajda et al. 2018: cryptic only if the site is absent in all/nearly all unbound structures \u2014 not assessable here without a holo reference (CryptoBench pocket-residue RMSD > 2 A apo-vs-holo cannot be computed with no holo).",
+      "source": "pdb_v.entry_ligands (6 apo entries); pocket_scan cryptic_status 'not_run' (no holo in ensemble)"
+    },
+    "cryptic_potency_prior": {
+      "_note": "No site established and no holo reference, so no mechanism-based potency prior can be set.",
+      "expected_ceiling": "unknown",
+      "basis": "cryptic_mechanism undetermined; no anchored site."
+    },
+    "pocket_vs_interface": {
+      "_note": "The interaction to disrupt is an enzymatic cleavage performed by gamma-secretase, a different protein; there is no NOTCH3+gamma-secretase complex structure to classify a pocket against. interface stage was not_run (no partner_structures).",
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": null,
+      "matches_mechanism_hypothesis": null
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": null,
+    "caveat": "The interaction named ('Notch3 signalling via gamma-secretase cleavage') is disrupted by a small molecule only at GAMMA-SECRETASE, a separate multi-subunit intramembrane protease \u2014 not at a pocket on NOTCH3. The pocket scan (deployed Modal app druggability-pocket-scan; fpocket 4.2.3 + P2Rank 2.5.1 + mdpocket) ran on the apo NRR ensemble 4ZLP/5CZV/5CZX/6XSW (chains resolved by accession; in 5CZX chain A is the NRR and Fab chains H/L are present, L flagged as a polymer-ligand contributing 50% of one pocket's lining). It found real cavities (15-24 pockets/structure at D=1.6, largest 293-514 A^3; merged >1000 A^3 at D=2.4; mdpocket persistent cavity 465-704 A^3) but NONE could be anchored to a small-molecule site: there is no holo ligand, no partner complex for the enzymatic interaction, and the only mdpocket site is a ligand-unanchored persistence cavity of unverified identity. Volume and druggability are therefore not reported as site quantities (site_hypothesis_basis = not_established). All structures are apo, so cryptic risk is high and geometric scoring is blind (rule 3). Full-length disorder is 25.8% (metapredict); the region just C-terminal to the NRR (1628-1816, juxtamembrane) is disordered. Reading any of these geometric numbers as a NOTCH3 druggability verdict would be a category error: the chemistry that exists targets gamma-secretase.",
+    "sources": [
+      "pocket_scan (deployed Modal app 'druggability-pocket-scan', fpocket 4.2.3 conda-forge + P2Rank 2.5.1 + mdpocket), D swept {1.6,2.4}, ensemble 4ZLP/5CZV/5CZX/6XSW, uniprot_accession Q9UM47.",
+      "disorder: metapredict 3.0.2 (local CPU) on full-length UniProt Q9UM47 -> disorder_fraction 0.2581; disordered regions 1-55, 1304-1388, 1628-1816, 2023-2321.",
+      "cryptic/interface stages: not_run (no holo reference; no partner_structures)."
+    ],
+    "method": {
+      "tool": "fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 (rescore) + mdpocket, via deployed Modal app druggability-pocket-scan",
+      "version": "fpocket 4.2.3",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "4ZLP",
+        "5CZV",
+        "5CZX",
+        "6XSW"
+      ],
+      "chains_used": "target chains resolved by accession Q9UM47 per structure (4ZLP A/B, 5CZV A, 5CZX A, 6XSW A); non-target antibody chains kept/flagged (5CZX H partner, L polymer-ligand)"
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": [
+      "no affinity predictor in this deployment (CLAUDE.md rule 13); rule 12's positive control is unsatisfiable, so it is null with a stated reason rather than a reported prediction"
+    ]
+  },
+  "falsification": {
+    "checks_run": [
+      "1. Does the actives count collapse to one assay? (assay-description GROUP BY)",
+      "2. Is the best potency from a characterised assay?",
+      "2b. Cross-accession check on the top compound",
+      "2c. Are approved-drug rows in the bioactivity table real precedent?",
+      "3. Do the actives collapse to one series or lab?",
+      "4. Is any holo ligand actually drug-like? (holo detection)",
+      "5. Does a pocket appear in only one crystal form? / 5a. Is a low or swinging druggability being read as a finding?",
+      "6. Is the accession mapping real? (n_target_components)",
+      "7. What was tried in the clinic and why did it stop? (Paperclip papers)",
+      "8. Is a look-alike being counted?",
+      "9. Is this our question at all? (ran, did not fire \u2014 no literature-provenance ask needed)",
+      "10 / 10b / 11. Separation / power / label-measurement confound checks (ran; no separation, threshold or negative boundary is relied on)"
+    ],
+    "findings": [
+      "1 FIRED: one assay (1641354, patent boilerplate 'pharmacological properties of the compounds of this invention') is 62.7% of activity; the NICD3 reporter (1468308) is 33.9%. The count is about these two assays, not about NOTCH3.",
+      "2 FIRED: best potency 1.0 nM comes from a NICD3 cellular cleavage reporter (assay 1468308), not a characterised NOTCH3-binding assay. best_potency_characterised=false.",
+      "2b FIRED (highest-yield): CHEMBL3410169 is 1.0 nM IC50 on BOTH NOTCH1 (P46531) and NOTCH3 (Q9UM47) via identical 'Inhibition of NotchN intracellular domain fragment' reporters. The measured potency belongs to gamma-secretase (which cleaves all Notch receptors), not to NOTCH3 selectively. This is 'readout protein is not the measured protein' plus pan-family off-target in one compound.",
+      "2c CLEAN: no approved-drug rows are being counted as NOTCH3 binders (approved_small_molecules is empty; the one clinical small molecule, varegacestat, is flagged as a gamma-secretase inhibitor).",
+      "3 FIRED (partly): the 57 compounds are one chemotype family (benzodiazepine/dibenzazepine-dipeptide gamma-secretase inhibitors) from patent-scale SAR across two assays; not independent programmes.",
+      "4 CLEAN and decisive: no holo ligand exists to be drug-like or a frequent hitter \u2014 all 6 structures are apo (only Ca2+, NAG, glycerol, acetate, EDO, chloride). Zero drug-like co-crystals.",
+      "5 / 5a CLEAN: no druggability value is reported and none is read as a finding; no site was anchored (site_hypothesis_basis not_established), so there is no across-structure spread to over-interpret.",
+      "6 FIRED: this accession carries TWO ChEMBL targets \u2014 the NOTCH3 single protein (tid 109578) and a pan-Notch FAMILY target (tid 119724, n_target_components=4). Activity on the family target is inherited across NOTCH1-4, not measured on NOTCH3.",
+      "7 FIRED: TAREXTUMAB (anti-NOTCH2/3 antibody) reached Phase 2 (pancreatic Cancer Med 2019;8:5148-57; solid-tumour Invest New Drugs 2019;37:722-730) and was not advanced. The gamma-secretase-inhibitor CLASS is limited by on-target pan-Notch toxicity: GSIs cause intestinal goblet-cell metaplasia (Milano et al., Toxicol Sci 2004) and GI toxicity has driven trial design for even 'selective' GSIs (PF-03084014, Wei et al., Mol Cancer Ther) \u2014 the direct clinical consequence of the poor selectivity this dossier surfaces.",
+      "8 CLEAN/RELEVANT: the look-alike check is central here \u2014 VAREGACESTAT and all 57 'NOTCH3 actives' are gamma-secretase inhibitors, not NOTCH3 binders; they are correctly kept out of any NOTCH3-direct tractability claim.",
+      "9 did not fire: every claim was settleable inside the pipeline (ChEMBL targets, assay descriptions, cross-accession); no upstream-graph ask issued.",
+      "10/10b/11 did not fire: the dossier leans on no separation, threshold or negative boundary."
+    ],
+    "survived": false,
+    "_survived_note": "The claim 'NOTCH3 is small-molecule tractable (57 nM-potent actives)' does NOT survive: checks 1, 2, 2b, 3 and 6 show the actives measure gamma-secretase cleavage across the whole Notch family, not binding to a NOTCH3 pocket. What survives is a correct negative/insufficient reading \u2014 the chemistry is real but its target is gamma-secretase."
+  },
+  "next_experiment": {
+    "description": "Two experiments. (1) Test whether any small molecule binds a NOTCH3 pocket DIRECTLY: SPR/ITC or a fragment/biophysical screen against the isolated NRR (UniProt 1378-1640) and against the intracellular ANK domain. (2) Confirm the mechanism of the ~1 nM cellular actives is gamma-secretase inhibition: a biochemical gamma-secretase cleavage assay plus a counter-screen of the top compounds across NOTCH1-4 and non-Notch substrates (e.g. APP), to quantify the pan-Notch/APP selectivity liability.",
+    "rationale": "All 57 reported actives derive from a pan-Notch/NICD cellular cleavage reporter or undefined patent boilerplate, and the top compound is equipotent (1.0 nM) on NOTCH1 and NOTCH3 via identical intracellular-domain reporters \u2014 the signature of a gamma-secretase inhibitor. No ChEMBL assay measures binding to a NOTCH3 pocket, and all 6 crystal structures are apo, so the geometric axis cannot anchor a site. Whether NOTCH3 itself is small-molecule bindable is therefore genuinely unmeasured.",
+    "resolves": "Whether NOTCH3 (as opposed to gamma-secretase) presents a druggable small-molecule pocket at all, and whether any of the existing chemistry has a NOTCH3-selective binding component rather than being purely gamma-secretase inhibition acting on the whole Notch family."
+  },
+  "not_found": [
+    {
+      "field": "target_precedent.patents.count",
+      "reason": "Paperclip returns 'Patents sources are not available.' \u2014 not retrievable (CLAUDE.md rule 13).",
+      "signature": "Patents sources are not available."
+    },
+    {
+      "field": "affinity (entire block, incl. rule-12 positive control)",
+      "reason": "No affinity/binding predictor in this deployment (CLAUDE.md rule 13). Rule 12 control is unsatisfiable -> null with reason, not a reported prediction.",
+      "signature": "no predictor available"
+    },
+    {
+      "field": "structure.cofold_control / pocket_neighbour_precedent.candidates[].cofold_transfer",
+      "reason": "No cofolding model in this deployment (CLAUDE.md rule 13); pocket-neighbour transfer not computed.",
+      "signature": "no cofolding model available"
+    },
+    {
+      "field": "structural_neighbour_precedent.neighbours",
+      "reason": "Foldseek search (proto_tools, public search.foldseek.com server, pdb100) on 5CZX_A was launched but the public server queue did not return within the session. This is a tool non-completion, NOT 'no structural neighbours found'; re-run to populate the axis.",
+      "signature": "foldseek public-server queue did not return within session"
+    },
+    {
+      "field": "family_precedent union COUNT(DISTINCT molregno) across NOTCH1/2/4",
+      "reason": "Deduplicated union count hit a Paperclip server-side statement timeout (rule-15 Kind A: 'SQL error: canceling statement due to statement timeout' / query-shape). Per-target aggregates reported instead (NOTCH1 137, NOTCH2 3, NOTCH4 3); family_actives set to NOTCH1's reconciled 137.",
+      "signature": "statement timeout on COUNT(DISTINCT) over OR/IN of 3 accessions"
+    },
+    {
+      "field": "tractability.pocket_volume_a3 (min/max/primary_d1_6_a3)",
+      "reason": "No small-molecule site could be anchored on the apo NRR ensemble (site_hypothesis_basis not_established): no holo ligand, no partner complex for the enzymatic interaction, and the only mdpocket site is a ligand-unanchored persistence cavity of unverified identity (rule 4b). Documentary geometry is in tractability.pocket_volume_a3._documentary; it is not reported as a site volume.",
+      "signature": "site_from_density ligand_anchored=false, distance_to_donor_ligand_centroid_a=null (no holo donor)"
+    },
+    {
+      "field": "tractability.pocket_druggability (min/max)",
+      "reason": "No site anchored, so any druggability would be max_druggability_no_ligand_site, which rule 4.0 bans as a reportable value. Not reported.",
+      "signature": "no site signature; would fall to max_druggability_no_ligand_site"
+    },
+    {
+      "field": "tractability.pocket_hydrophobic_density",
+      "reason": "No anchored site to characterise; not reported.",
+      "signature": "no anchored site"
+    },
+    {
+      "field": "tractability.annotated_binding_site_overlap",
+      "reason": "No small-molecule site established to compare against annotated features.",
+      "signature": "no anchored site"
+    },
+    {
+      "field": "tractability.ligand_site_jaccard",
+      "reason": "No holo ligand site exists to compute a Jaccard against (all apo).",
+      "signature": "no holo ligand in ensemble"
+    },
+    {
+      "field": "tractability.max_backbone_ca_displacement_a",
+      "reason": "Cryptic displacement is measured apo-vs-holo; no holo reference exists (all 6 apo), so it cannot be computed (cryptic_status not_run).",
+      "signature": "cryptic_status not_run (no holo)"
+    },
+    {
+      "field": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket",
+      "reason": "No site to score for a consensus fraction; only ensemble denominators (n_structures 4, n_measurements 8) are recorded.",
+      "signature": "no anchored site"
+    }
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: Q9UM47",
+      "result": "insufficient_evidence",
+      "plain_language": "Insufficient evidence for Q9UM47: 57 actives; best 1 nM; 1 clinical-stage small molecules.",
+      "status": "INCONCLUSIVE",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 1.0,
+        "unit": "nM",
+        "display": "1 nM",
+        "meaning": "Best raw potency; assay uncharacterised (rule 6) \u2014 not a usable potency claim.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay",
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.distinct_actives",
+        "label": "Distinct small-molecule actives",
+        "value": 57,
+        "unit": "compounds",
+        "display": "57 compounds",
+        "meaning": "Distinct small molecules with measured activity; a count of compounds, not of assays (rules 1b, 14).",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 1,
+        "unit": "molecules",
+        "display": "1 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.2581,
+        "unit": "fraction",
+        "display": "0.2581",
+        "meaning": "Fraction of the sequence predicted disordered; high disorder disfavours a stable small-molecule pocket.",
+        "direction": "negative",
+        "evidence_ids": [],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "retrieved_precedent",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 1.0,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": null,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "insufficient_evidence",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.chembl_target",
+        "claim": "Measured bioactivity records for the target in ChEMBL.",
+        "source_type": "database",
+        "source_id": "ChEMBL:tid 109578 (SINGLE PROTEIN, Q9UM47, n_target_components=1); a separate pan-Notch family target tid 119724 ('Notch receptor', n_target_components=4) also maps to this accession",
+        "source_url": "https://www.ebi.ac.uk/chembl/target_report_card/tid 109578 (SINGLE PROTEIN, Q9UM47, n_target_components=1); a separate pan-Notch family target tid 119724 ('Notch receptor', n_target_components=4) also maps to this accession/",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "Inhibition of Notch3 intracellular domain fragment transfected in human HeLa cells (assay_id 1468308, IC50, standard_relation '=') \u2014 a NICD3 cellular cleavage reporter, i.e. a functional readout of gamma-secretase activity, NOT a direct NOTCH3-binding measurement",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "LOW",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pdb.5CZX",
+        "claim": "Experimental structure 5CZX used for the computed axis.",
+        "source_type": "structure",
+        "source_id": "PDB:5CZX",
+        "source_url": "https://www.rcsb.org/structure/5CZX",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": "unknown",
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "not_established",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "No probabilistic uncertainty model was run; ranges, where present, are clustering scenarios or heuristic scores, never confidence intervals."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Paperclip returns 'Patents sources are not available.' \u2014 not retrievable (CLAUDE.md rule 13).",
+        "field_path": "output.target_precedent.patents.count"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No affinity/binding predictor in this deployment (CLAUDE.md rule 13). Rule 12 control is unsatisfiable -> null with reason, not a reported prediction.",
+        "field_path": "output.affinity (entire block, incl. rule-12 positive control)"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No cofolding model in this deployment (CLAUDE.md rule 13); pocket-neighbour transfer not computed.",
+        "field_path": "output.structure.cofold_control / pocket_neighbour_precedent.candidates[].cofold_transfer"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Foldseek search (proto_tools, public search.foldseek.com server, pdb100) on 5CZX_A was launched but the public server queue did not return within the session. This is a tool non-completion, NOT 'no structural neighbours found'; re-run to populate the axis.",
+        "field_path": "output.structural_neighbour_precedent.neighbours"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "ERROR",
+        "message": "Deduplicated union count hit a Paperclip server-side statement timeout (rule-15 Kind A: 'SQL error: canceling statement due to statement timeout' / query-shape). Per-target aggregates reported instead (NOTCH1 137, NOTCH2 3, NOTCH4 3); family_actives set to NOTCH1's reconciled 137.",
+        "field_path": "output.family_precedent union COUNT(DISTINCT molregno) across NOTCH1/2/4"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No small-molecule site could be anchored on the apo NRR ensemble (site_hypothesis_basis not_established): no holo ligand, no partner complex for the enzymatic interaction, and the only mdpocket site is a ligand-unanchored persistence cavity of unverified identity (rule 4b). Documentary geometry is in tractability.pocket_volume_a3._documentary; it is not reported as a site volume.",
+        "field_path": "output.tractability.pocket_volume_a3 (min/max/primary_d1_6_a3)"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No site anchored, so any druggability would be max_druggability_no_ligand_site, which rule 4.0 bans as a reportable value. Not reported.",
+        "field_path": "output.tractability.pocket_druggability (min/max)"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No anchored site to characterise; not reported.",
+        "field_path": "output.tractability.pocket_hydrophobic_density"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No small-molecule site established to compare against annotated features.",
+        "field_path": "output.tractability.annotated_binding_site_overlap"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No holo ligand site exists to compute a Jaccard against (all apo).",
+        "field_path": "output.tractability.ligand_site_jaccard"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Cryptic displacement is measured apo-vs-holo; no holo reference exists (all 6 apo), so it cannot be computed (cryptic_status not_run).",
+        "field_path": "output.tractability.max_backbone_ca_displacement_a"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "No site to score for a consensus fraction; only ensemble denominators (n_structures 4, n_measurements 8) are recorded.",
+        "field_path": "output.tractability.ensemble_consensus_fraction.fraction_with_strong_pocket"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "The interaction named ('Notch3 signalling via gamma-secretase cleavage') is disrupted by a small molecule only at GAMMA-SECRETASE, a separate multi-subunit intramembrane protease \u2014 not at a pocket on NOTCH3. The pocket scan (deployed Modal app druggability-pocket-scan; fpocket 4.2.3 + P2Rank 2.5.1 + mdpocket) ran on the apo NRR ensemble 4ZLP/5CZV/5CZX/6XSW (chains resolved by accession; in 5CZX chain A is the NRR and Fab chains H/L are present, L flagged as a polymer-ligand contributing 50% of one pocket's lining). It found real cavities (15-24 pockets/structure at D=1.6, largest 293-514 A^3; merged >1000 A^3 at D=2.4; mdpocket persistent cavity 465-704 A^3) but NONE could be anchored to a small-molecule site: there is no holo ligand, no partner complex for the enzymatic interaction, and the only mdpocket site is a ligand-unanchored persistence cavity of unverified identity. Volume and druggability are therefore not reported as site quantities (site_hypothesis_basis = not_established). All structures are apo, so cryptic risk is high and geometric scoring is blind (rule 3). Full-length disorder is 25.8% (metapredict); the region just C-terminal to the NRR (1628-1816, juxtamembrane) is disordered. Reading any of these geometric numbers as a NOTCH3 druggability verdict would be a category error: the chemistry that exists targets gamma-secretase.",
+        "field_path": "output.tractability.caveat"
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.disorder_fraction carries no evidence or assumption link.",
+        "field_path": null
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "Two experiments. (1) Test whether any small molecule binds a NOTCH3 pocket DIRECTLY: SPR/ITC or a fragment/biophysical screen against the isolated NRR (UniProt 1378-1640) and against the intracellular ANK domain. (2) Confirm the mechanism of the ~1 nM cellular actives is gamma-secretase inhibition: a biochemical gamma-secretase cleavage assay plus a counter-screen of the top compounds across NOTCH1-4 and non-Notch substrates (e.g. APP), to quantify the pan-Notch/APP selectivity liability.",
+        "result": "Whether NOTCH3 (as opposed to gamma-secretase) presents a druggable small-molecule pocket at all, and whether any of the existing chemistry has a NOTCH3-selective binding component rather than being purely gamma-secretase inhibition acting on the whole Notch family.",
+        "meaning": "All 57 reported actives derive from a pan-Notch/NICD cellular cleavage reporter or undefined patent boilerplate, and the top compound is equipotent (1.0 nM) on NOTCH1 and NOTCH3 via identical intracellular-domain reporters \u2014 the signature of a gamma-secretase inhibitor. No ChEMBL assay measures binding to a NOTCH3 pocket, and all 6 crystal structures are apo, so the geometric axis cannot anchor a site. Whether NOTCH3 itself is small-molecule bindable is therefore genuinely unmeasured."
+      },
+      {
+        "change": "If the falsification check '1. Does the actives count collapse to one assay? (assay-description GROUP BY)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2. Is the best potency from a characterised assay?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2b. Cross-accession check on the top compound' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2c. Are approved-drug rows in the bioactivity table real precedent?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '3. Do the actives collapse to one series or lab?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '4. Is any holo ligand actually drug-like? (holo detection)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '5. Does a pocket appear in only one crystal form? / 5a. Is a low or swinging druggability being read as a finding?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '6. Is the accession mapping real? (n_target_components)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '7. What was tried in the clinic and why did it stop? (Paperclip papers)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '8. Is a look-alike being counted?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '9. Is this our question at all? (ran, did not fire \u2014 no literature-provenance ask needed)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '10 / 10b / 11. Separation / power / label-measurement confound checks (ran; no separation, threshold or negative boundary is relied on)' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": "tid 109578 (SINGLE PROTEIN, Q9UM47, n_target_components=1); a separate pan-Notch family target tid 119724 ('Notch receptor', n_target_components=4) also maps to this accession",
+          "best_potency_nm": 1.0,
+          "best_potency_characterised": false,
+          "distinct_actives": 57,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 1,
+          "terminated_programs": 1
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "not_run",
+          "site_hypothesis_basis": "not_established",
+          "structure_pdb_id": null,
+          "fpocket_rank": null,
+          "prank_rank": null,
+          "n_pockets": null,
+          "pocket_volume_d16_a3": null,
+          "ligand_site_jaccard": null,
+          "cryptic_pocket_risk": "high",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved Q9UM47",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "apo_experimental \u2014 5CZX",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "no reportable site",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "57 actives",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "checks recorded",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "insufficient_evidence / retrieved_precedent",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "Two experiments. (1) Test whether any small molecule binds a NOTCH3 pocket DIRECTLY: SPR/ITC or a fragment/biophysical screen against the isolated NRR (UniProt 1378-1640) and against the intracellular ANK domain. (2) Confirm the mechanism of the ~1 nM cellular actives is gamma-secretase inhibition: a biochemical gamma-secretase cleavage assay plus a counter-screen of the top compounds across NOTCH1-4 and non-Notch substrates (e.g. APP), to quantify the pan-Notch/APP selectivity liability.",
+        "rationale": "All 57 reported actives derive from a pan-Notch/NICD cellular cleavage reporter or undefined patent boilerplate, and the top compound is equipotent (1.0 nM) on NOTCH1 and NOTCH3 via identical intracellular-domain reporters \u2014 the signature of a gamma-secretase inhibitor. No ChEMBL assay measures binding to a NOTCH3 pocket, and all 6 crystal structures are apo, so the geometric axis cannot anchor a site. Whether NOTCH3 itself is small-molecule bindable is therefore genuinely unmeasured.",
+        "resolves": "Whether NOTCH3 (as opposed to gamma-secretase) presents a druggable small-molecule pocket at all, and whether any of the existing chemistry has a NOTCH3-selective binding component rather than being purely gamma-secretase inhibition acting on the whole Notch family."
+      },
+      "figure": {
+        "kind": "none",
+        "path": null,
+        "caption": null,
+        "present": false,
+        "note": "No figure applies to this run."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "5CZX",
+          "4ZLP",
+          "5CZV",
+          "6XSW"
+        ],
+        "chembl_target_id": "tid 109578 (SINGLE PROTEIN, Q9UM47, n_target_components=1); a separate pan-Notch family target tid 119724 ('Notch receptor', n_target_components=4) also maps to this accession",
+        "uniprot_accession": "Q9UM47",
+        "tools": [
+          "fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 (rescore) + mdpocket, via deployed Modal app druggability-pocket-scan",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:22a6096f99c31ec25afca0159766242a45d9b1f93ce19383a2235bb4e3f93e32"
+    }
+  }
+}

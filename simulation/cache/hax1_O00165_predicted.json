@@ -1,0 +1,772 @@
+{
+  "_fixture": "INTEGRATION FIXTURE, NOT A VALIDATOR-CALIBRATION EXAMPLE AND NOT A CONTRACT. Built 2026-08-16 to fill a schema-corpus shape never previously seen with real data: structure.tier=='predicted' (the ESMFold structure-less fallback of rule 4e). Real tool runs throughout; every unretrievable value is null with a reason in not_found. Do NOT calibrate the validator or rubric against it; re-run rather than trust it if the pipeline has changed. Companion to the beta-catenin not_tractable fixture.",
+  "_pipeline_state": {
+    "run_date": "2026-08-16",
+    "esmfold": "structure-select/predicted_structure_fallback.py -> cofold-check/predict.esmfold_predict, proto_tools on Modal GPU (proto-env, workspace rafwiewiora); seed 42, num_recycles 4; pTM 0.2153, avg_plddt 0.5119, avg_pae 26.71, fold_confidence 'unreliable'",
+    "pocket_scan": "DEPLOYED Modal app druggability-pocket-scan (redeployed from current source to expose predicted_structures), fpocket 4.2.3 + P2Rank 2.5.1, D swept {1.6,2.4}, on predicted_structures={ESMFOLD_O00165}",
+    "rules_in_force": [
+      "rule 4e: structure-less orphan folded with ESMFold, scan returned WITH warnings, never nulled for low pTM (only a tool failure nulls)",
+      "rule 4.0 / 4b: max_druggability_no_ligand_site is the only site basis available on this unanchored model and is FORBIDDEN from producing a reportable value; site_hypothesis_basis=not_established, axis carries no site definition",
+      "rule 4a: pooled volume >1000 A^3 is a merge artifact, not a site volume",
+      "rule 13: affinity / cofold / patents / (structural-neighbour, here) nulled with reasons",
+      "rule 14: every count reconciled against an independent aggregate"
+    ],
+    "known_stale_risk": "Snapshot. Re-run rather than trust it if the pipeline has changed."
+  },
+  "input": {
+    "uniprot_accession": "O00165",
+    "as_of_date": null,
+    "disease_context": "HAX1-dependent anti-apoptotic signalling in cancer",
+    "interaction_to_disrupt": null,
+    "mechanism_hypothesis": null
+  },
+  "target": {
+    "uniprot_accession": "O00165",
+    "gene_symbol": "HAX1",
+    "protein_name": "HCLS1-associated protein X-1",
+    "organism": "Homo sapiens",
+    "sequence_length": 279,
+    "sources": [
+      "paperclip_sql -s proteins: uniprot_v.proteins WHERE accession='O00165' (single-row identity; sequence_length 279)"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "insufficient_evidence",
+  "verdict_basis": "none",
+  "axis_conflict": "No genuine axis disagreement: both axes are thin. Retrieved precedent is 2 small molecules with a best measured binding of ~340 uM; the computed axis has no experimental structure and only an UNRELIABLE ESMFold model (pTM 0.215, 98.2% predicted disorder), on which no site basis survives. The high within-structure druggability values the scan reported on the model (0.808 at D=1.6, 0.966 at D=2.4) are artifacts of max_druggability_no_ligand_site on an unreliable fold, not evidence of tractability (rule 4.0).",
+  "target_precedent": {
+    "chembl_target_id": null,
+    "distinct_actives": 2,
+    "compound_modality_split": {
+      "_note": "Rule 1b/1c: modality from SMILES via precedent-lookup/modality.py, not molecule_type. Both compounds classified small_molecule.",
+      "small_molecule": 2,
+      "peptide": 0,
+      "macrocyclic_peptide": 0,
+      "oligonucleotide": 0,
+      "oligosaccharide": 0,
+      "protein_or_antibody": 0,
+      "modality_unknown": 0
+    },
+    "modality_unknown_count": 0,
+    "assay_concentration": {
+      "top_assay_description": "Binding affinity to human HAX1 incubated for 45 mins by Kinobead based pull down",
+      "top_assay_share_pct": 50.0,
+      "measures_a_different_target": false,
+      "assay_type_split": {
+        "binding_B": 4,
+        "functional_F": 0
+      }
+    },
+    "best_potency_nm": 339696.8,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "Binding affinity to human HAX1 by Kinobead pull-down (ChEMBL bioactivities_by_accession, molregno 2955915, ED50 339696.8 nM, pchembl 3.47, assay_type B)",
+    "best_potency_characterised": true,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [],
+    "patents": {
+      "count": null,
+      "source": "Paperclip returns 'Patents sources are not available.' (rule 13)"
+    },
+    "terminated_programs": [],
+    "as_of_leakage": [],
+    "sources": [
+      "paperclip_sql -s proteins: chembl_v.compounds_by_accession / bioactivities_by_accession / drugs_by_accession for O00165",
+      "count reconciliation (rule 14): 2 distinct compounds (COUNT(DISTINCT molregno)=2); 4 bioactivity rows (COUNT(*)=4); 0 approved drug rows (COUNT(*)=0)",
+      "modality by structure via precedent-lookup/modality.py: molregno 2955915 small_molecule (MW 503.5, 37 heavy); molregno 2260965 small_molecule (MW 851.5, 59 heavy)",
+      "best potency: molregno 2955915, ED50 339696.8 nM from the Kinobead HAX1 pull-down (a direct binding assay -> characterised)"
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "Presence of an approved biologic is target validation, NOT small-molecule tractability. No approved biologics found for HAX1 (intracellular anti-apoptotic protein; drugs_by_accession returned 0 rows, reconciled)."
+  },
+  "family_precedent": {
+    "pfam": null,
+    "family_actives": null,
+    "best_family_potency_nm": null,
+    "best_family_potency_modality": null,
+    "best_family_target": null,
+    "sources": [
+      "uniprot_v.cross_references for O00165: no Pfam cross-reference (present: GO, EMBL, Ensembl, PANTHER, RefSeq, ...; none is Pfam) -> no Pfam family to query"
+    ]
+  },
+  "structural_neighbour_precedent": {
+    "_note": "NOT RUN. No experimental query structure exists (0 PDB entries), and the ESMFold model (pTM 0.215, 98% disordered) is too unreliable to seed a Foldseek search. Empty list means unmeasured, NOT 'no neighbours'. This is also the 'no usable homolog' finding that makes the rule-4e predicted fallback the correct route.",
+    "method": "foldseek-search (Proto, CPU, in-process)",
+    "query_structure": null,
+    "neighbours": [],
+    "sources": []
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "NOT RUN. Needs a pocket-descriptor similarity index across targets (none in this pipeline) and a cofold transfer (unavailable, rule 13). Empty list means unmeasured.",
+    "candidates": [],
+    "sources": []
+  },
+  "structure": {
+    "tier": "predicted",
+    "pdb_id": null,
+    "resolution_a": null,
+    "biological_unit_used": "ESMFold monomer model (single chain A), full 279-residue UniProt canonical sequence",
+    "bound_ligand": {
+      "comp_id": null,
+      "heavy_atoms": null,
+      "is_druglike": null,
+      "is_known_frequent_hitter": null
+    },
+    "total_pdb_structures": 0,
+    "holo_count": 0,
+    "apo_count": 0,
+    "ensemble_used": [
+      "ESMFOLD_O00165"
+    ],
+    "predicted_plddt": 0.512,
+    "_esmfold": {
+      "ptm": 0.2153,
+      "avg_plddt": 0.5119,
+      "avg_pae": 26.71,
+      "fold_confidence": "unreliable",
+      "seed": 42,
+      "num_recycles": 4,
+      "wall_clock_s": 25.4,
+      "input_note": "UniProt canonical sequence for O00165, 279 residues \u2014 FULL chain folded (no ordered-core range supplied).",
+      "warnings": [
+        "PREDICTED STRUCTURE \u2014 this pocket scan ran on an ESMFold model, not a deposited experimental structure. Every pocket is a hypothesis about a computational model, one level less trustworthy than the rest of the computed axis.",
+        "ESMFold pTM 0.215 is below 0.55 \u2014 the fold itself is UNRELIABLE and the topology may be wrong. Returned ONLY to honour the contract that a structure-less target still gets an answer (rule 4e); the correct reading is 'no usable structure by any route', and the pocket numbers carry no weight."
+      ],
+      "tool_per_structure_tier": "apo (no drug-like ligand on the model); dossier tier is 'predicted' because it is an ESMFold model (structure_origin=esmfold_predicted)"
+    },
+    "cofold_control": {
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "ESMFold via structure-select/predicted_structure_fallback.py -> cofold-check/predict.esmfold_predict (proto_tools, Modal GPU proto-env, workspace rafwiewiora): pTM 0.2153, avg_plddt 0.5119, avg_pae 26.71, fold_confidence 'unreliable', seed 42, num_recycles 4, 2026-08-16",
+      "pdb_v.structures_by_accession: 0 entries for O00165 (COUNT(DISTINCT entry_id)=0, reconciled) \u2014 no experimental structure; predicted-tier fallback per rule 4e"
+    ]
+  },
+  "tractability": {
+    "pocket_volume_a3": {
+      "min": null,
+      "max": null,
+      "spread_pct": null,
+      "clustering_d": null,
+      "primary_d1_6_a3": null,
+      "site_pocket_selected_by": null,
+      "_model_raw_pooled": "scan returned pooled cavity volume 1023.99-1368.91 A^3 (spread 25.2%) across D=1.6/2.4 on the model, basis max_druggability_no_ligand_site. NOT reported as a site volume: >1000 A^3 is the merge-artifact signature (rule 4a) and max_druggability_no_ligand_site identifies no site (rule 4.0). Site not established."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "site_pocket_selected_by": null,
+      "load_bearing": false,
+      "_comparability": "N/A \u2014 no site established, so no within-structure range is reported.",
+      "_false_negative_rate": "Not load-bearing and never compared across structures. Low/high druggability on a single file is normalised over that file's own pocket list (RORgt 4NB6 0.827 vs 6C1P 0.009, same site; JAK1 median 0.009 across nine approved drugs). Direction and named cases, not a percentage.",
+      "_model_raw": "scan returned within-structure druggability 0.808 (D=1.6, fpocket rank 7 of 20, PRANK rank 1) and 0.966 (D=2.4, fpocket rank 30 of 34) on the model. NOT reportable \u2014 basis max_druggability_no_ligand_site (rule 4.0 forbids it producing a value) on an unreliable fold."
+    },
+    "site_pocket_rank": {
+      "_note": "Nulled deliberately. The scan's within-structure ranks exist (fpocket 7/20, PRANK 1 at D=1.6) but were obtained via max_druggability_no_ligand_site on a model with no site basis \u2014 rule 4.0 forbids reporting them as the site. Raw values kept in pocket_druggability._model_raw.",
+      "fpocket": null,
+      "prank": null,
+      "n_pockets": null,
+      "structure_pdb_id": null
+    },
+    "ensemble_consensus_fraction": {
+      "n_structures": null,
+      "n_measurements": 2,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null
+    },
+    "pocket_hydrophobic_density": null,
+    "pocket_residues": [],
+    "site_hypothesis_basis": "not_established",
+    "mdpocket_site_definition_used": "none",
+    "site_centroid_to_ligand_distance_a": null,
+    "site_centroid_to_ligand_note": "no holo/ligand donor and no caller site_residues; site not established on the model",
+    "annotated_binding_site_overlap": null,
+    "ligand_site_jaccard": null,
+    "disorder_fraction": 0.9821,
+    "cryptic_pocket_risk": "undetermined",
+    "cryptic_mechanism": "undetermined",
+    "cryptic_evidence": {
+      "is_cryptic": null,
+      "n_apo_examined": null,
+      "n_apo_site_absent": null,
+      "site_present_in_apo_ensemble": null,
+      "basis": "cryptic census not run: a predicted single model with no apo/holo experimental ensemble (pocket_scan cryptic stage cryptic_status='not_run': needs both an apo and a holo structure; got 0 holo and 0 apo)",
+      "definition": "Vajda 2018 \u2014 cryptic only if the site is absent in all, or nearly all, unbound structures",
+      "source": "pocket_scan cryptic stage"
+    },
+    "cryptic_potency_prior": {
+      "expected_ceiling": "unknown",
+      "basis": "no site established and the fold is unreliable (pTM 0.215); achievable potency cannot be estimated"
+    },
+    "pocket_vs_interface": {
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": null,
+      "matches_mechanism_hypothesis": null
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": null,
+    "caveat": "PREDICTED-TIER, RULE 4e. HAX1 has no experimental structure (0 PDB entries) and no usable homolog (no Pfam family; the only query available is the model itself). It was folded with ESMFold at pTM 0.215 (fold_confidence 'unreliable', <0.55) and is 98.2% predicted-disordered (metapredict). The pocket scan ran on the model and returned pockets, but NO site basis survives (no holo donor, no caller site_residues, no homolog), so site_hypothesis_basis is not_established and the computed axis carries NO site definition (rule 4e/4.0). The pooled cavity volume (1024-1369 A^3) exceeds the 1000 A^3 merge threshold (rule 4a) and the high druggability values are max_druggability_no_ligand_site artifacts on an unreliable fold. Read: 'we could not crystallise it and the model is unsure' \u2014 the honest finding for a structure-less, disordered orphan, returned WITH warnings rather than nulled.",
+    "sources": [
+      "pocket_scan (DEPLOYED Modal app druggability-pocket-scan, fpocket 4.2.3 + P2Rank 2.5.1, D swept {1.6,2.4}) on predicted_structures={ESMFOLD_O00165}; site_hypothesis_basis not_established (rule 4e/4.0)",
+      "disorder_fraction 0.9821 from metapredict 3.0.2 (local CPU) on full-length UniProt O00165, high confidence, 279/279 residues in one disordered region"
+    ],
+    "method": {
+      "tool": "fpocket 4.2.3 (conda-forge)",
+      "version": "fpocket 4.2.3; P2Rank 2.5.1 rescore",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "ESMFOLD_O00165"
+      ],
+      "chains_used": {
+        "ESMFOLD_O00165": [
+          "A"
+        ]
+      }
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": []
+  },
+  "falsification": {
+    "checks_run": [
+      "Do all reported actives trace to a single paper/lab/series?",
+      "Are potencies only achieved at concentrations unreachable in tissue?",
+      "Does the pocket appear in one crystal form and no other?",
+      "Is the pocket an artifact of a crystallization additive, detergent, or cryoprotectant?",
+      "Are the actives known promiscuous binders, aggregators, or PAINS?",
+      "Were there clinical programs against this target that were terminated?"
+    ],
+    "findings": [
+      "Both actives come from HAX1 target-engagement chemoproteomics (Kinobead and cellular pull-down assays); the best measured binding is ~340 uM (molregno 2955915). No potent, characterised small-molecule series exists.",
+      "340 uM is not a therapeutically reachable potency; there is no concentration-independent potency to defend.",
+      "No experimental structure exists (0 PDB entries), so 'one crystal form' and 'crystallisation-additive' checks are not applicable \u2014 the only geometry is an unreliable ESMFold model (pTM 0.215).",
+      "PAINS/aggregator screening not performed: there is no potent active for which such a flag would change the (already insufficient) conclusion.",
+      "No terminated clinical programs found against HAX1 (drugs_by_accession=0)."
+    ],
+    "survived": false
+  },
+  "next_experiment": {
+    "description": "Obtain an experimental structure of an ordered HAX1 construct or a HAX1 complex with a stabilising partner (e.g. HS1/HCLS1 or a mitochondrial partner) by crystallography or cryo-EM before advancing any pocket-based tractability claim.",
+    "rationale": "HAX1 is 98.2% predicted-disordered (metapredict) and folds at pTM 0.215 (ESMFold, 'unreliable'); geometric pocket scoring on such a model is uninterpretable, and there is no experimental structure and no Pfam family to transfer a site from.",
+    "resolves": "Whether HAX1 has any orderable, ligandable site at all \u2014 the single fact that separates 'insufficient_evidence' from a computed tractability verdict for this orphan."
+  },
+  "not_found": [
+    {
+      "field": "tractability.pocket_volume_a3",
+      "reason": "site not established: max_druggability_no_ligand_site is the only basis available on this unanchored predicted model (no ligand donor, no caller site_residues, no homolog), which rule 4.0 forbids from producing a reportable value; the scan's pooled cavity volume (1024-1369 A^3) also exceeds the 1000 A^3 merge threshold (rule 4a). No site volume, spread, or primary_d1_6_a3 is reportable.",
+      "signature": "site_hypothesis_basis=not_established; site_pocket_selected_by=max_druggability_no_ligand_site"
+    },
+    {
+      "field": "tractability.pocket_druggability",
+      "reason": "no site established; druggability is within-structure-normalised and here anchored to no site. Raw model values kept only in pocket_druggability._model_raw for the record.",
+      "signature": "rule 4.0 / max_druggability_no_ligand_site"
+    },
+    {
+      "field": "tractability.pocket_hydrophobic_density",
+      "reason": "no site established, so there is no site hydrophobic density to report."
+    },
+    {
+      "field": "tractability.annotated_binding_site_overlap",
+      "reason": "no UniProt binding-site annotation to overlap and no established site on the model."
+    },
+    {
+      "field": "tractability.ligand_site_jaccard",
+      "reason": "no holo ligand site exists (0 experimental structures; the model carries no ligand)."
+    },
+    {
+      "field": "tractability.max_backbone_ca_displacement_a",
+      "reason": "cryptic displacement needs an apo+holo pair; none exists (cryptic stage not_run: 0 holo, 0 apo)."
+    },
+    {
+      "field": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket",
+      "reason": "a single predicted model; no ensemble consensus fraction is defined (2 measurements = one model x two clustering values)."
+    },
+    {
+      "field": "affinity",
+      "reason": "no affinity predictor in this deployment (rule 13); rule 12's mandatory positive control is unsatisfiable, not skipped."
+    },
+    {
+      "field": "structure.cofold_control",
+      "reason": "no cofolding model in this deployment (rule 13)."
+    },
+    {
+      "field": "pocket_neighbour_precedent.candidates",
+      "reason": "not run: no pocket-descriptor similarity index across targets and no cofold transfer (rule 13). Empty list = unmeasured."
+    },
+    {
+      "field": "structural_neighbour_precedent.neighbours",
+      "reason": "not run: no experimental query structure (0 PDB entries) and the ESMFold model (pTM 0.215) is too unreliable to seed Foldseek. Empty list = unmeasured, not 'no neighbours'. This is also the 'no usable homolog' finding behind the rule-4e predicted fallback."
+    },
+    {
+      "field": "family_precedent.pfam",
+      "reason": "O00165 has no Pfam cross-reference in uniprot_v.cross_references (present: GO, EMBL, Ensembl, PANTHER, RefSeq, ...; none is Pfam), so there is no Pfam family and no family_actives/best_family_potency to query."
+    },
+    {
+      "field": "target_precedent.patents.count",
+      "reason": "Paperclip returns 'Patents sources are not available.' (rule 13)."
+    },
+    {
+      "field": "target_precedent.modality_unknown_count",
+      "reason": "disclosed as 0: both compounds were classified small_molecule from SMILES (rule 1b/1c), so nothing abstained."
+    }
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: O00165",
+      "result": "insufficient_evidence",
+      "plain_language": "Insufficient evidence for O00165: 2 actives; best 339697 nM.",
+      "status": "INCONCLUSIVE",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 339696.8,
+        "unit": "nM",
+        "display": "339697 nM",
+        "meaning": "Best measured potency of a small molecule against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.distinct_actives",
+        "label": "Distinct small-molecule actives",
+        "value": 2,
+        "unit": "compounds",
+        "display": "2 compounds",
+        "meaning": "Distinct small molecules with measured activity; a count of compounds, not of assays (rules 1b, 14).",
+        "direction": "positive",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "neutral",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.9821,
+        "unit": "fraction",
+        "display": "0.9821",
+        "meaning": "Fraction of the sequence predicted disordered; high disorder disfavours a stable small-molecule pocket.",
+        "direction": "negative",
+        "evidence_ids": [],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.predicted_plddt",
+        "label": "Predicted-model pLDDT",
+        "value": 0.512,
+        "unit": "score",
+        "display": "0.512",
+        "meaning": "ESMFold per-residue confidence (0-100). A model-confidence SCORE, not a probability of tractability.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.predicted_model"
+        ],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "none",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 339696.8,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": null,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "insufficient_evidence",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "Binding affinity to human HAX1 by Kinobead pull-down (ChEMBL bioactivities_by_accession, molregno 2955915, ED50 339696.8 nM, pchembl 3.47, assay_type B)",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.predicted_model",
+        "claim": "ESMFold predicted model used because no usable experimental structure exists.",
+        "source_type": "prediction",
+        "source_id": "ESMFold",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "LOW",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": null,
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "not_established",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "No probabilistic uncertainty model was run; ranges, where present, are clustering scenarios or heuristic scores, never confidence intervals."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "site not established: max_druggability_no_ligand_site is the only basis available on this unanchored predicted model (no ligand donor, no caller site_residues, no homolog), which rule 4.0 forbids from producing a reportable value; the scan's pooled cavity volume (1024-1369 A^3) also exceeds the 1000 A^3 merge threshold (rule 4a). No site volume, spread, or primary_d1_6_a3 is reportable.",
+        "field_path": "output.tractability.pocket_volume_a3"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no site established; druggability is within-structure-normalised and here anchored to no site. Raw model values kept only in pocket_druggability._model_raw for the record.",
+        "field_path": "output.tractability.pocket_druggability"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no site established, so there is no site hydrophobic density to report.",
+        "field_path": "output.tractability.pocket_hydrophobic_density"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no UniProt binding-site annotation to overlap and no established site on the model.",
+        "field_path": "output.tractability.annotated_binding_site_overlap"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no holo ligand site exists (0 experimental structures; the model carries no ligand).",
+        "field_path": "output.tractability.ligand_site_jaccard"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "cryptic displacement needs an apo+holo pair; none exists (cryptic stage not_run: 0 holo, 0 apo).",
+        "field_path": "output.tractability.max_backbone_ca_displacement_a"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "a single predicted model; no ensemble consensus fraction is defined (2 measurements = one model x two clustering values).",
+        "field_path": "output.tractability.ensemble_consensus_fraction.fraction_with_strong_pocket"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no affinity predictor in this deployment (rule 13); rule 12's mandatory positive control is unsatisfiable, not skipped.",
+        "field_path": "output.affinity"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no cofolding model in this deployment (rule 13).",
+        "field_path": "output.structure.cofold_control"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "not run: no pocket-descriptor similarity index across targets and no cofold transfer (rule 13). Empty list = unmeasured.",
+        "field_path": "output.pocket_neighbour_precedent.candidates"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "not run: no experimental query structure (0 PDB entries) and the ESMFold model (pTM 0.215) is too unreliable to seed Foldseek. Empty list = unmeasured, not 'no neighbours'. This is also the 'no usable homolog' finding behind the rule-4e predicted fallback.",
+        "field_path": "output.structural_neighbour_precedent.neighbours"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "O00165 has no Pfam cross-reference in uniprot_v.cross_references (present: GO, EMBL, Ensembl, PANTHER, RefSeq, ...; none is Pfam), so there is no Pfam family and no family_actives/best_family_potency to query.",
+        "field_path": "output.family_precedent.pfam"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Paperclip returns 'Patents sources are not available.' (rule 13).",
+        "field_path": "output.target_precedent.patents.count"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "disclosed as 0: both compounds were classified small_molecule from SMILES (rule 1b/1c), so nothing abstained.",
+        "field_path": "output.target_precedent.modality_unknown_count"
+      },
+      {
+        "code": "STRUCTURE_PREDICTED",
+        "severity": "WARNING",
+        "message": "The computed axis ran on a predicted model, not an experimental structure; treat it as flagged, not measured (rule 4e).",
+        "field_path": "output.structure.tier"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "PREDICTED-TIER, RULE 4e. HAX1 has no experimental structure (0 PDB entries) and no usable homolog (no Pfam family; the only query available is the model itself). It was folded with ESMFold at pTM 0.215 (fold_confidence 'unreliable', <0.55) and is 98.2% predicted-disordered (metapredict). The pocket scan ran on the model and returned pockets, but NO site basis survives (no holo donor, no caller site_residues, no homolog), so site_hypothesis_basis is not_established and the computed axis carries NO site definition (rule 4e/4.0). The pooled cavity volume (1024-1369 A^3) exceeds the 1000 A^3 merge threshold (rule 4a) and the high druggability values are max_druggability_no_ligand_site artifacts on an unreliable fold. Read: 'we could not crystallise it and the model is unsure' \u2014 the honest finding for a structure-less, disordered orphan, returned WITH warnings rather than nulled.",
+        "field_path": "output.tractability.caveat"
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.distinct_actives carries no evidence or assumption link.",
+        "field_path": null
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.approved_small_molecules carries no evidence or assumption link.",
+        "field_path": null
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.clinical_stage_small_molecules carries no evidence or assumption link.",
+        "field_path": null
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.disorder_fraction carries no evidence or assumption link.",
+        "field_path": null
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "Obtain an experimental structure of an ordered HAX1 construct or a HAX1 complex with a stabilising partner (e.g. HS1/HCLS1 or a mitochondrial partner) by crystallography or cryo-EM before advancing any pocket-based tractability claim.",
+        "result": "Whether HAX1 has any orderable, ligandable site at all \u2014 the single fact that separates 'insufficient_evidence' from a computed tractability verdict for this orphan.",
+        "meaning": "HAX1 is 98.2% predicted-disordered (metapredict) and folds at pTM 0.215 (ESMFold, 'unreliable'); geometric pocket scoring on such a model is uninterpretable, and there is no experimental structure and no Pfam family to transfer a site from."
+      },
+      {
+        "change": "If the falsification check 'Do all reported actives trace to a single paper/lab/series?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Are potencies only achieved at concentrations unreachable in tissue?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Does the pocket appear in one crystal form and no other?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Is the pocket an artifact of a crystallization additive, detergent, or cryoprotectant?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Are the actives known promiscuous binders, aggregators, or PAINS?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Were there clinical programs against this target that were terminated?' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": null,
+          "best_potency_nm": 339696.8,
+          "best_potency_characterised": true,
+          "distinct_actives": 2,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 0,
+          "terminated_programs": 0
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "not_run",
+          "site_hypothesis_basis": "not_established",
+          "structure_pdb_id": null,
+          "fpocket_rank": null,
+          "prank_rank": null,
+          "n_pockets": null,
+          "pocket_volume_d16_a3": null,
+          "ligand_site_jaccard": null,
+          "cryptic_pocket_risk": "undetermined",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved O00165",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "predicted \u2014 None",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "no reportable site",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "2 actives",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "checks recorded",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "insufficient_evidence / none",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "Obtain an experimental structure of an ordered HAX1 construct or a HAX1 complex with a stabilising partner (e.g. HS1/HCLS1 or a mitochondrial partner) by crystallography or cryo-EM before advancing any pocket-based tractability claim.",
+        "rationale": "HAX1 is 98.2% predicted-disordered (metapredict) and folds at pTM 0.215 (ESMFold, 'unreliable'); geometric pocket scoring on such a model is uninterpretable, and there is no experimental structure and no Pfam family to transfer a site from.",
+        "resolves": "Whether HAX1 has any orderable, ligandable site at all \u2014 the single fact that separates 'insufficient_evidence' from a computed tractability verdict for this orphan."
+      },
+      "figure": {
+        "kind": "none",
+        "path": null,
+        "caption": null,
+        "present": false,
+        "note": "No figure applies to this run."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "ESMFOLD_O00165"
+        ],
+        "chembl_target_id": null,
+        "uniprot_accession": "O00165",
+        "tools": [
+          "fpocket 4.2.3 (conda-forge)",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:63969943b87914f126966965fdcb062612cf0c8656caa69f550d704e1f9c9a63"
+    }
+  }
+}

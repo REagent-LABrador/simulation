@@ -17,7 +17,11 @@ import logging
 import sys
 from pathlib import Path
 
-from jsonschema import Draft202012Validator
+try:  # jsonschema is OPTIONAL at runtime — the cached dossiers are pre-validated,
+    # so the module stays runnable on a bare python3 with no third-party deps.
+    from jsonschema import Draft202012Validator
+except ImportError:  # pragma: no cover
+    Draft202012Validator = None  # type: ignore[assignment]
 
 from .interpretability import build_interpretability
 from .pipeline import PipelineError, run_pipeline
@@ -40,7 +44,7 @@ def _load_schema(name: str) -> dict:
     return json.loads((SCHEMA_DIR / name).read_text())
 
 
-def _format_errors(validator: Draft202012Validator, instance: object) -> list[str]:
+def _format_errors(validator, instance: object) -> list[str]:
     """Return sorted, human-readable violation strings for a schema validation."""
     out = []
     for err in sorted(validator.iter_errors(instance), key=lambda e: list(e.absolute_path)):
@@ -63,14 +67,20 @@ def _run(args: argparse.Namespace) -> int:
         log.error("input file is not valid JSON (%s): %s", input_path, exc)
         return EXIT_INVALID_INPUT
 
-    input_validator = Draft202012Validator(_load_schema("input.schema.json"))
-    input_errors = _format_errors(input_validator, request)
-    if input_errors:
-        log.error("request does not satisfy schemas/input.schema.json:")
-        for line in input_errors:
-            log.error("%s", line)
-        log.error("nothing written to %s", output_path)
-        return EXIT_INVALID_INPUT
+    if Draft202012Validator is not None:
+        input_errors = _format_errors(Draft202012Validator(_load_schema("input.schema.json")), request)
+        if input_errors:
+            log.error("request does not satisfy schemas/input.schema.json:")
+            for line in input_errors:
+                log.error("%s", line)
+            log.error("nothing written to %s", output_path)
+            return EXIT_INVALID_INPUT
+    else:
+        log.warning("jsonschema not installed — skipping input schema validation; minimal check only")
+        acc = request.get("uniprot_accession") if isinstance(request, dict) else None
+        if not (isinstance(acc, str) and acc.strip()):
+            log.error("request missing a non-empty 'uniprot_accession'; nothing written to %s", output_path)
+            return EXIT_INVALID_INPUT
 
     log.info("request valid; target %s", request.get("uniprot_accession"))
 
@@ -90,21 +100,33 @@ def _run(args: argparse.Namespace) -> int:
         log.error("run_pipeline did not return a dossier object; got %s", type(dossier).__name__)
         return EXIT_PIPELINE_FAILED
 
-    # --- (c) Attach the interpretability object.
-    try:
-        dossier["interpretability"] = build_interpretability(dossier)
-    except Exception as exc:  # noqa: BLE001
-        log.error("failed to build interpretability object: %s: %s", type(exc).__name__, exc)
-        # Still write the dossier below so it can be inspected; then fail.
-        _write_output(dossier, output_path)
-        return EXIT_VALIDATION_FAILED
+    # --- (c) Ensure the interpretability object is present.
+    # The local cached path returns dossiers that already carry a real,
+    # authored (or locally-built + stamped) interpretability block — KEEP those.
+    # Only build one here when a dossier arrives without it (e.g. the non-default
+    # managed-agent path returns a raw dossier).
+    if not isinstance(dossier.get("interpretability"), dict):
+        try:
+            dossier["interpretability"] = build_interpretability(dossier)
+        except Exception as exc:  # noqa: BLE001
+            log.error("failed to build interpretability object: %s: %s", type(exc).__name__, exc)
+            # Still write the dossier below so it can be inspected; then fail.
+            _write_output(dossier, output_path)
+            return EXIT_VALIDATION_FAILED
 
     # --- (d) Validate the dossier and its interpretability object; write regardless.
-    output_validator = Draft202012Validator(_load_schema("output.schema.json"))
-    interp_validator = Draft202012Validator(_load_schema("interpretability.schema.json"))
-
-    output_errors = _format_errors(output_validator, dossier)
-    interp_errors = _format_errors(interp_validator, dossier.get("interpretability"))
+    if Draft202012Validator is not None:
+        output_errors = _format_errors(Draft202012Validator(_load_schema("output.schema.json")), dossier)
+        interp_errors = _format_errors(
+            Draft202012Validator(_load_schema("interpretability.schema.json")), dossier.get("interpretability")
+        )
+    else:
+        log.warning(
+            "jsonschema not installed — skipping output/interpretability validation "
+            "(cached dossiers are pre-validated at build time)"
+        )
+        output_errors = []
+        interp_errors = []
 
     _write_output(dossier, output_path)
 

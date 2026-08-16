@@ -1,12 +1,22 @@
-# Locked runner dependencies for the druggability-dossier simulation module.
-# The runner itself needs only Python's stdlib + jsonschema. The heavy scientific
-# stages (fpocket, mdpocket, gemmi, GPU folding) run remotely in the Claude Managed
-# Agent's sandbox, so NONE of them are needed to run this module.
+# Locked PYTHON dependencies for the druggability-dossier simulation module.
 #
-# Setup (one command):
+# THE DEFAULT RUN NEEDS ONLY PYTHON + jsonschema. It runs LOCALLY and offline:
+#
+#   python3 -m simulation run --input in.json --output out.json
+#
+# resolves the request against the bundled cache in simulation/cache/ (real
+# dossiers) and never touches the cloud, Modal, Paperclip, a managed agent, or an
+# API key. That is the whole install for the integrator:
+#
 #   micromamba run -n druggability pip install -r simulation/requirements.txt
 #
-# Versions pinned to what is installed in the `druggability` env (Python 3.14).
+# OPTIONAL — the managed-agent path (SIMULATION_USE_AGENT=1, NON-DEFAULT) also
+# needs the vendored TypeScript runtime and its own extras, installed separately:
+#
+#   cd simulation/runtime && bun install     # + bun on PATH + ANTHROPIC_API_KEY + network
+#
+# None of that is required for the default run. Versions below are pinned to what
+# is installed in the `druggability` env (Python 3.14).
 jsonschema==4.26.0
 # jsonschema's own dependency closure, pinned for reproducibility:
 attrs==26.1.0

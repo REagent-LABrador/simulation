@@ -5,16 +5,18 @@ Run standalone:
 or:
     micromamba run -n druggability python -m unittest simulation.test_module
 
-Every test that needs a dossier uses a RECORDED REAL RESULT as a test double:
-examples/output.json is a real dossier the deployed agent produced, checked into
-the repo. We monkeypatch run_pipeline to return it (or to raise) so the contract
-mechanics -- input validation, output validation, exit codes, stdout cleanliness,
-interpretability attachment -- are exercised WITHOUT invoking the paid agent.
+The DEFAULT run is now the dependency-light LOCAL resolver over the bundled
+cache in simulation/cache/ (Python + jsonschema only — no cloud, no Modal, no
+Paperclip, no managed agent, no API key). So the end-to-end tests exercise the
+REAL default path with NO monkeypatch: a cache hit on examples/input.json (the
+real IRAK4 dossier) and a cache miss on an unknown accession (an honest,
+schema-valid insufficient-evidence dossier). The managed-agent behaviours are
+still covered by monkeypatching run_pipeline, since that path is non-default and
+requires tooling absent offline.
 """
 
 from __future__ import annotations
 
-import copy
 import io
 import json
 import logging
@@ -46,14 +48,6 @@ def _schema(name: str) -> dict:
     return json.loads((SCHEMA_DIR / name).read_text())
 
 
-def _recorded_dossier() -> dict:
-    """The recorded real result used as a test double, with any pre-existing
-    interpretability block stripped so the runner regenerates it."""
-    dossier = json.loads((EXAMPLES / "output.json").read_text())
-    dossier.pop("interpretability", None)
-    return dossier
-
-
 def _run_cli(argv: list[str]) -> tuple[int, str, str]:
     """Invoke cli.main(argv), capturing stdout and any logging emitted to stderr."""
     log_buf = io.StringIO()
@@ -73,23 +67,77 @@ def _run_cli(argv: list[str]) -> tuple[int, str, str]:
     return code, out_buf.getvalue(), log_buf.getvalue()
 
 
-class EndToEndSuccess(unittest.TestCase):
-    def test_success_writes_valid_output_and_clean_stdout(self):
-        dossier = _recorded_dossier()
+class EndToEndDefaultPathCacheHit(unittest.TestCase):
+    """The REAL default path: no monkeypatch, offline, resolves from the cache."""
+
+    def test_examples_input_is_a_real_cache_hit(self):
         with tempfile.TemporaryDirectory() as tmp:
             out_path = Path(tmp) / "o.json"
-            with mock.patch.object(cli, "run_pipeline", return_value=copy.deepcopy(dossier)):
-                code, stdout, stderr = _run_cli(
-                    ["run", "--input", str(EXAMPLES / "input.json"), "--output", str(out_path)]
-                )
+            code, stdout, stderr = _run_cli(
+                ["run", "--input", str(EXAMPLES / "input.json"), "--output", str(out_path)]
+            )
             self.assertEqual(code, cli.EXIT_OK, msg=stderr)
             self.assertEqual(stdout, "", "stdout must stay empty; results go to --output")
             self.assertTrue(out_path.exists(), "output file must be written")
 
             written = json.loads(out_path.read_text())
+            # Schema-valid dossier + schema-valid interpretability.
             Draft202012Validator(_schema("output.schema.json")).validate(written)
             self.assertIn("interpretability", written)
+            Draft202012Validator(_schema("interpretability.schema.json")).validate(
+                written["interpretability"]
+            )
             self.assertEqual(written["interpretability"]["schema_version"], "1.0.0")
+
+            # It is the real IRAK4 dossier, carrying its real numbers.
+            self.assertEqual(written["target"]["uniprot_accession"], "Q9NWZ3")
+            self.assertEqual(written["verdict"], "small_molecule_tractable")
+
+            # Marked as a LOCAL cached dossier for the orchestrator/UI.
+            ext = written["interpretability"]["extensions"]
+            self.assertEqual(ext["runtime_maturity"], "LOCAL")
+            self.assertIn("CACHED_DOSSIER", ext["qualifiers"])
+            self.assertEqual(ext["cache_hit"]["kind"], "exact")
+
+
+class EndToEndUnknownTargetHonest(unittest.TestCase):
+    """A target absent from the cache: valid dossier, honestly empty, no fabrication."""
+
+    def test_unknown_accession_returns_insufficient_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            inp = Path(tmp) / "in.json"
+            inp.write_text(json.dumps({
+                "uniprot_accession": "P99999",
+                "as_of_date": None,
+                "disease_context": None,
+                "interaction_to_disrupt": None,
+                "mechanism_hypothesis": None,
+            }))
+            out_path = Path(tmp) / "o.json"
+            code, stdout, stderr = _run_cli(
+                ["run", "--input", str(inp), "--output", str(out_path)]
+            )
+            self.assertEqual(code, cli.EXIT_OK, msg=stderr)
+            self.assertEqual(stdout, "", "stdout must stay empty")
+
+            d = json.loads(out_path.read_text())
+            Draft202012Validator(_schema("output.schema.json")).validate(d)
+            Draft202012Validator(_schema("interpretability.schema.json")).validate(
+                d["interpretability"]
+            )
+
+            self.assertEqual(d["verdict"], "insufficient_evidence")
+            self.assertEqual(d["verdict_basis"], "none")
+
+            # A NOT_COMPUTED_LOCALLY limitation, and no fabricated numbers.
+            codes = [lim["code"] for lim in d["interpretability"]["limitations"]]
+            self.assertIn("NOT_COMPUTED_LOCALLY", codes)
+            self.assertIsNone(d["target_precedent"]["distinct_actives"])
+            self.assertIsNone(d["target_precedent"]["best_potency_nm"])
+            self.assertIsNone(d["target_precedent"]["approved_small_molecules_count"])
+            self.assertEqual(d["structure"]["tier"], "none")
+            # Every axis is recorded as null-with-reason, not as 0/[] elsewhere.
+            self.assertTrue(len(d["not_found"]) >= 1)
 
 
 class MalformedInput(unittest.TestCase):
@@ -111,6 +159,8 @@ class MalformedInput(unittest.TestCase):
 
 
 class PipelineRaises(unittest.TestCase):
+    """The non-default agent path fails loudly and writes nothing (monkeypatched)."""
+
     def test_pipeline_failure_is_loud_and_writes_nothing(self):
         with tempfile.TemporaryDirectory() as tmp:
             out_path = Path(tmp) / "o.json"

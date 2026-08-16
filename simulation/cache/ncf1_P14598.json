@@ -1,0 +1,909 @@
+{
+  "_fixture": "INTEGRATION/EXAMPLE DOSSIER for NCF1 / p47phox (P14598), a PPI-adaptor with ZERO annotated binding/active site. Produced by a real pipeline run 2026-08-15/16: paperclip (uniprot_v/pdb_v/chembl_v + raw chembl.molecule_dictionary), precedent-lookup/modality.py (RDKit, selftest PASS 0 false small-molecule calls), pocket-scan deployed Modal app 'druggability-pocket-scan' (fpocket 4.2.3 + P2Rank 2.5.1, D swept {1.6,2.4}, mdpocket, disorder, cryptic), and structure-select/neighbour_precedent.py (Foldseek, proto-tools). It is a SNAPSHOT and will go stale when the pipeline changes; re-run rather than trust it. Not a validator/rubric calibration example.",
+  "_activation_direction_note": "THE THERAPEUTIC HYPOTHESIS IS TO ACTIVATE THE NOX2 OXIDATIVE BURST, NOT INHIBIT IT (NCF1 is genetically validated in RA via the R90H hypofunctional allele; a burst-restoring / activating small molecule is the asset idea). The mechanism_hypothesis enum {orthosteric, allosteric, oligomer_destabilisation, unknown} has NO 'activation' value; 'oligomer_destabilisation' would connote INHIBITION of the assembled oxidase and is actively wrong for an activation hypothesis, so the least-wrong echo is 'unknown'. See not_found. This station reports small-molecule tractability only; genetic validation is another station's axis and does NOT lift the verdict here.",
+  "input": {
+    "_note": "Verbatim echo of the request; never inferred. Cache/dedup keys on (input.uniprot_accession, input.mechanism_hypothesis, input.as_of_date). mechanism_hypothesis was supplied as 'least-wrong of the enum'; 'unknown' was chosen and the reasoning is in _activation_direction_note and not_found.",
+    "uniprot_accession": "P14598",
+    "as_of_date": null,
+    "disease_context": "rheumatoid arthritis",
+    "interaction_to_disrupt": "NADPH-oxidase (NOX2) complex assembly / oxidative burst \u2014 hypothesis is ACTIVATION not inhibition",
+    "mechanism_hypothesis": "unknown"
+  },
+  "target": {
+    "uniprot_accession": "P14598",
+    "gene_symbol": "NCF1",
+    "protein_name": "Neutrophil cytosol factor 1",
+    "organism": "Homo sapiens",
+    "sequence_length": 390,
+    "sources": [
+      "uniprot_v.proteins WHERE accession='P14598' (single-row): uniprot_id NCF1_HUMAN, protein_name 'Neutrophil cytosol factor 1', gene NCF1, Homo sapiens, sequence_length 390. paperclip_sql -s proteins, run 2026-08-15/16 (PAPERCLIP_CONFIG_DIR=mktemp, key from repo-root .env)",
+      "domain architecture: uniprot_v.features WHERE accession='P14598' \u2014 Domain PX 4-125, Domain SH3 1 156-215, Domain SH3 2 226-285, Region Disordered 285-390. Prior partial run's structural picture VERIFIED against this query.",
+      "Pfam: uniprot_v.cross_references WHERE accession='P14598' AND database='Pfam' \u2014 PF00787 (PX), PF00018 (SH3_1, MatchStatus 2 = tandem), PF08944 (p47_phox_C), PF16621 (NCF1_PBR_AIR)."
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "insufficient_evidence",
+  "verdict_basis": "none",
+  "axis_conflict": "The two axes point in DIFFERENT directions from the therapeutic hypothesis, and neither carries the verdict FOR THE ASKED MECHANISM (activation). RETRIEVED axis: genuine, recent small-molecule chemistry exists against p47phox \u2014 147 distinct small molecules, a characterised sub-micromolar small-molecule Ki (220 nM, CHEMBL5411448, confidence 9), and a covalent-inhibition assay series \u2014 but every bit of it INHIBITS assembly (disrupts the p47phox tandem-SH3 / p22phox interaction, or covalently modifies p47phox), which is the OPPOSITE pharmacology to the activation the asset needs. The single sub-100 nM affinity in the whole set (43 nM Kd, CHEMBL5197024) is a PEPTIDE, not a small molecule (rule 1d), so it is not small-molecule-attributable. Zero approved and zero clinical small molecules act on NCF1 directly (chembl_v.drugs_by_accession = 0 rows). COMPUTED axis: uninterpretable for a site \u2014 all 11 PDB entries are apo (no drug-like ligand anywhere; 8WEJ's FAD/NADPH/heme/GTP are endogenous oxidase cofactors on the catalytic subunit), UniProt annotates ZERO Binding site and ZERO Active site on NCF1, and on the autoinhibited tandem-SH3+AIR ensemble (1NG2, 1UEC) pocket selection degraded to max_druggability_no_ligand_site (rule 4.0: does not identify a site) with the two structures' top pockets 8.85 A apart. The structural-neighbour fold (tandem SH3) has no drug-like holo in any of its 9 neighbour accessions. So the retrieved axis shows the interface is modestly ligandable for INHIBITION while the computed axis finds no anchorable activation pocket \u2014 recorded, not resolved. verdict_basis is 'none'.",
+  "target_precedent": {
+    "_site_attribution_note": "Every figure here is measured on the P14598 accession. The chemistry is a recent (2023-2024, high CHEMBL IDs) campaign of INHIBITORS of NADPH-oxidase assembly: covalent p47phox modifiers and disruptors of the p47phox tandem-SH3 / p22phox(149-162) interaction. It is real small-molecule precedent for INHIBITING the complex; it is NOT precedent for the ACTIVATION hypothesis this dossier is keyed on, and it must not be read as such.",
+    "chembl_target_id": "tid 103757 (SINGLE PROTEIN, n_target_components = 1), target_chembl_name 'Neutrophil cytosol factor 1'. chembl_v.target_proteins WHERE accession='P14598' returns exactly this one clean single-protein target.",
+    "distinct_actives": 147,
+    "compound_modality_split": {
+      "_note": "Rule 1b/1c. Decided from SMILES via precedent-lookup/modality.py (RDKit 2D, selftest PASS, 0 false small-molecule calls), NOT from molecule_type. FULL census over all 149 distinct compounds (reconciled: COUNT(DISTINCT molregno)=149 == 149 unique molregnos in the paged SMILES pull; every compound carried a SMILES, MAX(LENGTH)=192-194 matched the reassembled lengths so no truncation). distinct_actives above is the small_molecule entry.",
+      "small_molecule": 147,
+      "peptide": 2,
+      "macrocyclic_peptide": 0,
+      "oligonucleotide": 0,
+      "oligosaccharide": 0,
+      "protein_or_antibody": 0,
+      "modality_unknown": 0
+    },
+    "modality_unknown_count": 0,
+    "assay_concentration": {
+      "top_assay_description": "Covalent inhibition of recombinant human His-tagged p47phox",
+      "top_assay_share_pct": 21.3,
+      "measures_a_different_target": false,
+      "_note": "No assay exceeds ~30%, so rule 6's single-assay concentration does not fire. Top five: 'Covalent inhibition of recombinant human His-tagged p47phox' 21.3%; 'Inhibition of Cy5-labeled p22phox (149-162) probe binding' 19.8% (the PPI-disruption / assembly-inhibition readout); then three His-tagged-p47phox binding-affinity assays at 10.6/7.2/2.6%. All are directly on p47phox or on the p47phox-p22phox interaction \u2014 none measures a different protein.",
+      "assay_type_split": {
+        "binding_B": 348,
+        "functional_F": 0
+      }
+    },
+    "best_potency_nm": 220.0,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "Ki = 220 nM (standard_relation '=', pChEMBL 6.66, confidence_score 9), compound CHEMBL5411448, assay 'Inhibition of Cy5-labeled p22phox (149 to 162 residues) probe binding' \u2014 an FP competition assay measuring disruption of the p47phox tandem-SH3 / p22phox interaction (i.e. INHIBITION of oxidase assembly). This is the best SMALL-MOLECULE value. The best value in the whole set, Kd = 43 nM (pChEMBL 7.37, CHEMBL5197024, a characterised direct-binding assay to His-tagged p47phox), is a PEPTIDE and is reported separately in not_found per rule 1d, not here.",
+    "best_potency_characterised": true,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [],
+    "_clinical_note": "chembl_v.drugs_by_accession returned 0 rows (clean 6 ms run) \u2014 no drug with a curated DIRECT mechanism of action on NCF1. The rule-2d high-recall cross-check (chembl_v.compounds_by_accession WHERE max_phase>=1) returned only two molecules, both OFF-TARGET repurposing/screening hits whose clinical phase is for other indications: EBSELEN (CHEMBL51085, max_phase 3.0, best pChEMBL 4.92 ~12 uM) \u2014 an organoselenium benzisoselenazol-3-one, a well-known promiscuous redox-active/covalent frequent hitter; and QUIPAZINE (max_phase 2.0, no pChEMBL) \u2014 a serotonergic small molecule. Neither is an NCF1-directed program, so clinical_stage_small_molecules is left empty and they are disclosed here rather than listed as NCF1 candidates.",
+    "patents": {
+      "count": null,
+      "source": null
+    },
+    "terminated_programs": [],
+    "as_of_leakage": [],
+    "sources": [
+      "paperclip_sql -s proteins, run 2026-08-15/16 (PAPERCLIP_CONFIG_DIR=mktemp, key from repo-root .env)",
+      "distinct compounds: COUNT(DISTINCT molregno) FROM chembl_v.compounds_by_accession WHERE accession='P14598' = 149; MAX(best_pchembl_value)=7.37. Reconciled against the paged row pull (149 unique molregnos).",
+      "bioactivities: COUNT(*) FROM chembl_v.bioactivities_by_accession WHERE accession='P14598' = 348; reconciles exactly with the assay_type split (B 348 + F 0 = 348).",
+      "modality split: precedent-lookup/modality.py over all 149 SMILES (paged single-column pull, reassembled length == MAX(LENGTH(canonical_smiles)) so no width truncation) \u2014 {small_molecule 147, peptide 2}.",
+      "best small-molecule potency: chembl_v.bioactivities_by_accession ORDER BY pchembl_value DESC, standard_relation '=' only; top small molecule CHEMBL5411448 Ki 220 nM (pChEMBL 6.66); top overall CHEMBL5197024 Kd 43 nM (pChEMBL 7.37) is a peptide by modality.py.",
+      "assay_concentration: GROUP BY assay_description with window-function share; top 21.3% < 30%.",
+      "drugs: chembl_v.drugs_by_accession WHERE accession='P14598' = 0 rows (clean run). Rule-2d cross-check chembl_v.compounds_by_accession WHERE max_phase>=1 = EBSELEN (ph3, off-target), QUIPAZINE (ph2, off-target)."
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "No approved biologic acts on NCF1, and none is expected: p47phox is an INTRACELLULAR cytosolic adaptor of the phagocyte NADPH oxidase, not an extracellular/surface antigen. chembl_v.drugs_by_accession returned 0 rows for P14598 (clean run) \u2014 no Antibody, Protein, Enzyme, Oligonucleotide or other biologic-typed drug on this accession. The empty list is a retrieved finding, and here it is NOT the usual 'validated by a biologic but not small-molecule tractable' situation."
+  },
+  "family_precedent": {
+    "_note": "Reported as its own axis, never merged (rule 9/9b). Two kinds of Pfam family are cross-referenced and neither gives usable transferable precedent: the p47phox-SPECIFIC families PF08944 (p47_phox_C) and PF16621 (NCF1_PBR_AIR) are tiny (essentially NCF1 orthologues and near-paralogues) and carry no independent chemistry; the GENERIC domain families PF00787 (PX) and PF00018 (SH3) are enormous and their chemistry, where any exists, lives in unrelated proteins \u2014 rule 9: a jump along 'same SH3/PX family' transfers nothing to a PPI adaptor. The pocket, not the family, is the transferable unit.",
+    "pfam": "PF00787 (PX); PF00018 (SH3_1, tandem, MatchStatus 2); PF08944 (p47_phox_C); PF16621 (NCF1_PBR_AIR)",
+    "family_actives": null,
+    "best_family_potency_nm": null,
+    "best_family_potency_modality": null,
+    "best_family_target": null,
+    "sources": [
+      "Pfam membership: uniprot_v.cross_references WHERE accession='P14598' AND database='Pfam' (4 families). paperclip_sql -s proteins, run 2026-08-15/16 (PAPERCLIP_CONFIG_DIR=mktemp, key from repo-root .env)",
+      "family_actives DELIBERATELY not computed \u2014 see not_found: the informative families are too small to carry precedent and the generic PX/SH3 families transfer nothing (rule 9); a number here would be a meaningless aggregate over unrelated proteins. Also, cross_references filtered by Pfam id (not by accession) repeatedly hit the Kind-A '[error] Request timed out' signature (rule 15), so a family-member census was not retrievable this session."
+    ]
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek fold neighbours of the tandem-SH3 construct (1NG2 chain A), NOT sequence family. The finding is coherent and negative: every structural neighbour is another SH3-domain PPI adaptor and NONE carries a drug-like holo ligand \u2014 the SH3-adaptor fold has essentially no transferable small-molecule precedent.",
+    "method": "foldseek-search (Proto, remote, pdb100, mode=3diaa; TM-scores from a second mode=tmalign search)",
+    "query_structure": "1NG2 chain A (tandem SH3 + AIR, autoinhibited p47phox)",
+    "neighbours": [
+      {
+        "pdb_id": "6UY8",
+        "tm_score": 0.4133,
+        "evalue": 0.0008881,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "STAC3 tandem SH3 domains"
+      },
+      {
+        "pdb_id": "6B27",
+        "tm_score": 0.4149,
+        "evalue": 0.001176,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "human STAC2 tandem SH3 domains"
+      },
+      {
+        "pdb_id": "6B25",
+        "tm_score": 0.4056,
+        "evalue": 0.0001739,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "human STAC1 tandem SH3 domains"
+      },
+      {
+        "pdb_id": "6UY9",
+        "tm_score": 0.3971,
+        "evalue": 0.0002058,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "STAC3 tandem SH3 domains (mutant)"
+      },
+      {
+        "pdb_id": "6B28",
+        "tm_score": 0.3568,
+        "evalue": 0.0005664,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "human STAC2 tandem SH3 domains Q347I"
+      },
+      {
+        "pdb_id": "2L3S",
+        "tm_score": 0.3383,
+        "evalue": 0.001112,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "autoinhibited Crk (SH3 adaptor)"
+      },
+      {
+        "pdb_id": "2MOX",
+        "tm_score": 0.332,
+        "evalue": 5.046e-05,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "sorbin/SH3-domain-containing tandem SH3"
+      },
+      {
+        "pdb_id": "2LQW",
+        "tm_score": null,
+        "evalue": 0.0006338,
+        "has_druglike_holo": false,
+        "ligand": null,
+        "_title": "phosphorylated CRKL (SH3 adaptor)"
+      }
+    ],
+    "sources": [
+      "foldseek-search remote pdb100 (645 hits, 7.6 s), single-chain path on 1NG2.cif; filter sequence_identity < 0.3 AND alignment_length >= 120; n_hits_total 645, n_hits_passing 28, n_carried 15.",
+      "accession_summary: n_accessions 9, n_with_holo_entry_level 1, n_with_holo_single_protein 1 \u2014 and none of the carried neighbours has a DRUG-LIKE holo. Neighbours are STAC1/2/3, Crk/CRKL, sorbin SH3, Grb2, Ephexin4 \u2014 all SH3 PPI adaptors.",
+      "https://search.foldseek.com/api/result/download/qWcmBGadbSrEpu0oMxHbugqnvnpPzEXX49Z5BA ; ligand/holo adjudication via pdb_v.entry_ligands / pdb_v.polymer_entities / pdb_v.entries.",
+      "structure-select/neighbour_precedent.py, proto-tools, env druggability."
+    ]
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "The strongest transfer axis in principle, because the pocket is the unit that transfers. NOT RUN here.",
+    "candidates": [],
+    "sources": [],
+    "_why_empty": "NOT RUN, not 'no candidates found'. It needs a pocket-descriptor similarity index across other targets' scored pockets (no such index in this pipeline) and a cofold transfer to make a similarity falsifiable (no cofolding model, rule 13). See not_found."
+  },
+  "structure": {
+    "tier": "apo_experimental",
+    "pdb_id": "1NG2",
+    "resolution_a": 1.7,
+    "biological_unit_used": "Autoinhibited tandem-SH3 + AIR construct, chain A, scored as a 2-member apo ensemble: 1NG2 (1.7 A) and 1UEC (1.82 A), pocket_scan core_restricted_to_target_chains {1NG2: [A], 1UEC: [A]}. This is the mechanism-relevant unit for an activation hypothesis (the intramolecular AIR/tandem-SH3 autoinhibitory interface, relief of which drives assembly). 11 PDB entries exist for P14598 in total, all apo domain fragments (PX in 1KQ6/1O7K/7YXW etc.; tandem SH3+AIR in 1NG2/1UEC); 8WEJ (2.79 A cryo-EM, 2024) is the assembled NOX2 holo-complex but carries only endogenous cofactors.",
+    "bound_ligand": {
+      "comp_id": null,
+      "heavy_atoms": null,
+      "is_druglike": null,
+      "is_known_frequent_hitter": null
+    },
+    "total_pdb_structures": 11,
+    "holo_count": 0,
+    "apo_count": 11,
+    "_holo_census": "ZERO drug-like holo across all 11 entries, by ligand chemistry (structure-select ligand_filter classes). The only heteroatoms present are crystallisation additives (GOL glycerol, SO4 sulfate, TFA trifluoroacetate) and, in the assembled-complex entry 8WEJ, the endogenous NADPH-oxidase cofactors FAD (as FDA/dihydro-FAD), NADPH (NDP), heme (HEM), GTP, N-glycan (NAG) and Mg \u2014 which sit on the catalytic gp91phox/CYBB subunit and on RAC, NOT on p47phox, and are cofactors, not drug-like ligands. pocket_scan classified 1NG2 and 1UEC as apo by chemistry.",
+    "ensemble_used": [
+      "1NG2",
+      "1UEC"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "_note": "No cofolding model in this deployment (rule 13).",
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "paperclip_sql -s proteins, run 2026-08-15/16 (PAPERCLIP_CONFIG_DIR=mktemp, key from repo-root .env)",
+      "structures: pdb_v.structures_by_accession LEFT JOIN pdb_v.entry_ligands WHERE accession='P14598'. total_pdb_structures reconciled: COUNT(DISTINCT entry_id)=11 == n_rows 11.",
+      "entities/domain sizes: pdb_v.polymer_entities WHERE uniprot_accession='P14598' \u2014 1NG2 and 1UEC are 193-aa tandem-SH3+AIR constructs; 1KQ6 141 aa (PX); 8WEJ 286-aa full p47phox in the NOX2 assembly.",
+      "holo/apo split by ligand chemistry over the 11 reconciled entries (see _holo_census); no drug-like holo, so holo_count 0 / apo_count 11.",
+      "pocket_scan Modal 'druggability-pocket-scan' run 2026-08-16: structures.1NG2/1UEC tier 'apo'."
+    ]
+  },
+  "tractability": {
+    "_primary": "READ site_hypothesis_basis FIRST: NO site was established. NCF1 has ZERO annotated Binding site / Active site, there is no drug-like holo anywhere to anchor a site, and no partner complex was supplied to define an activation site. Every geometric number below describes a cavity fpocket found in an apo autoinhibited tandem-SH3 structure; none is a measurement of an activation site, and pocket selection degraded to max_druggability_no_ligand_site (rule 4.0: does not identify a site).",
+    "pocket_volume_a3": {
+      "min": null,
+      "max": null,
+      "spread_pct": null,
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": 245.727,
+      "site_pocket_selected_by": "max_druggability_no_ligand_site",
+      "_primary_note": "245.7 A^3 is the D=1.6 top (by max-druggability) cavity in the single structure 1NG2; 1UEC's is 111.2 A^3 at D=1.6. THESE ARE NOT A SITE VOLUME and are NOT pooled into min/max: site_pocket_selected_by is max_druggability_no_ligand_site (rule 4b: does not identify a site), and the two structures' top pockets sit 8.85 A apart (radius-from-centre 5.79 vs 14.64 A), i.e. they are different cavities. The 210/240 A^3 guide is withdrawn (rule 4a) and is not invoked. Reported per structure, here, not as a spread."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "site_pocket_selected_by": "max_druggability_no_ligand_site",
+      "load_bearing": false,
+      "_comparability": "WITHIN ONE STRUCTURE only, and not even reported as a range: min/max are null. site_pocket_selected_by is max_druggability_no_ligand_site \u2014 the path rule 4.0 says must never produce a reportable value \u2014 so a pooled druggability spread would measure nothing. The per-structure values are modest: 1NG2 D=1.6 top cavity druggability_score 0.224 (fpocket rank 2 of 11, PRANK rank 3). Reported beside its rank in site_pocket_rank, never as a verdict input.",
+      "_provenance": "shipped fpocket 4.2.3: a 3-descriptor logistic regression fitted on 21 positives, whose dominant descriptor is min-max normalised over the current structure's own pocket list (pocket.c:736-756). A within-structure rank, not a probability.",
+      "_false_negative_rate": "REPORTED, NEVER LOAD-BEARING. Druggability may not carry a negative or insufficient_evidence verdict on its own (rule 4.0). Low druggability on holo crystals with a drug bound is common (e.g. EGFR 6LUD with osimertinib 0.013); the 41% figure once quoted rests on a denominator under audit and a cross-structure pooling this rule forbids \u2014 state the direction and named cases, not a percentage. Here druggability contributed nothing to the verdict.",
+      "_do_not_max": "max_druggability_no_ligand_site measures pocket count (r(n_pockets, max druggability)=0.702) and is banned as a reportable value. It fired here only because there is no ligand and no site_residues to anchor a site; its output is shown per structure so a reader can see what the banned path produces, not as a finding."
+    },
+    "site_pocket_rank": {
+      "_note": "Reported for completeness, NOT as a site claim \u2014 the ranked pocket was selected by max_druggability_no_ligand_site, which does not identify a site. fpocket rank and PRANK rank are two within-structure orderings; they disagree here (fpocket 2 vs PRANK 3) which is itself only noise on a non-site.",
+      "fpocket": 2,
+      "prank": 3,
+      "n_pockets": 11,
+      "structure_pdb_id": "1NG2"
+    },
+    "ensemble_consensus_fraction": {
+      "_note": "Published criterion (~70% of structures with a strong hot spot) is not evaluable as a tractability signal here \u2014 and it is not one anyway (AUC 0.560). Denominators given so the fraction's meaninglessness is visible.",
+      "n_structures": 2,
+      "n_measurements": 4,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null
+    },
+    "pocket_hydrophobic_density": null,
+    "pocket_residues": [],
+    "site_hypothesis_basis": "not_established",
+    "mdpocket_site_definition_used": "none",
+    "site_centroid_to_ligand_distance_a": null,
+    "site_centroid_to_ligand_note": "mdpocket ran on the 2-structure ensemble (mdpocket_status 'ok') but returned ONLY a site_from_density (the most persistent cavity), NOT a site_from_ligand \u2014 there is no holo donor anywhere in the NCF1 PDB set and no mdpocket_site_donor was supplied, so distance_to_donor_ligand_centroid_a is null (distance_reason: 'no site donor'). Per rule 4b clause 4 this persistent cavity is UNVERIFIED and was NOT adopted as the site; mdpocket_site_definition_used is therefore 'none'.",
+    "annotated_binding_site_overlap": 0.0,
+    "_annotated_binding_site_overlap_basis": "A MEASURED ZERO, not a failed measurement. uniprot_v.features for P14598 contains ZERO 'Binding site' and ZERO 'Active site' features (explicit COUNT FILTER: 0 and 0); the only Ligand keyword is 'Lipid-binding' (the PX domain's phosphoinositide site, not a druggable small-molecule pocket annotation). There is nothing curated to overlap, so overlap is exactly 0. This is the PPI-adaptor signature the prior run flagged, verified.",
+    "ligand_site_jaccard": null,
+    "disorder_fraction": 0.2718,
+    "cryptic_pocket_risk": "high",
+    "cryptic_mechanism": "undetermined",
+    "cryptic_evidence": {
+      "_note": "The apo census the cryptic call would rest on. Vajda 2018: cryptic only if the site is absent in all/nearly all unbound structures.",
+      "is_cryptic": null,
+      "n_apo_examined": 2,
+      "n_apo_site_absent": null,
+      "site_present_in_apo_ensemble": null,
+      "basis": "NOT MEASURED, and the null is the finding. pocket_scan cryptic stage returned cryptic_status 'not_run', reason '0 holo reference and 2 apo': crypticity is a pairwise apo-vs-holo measurement and there is no holo NCF1 structure to superpose against. cryptic_pocket_risk is set 'high' on the rule-3 basis that geometric scoring is blind to cryptic sites on an apo-only target, so a low/absent pocket score here is an absence of measurement, not evidence against tractability \u2014 NOT because crypticity was demonstrated.",
+      "definition": "Vajda et al. 2018 / CryptoBench pocket-residue RMSD > 2 A between apo and holo. Named so a reader can see it was NOT applied.",
+      "source": "pocket_scan cryptic stage: cryptic_status = not_run."
+    },
+    "cryptic_potency_prior": {
+      "_note": "Mechanism is a prior on achievable potency; none was determined here.",
+      "expected_ceiling": "unknown",
+      "basis": "No cryptic mechanism was determined (census not run), so no potency prior applies. Reporting a ceiling would be inventing one."
+    },
+    "pocket_vs_interface": {
+      "_note": "Measured, not assumed \u2014 and here not measurable. Requires a complex structure containing the partner relevant to the mechanism.",
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": null,
+      "matches_mechanism_hypothesis": false,
+      "_why": "The interface stage did not run: no partner_structures were supplied. For the ACTIVATION hypothesis the relevant 'interface' is either the intramolecular AIR/tandem-SH3 autoinhibitory contact (an activator would disrupt it to relieve autoinhibition) or the assembled NOX2 complex (8WEJ); neither was passed as a partner complex, and asserting orthosteric/allosteric/destabiliser without one is exactly what this module refuses to do. classification is no_partner_structure; matches_mechanism_hypothesis is false because no pocket found is an activation candidate. Note oligomer_destabilisation would DEstabilise/inhibit the assembly \u2014 the opposite of the activation asked for."
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": "Not computable \u2014 clash attribution needs a holo reference to transfer a ligand from, and there is no holo NCF1 structure (and no drug-like holo in the tandem-SH3 fold neighbourhood either). A null for want of a reference, not a null result.",
+    "caveat": "The computed axis measured almost nothing about a SITE, and saying so is the result. Disorder ran (0.2718 over the 390-residue full-length sequence; the single disordered region is 285-390, i.e. exactly the PBR/AIR). fpocket detection ran and found cavities. But: cryptic not_run (needs an apo/holo pair; NCF1 has 0 holo), interface not_run (no partner complex supplied), mdpocket returned only an unanchored site_from_density, and site selection degraded to max_druggability_no_ligand_site on both apo structures \u2014 which does not identify a site \u2014 with their top pockets 8.85 A apart. UniProt annotates zero Binding site / Active site on NCF1. So the honest computed reading is: this is a PROTEIN-PROTEIN-INTERACTION ADAPTOR with no orthosteric small-molecule pocket that the geometry can establish, on an apo-only structure set. Chains were asserted (1NG2=A, 1UEC=A) per rule 2b as the autoinhibited tandem-SH3+AIR unit. None of this weighs against the target being ligandable at the p22phox interface \u2014 the retrieved axis shows it is, for INHIBITION \u2014 it says the ACTIVATION site the asset needs is not established by structure here.",
+    "sources": [
+      "pocket_scan Modal 'druggability-pocket-scan' run 2026-08-16, fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 rescore_2024, D swept {1.6, 2.4}, uniprot_accession P14598, ensemble 1NG2+1UEC.",
+      "per-structure cavities (max_druggability_no_ligand_site): 1NG2 D=1.6 vol 245.7 A^3 drugg 0.224 fpocket-rank 2 PRANK 3 of 11 pockets; 1NG2 D=2.4 vol 598.9 of 15; 1UEC D=1.6 vol 111.2 of 12; 1UEC D=2.4 vol 447.8 of 16. site_centroid_control.max_radius_difference_a 8.85 (1NG2 5.79 vs 1UEC 14.64).",
+      "disorder 0.2718 over 390 residues, disordered region 285-390: metapredict 3.0.2 (CPU) on the full-length UniProt sequence, via pocket_scan disorder stage.",
+      "cryptic not_run (0 holo/2 apo); interface not_run (no partner); mdpocket_status ok with site_from_density only (ligand_anchored false, distance null).",
+      "annotated_binding_site_overlap 0.0: uniprot_v.features WHERE accession='P14598' \u2014 COUNT('Binding site')=0, COUNT('Active site')=0."
+    ],
+    "method": {
+      "tool": "fpocket",
+      "version": "fpocket 4.2.3 (conda-forge); P2Rank 2.5.1 rescore_2024; mdpocket; metapredict 3.0.2",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "1NG2",
+        "1UEC"
+      ],
+      "chains_used": {
+        "1NG2": [
+          "A"
+        ],
+        "1UEC": [
+          "A"
+        ]
+      }
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": [],
+    "_why_null": "Rule 13: no affinity predictor in this deployment, so rule 12's mandatory positive control is unsatisfiable rather than skipped. A characterised control binder exists (CHEMBL5411448, Ki 220 nM small molecule; or the 43 nM peptide CHEMBL5197024) but having a control and no predictor is still no prediction."
+  },
+  "falsification": {
+    "checks_run": [
+      "Do all reported actives trace to one paper/lab/series? PARTIALLY \u2014 FOUND. The 147 small molecules cluster into a small number of recent (2023-2024, high CHEMBL IDs) p47phox campaigns: a covalent-inhibition series (top assay, 21.3%) and a p22phox(149-162) SH3-displacement series (19.8%), with several bivalent PEG-linked bis-aminoquinoline/aminonaphthyridine scaffolds among the most potent. This is a narrow, recent chemical space, not decades of independent series; treat the precedent as one-programme-deep.",
+      "Is the best potency from a characterised assay, and is it a small molecule? MIXED \u2014 FOUND. The single best affinity, Kd 43 nM (CHEMBL5197024), is a PEPTIDE (modality.py: proline/arginine backbone), not small-molecule-attributable (rule 1d). The best SMALL-MOLECULE value is Ki 220 nM (CHEMBL5411448) from a characterised FP competition assay (confidence 9, relation '='). So the headline nanomolar figure evaporates once modality is applied; small molecules top out sub-micromolar, not nanomolar.",
+      "Are the actives promiscuous binders / frequent hitters? FOUND for the clinical hits. EBSELEN (max_phase 3 by the rule-2d cross-check) is an organoselenium benzisoselenazol-3-one \u2014 a textbook promiscuous redox-active/covalent frequent hitter \u2014 at only ~12 uM on p47phox; it is an off-target hit, not an NCF1 lead. More broadly the top assay is 'Covalent inhibition of p47phox', and covalent/PEG-linked bivalent chemistry carries the usual specificity caveats. No PAINS/aggregator database was queried (see not_found), so this is flagged, not adjudicated.",
+      "Does the direction of the chemistry match the therapeutic hypothesis? NO \u2014 THE CENTRAL FINDING. Every retrieved active INHIBITS assembly (disrupts p47phox-p22phox or covalently modifies p47phox). The hypothesis is to ACTIVATE the burst. An assembly inhibitor is not precedent for an activator; if anything it is anti-precedent for the same interface. The mechanism_hypothesis enum cannot even represent 'activation'.",
+      "Is the pocket an artifact of one crystal form / additive? N/A in the damaging direction \u2014 there is no holo pocket to be an artifact of; all 11 entries are apo and the only heteroatoms are additives (GOL/SO4/TFA) or oxidase cofactors (8WEJ). CHECK RUN, no holo-pocket artifact possible.",
+      "Does the fold carry transferable small-molecule precedent? NO. Foldseek fold neighbours of the tandem SH3 (645 hits, 28 passing, 9 accessions) are all SH3 PPI adaptors (STAC1/2/3, Crk/CRKL, sorbin, Grb2, Ephexin4) and NONE carries a drug-like holo (n_with_holo_single_protein 1, none drug-like). SH3 adaptors are classic hard PPI targets; the fold offers nothing to transfer.",
+      "Is the actives count an artifact of a moving row cap / dominant off-target assay (rule 6/14)? NO. distinct compounds reconciled (COUNT(DISTINCT molregno) 149 == 149 unique in the row pull); bioactivities 348 == B 348 + F 0; no assay exceeds 30% and every top assay is on p47phox or its p22phox interaction (measures_a_different_target false). CHECK RUN, nothing found.",
+      "Were clinical programmes against NCF1 terminated, and why? NOT RUN \u2014 no trials/literature termination search this session (see not_found). Absence of terminated_programs must not be read as 'nobody failed' nor as 'nobody tried'."
+    ],
+    "findings": [
+      "Genuine recent small-molecule chemistry exists against p47phox (147 distinct small molecules; best SM Ki 220 nM, characterised), demonstrating the p47phox / p22phox interface is MODESTLY ligandable \u2014 but exclusively for INHIBITION of assembly, the opposite direction to the activation hypothesis.",
+      "The single sub-100 nM affinity in the set (43 nM Kd) is a PEPTIDE, not a small molecule; small molecules top out sub-micromolar.",
+      "Zero approved and zero clinical small molecules act on NCF1 directly (drugs_by_accession 0 rows); the only clinical-phase hits (ebselen, quipazine) are off-target, and ebselen is a promiscuous frequent hitter.",
+      "The computed axis establishes no site: NCF1 has zero annotated Binding/Active sites, all 11 PDB entries are apo, and pocket selection degraded to max_druggability_no_ligand_site with the two apo structures' top pockets 8.85 A apart.",
+      "The tandem-SH3 fold has no drug-like holo across 9 Foldseek neighbour accessions \u2014 no transferable fold precedent.",
+      "Genetic validation (R90H, RA) is target validation, not small-molecule tractability, and does not lift this dossier's verdict."
+    ],
+    "survived": true
+  },
+  "next_experiment": {
+    "description": "A biophysical (SPR/NMR) or crystallographic/cryo-EM fragment screen aimed specifically at an ACTIVATING modality \u2014 small molecules that bind the intramolecular AIR / tandem-SH3 autoinhibitory interface of p47phox and DISRUPT it (relieving autoinhibition to promote NADPH-oxidase assembly and the oxidative burst), read out by a functional burst/assembly assay with a co-structure of any activator bound. Failing an activator, a fragment screen against the isolated tandem-SH3+AIR module reporting a hit rate would at least establish whether that surface is ligandable at all.",
+    "rationale": "The verdict is insufficient_evidence FOR THE ACTIVATION MECHANISM, and every branch that could change it is closed for the same reason: all existing NCF1 chemistry is assembly-INHIBITOR chemistry (wrong direction), the best affinity is a peptide, there is no holo structure to anchor an activation site, the fold has no drug-like precedent, and NCF1 carries no annotated pocket. Computation cannot manufacture an activation site on an apo PPI adaptor (rule 3/4.0). What is missing is a direction-correct experiment, not more analysis of inhibitor data.",
+    "resolves": "Whether an ACTIVATING small molecule (autoinhibition-disrupting) against p47phox is chemically achievable \u2014 the exact question the retrieved inhibitor chemistry and the apo computed axis leave open. A single activator-bound structure would convert this axis from unmeasured to measurable: it would supply the holo reference that unlocks the cryptic comparison, the anchor that lets a site be defined by something other than max_druggability_no_ligand_site, and the proof that the mechanism the enum cannot name is real."
+  },
+  "not_found": [
+    "input.mechanism_hypothesis / MISSING ENUM VALUE: the therapeutic hypothesis is ACTIVATION of the NOX2 oxidative burst, but the mechanism_hypothesis enum is {orthosteric, allosteric, oligomer_destabilisation, unknown} with NO 'activation' member. 'oligomer_destabilisation' denotes DEstabilising the assembled oxidase (i.e. inhibition) and is actively wrong for an activation hypothesis; orthosteric/allosteric presuppose a pocket that is not established. The least-wrong echo is 'unknown', recorded as such. This is a schema-vocabulary gap, not a retrieval failure.",
+    "target_precedent.best_potency (overall): the single best affinity in the set, Kd 43 nM (pChEMBL 7.37, CHEMBL5197024, characterised direct binding to His-tagged p47phox), is a PEPTIDE by modality.py and is therefore NOT reported as best_potency_nm (rule 1d, which is small-molecule-attributable). The reported best_potency_nm is the best SMALL MOLECULE, 220 nM. Recorded so the nanomolar figure is not silently attributed to small molecules.",
+    "target_precedent clinical/approved small molecules: chembl_v.drugs_by_accession = 0 rows (no curated direct-MoA drug on NCF1); the rule-2d cross-check returned only EBSELEN (max_phase 3) and QUIPAZINE (max_phase 2), both OFF-TARGET repurposing/screening hits developed for other indications, so both lists are empty and the two molecules are disclosed in target_precedent._clinical_note rather than listed as NCF1 candidates.",
+    "target_precedent.patents.count: Paperclip exposes no patent source (rule 13). Null, never 0.",
+    "target_precedent.terminated_programs: NOT RETRIEVED \u2014 no clinical-trial or literature termination search was run this session. The empty list is an unmeasured axis, not a finding that no NCF1 programme was terminated (and equally not that none was tried).",
+    "structure.bound_ligand.is_known_frequent_hitter: no frequent-hitter/aggregator/PAINS database was queried; ebselen is a known promiscuous compound by literature reputation but that is not a database check, so the field is null. (There is also no drug-like bound ligand to assess.)",
+    "family_precedent.family_actives / best_family_potency_nm / best_family_potency_modality / best_family_target: DELIBERATELY not computed. The p47phox-specific Pfam families (PF08944, PF16621) are too small to carry independent chemistry and the generic PX/SH3 families (PF00787, PF00018) transfer nothing to a PPI adaptor (rule 9). A cross_references census keyed on Pfam id also repeatedly hit the Kind-A '[error] Request timed out' signature (rule 15), so a member list was not retrievable. Null rather than a meaningless aggregate over unrelated proteins.",
+    "pocket_neighbour_precedent.candidates: NOT RUN \u2014 needs a cross-target pocket-descriptor index (none in this pipeline) and a cofold transfer (no cofolding model, rule 13). Empty list = unmeasured.",
+    "affinity.* (whole block, incl. rule 12's positive control): no affinity predictor in this deployment (rule 13). Unsatisfiable, not skipped.",
+    "structure.cofold_control.*: no cofolding model in this deployment (rule 13).",
+    "tractability.pocket_volume_a3.min and tractability.pocket_volume_a3.max: DELIBERATELY null. The per-structure D=1.6 volumes ARE reported (primary_d1_6_a3 245.7 A^3 for 1NG2; 111.2 A^3 for 1UEC) but are NOT pooled into a spread, because site_pocket_selected_by is max_druggability_no_ligand_site (rule 4b: not a site) and the two structures' pockets are 8.85 A apart.",
+    "tractability.pocket_druggability.min and tractability.pocket_druggability.max: DELIBERATELY null. Druggability is not a cross-structure quantity (rule 4.0) and no site was established; the per-structure value (0.224 in 1NG2 D=1.6) is given beside its rank in site_pocket_rank, never pooled.",
+    "tractability.pocket_hydrophobic_density: withheld \u2014 the only pocket it could describe was selected by max_druggability_no_ligand_site and is not a site, so a hydrophobic-density figure attached to it would read as a site property it is not.",
+    "tractability.ligand_site_jaccard: null \u2014 there is no ligand anywhere in the NCF1 PDB set (0 drug-like holo) to define a ligand contact set, so there is nothing to compute a Jaccard against. Null for want of a ligand, not a low overlap.",
+    "tractability.max_backbone_ca_displacement_a: null \u2014 backbone displacement is an apo-vs-holo superposition measurement and there is no holo NCF1 structure to superpose against (cryptic stage not_run, 0 holo/2 apo).",
+    "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket and meets_consensus_criterion: null \u2014 with no established site there is no site occupancy to take a consensus fraction of; n_structures (2) and n_measurements (4) are given so the reader sees the denominator. (It is not a tractability signal anyway, AUC 0.560.)",
+    "structural_neighbour_precedent detail limited to single-chain path: neighbour_precedent ran the single-chain Foldseek on 1NG2 chain A (a tandem-SH3 construct); a multimer search was not run because the autoinhibited construct is effectively one chain. Adequate for the fold-precedent question asked.",
+    "TRANSPORT NOTE (rule 15): several diagnostic paperclip queries hit the Kind-A '[error] Request timed out' signature during this session (a GROUP BY feature-type count, uniprot_alignment_ranges, and some first-attempt drugs/compounds calls) \u2014 a shared 10-connection budget under parallel sessions. Every reported figure was re-run to a clean result and/or issued as a single-row server-side aggregate reconciled against the row pull; no timed-out query was read as a 0 or [].",
+    "as_of_date: null (none supplied); as_of_leakage is [] accordingly, and no date filtering was applied."
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: P14598",
+      "result": "insufficient_evidence",
+      "plain_language": "Insufficient evidence for P14598: 147 actives; best 220 nM.",
+      "status": "INCONCLUSIVE",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 220.0,
+        "unit": "nM",
+        "display": "220 nM",
+        "meaning": "Best measured potency of a small molecule against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay",
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.distinct_actives",
+        "label": "Distinct small-molecule actives",
+        "value": 147,
+        "unit": "compounds",
+        "display": "147 compounds",
+        "meaning": "Distinct small molecules with measured activity; a count of compounds, not of assays (rules 1b, 14).",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.druggability_rank",
+        "label": "Druggability rank",
+        "value": 2,
+        "unit": "rank",
+        "display": "rank 2 of 11 in 1NG2",
+        "meaning": "fpocket rank of the site pocket AMONG that structure's pockets \u2014 a within-structure ordering, never compared across structures (rule 4). Not load-bearing.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.1NG2"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      },
+      {
+        "id": "metric.pocket_volume_d16",
+        "label": "Pocket volume (D=1.6)",
+        "value": 245.727,
+        "unit": "A^3",
+        "display": "245.727 A^3",
+        "meaning": "Absolute site volume at clustering D=1.6. Comparable across structures, but its clustering sensitivity travels with it; the 210/240 A^3 tractability guide is withdrawn (rule 4a).",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.1NG2"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.2718,
+        "unit": "fraction",
+        "display": "0.2718",
+        "meaning": "Fraction of the sequence predicted disordered; high disorder disfavours a stable small-molecule pocket.",
+        "direction": "negative",
+        "evidence_ids": [],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "none",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 220.0,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": 2,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "insufficient_evidence",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      },
+      {
+        "id": "step.druggability_rank",
+        "label": "Within-structure druggability rank",
+        "method": "fpocket pocket scoring at clustering D=1.6; report the site pocket's rank among the structure's pockets.",
+        "formula": "rank of site pocket among n_pockets by fpocket score",
+        "inputs": [
+          {
+            "path": "tractability.site_pocket_rank.n_pockets",
+            "value": 11,
+            "unit": "pockets"
+          },
+          {
+            "path": "tractability.site_hypothesis_basis",
+            "value": "not_established",
+            "unit": null
+          }
+        ],
+        "result": {
+          "value": 2,
+          "unit": "rank"
+        },
+        "evidence_ids": [
+          "evidence.pdb.1NG2"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.chembl_target",
+        "claim": "Measured bioactivity records for the target in ChEMBL.",
+        "source_type": "database",
+        "source_id": "ChEMBL:tid 103757 (SINGLE PROTEIN, n_target_components = 1), target_chembl_name 'Neutrophil cytosol factor 1'. chembl_v.target_proteins WHERE accession='P14598' returns exactly this one clean single-protein target.",
+        "source_url": "https://www.ebi.ac.uk/chembl/target_report_card/tid 103757 (SINGLE PROTEIN, n_target_components = 1), target_chembl_name 'Neutrophil cytosol factor 1'. chembl_v.target_proteins WHERE accession='P14598' returns exactly this one clean single-protein target./",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "Ki = 220 nM (standard_relation '=', pChEMBL 6.66, confidence_score 9), compound CHEMBL5411448, assay 'Inhibition of Cy5-labeled p22phox (149 to 162 residues) probe binding' \u2014 an FP competition assay measuring disruption of the p47phox tandem-SH3 / p22phox interaction (i.e. INHIBITION of oxidase assembly). This is the best SMALL-MOLECULE value. The best value in the whole set, Kd = 43 nM (pChEMBL 7.37, CHEMBL5197024, a characterised direct-binding assay to His-tagged p47phox), is a PEPTIDE and is reported separately in not_found per rule 1d, not here.",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pdb.1NG2",
+        "claim": "Experimental structure 1NG2 used for the computed axis.",
+        "source_type": "structure",
+        "source_id": "PDB:1NG2",
+        "source_url": "https://www.rcsb.org/structure/1NG2",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": "unknown",
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "not_established",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "No probabilistic uncertainty model was run; ranges, where present, are clustering scenarios or heuristic scores, never confidence intervals."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "input.mechanism_hypothesis / MISSING ENUM VALUE: the therapeutic hypothesis is ACTIVATION of the NOX2 oxidative burst, but the mechanism_hypothesis enum is {orthosteric, allosteric, oligomer_destabilisation, unknown} with NO 'activation' member. 'oligomer_destabilisation' denotes DEstabilising the assembled oxidase (i.e. inhibition) and is actively wrong for an activation hypothesis; orthosteric/allosteric presuppose a pocket that is not established. The least-wrong echo is 'unknown', recorded as such. This is a schema-vocabulary gap, not a retrieval failure.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "target_precedent.best_potency (overall): the single best affinity in the set, Kd 43 nM (pChEMBL 7.37, CHEMBL5197024, characterised direct binding to His-tagged p47phox), is a PEPTIDE by modality.py and is therefore NOT reported as best_potency_nm (rule 1d, which is small-molecule-attributable). The reported best_potency_nm is the best SMALL MOLECULE, 220 nM. Recorded so the nanomolar figure is not silently attributed to small molecules.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "target_precedent clinical/approved small molecules: chembl_v.drugs_by_accession = 0 rows (no curated direct-MoA drug on NCF1); the rule-2d cross-check returned only EBSELEN (max_phase 3) and QUIPAZINE (max_phase 2), both OFF-TARGET repurposing/screening hits developed for other indications, so both lists are empty and the two molecules are disclosed in target_precedent._clinical_note rather than listed as NCF1 candidates.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Paperclip exposes no patent source (rule 13). Null, never 0.",
+        "field_path": "output.target_precedent.patents.count"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT RETRIEVED \u2014 no clinical-trial or literature termination search was run this session. The empty list is an unmeasured axis, not a finding that no NCF1 programme was terminated (and equally not that none was tried).",
+        "field_path": "output.target_precedent.terminated_programs"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no frequent-hitter/aggregator/PAINS database was queried; ebselen is a known promiscuous compound by literature reputation but that is not a database check, so the field is null. (There is also no drug-like bound ligand to assess.)",
+        "field_path": "output.structure.bound_ligand.is_known_frequent_hitter"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "family_precedent.family_actives / best_family_potency_nm / best_family_potency_modality / best_family_target: DELIBERATELY not computed. The p47phox-specific Pfam families (PF08944, PF16621) are too small to carry independent chemistry and the generic PX/SH3 families (PF00787, PF00018) transfer nothing to a PPI adaptor (rule 9). A cross_references census keyed on Pfam id also repeatedly hit the Kind-A '[error] Request timed out' signature (rule 15), so a member list was not retrievable. Null rather than a meaningless aggregate over unrelated proteins.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT RUN \u2014 needs a cross-target pocket-descriptor index (none in this pipeline) and a cofold transfer (no cofolding model, rule 13). Empty list = unmeasured.",
+        "field_path": "output.pocket_neighbour_precedent.candidates"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "affinity.* (whole block, incl. rule 12's positive control): no affinity predictor in this deployment (rule 13). Unsatisfiable, not skipped.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no cofolding model in this deployment (rule 13).",
+        "field_path": "output.structure.cofold_control.*"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.pocket_volume_a3.min and tractability.pocket_volume_a3.max: DELIBERATELY null. The per-structure D=1.6 volumes ARE reported (primary_d1_6_a3 245.7 A^3 for 1NG2; 111.2 A^3 for 1UEC) but are NOT pooled into a spread, because site_pocket_selected_by is max_druggability_no_ligand_site (rule 4b: not a site) and the two structures' pockets are 8.85 A apart.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.pocket_druggability.min and tractability.pocket_druggability.max: DELIBERATELY null. Druggability is not a cross-structure quantity (rule 4.0) and no site was established; the per-structure value (0.224 in 1NG2 D=1.6) is given beside its rank in site_pocket_rank, never pooled.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "withheld \u2014 the only pocket it could describe was selected by max_druggability_no_ligand_site and is not a site, so a hydrophobic-density figure attached to it would read as a site property it is not.",
+        "field_path": "output.tractability.pocket_hydrophobic_density"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "null \u2014 there is no ligand anywhere in the NCF1 PDB set (0 drug-like holo) to define a ligand contact set, so there is nothing to compute a Jaccard against. Null for want of a ligand, not a low overlap.",
+        "field_path": "output.tractability.ligand_site_jaccard"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "null \u2014 backbone displacement is an apo-vs-holo superposition measurement and there is no holo NCF1 structure to superpose against (cryptic stage not_run, 0 holo/2 apo).",
+        "field_path": "output.tractability.max_backbone_ca_displacement_a"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket and meets_consensus_criterion: null \u2014 with no established site there is no site occupancy to take a consensus fraction of; n_structures (2) and n_measurements (4) are given so the reader sees the denominator. (It is not a tractability signal anyway, AUC 0.560.)",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "structural_neighbour_precedent detail limited to single-chain path: neighbour_precedent ran the single-chain Foldseek on 1NG2 chain A (a tandem-SH3 construct); a multimer search was not run because the autoinhibited construct is effectively one chain. Adequate for the fold-precedent question asked.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "TRANSPORT NOTE (rule 15): several diagnostic paperclip queries hit the Kind-A '[error] Request timed out' signature during this session (a GROUP BY feature-type count, uniprot_alignment_ranges, and some first-attempt drugs/compounds calls) \u2014 a shared 10-connection budget under parallel sessions. Every reported figure was re-run to a clean result and/or issued as a single-row server-side aggregate reconciled against the row pull; no timed-out query was read as a 0 or [].",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "null (none supplied); as_of_leakage is [] accordingly, and no date filtering was applied.",
+        "field_path": "output.as_of_date"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "The computed axis measured almost nothing about a SITE, and saying so is the result. Disorder ran (0.2718 over the 390-residue full-length sequence; the single disordered region is 285-390, i.e. exactly the PBR/AIR). fpocket detection ran and found cavities. But: cryptic not_run (needs an apo/holo pair; NCF1 has 0 holo), interface not_run (no partner complex supplied), mdpocket returned only an unanchored site_from_density, and site selection degraded to max_druggability_no_ligand_site on both apo structures \u2014 which does not identify a site \u2014 with their top pockets 8.85 A apart. UniProt annotates zero Binding site / Active site on NCF1. So the honest computed reading is: this is a PROTEIN-PROTEIN-INTERACTION ADAPTOR with no orthosteric small-molecule pocket that the geometry can establish, on an apo-only structure set. Chains were asserted (1NG2=A, 1UEC=A) per rule 2b as the autoinhibited tandem-SH3+AIR unit. None of this weighs against the target being ligandable at the p22phox interface \u2014 the retrieved axis shows it is, for INHIBITION \u2014 it says the ACTIVATION site the asset needs is not established by structure here.",
+        "field_path": "output.tractability.caveat"
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.disorder_fraction carries no evidence or assumption link.",
+        "field_path": null
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "A biophysical (SPR/NMR) or crystallographic/cryo-EM fragment screen aimed specifically at an ACTIVATING modality \u2014 small molecules that bind the intramolecular AIR / tandem-SH3 autoinhibitory interface of p47phox and DISRUPT it (relieving autoinhibition to promote NADPH-oxidase assembly and the oxidative burst), read out by a functional burst/assembly assay with a co-structure of any activator bound. Failing an activator, a fragment screen against the isolated tandem-SH3+AIR module reporting a hit rate would at least establish whether that surface is ligandable at all.",
+        "result": "Whether an ACTIVATING small molecule (autoinhibition-disrupting) against p47phox is chemically achievable \u2014 the exact question the retrieved inhibitor chemistry and the apo computed axis leave open. A single activator-bound structure would convert this axis from unmeasured to measurable: it would supply the holo reference that unlocks the cryptic comparison, the anchor that lets a site be defined by something other than max_druggability_no_ligand_site, and the proof that the mechanism the enum cannot name is real.",
+        "meaning": "The verdict is insufficient_evidence FOR THE ACTIVATION MECHANISM, and every branch that could change it is closed for the same reason: all existing NCF1 chemistry is assembly-INHIBITOR chemistry (wrong direction), the best affinity is a peptide, there is no holo structure to anchor an activation site, the fold has no drug-like precedent, and NCF1 carries no annotated pocket. Computation cannot manufacture an activation site on an apo PPI adaptor (rule 3/4.0). What is missing is a direction-correct experiment, not more analysis of inhibitor data."
+      },
+      {
+        "change": "If the falsification check 'Do all reported actives trace to one paper/lab/series? PARTIALLY \u2014 FOUND. The 147 small molecules cluster into a small number of recent (2023-2024, high CHEMBL IDs) p47phox campaigns: a covalent-inhibition series (top assay, 21.3%) and a p22phox(149-162) SH3-displacement series (19.8%), with several bivalent PEG-linked bis-aminoquinoline/aminonaphthyridine scaffolds among the most potent. This is a narrow, recent chemical space, not decades of independent series; treat the precedent as one-programme-deep.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Is the best potency from a characterised assay, and is it a small molecule? MIXED \u2014 FOUND. The single best affinity, Kd 43 nM (CHEMBL5197024), is a PEPTIDE (modality.py: proline/arginine backbone), not small-molecule-attributable (rule 1d). The best SMALL-MOLECULE value is Ki 220 nM (CHEMBL5411448) from a characterised FP competition assay (confidence 9, relation '='). So the headline nanomolar figure evaporates once modality is applied; small molecules top out sub-micromolar, not nanomolar.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Are the actives promiscuous binders / frequent hitters? FOUND for the clinical hits. EBSELEN (max_phase 3 by the rule-2d cross-check) is an organoselenium benzisoselenazol-3-one \u2014 a textbook promiscuous redox-active/covalent frequent hitter \u2014 at only ~12 uM on p47phox; it is an off-target hit, not an NCF1 lead. More broadly the top assay is 'Covalent inhibition of p47phox', and covalent/PEG-linked bivalent chemistry carries the usual specificity caveats. No PAINS/aggregator database was queried (see not_found), so this is flagged, not adjudicated.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Does the direction of the chemistry match the therapeutic hypothesis? NO \u2014 THE CENTRAL FINDING. Every retrieved active INHIBITS assembly (disrupts p47phox-p22phox or covalently modifies p47phox). The hypothesis is to ACTIVATE the burst. An assembly inhibitor is not precedent for an activator; if anything it is anti-precedent for the same interface. The mechanism_hypothesis enum cannot even represent 'activation'.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Is the pocket an artifact of one crystal form / additive? N/A in the damaging direction \u2014 there is no holo pocket to be an artifact of; all 11 entries are apo and the only heteroatoms are additives (GOL/SO4/TFA) or oxidase cofactors (8WEJ). CHECK RUN, no holo-pocket artifact possible.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Does the fold carry transferable small-molecule precedent? NO. Foldseek fold neighbours of the tandem SH3 (645 hits, 28 passing, 9 accessions) are all SH3 PPI adaptors (STAC1/2/3, Crk/CRKL, sorbin, Grb2, Ephexin4) and NONE carries a drug-like holo (n_with_holo_single_protein 1, none drug-like). SH3 adaptors are classic hard PPI targets; the fold offers nothing to transfer.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Is the actives count an artifact of a moving row cap / dominant off-target assay (rule 6/14)? NO. distinct compounds reconciled (COUNT(DISTINCT molregno) 149 == 149 unique in the row pull); bioactivities 348 == B 348 + F 0; no assay exceeds 30% and every top assay is on p47phox or its p22phox interaction (measures_a_different_target false). CHECK RUN, nothing found.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'Were clinical programmes against NCF1 terminated, and why? NOT RUN \u2014 no trials/literature termination search this session (see not_found). Absence of terminated_programs must not be read as 'nobody failed' nor as 'nobody tried'.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      },
+      {
+        "output_path": "output.tractability.site_pocket_rank.fpocket",
+        "input_paths": [
+          "output.structure.pdb_id",
+          "output.tractability.site_hypothesis_basis"
+        ],
+        "transformation": "fpocket within-structure ranking at D=1.6 over the selected structure's pockets."
+      },
+      {
+        "output_path": "output.tractability.pocket_volume_a3.primary_d1_6_a3",
+        "input_paths": [
+          "output.structure.pdb_id"
+        ],
+        "transformation": "mdpocket site volume at clustering D=1.6."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": "tid 103757 (SINGLE PROTEIN, n_target_components = 1), target_chembl_name 'Neutrophil cytosol factor 1'. chembl_v.target_proteins WHERE accession='P14598' returns exactly this one clean single-protein target.",
+          "best_potency_nm": 220.0,
+          "best_potency_characterised": true,
+          "distinct_actives": 147,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 0,
+          "terminated_programs": 0
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "not_run",
+          "site_hypothesis_basis": "not_established",
+          "structure_pdb_id": "1NG2",
+          "fpocket_rank": 2,
+          "prank_rank": 3,
+          "n_pockets": 11,
+          "pocket_volume_d16_a3": 245.727,
+          "ligand_site_jaccard": null,
+          "cryptic_pocket_risk": "high",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved P14598",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "apo_experimental \u2014 1NG2",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "rank 2 of 11 in 1NG2",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "147 actives",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "survived",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "insufficient_evidence / none",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "A biophysical (SPR/NMR) or crystallographic/cryo-EM fragment screen aimed specifically at an ACTIVATING modality \u2014 small molecules that bind the intramolecular AIR / tandem-SH3 autoinhibitory interface of p47phox and DISRUPT it (relieving autoinhibition to promote NADPH-oxidase assembly and the oxidative burst), read out by a functional burst/assembly assay with a co-structure of any activator bound. Failing an activator, a fragment screen against the isolated tandem-SH3+AIR module reporting a hit rate would at least establish whether that surface is ligandable at all.",
+        "rationale": "The verdict is insufficient_evidence FOR THE ACTIVATION MECHANISM, and every branch that could change it is closed for the same reason: all existing NCF1 chemistry is assembly-INHIBITOR chemistry (wrong direction), the best affinity is a peptide, there is no holo structure to anchor an activation site, the fold has no drug-like precedent, and NCF1 carries no annotated pocket. Computation cannot manufacture an activation site on an apo PPI adaptor (rule 3/4.0). What is missing is a direction-correct experiment, not more analysis of inhibitor data.",
+        "resolves": "Whether an ACTIVATING small molecule (autoinhibition-disrupting) against p47phox is chemically achievable \u2014 the exact question the retrieved inhibitor chemistry and the apo computed axis leave open. A single activator-bound structure would convert this axis from unmeasured to measurable: it would supply the holo reference that unlocks the cryptic comparison, the anchor that lets a site be defined by something other than max_druggability_no_ligand_site, and the proof that the mechanism the enum cannot name is real."
+      },
+      "figure": {
+        "kind": "none",
+        "path": null,
+        "caption": null,
+        "present": false,
+        "note": "No figure applies to this run."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "1NG2",
+          "1UEC"
+        ],
+        "chembl_target_id": "tid 103757 (SINGLE PROTEIN, n_target_components = 1), target_chembl_name 'Neutrophil cytosol factor 1'. chembl_v.target_proteins WHERE accession='P14598' returns exactly this one clean single-protein target.",
+        "uniprot_accession": "P14598",
+        "tools": [
+          "fpocket",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:724027832e7c75fa0f6ca38cc64b0f3a89574809540c400be476ed54254bb5d4"
+    }
+  }
+}
