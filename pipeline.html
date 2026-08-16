@@ -665,11 +665,12 @@
         </div>
         <div class="out-note">
           Written to <code>/mnt/session/outputs/druggability-dossier.json</code>
-          and pasted into the reply. The output contract is the JSON template in
-          <b>CLAUDE.md</b>, enforced by
-          <b>.claude/skills/assemble-dossier/validate_dossier.py</b> &mdash; that
-          validator plus the template are the schema; there is no separate
-          <code>schema/</code> directory in this checkout.
+          and pasted into the reply. The machine-readable contract is
+          <b>schemas/input.schema.json</b> and <b>schemas/output.schema.json</b>
+          (JSON Schema draft 2020-12), with the cross-field semantics enforced by
+          <b>.claude/skills/assemble-dossier/validate_dossier.py</b>. The output
+          also carries an <code>interpretability</code> object for this panel
+          (<b>schemas/interpretability.schema.json</b>).
         </div>
       </div>
 

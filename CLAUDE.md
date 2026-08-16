@@ -1689,13 +1689,15 @@ So, binding:
    shapes are read by the validator and by consumers, and changing them is not
    this rule's call to make.
 
-### 15. Seven Paperclip failure signatures, in two kinds. Distinguish them.
+### 15. Eight Paperclip failure signatures, in two kinds. Distinguish them.
 
 A failed retrieval that reaches the JSON as `0` or `[]` is the one error this
 dossier cannot survive, and Paperclip fails in more ways than the documentation
 admits: **11 of 30 SQL calls in one dry run failed, across four distinct
-signatures, three of them undocumented.** Three more were found later. They split
-into two kinds, and the distinction decides what you do about them.
+signatures, three of them undocumented.** Four more were found on later runs —
+a stdout schema error, a server-side statement timeout, a size-triggered row
+preview and a column-width truncation. They split into two kinds, and the
+distinction decides what you do about them.
 
 **Kind A — the query did not run.** Value is `null`, never `0`, never `[]`.
 
@@ -1705,6 +1707,7 @@ into two kinds, and the distinction decides what you do about them.
 | `[error] Something went wrong. Please try again.` | undocumented. No code, no detail, no way to tell transient from permanent. |
 | `vsh: cd: /papers/: Permission denied` | returned by `paperclip sql` **for a SQL query** — a shell error from another subsystem, naming a path you never queried. |
 | `ERR: sql: unknown column "x"` / `relation "y" does not exist` | a **schema** error, printed on **stdout with exit 0**. A parser that reads rows sees a header-less body and returns zero. This produced a false `IRAK4 absent` and was then misdiagnosed as an expired API key — the key was fine; `uniprot_v.proteins` simply has no `organism_id` column. Verify a column exists before filtering on it, and never conclude absence from an empty parse without checking stdout for `ERR:`. |
+| `SQL error: canceling statement due to statement timeout` | a **server-side** statement timeout at **~85 s**, distinct from the 120 s client-side `[error] Request timed out` above. It keys on query **shape**, not just cost: an `IN (subquery)` and a `cross_references JOIN proteins` each hit it where **125 inlined literals returned in 2.2 s** and the unjoined `COUNT` in 1.3 s. Rewrite as inlined literals or split the join into two queries, then retry — do not read the timeout as "no rows". |
 | a silently capped row set | rule 14. Well-formed table, correct columns, **no error text at all**. |
 
 **Kind B — the query ran and the *value* is wrong.** Rule 14's count
@@ -1713,7 +1716,7 @@ it is the cell contents that are damaged. Neither can be caught downstream.
 
 | signature | what it actually is |
 | --- | --- |
-| `Preview (first 5 of 100 rows)` | a **display** cap distinct from the row cap. The footer truthfully reads `100`, but only 5 rows are rendered, so `len(rows) == 5` while the count you reconcile against says 100. Trust the footer, not the row list. |
+| `Preview (first 5 of N rows)` | a **display** cap distinct from the row cap, and **triggered by size, not by `LIMIT`**: measured, **60 rows render in full and 80 collapse to a 5-row preview**, while the footer still prints the true `(N rows, …ms)`. So `len(rows) == 5` against a footer of 190. This defeated a `tail -3` sanity check that read the preview as the whole result. Trust the footer count, never the rendered row list; to actually read >~60 rows, page with `OFFSET`/`LIMIT` or aggregate server-side. |
 | a value cut to the column width, ending `...` | the CLI caps rendered **column width** and appends an ellipsis. It is **width-dependent, not a fixed limit**: `A1AHB`'s 100-char SMILES returns whole from a 3-column query and truncated to 77 + `...` from a 7-column one. Widening the `SELECT` list silently shortens every long cell in it. **A truncated SMILES still parses**, so a classifier returns a confident *wrong* verdict rather than an error. Defence: pull wide text as fixed-width `SUBSTRING(col,1,70), SUBSTRING(col,71,70), …` slices and rejoin, then assert the rejoined length against a server-side `LENGTH(col)`. `ligand_filter.py` already does this and is **not** exposed. The `STRING_AGG(DISTINCT comp_id,' ')` shortcut in rule 14 clause 4 **is** exposed — it silently drops comps off multi-ligand entries. |
 
 **Any Kind A signature means the query did not run.** The value is `null`, the reason is
@@ -1724,15 +1727,15 @@ precedent found". A timeout is not a zero, a shell error is not a zero, a schema
 error is not a zero, and a capped table is not a count.
 
 **Only auth failures are guarded today, and that guard catches none of the
-seven.** The tool layer throws on `401`/`403`/`unauthorized`/`forbidden`/`invalid
+eight.** The tool layer throws on `401`/`403`/`unauthorized`/`forbidden`/`invalid
 api key` and friends, and only when the process also exits non-zero. Every
 signature above exits `0`, and the schema errors print their complaint on
 **stdout** rather than stderr, so they survive a `2>/dev/null` intact and read as
 data. **Do not expect the tool layer to stop any of them.** The guard is these
 rules, the reconciliation in rule 14, and nothing else.
 
-**A corollary about credentials.** Six of the seven look exactly like "the key is
-bad", and none of them are. Before concluding a credential is expired or
+**A corollary about credentials.** Seven of the eight look exactly like "the key
+is bad", and none of them are. Before concluding a credential is expired or
 unprivileged, run `SELECT 1` and one known-good row lookup: if those return, the
 key is fine and the fault is in your SQL. An authentication failure announces
 itself as `[error] Not authenticated. Run: paperclip login` and returns **no
