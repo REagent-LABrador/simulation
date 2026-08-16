@@ -5,10 +5,10 @@ druggability dossier for one protein target and writes it as a single JSON file
 that validates against `schemas/output.schema.json`, with a side-panel
 interpretability object at `output.interpretability`.
 
-## The one command
+## The command
 
 ```bash
-python -m simulation run --input input.json --output output.json
+python -m simulation run --mode live|replay --input input.json --output output.json
 ```
 
 Copy-pasteable example against the shipped example request:
@@ -16,10 +16,11 @@ Copy-pasteable example against the shipped example request:
 ```bash
 # from the station root (managed/druggability-dossier/), with the env from below active
 micromamba run -n druggability-simulation \
-  python -m simulation run --input examples/input.json --output /tmp/dossier.json
+  python -m simulation run --mode replay \
+  --input examples/input.json --output /tmp/dossier.json
 ```
 
-`--input` and `--output` are both required paths. `--input` must satisfy
+`--mode`, `--input`, and `--output` are required. `--input` must satisfy
 `schemas/input.schema.json` (one required field, `uniprot_accession`).
 
 ## Exit codes
@@ -28,8 +29,8 @@ micromamba run -n druggability-simulation \
 | --- | --- |
 | `0` | success — dossier written, and BOTH the output schema and the interpretability schema validated |
 | `2` | invalid input — request missing/failing `schemas/input.schema.json`; **nothing is written** |
-| `3` | dossier production failed — the managed agent could not be invoked (see below); **nothing is written** |
-| `4` | validation failed — the dossier was written to `--output` for inspection, but it (or its interpretability object) did not validate |
+| `3` | dossier production failed — a `simulation.execution-error.v1` terminal object is written with the exact reason code |
+| `4` | provider/replay output was invalid — a `simulation.execution-error.v1` terminal object is written with `reasonCode: INVALID_OUTPUT` instead of publishing the invalid dossier |
 | `1` | usage error |
 
 Any nonzero code is a failure. Exit `0` is returned only when the dossier and its
@@ -85,16 +86,26 @@ Both `simulation/requirements.txt` (exact versions) and
 
 ## How the dossier is produced (and what a live run needs)
 
-`run_pipeline` in `simulation/pipeline.py` invokes the **Claude Managed Agent**
-that is this station — there is no pure-Python re-run of the science. It drives
-the documented headless route (`bun run console druggability-dossier -- --once
-"<task>"`, README step 3 / `scripts/console.ts`), which runs the deployed agent,
+`--mode live` invokes the **existing Claude Managed Agent** that is this station;
+there is no pure-Python re-run of the science. Set `LABRADOR_RUNTIME_ROOT` to the
+full LABrador checkout that already contains the managed-agent runtime and an
+existing deployment. The split station drives that checkout's documented
+headless route (`bun scripts/console.ts small-molecule-tractability-review --
+--once "<task>"`), which runs the deployed agent,
 answers any custom-tool round-trips in-process, prints the agent's final reply
 (the dossier JSON) to stdout, and logs to stderr; the module then parses that
 JSON. A live run therefore needs `ANTHROPIC_API_KEY`, network access, `bun` on
 PATH, and the agent to have been deployed (`manifest.deployment.agent_id` set).
 When any of those is absent, `run_pipeline` raises a typed error and the command
-fails loudly (exit `3`) rather than hanging or fabricating a dossier.
+fails loudly (exit `3`) rather than hanging, deploying anything, or falling
+back to replay. Stable terminal codes distinguish runtime, deployment,
+credential, dependency, timeout, provider, and invalid-output failures. The
+managed-provider session receives a 90-minute limit; the orchestrator owns the
+90-minute node timeout.
+
+`--mode replay` uses only the bundled real-dossier cache. Cache hits are stamped
+`CACHED_DOSSIER`; misses return an honest `insufficient_evidence` dossier with
+no invented scientific values.
 
 The **schemas, examples, and interpretability logic are self-contained** and need
 none of that: they run offline against the checked-in `examples/` and fixtures,
@@ -106,9 +117,8 @@ which is what `simulation/test_module.py` exercises.
 micromamba run -n druggability python simulation/test_module.py
 ```
 
-Offline, no paid calls: it monkeypatches `run_pipeline` with a recorded real
-dossier (`examples/output.json`) to check the end-to-end contract (exit 0, output
-written, stdout empty, output validates), checks that malformed input and a
-raising pipeline both fail loudly with nothing written, and checks that
+Offline, no paid calls: it runs replay against the bundled real dossier and
+checks the end-to-end contract (exit 0, output written, stdout empty, output
+validates), checks malformed input and exact live terminal errors, and checks that
 `build_interpretability` validates against `schemas/interpretability.schema.json`
 for the example dossier and both integration fixtures.

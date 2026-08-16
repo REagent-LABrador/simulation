@@ -1,8 +1,8 @@
 # Locked PYTHON dependencies for the druggability-dossier simulation module.
 #
-# THE DEFAULT RUN NEEDS ONLY PYTHON + jsonschema. It runs LOCALLY and offline:
+# REPLAY NEEDS ONLY PYTHON + jsonschema. It runs LOCALLY and offline:
 #
-#   python3 -m simulation run --input in.json --output out.json
+#   python3 -m simulation run --mode replay --input in.json --output out.json
 #
 # resolves the request against the bundled cache in simulation/cache/ (real
 # dossiers) and never touches the cloud, Modal, Paperclip, a managed agent, or an
@@ -10,12 +10,11 @@
 #
 #   micromamba run -n druggability pip install -r simulation/requirements.txt
 #
-# OPTIONAL — the managed-agent path (SIMULATION_USE_AGENT=1, NON-DEFAULT) also
-# needs the vendored TypeScript runtime and its own extras, installed separately:
+# LIVE uses a separately configured full LABrador checkout:
 #
-#   cd simulation/runtime && bun install     # + bun on PATH + ANTHROPIC_API_KEY + network
+#   LABRADOR_RUNTIME_ROOT=/path/to/LABrador python -m simulation run --mode live ...
 #
-# None of that is required for the default run. Versions below are pinned to what
+# None of that is required for replay. Versions below are pinned to what
 # is installed in the `druggability` env (Python 3.14).
 jsonschema==4.26.0
 # jsonschema's own dependency closure, pinned for reproducibility:

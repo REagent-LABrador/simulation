@@ -61,13 +61,39 @@ Additional skills support this core pipeline, including `falsification-sweep`
 
 ## Input / output contract
 
-The input and output are JSON. The formal JSON Schemas live under `schema/`:
+The input and output are JSON. The formal JSON Schemas live under `schemas/`:
 
-- `schema/input.schema.json` — the request contract.
-- `schema/output.schema.json` — the dossier contract.
+- `schemas/input.schema.json` — the request contract.
+- `schemas/output.schema.json` — the dossier contract.
 
 The `input` block is echoed back verbatim on every run and is never inferred.
 See `CLAUDE.md` for the full field-by-field contract and operating rules.
+
+## Run it
+
+Choose the mode explicitly; live mode never falls back to replay:
+
+```bash
+# Deterministic bundled cache; no provider calls.
+python -m simulation run --mode replay \
+  --input examples/input.json --output /tmp/dossier.json
+
+# Existing Paperclip/Proto/Modal-backed managed agent. This does not deploy it.
+LABRADOR_RUNTIME_ROOT=/path/to/LABrador \
+  python -m simulation run --mode live \
+  --input examples/input.json --output /tmp/dossier.json
+```
+
+A failed live run exits nonzero and writes a small
+`simulation.execution-error.v1` object with `status: CANNOT_COMPLETE` and an
+exact `reasonCode`. A replay cache hit remains labelled `CACHED_DOSSIER`; it is
+never reported as live.
+
+Every successful dossier is also validated against the exact shared
+interpretability schema vendored from `platform-contracts`; its source commit
+and SHA-256 are recorded in `schemas/contract.lock.json`. Invalid provider
+output becomes terminal `CANNOT_COMPLETE / INVALID_OUTPUT` rather than being
+published as a scientific dossier.
 
 ## Not a substitute for experiment
 

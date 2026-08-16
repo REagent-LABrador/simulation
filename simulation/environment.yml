@@ -1,16 +1,15 @@
 # Locked micromamba environment for the druggability-dossier simulation module.
 # The module is self-contained; it depends on no other repo.
 #
-# THE DEFAULT RUN NEEDS ONLY Python + jsonschema. `python3 -m simulation run`
+# REPLAY NEEDS ONLY Python + jsonschema. `python3 -m simulation run --mode replay`
 # resolves the request against the bundled cache in simulation/cache/ (real
 # dossiers) entirely LOCALLY — no cloud, no Modal, no Paperclip, no managed
 # agent, no API key — so no gemmi/fpocket/GPU deps are listed and none are needed.
 #
-# OPTIONAL — the NON-DEFAULT managed-agent path (SIMULATION_USE_AGENT=1) also
-# needs the vendored TypeScript runtime at simulation/runtime/ (its handlers run
-# client-side), installed separately and not covered by this file:
+# LIVE uses a separately configured full LABrador checkout (its handlers run
+# client-side), not covered by this file:
 #
-#   cd simulation/runtime && bun install     # + bun + ANTHROPIC_API_KEY + network
+#   LABRADOR_RUNTIME_ROOT=/path/to/LABrador python -m simulation run --mode live ...
 #
 # This env is named distinctly so `env create -f` never clobbers the operator's
 # richer `druggability` env (which already carries jsonschema, so you can also

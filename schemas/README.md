@@ -1,13 +1,15 @@
 # Simulation-station JSON Schemas
 
-The machine-readable contract for the simulation (druggability-dossier) station.
-Three files, all [JSON Schema draft 2020-12](https://json-schema.org/):
+The machine-readable contract for the simulation (druggability-dossier) station:
+three [JSON Schema draft 2020-12](https://json-schema.org/) documents plus one
+source lock.
 
 | file | what it governs |
 | --- | --- |
 | `input.schema.json` | the **request** a caller sends the station |
 | `output.schema.json` | the **dossier** the station returns |
 | `interpretability.schema.json` | the **`output.interpretability`** object — the LABrador shared interpretability contract (v1.0.0) |
+| `contract.lock.json` | exact `platform-contracts` source commit, path, and SHA-256 for the vendored interpretability schema |
 
 ## The interpretability contract (required)
 
@@ -27,6 +29,11 @@ dossier — no recomputation, no fabrication; unknowns stay `null` and earn a
 `limitation`. Enums: `status` SUPPORTED|QUALIFIED|INCONCLUSIVE|FAILED|NOT_APPLICABLE;
 `basis` OBSERVED|INFERRED|MODELED|SYNTHETIC; `direction` positive|negative|neutral|mixed|unknown;
 `grade` HIGH|MODERATE|LOW|UNSUPPORTED; `severity` INFO|WARNING|ERROR.
+
+This repository vendors the contract byte-for-byte from
+`REagent-LABrador/platform-contracts` commit
+`755499b42ab65d3b01f959b11624dd4e61bdd561`. The expected SHA-256 is recorded
+in `contract.lock.json` and enforced by the offline module tests.
 
 ## What these are, and what they are not
 
