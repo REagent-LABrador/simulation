@@ -1,0 +1,462 @@
+{
+  "_fixture": "INTEGRATION FIXTURE, NOT A VALIDATOR-CALIBRATION EXAMPLE AND NOT A CONTRACT. This file exists so station 4's end-to-end run has a dossier whose subject matches an IRAK4 programme; with only JAK1 and TNF-alpha committed, every tractability row in that run quarantines as SUBJECT_MISMATCH and the station is a no-op. It is a snapshot of the pipeline as of 2026-08-15 and it will go stale the next time the pipeline changes. Do NOT calibrate the validator or the rubric against it, and do not treat a disagreement between this file and a later run as a regression in the later run. jak1_P23458.json and tnf_P01375.json are the calibration examples; this is not one of them.",
+  "_pipeline_state": {
+    "run_date": "2026-08-15",
+    "pocket_scan": "Modal app .claude/skills/pocket-scan/modal_app.py, fpocket + PRANK swept at D = 1.6 and 2.4, disorder / cryptic / interface / mdpocket stages",
+    "rules_in_force": [
+      "rule 1 rewritten: molecule_type decides DRUGS only; compound modality from structure via precedent-lookup/modality.py",
+      "rule 4 rewritten: druggability is a WITHIN-STRUCTURE rank; the 210/240 A^3 volume separation is retracted",
+      "rule 2b: chain selection asserted through pocket_scan --chains",
+      "rule 14: every count reconciled against an independently issued aggregate"
+    ],
+    "known_stale_risk": "This file is a snapshot. Re-run rather than trust it if the pipeline has changed."
+  },
+  "_retrieved": "2026-08-15",
+  "input": {
+    "_note": "Verbatim echo of the request, never inferred and never back-filled. THIS RUN WAS INVOKED WITH AN EXPLICIT MECHANISM HYPOTHESIS, which is the whole reason the pair of IRAK4 dossiers exists: the same accession under a different mechanism_hypothesis is a DIFFERENT ANSWER, and any cache, dedup or comparison downstream must key on (input.uniprot_accession, input.mechanism_hypothesis, input.as_of_date). Those three fields are the only machine-readable thing that distinguishes this file from its companion. target.uniprot_accession is the RESOLVED accession; input.uniprot_accession is what the caller said.",
+    "uniprot_accession": "Q9NWZ3",
+    "as_of_date": null,
+    "disease_context": null,
+    "interaction_to_disrupt": "the MyD88-IRAK4-IRAK2 Myddosome death-domain helical assembly \u2014 IRAK4's scaffolding role, disrupted by destabilising the oligomer rather than by inhibiting catalysis",
+    "mechanism_hypothesis": "oligomer_destabilisation"
+  },
+  "target": {
+    "uniprot_accession": "Q9NWZ3",
+    "gene_symbol": "IRAK4",
+    "protein_name": "Interleukin-1 receptor-associated kinase 4",
+    "organism": "Homo sapiens",
+    "sequence_length": 460,
+    "sources": [
+      "uniprot_v.proteins WHERE accession='Q9NWZ3' (run 2026-08-15)",
+      "sequence_length 460: uniprot_v.proteins.sequence_length, single-row aggregate"
+    ]
+  },
+  "as_of_date": null,
+  "verdict": "insufficient_evidence",
+  "verdict_basis": "none",
+  "axis_conflict": "Not a conflict between the two axes so much as a warning about which axis a reader will reach for. The RETRIEVED axis is empty FOR THIS MECHANISM \u2014 zero holo death-fold structures anywhere, zero actives attributable to the interface, no annotated site \u2014 while the COMPUTED axis returned the highest druggability value in either IRAK4 dossier, 0.890 at rank 1 of 134. They point in opposite directions and the computed one is wrong: its pocket is a hydrophobic core with enclosure 0.998 and no solvent mouth, selected by max_druggability_no_ligand_site, which does not identify a site. verdict_basis is 'none' because neither axis carried the verdict \u2014 the retrieved axis is empty and the computed axis is uninterpretable. Recorded here rather than resolved, per the contract.",
+  "target_precedent": {
+    "_site_attribution_note": "EVERY FIGURE IN THIS BLOCK IS MEASURED ON THE ACCESSION, NOT ON THE DEATH-DOMAIN INTERFACE. The characterised assays behind them are kinase-activity and IL-1-driven whole-blood readouts, i.e. the ATP site. Zero of the 11,416 compounds is attributable to the Myddosome death-fold assembly this dossier is about. Read the counts as precedent for the accession and NOT as precedent for this mechanism.",
+    "chembl_target_id": "CHEMBL3778 (tid 19639, SINGLE PROTEIN, n_target_components = 1). Three further ChEMBL targets carry this accession and are NOT this one: CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4 and CHEMBL4523742 VHL/IRAK4, all PROTEIN-PROTEIN INTERACTION with n_target_components = 2 - the degrader ternary-complex targets. 369 of the 32,838 activities on this accession (169 compounds) are inherited from those three and are not direct IRAK4 binding measurements.",
+    "distinct_actives": null,
+    "compound_modality_split": {
+      "_note": "Rule 1b/1c. Decided from SMILES via precedent-lookup/modality.py, NOT from molecule_type, which abstains on 59.2% of compounds and does so preferentially on the potent ones. distinct_actives above is the small_molecule entry here.",
+      "small_molecule": null,
+      "peptide": null,
+      "macrocyclic_peptide": null,
+      "oligonucleotide": null,
+      "oligosaccharide": null,
+      "protein_or_antibody": null,
+      "modality_unknown": null
+    },
+    "modality_unknown_count": null,
+    "assay_concentration": {
+      "top_assay_description": "Biochemical Assay: The biochemical assay is in a AlphaScreen format",
+      "top_assay_share_pct": 9.6,
+      "measures_a_different_target": false,
+      "assay_type_split": {
+        "binding_B": 32063,
+        "functional_F": 774
+      }
+    },
+    "best_potency_nm": 0.022,
+    "best_potency_modality": "small_molecule",
+    "best_potency_assay": "IC50 = 0.022 nM, standard_relation '=', pChEMBL 10.66, confidence_score 9, compound CHEMBL4443947, assay description 'Binding affinity to human IRK4 using myelin basic protein as substrate' \u2014 a characterised enzymatic kinase assay with a named substrate, not an uncharacterised 'inhibition of X' readout",
+    "best_potency_characterised": true,
+    "approved_small_molecules_count": 0,
+    "approved_small_molecules": [],
+    "clinical_stage_small_molecules": [
+      {
+        "name": "ZIMLOVISERTIB",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "chembl_v.drugs_by_accession + chembl.molecule_dictionary molregno 2221622 CHEMBL4081711, molecule_type 'Small molecule', structure_type 'MOL' (corroborated per rule 1a); max_phase 2.0, first_approval NULL"
+      },
+      {
+        "name": "EMAVUSERTIB",
+        "phase": 2.0,
+        "modality": "small_molecule",
+        "source": "ABSENT from chembl_v.drugs_by_accession (no drug_mechanism row). Found by the rule-2d cross-check directly in chembl.molecule_dictionary: molregno 2519942 CHEMBL4783351, molecule_type 'Small molecule', structure_type 'MOL', max_phase 2.0; 8 activity rows on Q9NWZ3, best pChEMBL 7.50"
+      },
+      {
+        "name": "KT-474",
+        "phase": 1.0,
+        "modality": "small_molecule",
+        "source": "ABSENT from chembl_v.drugs_by_accession. chembl.molecule_dictionary molregno 2917239 CHEMBL5569030, molecule_type 'Small molecule', structure_type 'MOL', max_phase 1.0. IT IS A CRBN-RECRUITING DEGRADER: its potent numbers are DC50 0.46 / 1.5 / 2.0 nM (CRBN-mediated degradation in PBMC and OCI-Ly10, all with pchembl_value NULL), and its ONLY binding number is IC50 = 41 nM (pChEMBL 7.39) against GST-tagged full-length IRAK4 residues 1-460. A DC50 is not a binding affinity; quoting 0.46 nM as affinity overstates the chemistry by more than a log."
+      }
+    ],
+    "patents": {
+      "count": null,
+      "source": null
+    },
+    "terminated_programs": [],
+    "as_of_leakage": [],
+    "sources": [
+      "paperclip sql -s proteins over chembl_v.* and chembl.molecule_dictionary, accession Q9NWZ3, run 2026-08-15",
+      "best_potency: chembl_v.bioactivities_by_accession ORDER BY pchembl_value DESC, standard_relation checked ('=' only, a '>' row is a failed measurement)",
+      "assay_concentration: GROUP BY assay_description with a window-function share; no assay exceeds 9.6%, so rule 6's ~30% single-assay concentration does not fire",
+      "clinical molecules: chembl_v.drugs_by_accession (1 row) cross-checked against chembl.molecule_dictionary by pref_name and chembl_id (rule 2d), which found two more that the view misses",
+      "target_precedent.distinct_actives: 11,416 from an independently issued COUNT(*) over chembl_v.compounds_by_accession WHERE accession='Q9NWZ3' (server-side aggregate, one row, cannot be silently capped); the paged row pull used to classify modality reconciles against the same 11,416.",
+      "target_precedent bioactivity total: COUNT(*) = 32,838 reconciles exactly against the assay_type split issued as a separate GROUP BY (B 32,063 + F 774 + A 1 = 32,838).",
+      "structure.total_pdb_structures: COUNT(DISTINCT entry_id) = 96 against 100 (accession, entry, entity) rows in pdb_v.structures_by_accession \u2014 the row count is entity-level and is NOT the entry count; 96 is the reconciled figure.",
+      "structure.holo_count / apo_count: 92 / 4 from a single server-side aggregate over the same 96 entries; the four apo entries were then named in a second aggregate (STRING_AGG) and agree: 2O8Y, 2OIB, 3MOP, 5UIQ."
+    ]
+  },
+  "biologic_precedent": {
+    "approved_biologics": [],
+    "note": "Presence of an approved biologic is target validation, NOT small-molecule tractability. IRAK4 has none: chembl_v.drugs_by_accession returns exactly one row for Q9NWZ3 (zimlovisertib, max_phase 2.0), whose molecule_type is 'Small molecule' with structure_type 'MOL', and the rule-2d cross-check into chembl.molecule_dictionary found two further clinical molecules, both also 'Small molecule'/'MOL'. No Antibody, Protein, Enzyme, Cell, Oligonucleotide, Oligosaccharide, Vaccine component, Gene or ADC row exists on this accession. The empty list is a retrieved finding, not a failed query \u2014 the query returned rows, and none of them was a biologic."
+  },
+  "family_precedent": {
+    "pfam": null,
+    "family_actives": 13914,
+    "best_family_potency_nm": 0.01,
+    "best_family_potency_modality": null,
+    "best_family_target": "Q13546 (RIPK1)",
+    "_why_pfam_is_null": "Q9NWZ3 HAS NO DEATH-DOMAIN PFAM CROSS-REFERENCE. uniprot_v.cross_references returns exactly one Pfam row for this accession \u2014 PF07714, the kinase \u2014 even though UniProt's own feature table annotates a Death domain at 20-104. So the sequence-family axis for the mechanism this dossier is about cannot be keyed off the target's own annotation. The figures below are the PF00531 (Death domain) family measured independently of IRAK4, which has the useful side effect that they contain no IRAK4 contamination: IRAK4 is not among the 20 family members with actives.",
+    "_what_the_family_number_actually_is": "13,914 compounds across 20 of PF00531's 125 members, best pChEMBL 11.00 (0.01 nM) on Q13546 = RIPK1. IT IS NOT DEATH-DOMAIN CHEMISTRY. The four largest contributors are RIPK1 (5,103), MAP3K5/ASK1 (2,849), RIPK2 (1,995) and IRAK1 (1,968) \u2014 all multidomain KINASES whose reported actives bind the kinase domain, not the death fold. RIPK1's 0.01 nM series is the type-III allosteric kinase pocket. This is rule 9's point exactly: a jump along 'same death-domain family' transfers nothing here, because the family's chemistry lives in a different domain of the same proteins. MyD88 itself (Q99836), the direct partner in 3MOP, has 23 compounds and a best pChEMBL of 4.82 \u2014 about 15 micromolar.",
+    "sources": [
+      "PF00531 membership: uniprot_v.cross_references, COUNT(*) = 125, reconciled against the paged member list (3 pages of 60, union 125).",
+      "family aggregate: COUNT(DISTINCT accession) = 20, COUNT(*) = 13,914, MAX(best_pchembl_value) = 11.00 over chembl_v.compounds_by_accession with the 125 accessions INLINED as literals (2.2 s). The IN-subquery form of the identical query was cancelled by the statement timeout at 85.2 s.",
+      "per-target breakdown confirming the sum: 5103+2849+1995+1968+1104+507+162+87+44+26+23+21+7+4+4+4+2+2+1+1 = 13,914 over 20 accessions."
+    ]
+  },
+  "structural_neighbour_precedent": {
+    "_note": "Foldseek neighbours, NOT sequence family, AND THE CONTRAST WITH THE COMPANION ORTHOSTERIC RUN IS THE POINT. Same accession, same tool, same filter: the kinase domain returns 5,814 hits of which 1,746 pass; the death-domain assembly returns 1,133 of which only 47 pass. The best neighbour is 2OF5 (an oligomeric death-domain complex) at complex TM 0.401 with E-value 2.03 \u2014 not significant \u2014 and everything below it sits at E-values of 47 to 292, which are meaningless. The neighbours are other death-fold assemblies: apoptosome (5JUY), Apaf-1/caspase-9 (5WVE), CARD disks (5WVC), PIDDosome-type CARD complexes (4RHW, 7KEU). NONE carries a drug-like holo at the death fold. The fold has no small-molecule precedent to transfer.",
+    "method": "foldseek-multimer-search (Proto, remote, pdb100, mode=complex-3diaa; TM-scores are COMPLEX TM-scores read from raw m8 column 21, not a second tmalign search)",
+    "query_structure": "3MOP (14-chain Myddosome assembly)",
+    "neighbours": [
+      {
+        "pdb_id": "2OF5",
+        "tm_score": 0.4013,
+        "evalue": 2.026,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "5JUY",
+        "tm_score": 0.2158,
+        "evalue": 246.8,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "5WVE",
+        "tm_score": 0.1795,
+        "evalue": 76.14,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "5WVC",
+        "tm_score": 0.1719,
+        "evalue": 47.33,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "4RHW",
+        "tm_score": 0.1164,
+        "evalue": 47.33,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "7KEU",
+        "tm_score": 0.1294,
+        "evalue": 292.2,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "8CZO",
+        "tm_score": 0.08521,
+        "evalue": 4.136,
+        "has_druglike_holo": false,
+        "ligand": null
+      },
+      {
+        "pdb_id": "1WMG",
+        "tm_score": 0.05438,
+        "evalue": 0.1668,
+        "has_druglike_holo": false,
+        "ligand": null
+      }
+    ],
+    "sources": [
+      "foldseek-multimer-search remote pdb100 (1133 hits, 24.054611206054688 s)",
+      "paperclip pdb_v.polymer_entities / pdb_v.entry_ligands / pdb_v.entries / pdb_v.structures_by_accession",
+      "https://search.foldseek.com/api/result/download/9E5qvrqb9zi3Bd8HlfjbEkuQjfe85BUoDNe1GA",
+      "filter: sequence identity < 0.3, alignment length >= 120; n_hits_total 1133, n_hits_passing 47, n_carried 25",
+      "accession_summary: {\"n_accessions\": 20, \"n_with_holo_entry_level\": 6, \"n_with_holo_single_protein\": 4}"
+    ]
+  },
+  "pocket_neighbour_precedent": {
+    "_note": "The strongest transfer axis, because the pocket is the unit that actually transfers. Not run here.",
+    "candidates": [],
+    "sources": [],
+    "_why_empty": "NOT RUN, not 'no candidates found'. Filling this axis needs two things this deployment does not have: a pocket-descriptor similarity search across other targets' scored pockets (no such index exists in this pipeline), and the cofold transfer that turns a similarity score into a falsifiable prediction, which is unavailable per rule 13 (no cofolding model). An empty candidates list here means the axis was not measured. See not_found."
+  },
+  "structure": {
+    "tier": "apo_experimental",
+    "pdb_id": "3MOP",
+    "resolution_a": 3.4,
+    "biological_unit_used": "assembly 1, all 14 polymer chains, asserted via pocket_scan --chains '3MOP=A,B,C,D,E,F,G,H,I,J,K,L,M,N'. Rule 2b: oligomer destabilisation needs ALL subunits, because the site being interrogated IS the assembly. Chain assignment verified by entity in pdb_v.polymer_entities: A-F = MyD88 (Q99836, 6 copies), G-J = IRAK4 (Q9NWZ3, 4 copies), K-N = IRAK2 (O43187, 4 copies).",
+    "bound_ligand": {
+      "comp_id": null,
+      "heavy_atoms": null,
+      "is_druglike": null,
+      "is_known_frequent_hitter": null
+    },
+    "total_pdb_structures": 96,
+    "holo_count": 92,
+    "apo_count": 4,
+    "_death_fold_census": {
+      "_note": "total_pdb_structures / holo_count / apo_count above are ACCESSION-level and are dominated by kinase-domain entries. They are NOT a statement about the death fold. These are.",
+      "irak4_entries_containing_the_death_domain": 1,
+      "irak4_death_domain_entries": [
+        "3MOP"
+      ],
+      "irak4_death_domain_holo_entries": 0,
+      "death_fold_pdb_entries_all_proteins": 221,
+      "death_fold_entries_with_any_ligand_ge_250_da": 20,
+      "death_fold_entries_with_a_synthetic_drug_like_ligand": 1,
+      "the_one_synthetic_ligand": "7PZC / comp_id 8GI, 1-(1,2,3,5,6,7-hexahydro-s-indacen-4-yl)... at 404 Da \u2014 the NLRP3 sulfonylurea chemotype, which binds the NACHT ATPase module, not the pyrin death fold. The other 19 entries carry only endogenous nucleotides and heme (ATP, ADP, GTP, GDP, UDP, dATP, HEM, HEC), i.e. the NACHT/ATPase cofactors of the same multidomain proteins.",
+      "reading": "Across 221 death-fold PDB entries there is no synthetic drug-like ligand bound at a death-fold domain.",
+      "source": "pdb_v.polymer_entity_pfam over PF00531 (Death) / PF00619 (CARD) / PF01335 (DED) / PF02758 (PYRIN) joined to pdb_v.entry_ligands; COUNT(DISTINCT entry_id) = 221 issued as its own aggregate. NOTE the naive sum of the four families is 225 because 4 entries carry two death-fold families; 221 is the reconciled distinct-entry figure."
+    },
+    "ensemble_used": [
+      "3MOP"
+    ],
+    "predicted_plddt": null,
+    "cofold_control": {
+      "_note": "No cofolding model is available in this deployment (rule 13).",
+      "reference_pdb_id": null,
+      "cofold_rmsd_a": null,
+      "reproduces_reference": null,
+      "trusted": null
+    },
+    "sources": [
+      "paperclip sql -s proteins over pdb_v.entries / structures_by_accession / entry_ligands / polymer_entities, run 2026-08-15",
+      "3MOP resolution 3.4 A, X-RAY DIFFRACTION, released 2010-06-02, title 'The ternary Death Domain complex of MyD88, IRAK4, and IRAK2': pdb_v.entries",
+      "3MOP carries ZERO nonpolymer ligands: COUNT(*) over pdb_v.entry_ligands WHERE entry_id='3MOP' = 0, and pocket_scan's own chemistry-based tier call agrees ('apo \u2014 no drug-like ligand, classified by chemistry via ligand_filter.classify_record')",
+      "entity/chain assignment: pdb_v.polymer_entities WHERE entry_id='3MOP'",
+      "target_precedent.distinct_actives: 11,416 from an independently issued COUNT(*) over chembl_v.compounds_by_accession WHERE accession='Q9NWZ3' (server-side aggregate, one row, cannot be silently capped); the paged row pull used to classify modality reconciles against the same 11,416.",
+      "target_precedent bioactivity total: COUNT(*) = 32,838 reconciles exactly against the assay_type split issued as a separate GROUP BY (B 32,063 + F 774 + A 1 = 32,838).",
+      "structure.total_pdb_structures: COUNT(DISTINCT entry_id) = 96 against 100 (accession, entry, entity) rows in pdb_v.structures_by_accession \u2014 the row count is entity-level and is NOT the entry count; 96 is the reconciled figure.",
+      "structure.holo_count / apo_count: 92 / 4 from a single server-side aggregate over the same 96 entries; the four apo entries were then named in a second aggregate (STRING_AGG) and agree: 2O8Y, 2OIB, 3MOP, 5UIQ."
+    ]
+  },
+  "tractability": {
+    "_primary": "READ site_hypothesis_basis FIRST. No site was established in this run. Every number below describes a CAVITY that fpocket found in 3MOP; none of them is a measurement of the Myddosome death-domain interface, and the highest-scoring one is a hydrophobic core.",
+    "pocket_volume_a3": {
+      "min": null,
+      "max": null,
+      "spread_pct": null,
+      "_min_max_withheld": "DELIBERATELY NULL. The two measured cavity volumes are 253.8 A^3 at D=1.6 and 273.2 A^3 at D=2.4 in 3MOP. They are NOT pooled into a min/max here because site_pocket_selected_by is max_druggability_no_ligand_site, which does not identify a site \u2014 so a spread built from them would not be a spread of one site's volume. Rule 4b: report them per structure or not at all. They are reported per structure, here.",
+      "clustering_d": [
+        1.6,
+        2.4
+      ],
+      "primary_d1_6_a3": 253.8,
+      "site_pocket_selected_by": "max_druggability_no_ligand_site",
+      "_primary_note": "253.8 A^3 at D=1.6 and 273.2 A^3 at D=2.4 in the single structure 3MOP. THIS IS NOT A SITE VOLUME. site_pocket_selected_by is max_druggability_no_ligand_site \u2014 'the most druggable pocket anywhere in the scored chains' \u2014 which by rule 4b does not identify a site at all. There is no ligand to anchor to (3MOP carries zero nonpolymer ligands) and no second structure to establish persistence, so nothing selected this cavity except its own score. Volume is an absolute quantity and these two numbers are real measurements of a real cavity; they are simply not about the interface this dossier asks about. The 210/240 A^3 guide is withdrawn and may not be revived, so the fact that 253.8 lands between them means nothing."
+    },
+    "pocket_druggability": {
+      "min": null,
+      "max": null,
+      "fold_range": null,
+      "_min_max_withheld": "DELIBERATELY NULL. The measured value is 0.890 at BOTH D=1.6 and D=2.4 in 3MOP, so a pooled range would read 0.890-0.890, fold_range 1.0 \u2014 a spuriously stable number. It is withheld for the same reason as the volume: max_druggability_no_ligand_site does not identify a site, so there is nothing for a spread to be a spread OF. The single per-structure value is stated here and in site_pocket_rank.",
+      "site_pocket_selected_by": "max_druggability_no_ligand_site",
+      "load_bearing": false,
+      "_comparability": "WITHIN ONE STRUCTURE (3MOP), across the D sweep \u2014 0.890 at both D=1.6 and D=2.4. Not pooled across structures, because there is only one. AND IT MUST NOT BE READ AS A SITE VALUE FOR TWO INDEPENDENT REASONS. First, site_pocket_selected_by is max_druggability_no_ligand_site, the path rule 4's _do_not_max clause says must never produce a reportable value; it is circular here, since the pocket was chosen BY this score. Second, and decisively, the pocket is a buried hydrophobic core \u2014 see _buried_core below. A high number here is not evidence for the mechanism and it did not contribute to the verdict.",
+      "_provenance": "shipped fpocket 4.2.3: a 3-descriptor logistic regression fitted on 21 positives against 292 others, whose dominant term is min-max normalised over the current structure's own 134 pockets. A weak prior, not a probability.",
+      "_false_negative_rate": "REPORTED, NEVER LOAD-BEARING. This run is a FALSE POSITIVE rather than a false negative, and it is the more instructive direction: 0.890 is the highest druggability value in either IRAK4 dossier, and it sits on the mechanism that returns insufficient_evidence, while the mechanism that returns small_molecule_tractable scores 0.413 on a 1.40 A holo crystal with a drug bound. If this score were load-bearing the two verdicts would invert.",
+      "_do_not_max": "max-over-pockets measures pocket count: r(n_pockets, max druggability) = 0.702. 3MOP carries 134 pockets at D=1.6 and 124 at D=2.4 \u2014 a 14-chain assembly is exactly the kind of file that inflates this path. It fired here and the value it produced is reported only so a reader can see what it produces.",
+      "_buried_core": "enclosure 0.998 >= 0.98 (sealed, no solvent mouth), subunit_enclosure_gain 0.02 <= 0.05 (buried within one subunit, not by the assembly), apolar lining fraction 0.833 >= 0.7. This is the shape of a hydrophobic core, and fpocket's druggability regression rewards precisely that shape. TREAT THE DRUGGABILITY SCORE ON THIS POCKET AS UNINTERPRETABLE, not as a high one."
+    },
+    "site_pocket_rank": {
+      "_note": "Reported for completeness and NOT as a site claim. The ranked pocket is a hydrophobic core, not a site. Note also that the two within-structure orderings disagree sharply and in opposite directions across the sweep: fpocket ranks it 1 of 134 at D=1.6 while PRANK ranks it 10, and at D=2.4 fpocket ranks it 5 of 124 while PRANK ranks it 4. Rank 1 of 134 by a score the pocket was selected by is not an independent finding.",
+      "fpocket": 1,
+      "prank": 10,
+      "n_pockets": 134,
+      "structure_pdb_id": "3MOP"
+    },
+    "ensemble_consensus_fraction": {
+      "_note": "Published criterion: ~70% of structures showing a strong hot spot, ~50% meeting all criteria. One good conformer out of five is a negative result.",
+      "n_structures": 1,
+      "n_measurements": 2,
+      "fraction_with_strong_pocket": null,
+      "meets_consensus_criterion": null,
+      "source": "pocket_scan Modal run 2026-08-15: ensemble.n_structures 1 x D in {1.6, 2.4} = 2 measurements. A consensus criterion over an ensemble of one is not evaluable and is left null rather than reported as 1.0 \u2014 which is what a naive fraction would have said, and it would have been the most misleading number in the file."
+    },
+    "pocket_hydrophobic_density": null,
+    "pocket_residues": [
+      "D/58",
+      "G/11",
+      "G/12",
+      "G/14",
+      "G/18",
+      "G/19",
+      "G/22",
+      "G/71",
+      "G/72",
+      "G/84",
+      "G/99",
+      "G/100"
+    ],
+    "site_hypothesis_basis": "not_established",
+    "mdpocket_site_definition_used": "none",
+    "site_centroid_to_ligand_distance_a": null,
+    "site_centroid_to_ligand_note": "mdpocket did not run: mdpocket_status 'not_run', reason '1 structure(s); an ensemble measurement needs at least 2'. Rule 4b's off-site check is therefore unavailable, not passed. There is also no donor ligand anywhere in the death-fold to transfer \u2014 see structure._death_fold_census.",
+    "annotated_binding_site_overlap": 0.0,
+    "_annotated_binding_site_overlap_basis": "A MEASURED ZERO, not a failed measurement. Q9NWZ3's only Binding site and Active site features are 192-200, 213, 311, 313-316 and 329 \u2014 all 16 of them inside the protein kinase domain (186-454). The Death domain (20-104) carries no annotated binding site, no active site and no ligand feature of any kind, and the cavity scored here lines residues 11-100. Overlap is exactly zero because there is nothing curated at this domain to overlap. Source: uniprot_v.features WHERE accession='Q9NWZ3'.",
+    "ligand_site_jaccard": null,
+    "disorder_fraction": 0.1413,
+    "cryptic_pocket_risk": "high",
+    "cryptic_mechanism": "undetermined",
+    "cryptic_evidence": {
+      "_note": "The apo census the cryptic call rests on. Vajda 2018: cryptic only if the site is absent in all, or nearly all, unbound structures.",
+      "is_cryptic": null,
+      "n_apo_examined": 1,
+      "n_apo_site_absent": null,
+      "site_present_in_apo_ensemble": null,
+      "basis": "NOT MEASURED, and the null is the finding. pocket_scan returned cryptic_status 'not_run' with reason 'needs both an apo and a holo structure; got 0 holo reference and 1 apo'. There is exactly one PDB entry that models the IRAK4 death domain (3MOP) and it is ligand-free, so no apo-versus-holo comparison exists to make. cryptic_pocket_risk is set to high on that basis \u2014 an unmeasurable crypticity on a pure-apo, single-structure death fold is an absence of measurement, and rule 3 says a low or absent pocket score in that situation is not evidence of poor tractability.",
+      "definition": "Vajda et al. 2018 / CryptoBench pocket-residue RMSD > 2 A. The criterion is named so a reader can see it was NOT applied, rather than applied and passed.",
+      "source": "pocket_scan cryptic stage, mode2_scan.json cryptic.cryptic_status = not_run"
+    },
+    "cryptic_potency_prior": {
+      "_note": "Mechanism is a prior on achievable potency. Loop-motion sites: 25 of 27 reached nanomolar. Side-chain sites: all measured ones were low-micromolar at best.",
+      "expected_ceiling": "unknown",
+      "basis": "No cryptic mechanism was determined, so no prior applies. Reporting a ceiling here would be inventing one."
+    },
+    "pocket_vs_interface": {
+      "_note": "Measured, not assumed. Requires a complex structure containing the partner.",
+      "classification": "no_partner_structure",
+      "interface_residues": [],
+      "pocket_interface_overlap": null,
+      "partner_pdb_id": "3MOP",
+      "matches_mechanism_hypothesis": false,
+      "_why_not_classified": "THE PARTNER STRUCTURE EXISTS AND THE CLASSIFICATION STILL COULD NOT BE MADE, which is a different thing from having no partner and is recorded here rather than hidden behind the enum. The interface stage ran (interface_status 'ok') and found 191 interface residues across the MyD88/IRAK4/IRAK2 assembly. But pocket_scan's own consensus came back 'numbering_mismatch_not_interpretable' and it excluded 3MOP: only 23 of 107 shared residue NUMBERS name the same residue in both the scored assembly and the partner epitope set (identity fraction 0.215 against a 0.9 threshold), with mismatches like '19: MET vs ILE' and '20: LEU vs ARG'. The cause is structural, not a bug in the numbering: 3MOP holds THREE different proteins whose chains are each numbered from ~1, so a seqid-keyed comparison that does not carry the chain collides MyD88 residue 19 with IRAK4 residue 19. A constant offset cannot repair it (offset_ours_to_partner = 0, not applied). Every seqid-keyed field \u2014 overlap_fraction 0.462, interface_coverage 0.107, the six shared residues \u2014 is therefore matching non-homologous positions and is NOT reported above. The GEOMETRIC fields are unaffected and are what the buried-core call rests on. classification is set to no_partner_structure because that is the only enum value that does not assert something unmeasured; matches_mechanism_hypothesis is false because the pocket found is demonstrably not a destabiliser candidate.",
+      "_chain_attribution_verified_by_residue": {
+        "_note": "Rule 2b / chain attribution. Verified by residue, not assumed from the chain flag. Entity map from pdb_v.polymer_entities: A-F MyD88 Q99836, G-J IRAK4 Q9NWZ3, K-N IRAK2 O43187.",
+        "pocket_lining_by_chain": {
+          "D": 1,
+          "G": 12
+        },
+        "reading": "12 of the 13 lining residues are on chain G = IRAK4's OWN death domain, and the single remaining one (D/58) is MyD88. The cavity is inside one IRAK4 protomer. It is not at an inter-protein interface, so it cannot be the thing that destabilises the assembly."
+      },
+      "_buried_core_test": {
+        "enclosure": 0.998,
+        "enclosure_single_subunit_max": 0.978,
+        "subunit_enclosure_gain": 0.02,
+        "apolar_lining_fraction": 0.833,
+        "n_lining_subunits": 1,
+        "buried_core_suspected": true,
+        "thresholds_status": "PROPOSED, NOT CALIBRATED \u2014 derived from this single observed case, so they gate a flag and never a filter.",
+        "reading": "enclosure 0.998 means the cavity has effectively no solvent mouth; a gain of only 0.02 from adding the rest of the assembly means it is buried WITHIN one subunit rather than BY the oligomer; 0.833 apolar lining over nine Leu/Ile/Val/Phe/Pro residues completes the picture. This is the shape of a folded protein's hydrophobic interior, and fpocket's druggability regression rewards precisely that shape. It is why 0.890 is uninterpretable rather than high."
+      }
+    },
+    "max_backbone_ca_displacement_a": null,
+    "clash_attribution": "Not computable. Clash attribution requires a ligand to transfer from a holo reference, and there is no holo death-fold structure anywhere \u2014 not for IRAK4, and not across the 221 death-fold PDB entries surveyed. This is a null for want of a reference, not a null result.",
+    "caveat": "This computed axis measured almost nothing, and saying so IS the result. Four of the five stages either did not run or were not interpretable: cryptic not_run (needs an apo/holo pair, has 0 holo), mdpocket not_run (needs >=2 structures, has 1), interface ran but its residue-keyed output is not interpretable across a three-protein complex, and the site-selection route degraded to max_druggability_no_ligand_site, which does not identify a site. Only fpocket detection and the geometric burial test produced usable numbers, and what they say is that the best-scoring cavity in the Myddosome is the death domain's own hydrophobic core. Chain selection was ASSERTED as all 14 chains per rule 2b, which is the correct unit for oligomer destabilisation, and it is a different assertion from the companion orthosteric run: these two dossiers describe the same accession and share ZERO residues.",
+    "sources": [
+      "pocket_scan Modal run 2026-08-15, fpocket 4.2.3 (conda-forge) + P2Rank 2.5.1 rescore_2024, D swept over {1.6, 2.4}, chains asserted 3MOP=A,B,C,D,E,F,G,H,I,J,K,L,M,N, partner_structures 3MOP, uniprot_accession Q9NWZ3",
+      "cavity volumes, ranks and lining residues: structures.3MOP.by_clustering.<D>.site_pocket",
+      "burial geometry and chain attribution: pocket_vs_interface.per_structure.3MOP.1.6 (enclosure, subunit_enclosure_gain, apolar_lining_fraction, lining_chain_counts)",
+      "numbering mismatch: pocket_vs_interface.per_structure.3MOP.1.6.numbering_check (n_compared 107, n_identical 23, identity_fraction 0.215, threshold 0.9)",
+      "disorder 0.1413 over 460 residues: metapredict 3.0.2 on the full-length UniProt sequence \u2014 the same molecule-level number as the companion dossier, because disorder is a property of the protein and not of the mechanism",
+      "UniProt domain boundaries (Death 20-104, Protein kinase 186-454) and the absence of any Binding site / Active site feature in the Death domain: uniprot_v.features"
+    ],
+    "method": {
+      "tool": "fpocket",
+      "version": "fpocket 4.2.3 (conda-forge)",
+      "clustering_d_swept": [
+        1.6,
+        2.4
+      ],
+      "ensemble_pdb_ids": [
+        "3MOP"
+      ],
+      "chains_used": {
+        "3MOP": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N"
+        ]
+      }
+    }
+  },
+  "affinity": {
+    "positive_control_ligand": null,
+    "positive_control_measured_nm": null,
+    "positive_control_predicted_nm": null,
+    "reliable": null,
+    "predictions": [],
+    "sources": [],
+    "_why_null": "Rule 13: there is no affinity predictor in this deployment, so rule 12's mandatory positive control is unsatisfiable rather than skipped. The correct response to an unsatisfiable control is a null with a stated reason, never a prediction reported without one. Note what was available and deliberately not used: IRAK4 has an excellent control compound to hand (CHEMBL4443947, IC50 0.022 nM in a characterised MBP-substrate kinase assay). Having the control and no predictor is still no prediction."
+  },
+  "falsification": {
+    "checks_run": [
+      "1. Does the actives count collapse to one assay? GROUP BY assay_description with a window-function share over all 32,838 activities. Largest single assay is an AlphaScreen biochemical assay at 3,168 rows = 9.6%; the next four are 8.8%, 6.7%, 5.7%, 5.0%. Nothing approaches rule 6's ~30% concentration threshold. CHECK RUN, NOTHING FOUND.",
+      "1b. Is the dominant assay measuring a different protein? The 8.8% entry is 'IRAK4 Monocyte TNFalpha Cell Based Assay: Cryopreserved', 2,895 rows \u2014 the mirror image of the TNF-alpha case in rule 6, where the SAME assay appears under P01375 as assay_id 2591534 with 2,901 rows and inflates TNF's precedent. Here it is correctly attributed: IRAK4 is the measured protein and TNF-alpha is the readout. FOUND, AND IT FAVOURS THIS TARGET rather than damaging it \u2014 which is why it is recorded.",
+      "2. Is the best potency from a characterised assay? Yes. 0.022 nM is IC50, standard_relation '=', confidence_score 9, from 'Binding affinity to human IRK4 using myelin basic protein as substrate' \u2014 a named substrate and a named enzyme, not MYC's 'Inhibition of c-MYC (unknown origin)'. The next eleven values down to 0.1 nM are likewise whole-blood or DELFIA enzymatic assays with descriptions. CHECK RUN, NOTHING FOUND.",
+      "2c. Are approved-drug rows in the bioactivity table being read as precedent? Not applicable in the damaging direction: there are no max_phase 4 rows to mistake. Zero approved drugs of any modality exist on this accession. CHECK RUN, NOTHING FOUND.",
+      "6. Is the accession mapping real, and are hits inherited? chembl_v.target_proteins returns FOUR targets for Q9NWZ3, not one: tid 19639 CHEMBL3778 'SINGLE PROTEIN' with n_target_components = 1, and three PROTEIN-PROTEIN INTERACTION targets with n_target_components = 2 \u2014 CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4, CHEMBL4523742 VHL/IRAK4. Those are DEGRADER TERNARY-COMPLEX targets. FOUND: 369 of the 32,838 activities (1.1%), across 169 distinct compounds, are inherited from an n_target_components > 1 target and are not direct IRAK4 binding measurements. Small, but it is the channel the DC50 numbers arrive through.",
+      "8. Is a look-alike being counted, and is a degrader's DC50 being read as affinity? FOUND, AND IT IS THE SHARPEST RESULT OF THE SWEEP. KT-474 (CHEMBL5569030) is a clinical IRAK4 agent at max_phase 1 and its headline numbers are DC50 0.46, 1.5 and 2.0 nM \u2014 all 'CRBN-mediated IRAK4 degradation' in PBMC and OCI-Ly10 cells, all with pchembl_value NULL. Its only binding measurement is IC50 = 41 nM (pChEMBL 7.39) against GST-tagged full-length IRAK4. A DC50 is a degradation potency, not an affinity: quoting 0.46 nM would overstate the chemistry by 1.95 logs. Degrader precedent IS small-molecule precedent and it is counted as such; what it is NOT is evidence that any particular site is bindable.",
+      "4/5. Is the structural evidence an artifact of one crystal form or one additive? The 6EGE ligand DL1 is a 379 Da N-aryl pyridine-carboxamide with a morpholine and a pyrazole \u2014 ordinary med-chem, not a detergent (contrast CD20's Y01 cholesteryl hemisuccinate and RORgt 6C1P's CHAPSO), not a bis-electrophile (contrast 2AZ5's compound 307). It is one of 92 holo entries on this accession, so the site is not a single-crystal-form artifact. No frequent-hitter or aggregator database was queried, so is_known_frequent_hitter stays null rather than being asserted false. PARTIALLY RUN.",
+      "10/11. Is a perfect-looking result the absence of a counterexample? Watched for, and one was actively avoided: 5UIQ is titled 'Crystal structure of IRAK4 in complex with compound 9' and would read as a ninety-third holo entry, but its only heteroatom group is 8BV, 2-[(propan-2-yl)oxy]benzamide, 179.2 Da and 13 heavy atoms \u2014 a fragment. It is counted apo. The title is not the test. FOUND (a would-be false positive, excluded).",
+      "NEW \u2014 is a 'death-domain-containing' structure actually modelling the death domain? pdb_v.uniprot_alignment_ranges says TWO Q9NWZ3 entries span the death domain: 3MOP (min_uniprot_pos 4, max 106, residues_resolved 103) and 8DKS (min 1, max 460, residues_resolved 460). 8DKS would have entered a death-domain ensemble on that evidence. It must not: reading 8DKS.cif directly, its modelled auth_seq range is 164-459 \u2014 kinase domain only, 4,410 atoms, and its ligand SO9 (474.6 Da) sits in the ATP site. The view reports the CONSTRUCT's declared UniProt span, not the modelled span, and residues_resolved = 460 is simply wrong for this entry. FOUND: 3MOP is the ONLY PDB entry that models the IRAK4 death domain, and it took a coordinate-level check to establish it.",
+      "PRIMARY \u2014 is the top-ranked pocket a site at all? NO, AND THIS IS THE CENTRAL FINDING. fpocket's rank-1-of-134 pocket at druggability 0.890 has enclosure 0.998 (no solvent mouth), subunit_enclosure_gain 0.020 (buried inside ONE subunit, not by the assembly), apolar lining fraction 0.833, and 12 of its 13 lining residues on chain G \u2014 IRAK4's own death domain \u2014 with nine of them Leu/Ile/Val/Phe/Pro. It is the domain's hydrophobic core. pocket_scan's buried_core_suspected fired. Had only the headline druggability been read, this run would have reported a 0.890 site on a target with zero holo and zero attributable actives.",
+      "Is there ANY drug-like ligand precedent at this fold? NO, and it was measured rather than assumed. 221 distinct death-fold PDB entries (PF00531 Death + PF00619 CARD + PF01335 DED + PF02758 PYRIN, COUNT(DISTINCT entry_id); the naive sum of the four families is 225 because 4 entries carry two). Twenty of the 221 carry a heteroatom group of >= 250 Da. Nineteen of those twenty carry only endogenous nucleotides and heme \u2014 ATP, ADP, GTP, GDP, UDP, dATP, HEM, HEC \u2014 which are the NACHT/ATPase cofactors of the same multidomain proteins, not death-fold ligands. Exactly ONE, 7PZC's 8GI at 404 Da, is synthetic: the hexahydro-s-indacenyl NLRP3 chemotype, which binds the NACHT module and not the pyrin fold. Zero synthetic drug-like ligands at a death fold, across 221 entries.",
+      "Does the target's own precedent transfer to this mechanism? NO. All 11,416 compounds and the 0.022 nM best potency are measured against the ATP site: the characterised assays are kinase activity, MBP-substrate binding and IL-1-driven whole blood. UniProt annotates no Binding site and no Active site anywhere in the Death domain (20-104). The two IRAK4 dossiers share ZERO residues \u2014 kinase site lining 192-329, death-domain cavity lining 11-100.",
+      "Does the degrader precedent rescue this mechanism? NO, and it is the most tempting wrong inference available here. KT-474 degrades IRAK4 at DC50 0.46 nM and is genuinely a small molecule, so 'IRAK4 scaffolding is druggable' looks supported. It is not: KT-474 binds the KINASE domain (its one binding number, IC50 41 nM, is against full-length protein and its warhead is an IRAK4 kinase inhibitor) and removes the protein via CRBN. It abolishes the scaffold by degrading the whole protein; it does not bind the Myddosome interface, and it is no evidence that the interface is bindable.",
+      "Is the partner interface itself precedented anywhere? MyD88 (Q99836), the direct partner in 3MOP, has 23 compounds in ChEMBL with a best pChEMBL of 4.82 \u2014 about 15 microM. IRAK2 (O43187), the third protein, has 2 compounds, best 6.77. Neither is small-molecule precedented.",
+      "Foldseek: does the fold have transferable precedent? No. 1,133 hits, 47 passing, best complex TM 0.401 at E-value 2.03 (not significant), the rest at E-values 47-292. Neighbours are apoptosome, Apaf-1/caspase-9 and CARD-disk assemblies. Contrast the companion kinase run on the same accession: 5,814 hits, 1,746 passing, E-values to 6e-16.",
+      "7. What was tried in the clinic against the Myddosome interface, and why did it stop? NOT RUN \u2014 see not_found. No termination search was performed. Absence of terminated programs here must not be read as 'nobody has failed', and equally must not be read as 'nobody has tried'."
+    ],
+    "findings": [
+      "The top-ranked pocket (druggability 0.890, rank 1 of 134) is the death domain's hydrophobic core, not a site: enclosure 0.998, subunit_enclosure_gain 0.020, apolar lining 0.833, 12 of 13 lining residues on IRAK4's own chain G.",
+      "Zero synthetic drug-like ligands at a death fold across 221 death-fold PDB entries; the 20 entries with a >=250 Da ligand carry endogenous nucleotides and heme, except 7PZC's NLRP3 NACHT-domain inhibitor.",
+      "The target's 11,416 compounds and 0.022 nM potency are ATP-site measurements and transfer nothing to this mechanism; the two IRAK4 dossiers share zero residues.",
+      "KT-474's degrader precedent does not establish that the Myddosome interface is bindable \u2014 it binds the kinase domain and removes the protein via CRBN.",
+      "PF00531's 13,914 family compounds and 0.01 nM family best are RIPK1/ASK1/RIPK2/IRAK1 KINASE-domain chemistry, not death-fold chemistry.",
+      "3MOP is the only PDB entry that models this domain; 8DKS looks like a second one in pdb_v.uniprot_alignment_ranges and is kinase-only in its coordinates."
+    ],
+    "survived": true
+  },
+  "next_experiment": {
+    "description": "A structure of the IRAK4 death domain, or of the Myddosome, with ANY drug-like ligand bound at a death-fold surface \u2014 obtained by crystallographic or cryo-EM fragment screening against the assembly, not by computation. Failing that, a biophysical fragment screen (SPR or NMR) against the isolated IRAK4 death domain reporting a hit rate, which would establish whether the fold is ligandable at all before any site question is asked.",
+    "rationale": "The verdict is insufficient_evidence and every branch that could have changed it is closed for the same structural reason: there is exactly one PDB entry that models this domain (3MOP, 3.4 A, ligand-free), so there is no holo/apo pair to measure crypticity with, no second structure to fix a site by construction with, and no ligand to anchor a pocket to. Computation cannot manufacture any of these \u2014 rule 3 says a low or absent pocket score under those conditions is an absence of measurement, and this run's high score is worse than absent, because it is a hydrophobic core scoring 0.890. Across 221 death-fold PDB entries there is not one synthetic drug-like ligand at a death fold, so the fold-level prior offers nothing to transfer either. What is missing is an experiment, not an analysis.",
+    "resolves": "Whether the Myddosome death-domain interface is ligandable at all. A single fragment-bound death-fold structure would convert this axis from unmeasured to measurable: it would supply the holo reference that unlocks the cryptic comparison, the anchor that lets a site be identified by something other than max_druggability_no_ligand_site, and the second ensemble member that mdpocket needs."
+  },
+  "not_found": [
+    "affinity.* (the whole block, including rule 12's mandatory positive control): no affinity predictor exists in this deployment (rule 13). Unsatisfiable, not skipped.",
+    "structure.cofold_control.*: no cofolding model in this deployment (rule 13).",
+    "pocket_neighbour_precedent.candidates: the axis was NOT RUN. It needs a pocket-descriptor similarity index across other targets (none exists in this pipeline) and a cofold transfer (unavailable, rule 13). The empty list means unmeasured.",
+    "target_precedent.patents.count: Paperclip returns 'Patents sources are not available.' (rule 13). Null, never 0.",
+    "target_precedent.terminated_programs: NOT RETRIEVED. No trials or literature search for terminated IRAK4 programmes was run in this session. The empty list is an unmeasured axis, not a finding that no programme has been terminated \u2014 rule 7 and the falsification skill both warn specifically against reading it the other way.",
+    "structure.bound_ligand.is_known_frequent_hitter: no frequent-hitter / aggregator / PAINS database was queried. The ligand's chemistry was inspected and looks unremarkable, but an inspection is not a database check, so the field is null rather than false.",
+    "TRANSPORT DEFECT AFFECTING THIS RUN \u2014 the shared Paperclip account serves a 10-connection budget and several agents were querying it concurrently during this session. Identical queries returned in 15 ms and, minutes later, timed out at 120 s. Every figure reported here was either issued as a single-row server-side aggregate (which cannot be silently capped) or reconciled against one; where a query did not complete, the field is null and says so here rather than carrying a 0.",
+    "target_precedent.distinct_actives, compound_modality_split and modality_unknown_count ARE NULL BECAUSE THE FULL MODALITY CENSUS DID NOT COMPLETE, not because the compounds do not exist. Rule 1c requires the split over all 11,416 distinct compounds (reconciled COUNT(*)), which requires every SMILES, and the transport renders at most ~60 SMILES rows per call before switching silently to a 5-row preview \u2014 191 sequential calls against a 10-connection budget shared with other agents. WHAT WAS MEASURED, and it is reported as the bounded claim it is: the top 300 compounds by best_pchembl_value (every one at pChEMBL >= 9.0, i.e. 1 nM or better) were retrieved and classified from structure \u2014 {\"small_molecule\": 299, \"modality_unknown\": 1}. That is enough to attribute best_potency_nm (rule 1d) and enough to establish that the potent end of this target's chemistry is NOT peptidic, which is the failure mode rule 1b exists to catch. It is NOT the full split, and the full split is null rather than extrapolated from it.",
+    "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket and meets_consensus_criterion: not evaluable over an ensemble of one. A naive fraction would have read 1.0, which would have been the most misleading number in the file. n_structures (1) and n_measurements (2) are both given so the reader can see the denominator that makes the fraction meaningless.",
+    "tractability.ligand_site_jaccard: there is no ligand anywhere in 3MOP (COUNT(*) over pdb_v.entry_ligands = 0) and none in the death fold to transfer, so there is no ligand contact set to compute a Jaccard against. Null for want of a ligand, not a low overlap.",
+    "tractability.pocket_volume_a3.min / max / spread_pct and tractability.pocket_druggability.min / max / fold_range: withheld on purpose. The per-structure values ARE reported (volume 253.8 A^3 at D=1.6 and 273.2 A^3 at D=2.4; druggability 0.890 at both), but they are not pooled into a spread, because site_pocket_selected_by is max_druggability_no_ligand_site and a spread is only a measurement if every value in it describes the same site.",
+    "family_precedent.best_family_potency_modality: the modality of the RIPK1 compound carrying the 0.01 nM family best was not classified from structure. Rule 1d says a potency figure without a modality is not attributable, so it is null rather than assumed to be a small molecule \u2014 even though the wider point (that the number is kinase-domain chemistry, not death-fold chemistry) does not depend on it.",
+    "family_precedent.pfam: Q9NWZ3 carries NO death-domain Pfam cross-reference in uniprot_v.cross_references \u2014 only PF07714, the kinase. The death domain is annotated in uniprot_v.features (Domain, 20-104) and nowhere in the Pfam mapping, so the sequence-family axis for this mechanism cannot be keyed off the target's own annotation. The PF00531 figures reported are the family measured independently of IRAK4.",
+    "tractability.cryptic_evidence.is_cryptic / n_apo_site_absent / site_present_in_apo_ensemble and tractability.max_backbone_ca_displacement_a: NOT MEASURABLE. cryptic_analysis needs an apo/holo pair and there is no holo death-fold structure to pair with \u2014 not for IRAK4 and not in the 221-entry death-fold survey. cryptic_status came back 'not_run', reason '0 holo reference and 1 apo'.",
+    "tractability.mdpocket_site_definition_used / site_centroid_to_ligand_distance_a: mdpocket_status 'not_run', reason '1 structure(s); an ensemble measurement needs at least 2'. Rule 4b's off-site control is unavailable, not passed.",
+    "tractability.pocket_vs_interface.pocket_interface_overlap and interface_residues: the interface stage RAN and found 191 interface residues, but its residue-keyed output is not interpretable for this entry \u2014 only 23 of 107 shared residue numbers name the same residue (identity 0.215 against a 0.9 threshold), because 3MOP holds three different proteins each numbered from ~1 and the comparison keys on seqid without the chain. pocket_scan excluded 3MOP itself and returned 'numbering_mismatch_not_interpretable'. The overlap numbers it did compute (0.462, 0.107) match non-homologous positions and are deliberately NOT reported.",
+    "tractability.pocket_hydrophobic_density: withheld. The only pocket it could describe is the buried hydrophobic core, and a hydrophobic-density figure attached to a hydrophobic core reads as a site property. Its value is in the buried-core test instead, where it means what it actually means."
+  ]
+}

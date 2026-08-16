@@ -97,7 +97,10 @@ class Reality(unittest.TestCase):
     over-strict schema — the one that rejects correct work."""
 
     def test_every_example_validates(self):
-        files = sorted(EXAMPLES.glob("*.json"))
+        # Both the curated examples AND the dated integration fixtures — the
+        # latter are real multi-structure runs (IRAK4, two mechanism modes) and
+        # are what exposed chains_used being an object, not a string/array.
+        files = sorted(EXAMPLES.glob("*.json")) + sorted(EXAMPLES.glob("integration-fixtures/*.json"))
         if not files:
             self.skipTest("no examples/ in this checkout")
         for f in files:

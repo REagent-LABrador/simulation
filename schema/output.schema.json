@@ -413,7 +413,7 @@
             "version": {"$ref": "#/$defs/str"},
             "clustering_d_swept": {"type": "array", "items": {"type": "number"}},
             "ensemble_pdb_ids": {"type": "array", "items": {"type": "string"}},
-            "chains_used": {"type": ["string", "array", "null"]}
+            "chains_used": {"type": ["string", "array", "object", "null"]}
           }
         }
       }
