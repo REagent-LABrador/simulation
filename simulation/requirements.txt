@@ -1,0 +1,15 @@
+# Locked runner dependencies for the druggability-dossier simulation module.
+# The runner itself needs only Python's stdlib + jsonschema. The heavy scientific
+# stages (fpocket, mdpocket, gemmi, GPU folding) run remotely in the Claude Managed
+# Agent's sandbox, so NONE of them are needed to run this module.
+#
+# Setup (one command):
+#   micromamba run -n druggability pip install -r simulation/requirements.txt
+#
+# Versions pinned to what is installed in the `druggability` env (Python 3.14).
+jsonschema==4.26.0
+# jsonschema's own dependency closure, pinned for reproducibility:
+attrs==26.1.0
+jsonschema-specifications==2025.9.1
+referencing==0.37.0
+rpds-py==2026.6.3

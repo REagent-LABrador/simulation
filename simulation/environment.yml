@@ -1,0 +1,20 @@
+# Locked micromamba environment for the druggability-dossier simulation module runner.
+#
+# Setup (one command):
+#   micromamba env create -f simulation/environment.yml
+#
+# This environment is self-contained: it shares dependencies with no other repo.
+# The runner needs only Python + jsonschema; the scientific compute runs remotely
+# in the Claude Managed Agent's sandbox, so no gemmi/fpocket/GPU deps are listed.
+name: druggability-simulation
+channels:
+  - conda-forge
+dependencies:
+  - python=3.14
+  - pip=25.2
+  - pip:
+      - jsonschema==4.26.0
+      - attrs==26.1.0
+      - jsonschema-specifications==2025.9.1
+      - referencing==0.37.0
+      - rpds-py==2026.6.3
