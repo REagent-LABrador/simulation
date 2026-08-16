@@ -1,148 +1,218 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/REagent-LABrador/simulation/schemas/interpretability.schema.json",
-  "title": "Simulation-module interpretability object",
-  "description": "The per-run object the simulation module emits for the orchestrator's side panel. It is UNIQUE to this module: a 'reasoning trace' here is the WORKFLOW trace — which stages ran, the intermediate scores, their provenance and caveats — never LLM chain-of-thought. It is carried at output.interpretability in the run's output file (see output.schema.json), so a consumer reads exactly one file. A sibling module emits a differently-shaped object against its own copy of this schema; the side panel keys rendering off `module` and the `display`/`placement` hints each section carries, so it needs no per-module rendering code.\n\nGLOBAL DISPLAY HEURISTIC (top to bottom; the renderer follows the per-section hints, this is the frame):\n  1. HEADLINE — full width, top, largest type. `verdict` renders as a colour chip: green=small_molecule_tractable, red=not_tractable, grey=insufficient_evidence. `one_line` sits beside/under it.\n  2. FIGURE — if `figure.kind != \"none\"`, it shares the TOP ROW to the RIGHT of the headline text (headline ~60% left, figure ~40% right). On a panel narrower than ~640px the figure wraps to full width directly BELOW the headline. If absent or kind==none, the headline spans full width. `figure.path` resolves RELATIVE TO THE OUTPUT FILE'S DIRECTORY; if the file is missing, render `caption`/`alt` as a text placeholder rather than breaking.\n  3. BANNER — if present, a full-width strip immediately under the headline/figure row, coloured by `level`; NOT collapsible. This is where predicted-structure warnings and an axis_conflict surface. Always visible.\n  4. AXES — the two axes render as TWO COLUMNS SIDE BY SIDE (retrieved_precedent left, computed_tractability right) and are NEVER merged into one score. Each column shows its status pill, one headline_number, then rows. A row whose `caveat` is non-null MUST render the caveat inline (a smaller subline under the value or a persistent tag) — never hide a caveat behind hover-only. A within-structure score is pre-formatted in `value` as 'rank k of n in <pdb>'.\n  5. TRACE — a vertical stack of DROPDOWNS (collapsible), one per stage, ordered by `order`. Each opens/closes per its own `display` hint; convention is that the stage carrying the verdict basis is `open` and the rest `collapsed`. Expanding shows the stage `fields`, and the stage `figure` (if any) ABOVE its fields.\n  6. NOT_FOUND — a muted dropdown, collapsed by default, titled 'Not retrieved'; lists field + verbatim reason. It exists to make null != zero visible.\n  7. PROVENANCE — a footer: as_of_date and the source list.\n\nHARD RENDERING RULES: never merge the two axes into a single number; never render a null as 0 (show '—' or the not_found reason); a critical caveat renders inline, not hover-only.",
+  "title": "LABrador shared interpretability object (Tractability / Simulation module)",
+  "description": "The per-run object carried at output.interpretability. It answers, for the shared UI: what did the module conclude, why, on what evidence and assumptions, how each value was derived, what uncertainty and limitations remain, and what would change the conclusion. It is a WORKFLOW/decision trace, never LLM chain-of-thought. This is the common LABrador contract (schema_version 1.0.0); it SUPERSEDES this module's earlier axes/trace-shaped object, whose content now lives under `extensions`. Module-specific data (the two evidence axes kept separate, the ordered stage trace, structured identifiers, the input-hash cache key) lives in `extensions`, which the shared UI must not require.",
   "type": "object",
-  "required": ["module", "schema_version", "headline", "axes", "trace"],
+  "required": [
+    "schema_version", "headline", "metrics", "steps", "evidence", "assumptions",
+    "uncertainty", "limitations", "counterfactuals", "lineage", "extensions"
+  ],
   "additionalProperties": true,
   "properties": {
-    "module": {
-      "description": "Module identity, so the panel can label the tab and pick module-specific affordances. Always \"simulation\" for this module.",
-      "const": "simulation"
-    },
-    "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "schema_version": {"type": "string", "const": "1.0.0"},
+
     "headline": {
-      "description": "Rendered first, full width, top. The one thing a reader sees before expanding anything.",
       "type": "object",
-      "required": ["verdict", "one_line"],
+      "required": ["title", "result", "plain_language", "status", "basis"],
       "additionalProperties": true,
       "properties": {
-        "verdict": {"enum": ["small_molecule_tractable", "not_tractable", "insufficient_evidence"]},
-        "verdict_label": {"type": ["string", "null"], "description": "Human label for the chip, e.g. 'Small-molecule tractable'."},
-        "one_line": {"type": "string", "minLength": 1, "description": "A single honest sentence a non-specialist can read."},
-        "basis": {"enum": ["retrieved_precedent", "computed_tractability", "both", "none"]}
+        "title": {"type": "string", "minLength": 1},
+        "result": {"type": ["string", "null"], "description": "Stable machine-readable result (this module: the verdict)."},
+        "plain_language": {"type": "string", "minLength": 1},
+        "status": {"enum": ["SUPPORTED", "QUALIFIED", "INCONCLUSIVE", "FAILED", "NOT_APPLICABLE"]},
+        "basis": {"type": "array", "minItems": 1, "items": {"enum": ["OBSERVED", "INFERRED", "MODELED", "SYNTHETIC"]}}
       }
     },
-    "figure": {
-      "description": "OPTIONAL. When present and kind != 'none', it occupies the RIGHT of the top row beside the headline (see heuristic §2). Omit it, or set kind:'none', when there is nothing to show — a structure-less predicted run may still carry a model render; a purely precedent-carried verdict often has no figure.",
-      "type": ["object", "null"],
-      "additionalProperties": true,
-      "properties": {
-        "kind": {"enum": ["pocket_render", "structure", "chart", "none"]},
-        "path": {"type": ["string", "null"], "description": "Path to a PNG/SVG, RELATIVE TO THE OUTPUT FILE'S DIRECTORY. Null when kind=='none'."},
-        "alt": {"type": ["string", "null"]},
-        "caption": {"type": ["string", "null"], "description": "Rendered under the figure, and used as the text placeholder if the file is missing."},
-        "placement": {"enum": ["right_of_headline", "below_headline", "none"], "description": "Requested placement; the renderer may override to below_headline on a narrow panel."}
-      }
-    },
-    "banner": {
-      "description": "OPTIONAL full-width strip under the headline row; not collapsible. Carries predicted-structure warnings, an axis_conflict, or a data-quality note that must not be hidden.",
-      "type": ["object", "null"],
-      "additionalProperties": true,
-      "properties": {
-        "level": {"enum": ["info", "warning", "critical"]},
-        "messages": {"type": "array", "items": {"type": "string"}}
-      }
-    },
-    "axes": {
-      "description": "EXACTLY two entries — retrieved_precedent then computed_tractability — rendered as two side-by-side columns, never merged. This mirrors the dossier's two-axis architecture: the two are reported separately and no overall number is computed.",
+
+    "metrics": {
       "type": "array",
-      "minItems": 2,
-      "maxItems": 2,
-      "items": {
-        "type": "object",
-        "required": ["id", "title", "status"],
-        "additionalProperties": true,
-        "properties": {
-          "id": {"enum": ["retrieved_precedent", "computed_tractability"]},
-          "title": {"type": "string"},
-          "status": {"enum": ["supports", "contradicts", "insufficient", "not_run"], "description": "Rendered as a pill at the column head."},
-          "headline_number": {
-            "type": ["object", "null"],
+      "items": {"$ref": "#/$defs/metric"}
+    },
+
+    "steps": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/step"}
+    },
+
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+
+    "assumptions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/assumption"}
+    },
+
+    "uncertainty": {
+      "type": "object",
+      "required": ["method", "intervals", "seed", "draws", "limitations"],
+      "additionalProperties": true,
+      "properties": {
+        "method": {"type": "string", "minLength": 1},
+        "intervals": {"type": "array", "items": {"$ref": "#/$defs/interval"}},
+        "seed": {"type": ["integer", "null"]},
+        "draws": {"type": ["integer", "null"]},
+        "limitations": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+
+    "limitations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/limitation"}
+    },
+
+    "counterfactuals": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/counterfactual"}
+    },
+
+    "lineage": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/lineage"}
+    },
+
+    "extensions": {
+      "type": "object",
+      "description": "Module-specific structured data. The shared UI must not require any of it. For this module it carries the two evidence axes kept SEPARATE (never averaged), the ordered stage trace, next_experiment, the figure reference, structured PDB/ChEMBL/tool identifiers, and a cache_key hashed over the complete input.",
+      "additionalProperties": true
+    }
+  },
+
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "required": ["id", "label", "value", "unit", "display", "meaning", "direction", "evidence_ids", "assumption_ids"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "value": {"type": ["number", "string", "boolean", "null"]},
+        "unit": {"type": ["string", "null"]},
+        "display": {"type": ["string", "null"]},
+        "meaning": {"type": "string", "minLength": 1},
+        "direction": {"enum": ["positive", "negative", "neutral", "mixed", "unknown"]},
+        "evidence_ids": {"type": "array", "items": {"type": "string"}},
+        "assumption_ids": {"type": "array", "items": {"type": "string"}}
+      },
+      "comment": "Every NUMERIC metric must carry a non-empty unit.",
+      "if": {"properties": {"value": {"type": "number"}}},
+      "then": {"properties": {"unit": {"type": "string", "minLength": 1}}, "required": ["unit"]}
+    },
+
+    "step": {
+      "type": "object",
+      "required": ["id", "label", "method", "formula", "inputs", "result", "evidence_ids", "assumption_ids"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "method": {"type": "string", "minLength": 1},
+        "formula": {"type": ["string", "null"]},
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "value", "unit"],
             "additionalProperties": true,
             "properties": {
-              "label": {"type": ["string", "null"]},
-              "value": {"type": ["string", "null"], "description": "Pre-formatted for display; a within-structure score is written as 'rank k of n in <pdb>'."},
-              "caveat": {"type": ["string", "null"]}
-            }
-          },
-          "rows": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": true,
-              "properties": {
-                "label": {"type": ["string", "null"]},
-                "value": {"type": ["string", "number", "boolean", "null"]},
-                "caveat": {"type": ["string", "null"], "description": "If non-null, MUST render inline beneath the value."},
-                "provenance": {"type": ["string", "null"]}
-              }
-            }
-          },
-          "display": {"enum": ["column"], "default": "column"}
-        }
-      }
-    },
-    "trace": {
-      "description": "The workflow stages in execution order, each rendered as a collapsible dropdown. This is the literal 'reasoning trace' the panel exposes on a click: the pipeline's steps and what each computed.",
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "required": ["stage", "order", "summary", "status", "display"],
-        "additionalProperties": true,
-        "properties": {
-          "stage": {"type": "string", "description": "e.g. graph-intake, structure-select, pocket-scan, precedent-lookup, falsification, assemble-dossier."},
-          "order": {"type": "integer", "minimum": 1},
-          "summary": {"type": "string", "description": "One line shown on the collapsed dropdown header."},
-          "status": {"enum": ["ok", "skipped", "failed", "not_run"]},
-          "display": {"enum": ["open", "collapsed"], "description": "Default dropdown state. Open the stage that carried the verdict basis; collapse the rest."},
-          "fields": {
-            "type": "array",
-            "description": "Intermediate scores shown when the dropdown expands.",
-            "items": {
-              "type": "object",
-              "additionalProperties": true,
-              "properties": {
-                "label": {"type": ["string", "null"]},
-                "value": {"type": ["string", "number", "boolean", "null"]},
-                "caveat": {"type": ["string", "null"]}
-              }
-            }
-          },
-          "figure": {
-            "description": "OPTIONAL per-stage image, rendered ABOVE the stage's fields when the dropdown is open. Same relative-path and missing-file rules as the top-level figure.",
-            "type": ["object", "null"],
-            "additionalProperties": true,
-            "properties": {
-              "kind": {"enum": ["pocket_render", "structure", "chart", "none"]},
-              "path": {"type": ["string", "null"]},
-              "caption": {"type": ["string", "null"]}
+              "path": {"type": "string"},
+              "value": {"type": ["number", "string", "boolean", "null"]},
+              "unit": {"type": ["string", "null"]}
             }
           }
-        }
+        },
+        "result": {
+          "type": "object",
+          "required": ["value", "unit"],
+          "additionalProperties": true,
+          "properties": {
+            "value": {"type": ["number", "string", "boolean", "null"]},
+            "unit": {"type": ["string", "null"]}
+          }
+        },
+        "evidence_ids": {"type": "array", "items": {"type": "string"}},
+        "assumption_ids": {"type": "array", "items": {"type": "string"}}
       }
     },
-    "not_found": {
-      "description": "Rendered as a muted, collapsed dropdown titled 'Not retrieved'. Each entry is a field that could not be retrieved plus the verbatim reason — the panel's proof that a null is not a zero.",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "field": {"type": ["string", "null"]},
-          "reason": {"type": ["string", "null"]}
-        }
-      }
-    },
-    "provenance": {
-      "description": "Footer.",
-      "type": ["object", "null"],
+
+    "evidence": {
+      "type": "object",
+      "required": ["id", "claim", "source_type", "source_id", "source_url", "locator", "quote", "grade", "synthetic"],
       "additionalProperties": true,
       "properties": {
-        "as_of_date": {"type": ["string", "null"]},
-        "sources": {"type": "array", "items": {"type": ["string", "null"]}}
+        "id": {"type": "string", "minLength": 1},
+        "claim": {"type": "string", "minLength": 1},
+        "source_type": {"type": "string", "minLength": 1},
+        "source_id": {"type": ["string", "null"]},
+        "source_url": {"type": ["string", "null"]},
+        "locator": {"type": ["string", "null"]},
+        "quote": {"type": ["string", "null"]},
+        "grade": {"enum": ["HIGH", "MODERATE", "LOW", "UNSUPPORTED"]},
+        "synthetic": {"type": "boolean"}
+      }
+    },
+
+    "assumption": {
+      "type": "object",
+      "required": ["id", "path", "value", "unit", "basis", "synthetic"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "value": {"type": ["number", "string", "boolean", "null"]},
+        "unit": {"type": ["string", "null"]},
+        "basis": {"type": "string", "minLength": 1},
+        "synthetic": {"type": "boolean"}
+      }
+    },
+
+    "interval": {
+      "type": "object",
+      "required": ["metric_id", "low", "central", "high", "unit", "confidence_level"],
+      "additionalProperties": true,
+      "properties": {
+        "metric_id": {"type": "string", "minLength": 1},
+        "low": {"type": ["number", "null"]},
+        "central": {"type": ["number", "null"]},
+        "high": {"type": ["number", "null"]},
+        "unit": {"type": ["string", "null"]},
+        "confidence_level": {"type": ["number", "null"], "description": "Set only for a genuine confidence interval; null for a scenario or percentile range (identified in uncertainty.limitations)."}
+      }
+    },
+
+    "limitation": {
+      "type": "object",
+      "required": ["code", "severity", "message", "field_path"],
+      "additionalProperties": true,
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["INFO", "WARNING", "ERROR"]},
+        "message": {"type": "string", "minLength": 1},
+        "field_path": {"type": ["string", "null"]}
+      }
+    },
+
+    "counterfactual": {
+      "type": "object",
+      "required": ["change", "result", "meaning"],
+      "additionalProperties": true,
+      "properties": {
+        "change": {"type": ["string", "null"]},
+        "result": {"type": ["string", "null"]},
+        "meaning": {"type": ["string", "null"]}
+      }
+    },
+
+    "lineage": {
+      "type": "object",
+      "required": ["output_path", "input_paths", "transformation"],
+      "additionalProperties": true,
+      "properties": {
+        "output_path": {"type": "string", "minLength": 1},
+        "input_paths": {"type": "array", "items": {"type": "string"}},
+        "transformation": {"type": "string", "minLength": 1}
       }
     }
   }

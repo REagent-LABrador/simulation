@@ -43,6 +43,10 @@ OUT = Draft202012Validator(OUTPUT_SCHEMA)
 INTERP = Draft202012Validator(INTERP_SCHEMA)
 CONTRACT_EXAMPLES = STATION / "examples"  # module-contract examples/input.json + output.json
 
+# The deterministic interpretability builder — the same one run_pipeline uses.
+sys.path.insert(0, str(STATION / "simulation"))
+from interpretability import build_interpretability  # noqa: E402
+
 
 def _errs(validator, doc):
     return sorted(validator.iter_errors(doc), key=lambda e: list(e.absolute_path))
@@ -53,7 +57,7 @@ def _errs(validator, doc):
 # COPY of this, so each mutation isolates exactly one violated constraint.
 # --------------------------------------------------------------------------- #
 def minimal_valid_dossier() -> dict:
-    return {
+    d = {
         "input": {
             "uniprot_accession": "P01375",
             "as_of_date": None,
@@ -84,6 +88,10 @@ def minimal_valid_dossier() -> dict:
         "next_experiment": {"description": "do a thing", "rationale": "because", "resolves": "the question"},
         "not_found": [],
     }
+    # interpretability is now REQUIRED in the output schema; attach the real
+    # builder's output so every consumer of this helper stays schema-valid.
+    d["interpretability"] = build_interpretability(d)
+    return d
 
 
 class Validity(unittest.TestCase):
@@ -176,7 +184,14 @@ class NonDrift(unittest.TestCase):
     def test_required_top_level_matches_validator(self):
         self._need_vd()
         schema_required = set(OUTPUT_SCHEMA["required"])
-        self.assertEqual(schema_required, set(self.vd.REQUIRED_TOP_LEVEL))
+        # `interpretability` is deterministically builder-attached at output time
+        # and required by the PUBLISHED OUTPUT SCHEMA (LABrador contract), but it
+        # is deliberately NOT in validate_dossier's authored-body
+        # REQUIRED_TOP_LEVEL — that set also governs the hand-filled CLAUDE.md
+        # template, which the builder, not the author, populates. Every other
+        # required top-level key must still match the validator exactly.
+        self.assertIn("interpretability", schema_required)
+        self.assertEqual(schema_required - {"interpretability"}, set(self.vd.REQUIRED_TOP_LEVEL))
 
     def _enum_at(self, path):
         node = OUTPUT_SCHEMA["properties"]
@@ -369,25 +384,126 @@ class ModuleContract(unittest.TestCase):
         self.assertIn("interpretability", doc, "the example output should demonstrate the panel object")
         self.assertEqual(_errs(INTERP, doc["interpretability"]), [])
 
-    def test_interpretability_needs_exactly_two_axes(self):
-        # The two-axis architecture, encoded: never one, never three.
-        base = {"module": "simulation", "schema_version": "1.0",
-                "headline": {"verdict": "not_tractable", "one_line": "x"},
-                "trace": [{"stage": "s", "order": 1, "summary": "x", "status": "ok", "display": "open"}]}
-        one = dict(base, axes=[{"id": "retrieved_precedent", "title": "P", "status": "insufficient"}])
-        self.assertTrue(_errs(INTERP, one), "one axis must be rejected")
-        good = dict(base, axes=[
-            {"id": "retrieved_precedent", "title": "P", "status": "insufficient"},
-            {"id": "computed_tractability", "title": "C", "status": "insufficient"}])
-        self.assertEqual(_errs(INTERP, good), [])
 
-    def test_interpretability_module_must_be_simulation(self):
-        bad = {"module": "other", "schema_version": "1.0",
-               "headline": {"verdict": "not_tractable", "one_line": "x"},
-               "axes": [{"id": "retrieved_precedent", "title": "P", "status": "insufficient"},
-                        {"id": "computed_tractability", "title": "C", "status": "insufficient"}],
-               "trace": [{"stage": "s", "order": 1, "summary": "x", "status": "ok", "display": "open"}]}
-        self.assertTrue(_errs(INTERP, bad))
+class InterpretabilityContract(unittest.TestCase):
+    """The LABrador shared interpretability contract (message.txt, section E).
+    These are the red tests the spec asks for."""
+
+    def _built(self) -> dict:
+        """Interpretability built by the real builder from the example dossier."""
+        doc = json.loads((CONTRACT_EXAMPLES / "output.json").read_text())
+        base = {k: v for k, v in doc.items() if k != "interpretability"}
+        return build_interpretability(base)
+
+    def test_interpretability_is_required_in_output_schema(self):
+        self.assertIn("interpretability", OUTPUT_SCHEMA["required"])
+
+    def test_deleting_interpretability_fails_output_validation(self):
+        d = minimal_valid_dossier()
+        d.pop("interpretability")
+        self.assertTrue(_errs(OUT, d), "output schema must reject a dossier with no interpretability")
+
+    def test_example_carries_a_deeply_valid_interpretability(self):
+        doc = json.loads((CONTRACT_EXAMPLES / "output.json").read_text())
+        self.assertIn("interpretability", doc)
+        self.assertEqual(_errs(INTERP, doc["interpretability"]), [])
+
+    def test_builder_output_is_deeply_valid(self):
+        self.assertEqual(_errs(INTERP, self._built()), [])
+
+    def test_builder_valid_for_every_fixture_including_abstaining(self):
+        files = sorted(EXAMPLES.glob("integration-fixtures/*.json"))
+        d = minimal_valid_dossier()
+        d.pop("interpretability", None)
+        cases = [("minimal_abstaining", d)] + [
+            (f.name, {k: v for k, v in json.loads(f.read_text()).items() if k != "interpretability"})
+            for f in files
+        ]
+        for name, dossier in cases:
+            with self.subTest(case=name):
+                self.assertEqual(_errs(INTERP, build_interpretability(dossier)), [])
+
+    def test_ids_unique_and_all_references_resolve(self):
+        i = self._built()
+        for coll in ("metrics", "steps", "evidence", "assumptions"):
+            ids = [x["id"] for x in i[coll]]
+            self.assertEqual(len(ids), len(set(ids)), f"{coll} ids not unique")
+        ev = {e["id"] for e in i["evidence"]}
+        asm = {a["id"] for a in i["assumptions"]}
+        met = {m["id"] for m in i["metrics"]}
+        for m in i["metrics"]:
+            for r in m["evidence_ids"]:
+                self.assertIn(r, ev, f"metric {m['id']} references missing evidence {r}")
+            for r in m["assumption_ids"]:
+                self.assertIn(r, asm, f"metric {m['id']} references missing assumption {r}")
+        for s in i["steps"]:
+            for r in s["evidence_ids"]:
+                self.assertIn(r, ev)
+            for r in s["assumption_ids"]:
+                self.assertIn(r, asm)
+        for iv in i["uncertainty"]["intervals"]:
+            self.assertIn(iv["metric_id"], met, "interval references a missing metric")
+
+    def test_numeric_metrics_have_units(self):
+        for m in self._built()["metrics"]:
+            v = m["value"]
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                self.assertTrue(m.get("unit"), f"numeric metric {m['id']} has no unit")
+
+    def test_unknown_actives_stays_null_and_earns_a_limitation(self):
+        d = minimal_valid_dossier()
+        d.pop("interpretability", None)
+        d["target_precedent"] = {"distinct_actives": None}
+        i = build_interpretability(d)
+        codes = {limn["code"] for limn in i["limitations"]}
+        self.assertIn("ACTIVES_NOT_RETRIEVED", codes)
+        # never silently converted to 0 or an empty metric
+        self.assertFalse(any(m["id"] == "metric.distinct_actives" for m in i["metrics"]))
+
+    def test_no_ambiguous_none_actives_phrase(self):
+        self.assertNotIn("None actives", json.dumps(self._built()))
+
+    def test_two_axes_preserved_separately_in_extensions(self):
+        ax = self._built()["extensions"]["axes"]
+        self.assertIn("retrieved_precedent", ax)
+        self.assertIn("computed_tractability", ax)
+        # never collapsed into one invented scalar
+        self.assertNotIn("combined_score", ax)
+
+    def test_every_not_found_maps_to_a_limitation_with_field_path(self):
+        d = minimal_valid_dossier()
+        d.pop("interpretability", None)
+        d["not_found"] = [{"field": "target_precedent.distinct_actives", "reason": "[error] Request timed out"}]
+        i = build_interpretability(d)
+        hits = [limn for limn in i["limitations"]
+                if limn.get("field_path") == "output.target_precedent.distinct_actives"]
+        self.assertTrue(hits, "not_found item did not produce a limitation with a field_path")
+
+    def test_figure_is_packaged_or_flagged_absent(self):
+        fig = self._built()["extensions"]["figure"]
+        self.assertIn("present", fig)
+        self.assertIn("note", fig)
+        self.assertFalse(fig["present"], "figure is not packaged, so present must be false with a note")
+
+    def test_cache_key_uses_full_input_not_just_accession(self):
+        d = minimal_valid_dossier()
+        d.pop("interpretability", None)
+        d["input"] = {"uniprot_accession": "P00533", "as_of_date": None, "disease_context": None,
+                      "interaction_to_disrupt": None, "mechanism_hypothesis": "orthosteric"}
+        k1 = build_interpretability(d)["extensions"]["cache_key"]
+        d2 = copy.deepcopy(d)
+        d2["input"]["mechanism_hypothesis"] = "allosteric"  # same accession, different input
+        k2 = build_interpretability(d2)["extensions"]["cache_key"]
+        self.assertTrue(k1.startswith("sha256:"))
+        self.assertNotEqual(k1, k2, "cache key must change when the input changes, not only the accession")
+
+    def test_outputs_are_strict_json_without_nan_or_infinity(self):
+        def reject(token):
+            raise ValueError(f"non-finite JSON constant: {token}")
+        files = [CONTRACT_EXAMPLES / "output.json"] + sorted(EXAMPLES.glob("integration-fixtures/*.json"))
+        for f in files:
+            with self.subTest(f=f.name):
+                json.loads(f.read_text(), parse_constant=reject)  # raises on NaN/Infinity
 
 
 if __name__ == "__main__":

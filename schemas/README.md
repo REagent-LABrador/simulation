@@ -1,12 +1,32 @@
 # Simulation-station JSON Schemas
 
 The machine-readable contract for the simulation (druggability-dossier) station.
-Two files, both [JSON Schema draft 2020-12](https://json-schema.org/):
+Three files, all [JSON Schema draft 2020-12](https://json-schema.org/):
 
 | file | what it governs |
 | --- | --- |
 | `input.schema.json` | the **request** a caller sends the station |
 | `output.schema.json` | the **dossier** the station returns |
+| `interpretability.schema.json` | the **`output.interpretability`** object — the LABrador shared interpretability contract (v1.0.0) |
+
+## The interpretability contract (required)
+
+Every successful or scientifically degraded/abstaining run carries a top-level
+`interpretability` object, and `output.schema.json` **requires** it (an
+infrastructure failure that produces no result file is the orchestrator's
+concern). It is the **shared LABrador contract**, identical in shape across
+modules: `schema_version`, `headline{title,result,plain_language,status,basis[]}`,
+`metrics[]`, `steps[]`, `evidence[]`, `assumptions[]`,
+`uncertainty{method,intervals[],seed,draws,limitations[]}`, `limitations[]`,
+`counterfactuals[]`, `lineage[]`, `extensions{}`. It **supersedes** this station's
+earlier `module/axes/trace/figure` object; that content now lives under
+`extensions` (the two evidence axes kept separate — never averaged — plus the
+ordered trace, identifiers, figure reference, and an input-hash `cache_key`).
+`../simulation/interpretability.py` builds it as a pure, deterministic map from the
+dossier — no recomputation, no fabrication; unknowns stay `null` and earn a
+`limitation`. Enums: `status` SUPPORTED|QUALIFIED|INCONCLUSIVE|FAILED|NOT_APPLICABLE;
+`basis` OBSERVED|INFERRED|MODELED|SYNTHETIC; `direction` positive|negative|neutral|mixed|unknown;
+`grade` HIGH|MODERATE|LOW|UNSUPPORTED; `severity` INFO|WARNING|ERROR.
 
 ## What these are, and what they are not
 

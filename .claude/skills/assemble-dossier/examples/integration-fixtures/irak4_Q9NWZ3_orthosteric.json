@@ -420,5 +420,529 @@
     "family_precedent.family_actives / best_family_potency_nm / best_family_target: the PF07714 aggregate was CANCELLED BY THE SERVER at 85.2 s \u2014 'SQL error: canceling statement due to statement timeout' \u2014 in both the IN-subquery and the inline-literal form. A timeout is not a zero (rule 15). The family's membership count (1,168) IS reconciled and is reported.",
     "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket / meets_consensus_criterion: pocket_scan emits no consensus fraction and 'strong hot spot' has no threshold this pipeline has calibrated. n_measurements (6) is given; n_structures (3) is given; the fraction is not invented.",
     "tractability.pocket_vs_interface: not applicable rather than missing \u2014 an ATP-competitive hypothesis has no protein partner to overlap. IRAK4's only partner-containing entry, 3MOP, shares no residue with the kinase domain."
-  ]
+  ],
+  "interpretability": {
+    "schema_version": "1.0.0",
+    "headline": {
+      "title": "Small-molecule tractability: Q9NWZ3",
+      "result": "small_molecule_tractable",
+      "plain_language": "Small-molecule tractable for Q9NWZ3: actives not retrieved; best 0.022 nM; 3 clinical-stage small molecules.",
+      "status": "SUPPORTED",
+      "basis": [
+        "OBSERVED",
+        "MODELED"
+      ]
+    },
+    "metrics": [
+      {
+        "id": "metric.best_potency_nm",
+        "label": "Best potency",
+        "value": 0.022,
+        "unit": "nM",
+        "display": "0.022 nM",
+        "meaning": "Best measured potency of a small molecule against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.best_potency_assay",
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.approved_small_molecules",
+        "label": "Approved small molecules",
+        "value": 0,
+        "unit": "molecules",
+        "display": "0 molecules",
+        "meaning": "Approved small-molecule drugs acting directly on the target.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.clinical_stage_small_molecules",
+        "label": "Clinical-stage small molecules",
+        "value": 3,
+        "unit": "molecules",
+        "display": "3 molecules",
+        "meaning": "Small molecules that reached clinical development against the target.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.chembl_target"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.druggability_rank",
+        "label": "Druggability rank",
+        "value": 2,
+        "unit": "rank",
+        "display": "rank 2 of 11 in 6EGE",
+        "meaning": "fpocket rank of the site pocket AMONG that structure's pockets \u2014 a within-structure ordering, never compared across structures (rule 4). Not load-bearing.",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.6EGE"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      },
+      {
+        "id": "metric.pocket_volume_d16",
+        "label": "Pocket volume (D=1.6)",
+        "value": 682.5,
+        "unit": "A^3",
+        "display": "682.5 A^3",
+        "meaning": "Absolute site volume at clustering D=1.6. Comparable across structures, but its clustering sensitivity travels with it; the 210/240 A^3 tractability guide is withdrawn (rule 4a).",
+        "direction": "neutral",
+        "evidence_ids": [
+          "evidence.pdb.6EGE"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.ligand_site_jaccard",
+        "label": "Ligand-site Jaccard",
+        "value": 0.63,
+        "unit": "fraction",
+        "display": "0.63",
+        "meaning": "Overlap between the scored pocket and the co-crystal ligand site.",
+        "direction": "positive",
+        "evidence_ids": [
+          "evidence.pdb.6EGE"
+        ],
+        "assumption_ids": []
+      },
+      {
+        "id": "metric.disorder_fraction",
+        "label": "Disorder fraction",
+        "value": 0.1413,
+        "unit": "fraction",
+        "display": "0.1413",
+        "meaning": "Fraction of the sequence predicted disordered; high disorder disfavours a stable small-molecule pocket.",
+        "direction": "negative",
+        "evidence_ids": [],
+        "assumption_ids": []
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.verdict_decision",
+        "label": "Two-axis verdict",
+        "method": "Independent axes (retrieved precedent, computed tractability) combined by rule; never averaged into a scalar.",
+        "formula": null,
+        "inputs": [
+          {
+            "path": "verdict_basis",
+            "value": "retrieved_precedent",
+            "unit": null
+          },
+          {
+            "path": "target_precedent.best_potency_nm",
+            "value": 0.022,
+            "unit": "nM"
+          },
+          {
+            "path": "tractability.site_pocket_rank.fpocket",
+            "value": 2,
+            "unit": "rank"
+          }
+        ],
+        "result": {
+          "value": "small_molecule_tractable",
+          "unit": null
+        },
+        "evidence_ids": [],
+        "assumption_ids": [
+          "assumption.mechanism_hypothesis"
+        ]
+      },
+      {
+        "id": "step.druggability_rank",
+        "label": "Within-structure druggability rank",
+        "method": "fpocket pocket scoring at clustering D=1.6; report the site pocket's rank among the structure's pockets.",
+        "formula": "rank of site pocket among n_pockets by fpocket score",
+        "inputs": [
+          {
+            "path": "tractability.site_pocket_rank.n_pockets",
+            "value": 11,
+            "unit": "pockets"
+          },
+          {
+            "path": "tractability.site_hypothesis_basis",
+            "value": "holo ligand site \u2014 6EGE:DL1, auto-derived by pocket_scan as that entry's drug-like ligand (not supplied by hand). Confirmed per structure: the two holo measurements were selected by ligand_site_jaccard (0.63 at D=1.6, 0.531 at D=2.4); the four apo measurements fell back to site_signature_overlap, which is a residue-number match and is weaker. Neither entry is a homo-oligomer at the site (chain A scored alone), so the signature is not ambiguous by symmetry.",
+            "unit": null
+          }
+        ],
+        "result": {
+          "value": 2,
+          "unit": "rank"
+        },
+        "evidence_ids": [
+          "evidence.pdb.6EGE"
+        ],
+        "assumption_ids": [
+          "assumption.site_basis"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "evidence.chembl_target",
+        "claim": "Measured bioactivity records for the target in ChEMBL.",
+        "source_type": "database",
+        "source_id": "ChEMBL:CHEMBL3778 (tid 19639, SINGLE PROTEIN, n_target_components = 1). Three further ChEMBL targets carry this accession and are NOT this one: CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4 and CHEMBL4523742 VHL/IRAK4, all PROTEIN-PROTEIN INTERACTION with n_target_components = 2 - the degrader ternary-complex targets. 369 of the 32,838 activities on this accession (169 compounds) are inherited from those three and are not direct IRAK4 binding measurements.",
+        "source_url": "https://www.ebi.ac.uk/chembl/target_report_card/CHEMBL3778 (tid 19639, SINGLE PROTEIN, n_target_components = 1). Three further ChEMBL targets carry this accession and are NOT this one: CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4 and CHEMBL4523742 VHL/IRAK4, all PROTEIN-PROTEIN INTERACTION with n_target_components = 2 - the degrader ternary-complex targets. 369 of the 32,838 activities on this accession (169 compounds) are inherited from those three and are not direct IRAK4 binding measurements./",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.best_potency_assay",
+        "claim": "Assay underlying the best reported potency.",
+        "source_type": "assay",
+        "source_id": "IC50 = 0.022 nM, standard_relation '=', pChEMBL 10.66, confidence_score 9, compound CHEMBL4443947, assay description 'Binding affinity to human IRK4 using myelin basic protein as substrate' \u2014 a characterised enzymatic kinase assay with a named substrate, not an uncharacterised 'inhibition of X' readout",
+        "source_url": null,
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      },
+      {
+        "id": "evidence.pdb.6EGE",
+        "claim": "Experimental structure 6EGE used for the computed axis.",
+        "source_type": "structure",
+        "source_id": "PDB:6EGE",
+        "source_url": "https://www.rcsb.org/structure/6EGE",
+        "locator": null,
+        "quote": null,
+        "grade": "HIGH",
+        "synthetic": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "assumption.mechanism_hypothesis",
+        "path": "input.mechanism_hypothesis",
+        "value": "orthosteric",
+        "unit": "category",
+        "basis": "Caller-supplied structural question; not inferred by this module.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.as_of_date",
+        "path": "input.as_of_date",
+        "value": null,
+        "unit": "date",
+        "basis": "Retrieval cutoff; null means as-of-today with no cutoff enforced.",
+        "synthetic": false
+      },
+      {
+        "id": "assumption.site_basis",
+        "path": "tractability.site_hypothesis_basis",
+        "value": "holo ligand site \u2014 6EGE:DL1, auto-derived by pocket_scan as that entry's drug-like ligand (not supplied by hand). Confirmed per structure: the two holo measurements were selected by ligand_site_jaccard (0.63 at D=1.6, 0.531 at D=2.4); the four apo measurements fell back to site_signature_overlap, which is a residue-number match and is weaker. Neither entry is a homo-oligomer at the site (chain A scored alone), so the signature is not ambiguous by symmetry.",
+        "unit": null,
+        "basis": "How the scored pocket's site was defined (ligand-anchored, signature, or not established).",
+        "synthetic": false
+      }
+    ],
+    "uncertainty": {
+      "method": "fpocket clustering-scenario sweep and ensemble-consensus heuristic; no Monte Carlo / probabilistic model.",
+      "intervals": [
+        {
+          "metric_id": "metric.pocket_volume_d16",
+          "low": 463.6,
+          "central": 682.5,
+          "high": 1398.8,
+          "unit": "A^3",
+          "confidence_level": null
+        }
+      ],
+      "seed": null,
+      "draws": null,
+      "limitations": [
+        "The pocket-volume interval is a clustering-parameter SCENARIO range (fpocket D sweep), not a confidence interval or a percentile."
+      ]
+    },
+    "limitations": [
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "affinity.* (the whole block, including rule 12's mandatory positive control): no affinity predictor exists in this deployment (rule 13). Unsatisfiable, not skipped.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no cofolding model in this deployment (rule 13).",
+        "field_path": "output.structure.cofold_control.*"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "the axis was NOT RUN. It needs a pocket-descriptor similarity index across other targets (none exists in this pipeline) and a cofold transfer (unavailable, rule 13). The empty list means unmeasured.",
+        "field_path": "output.pocket_neighbour_precedent.candidates"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Paperclip returns 'Patents sources are not available.' (rule 13). Null, never 0.",
+        "field_path": "output.target_precedent.patents.count"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "NOT RETRIEVED. No trials or literature search for terminated IRAK4 programmes was run in this session. The empty list is an unmeasured axis, not a finding that no programme has been terminated \u2014 rule 7 and the falsification skill both warn specifically against reading it the other way.",
+        "field_path": "output.target_precedent.terminated_programs"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "no frequent-hitter / aggregator / PAINS database was queried. The ligand's chemistry was inspected and looks unremarkable, but an inspection is not a database check, so the field is null rather than false.",
+        "field_path": "output.structure.bound_ligand.is_known_frequent_hitter"
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "TRANSPORT DEFECT AFFECTING THIS RUN \u2014 the shared Paperclip account serves a 10-connection budget and several agents were querying it concurrently during this session. Identical queries returned in 15 ms and, minutes later, timed out at 120 s. Every figure reported here was either issued as a single-row server-side aggregate (which cannot be silently capped) or reconciled against one; where a query did not complete, the field is null and says so here rather than carrying a 0.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "target_precedent.distinct_actives, compound_modality_split and modality_unknown_count ARE NULL BECAUSE THE FULL MODALITY CENSUS DID NOT COMPLETE, not because the compounds do not exist. Rule 1c requires the split over all 11,416 distinct compounds (reconciled COUNT(*)), which requires every SMILES, and the transport renders at most ~60 SMILES rows per call before switching silently to a 5-row preview \u2014 191 sequential calls against a 10-connection budget shared with other agents. WHAT WAS MEASURED, and it is reported as the bounded claim it is: the top 300 compounds by best_pchembl_value (every one at pChEMBL >= 9.0, i.e. 1 nM or better) were retrieved and classified from structure \u2014 {\"small_molecule\": 299, \"modality_unknown\": 1}. That is enough to attribute best_potency_nm (rule 1d) and enough to establish that the potent end of this target's chemistry is NOT peptidic, which is the failure mode rule 1b exists to catch. It is NOT the full split, and the full split is null rather than extrapolated from it.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "family_precedent.family_actives / best_family_potency_nm / best_family_target: the PF07714 aggregate was CANCELLED BY THE SERVER at 85.2 s \u2014 'SQL error: canceling statement due to statement timeout' \u2014 in both the IN-subquery and the inline-literal form. A timeout is not a zero (rule 15). The family's membership count (1,168) IS reconciled and is reported.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "tractability.ensemble_consensus_fraction.fraction_with_strong_pocket / meets_consensus_criterion: pocket_scan emits no consensus fraction and 'strong hot spot' has no threshold this pipeline has calibrated. n_measurements (6) is given; n_structures (3) is given; the fraction is not invented.",
+        "field_path": null
+      },
+      {
+        "code": "NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "not applicable rather than missing \u2014 an ATP-competitive hypothesis has no protein partner to overlap. IRAK4's only partner-containing entry, 3MOP, shares no residue with the kinase domain.",
+        "field_path": "output.tractability.pocket_vs_interface"
+      },
+      {
+        "code": "ACTIVES_NOT_RETRIEVED",
+        "severity": "WARNING",
+        "message": "Distinct small-molecule actives were not retrieved (null, not zero); the count is unknown, not absent.",
+        "field_path": "output.target_precedent.distinct_actives"
+      },
+      {
+        "code": "TRACTABILITY_CAVEAT",
+        "severity": "INFO",
+        "message": "Three things a reader should discount this by. (1) The computed axis is REPORTED but is not carrying the verdict \u2014 verdict_basis is retrieved_precedent. Volume carries no verdict after rule 4a's retraction and druggability is a within-structure rank that may never carry one, so on the computed axis alone this dossier would say 'a pre-formed, ligand-confirmed cleft of 682.5 A^3' and stop there. (2) Geometric pocket scoring is blind to cryptic pockets in general; that blindness does not bite here because a holo structure exists and the apo census was run, but it would bite on any site of this protein that is not the ATP cleft. (3) Chain selection was ASSERTED, not defaulted: chain A only, at every entry. That is the correct unit for an intrachain ATP site and it is a different assertion from the one the companion dossier makes; the two runs share zero residues.",
+        "field_path": "output.tractability.caveat"
+      },
+      {
+        "code": "UNTAGGED_VALUE",
+        "severity": "INFO",
+        "message": "Metric metric.disorder_fraction carries no evidence or assumption link.",
+        "field_path": null
+      }
+    ],
+    "counterfactuals": [
+      {
+        "change": "Nothing on the tractability axis. The question this station answers is already answered for this mechanism: a 1.40 A holo crystal, 92 holo entries, 11,416 compounds, 0.022 nM in a characterised enzymatic assay, three clinical-stage small molecules and a pre-formed non-cryptic site. If any experiment is worth running it is the one that would change the FALSIFICATION picture, not the tractability picture: a `GROUP BY assay_id` chemotype-provenance query to establish whether the potent end collapses to one series, and a terminated-programme search. Both were blocked in this run \u2014 the first by the 85 s statement timeout, the second not attempted.",
+        "result": "Whether IRAK4's small-molecule precedent is broad or is one chemotype reported many times, and what the clinical failures have been \u2014 neither of which changes the tractability verdict, and rule 7 forbids letting them.",
+        "meaning": "Producing more computed-tractability evidence for a target with this much retrieved precedent would add nothing a reader would act on. The residual uncertainty is entirely on the clinical and chemotype side, which other stations own."
+      },
+      {
+        "change": "If the falsification check '1. Does the actives count collapse to one assay? GROUP BY assay_description with a window-function share over all 32,838 activities. Largest single assay is an AlphaScreen biochemical assay at 3,168 rows = 9.6%; the next four are 8.8%, 6.7%, 5.7%, 5.0%. Nothing approaches rule 6's ~30% concentration threshold. CHECK RUN, NOTHING FOUND.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '1b. Is the dominant assay measuring a different protein? The 8.8% entry is 'IRAK4 Monocyte TNFalpha Cell Based Assay: Cryopreserved', 2,895 rows \u2014 the mirror image of the TNF-alpha case in rule 6, where the SAME assay appears under P01375 as assay_id 2591534 with 2,901 rows and inflates TNF's precedent. Here it is correctly attributed: IRAK4 is the measured protein and TNF-alpha is the readout. FOUND, AND IT FAVOURS THIS TARGET rather than damaging it \u2014 which is why it is recorded.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2. Is the best potency from a characterised assay? Yes. 0.022 nM is IC50, standard_relation '=', confidence_score 9, from 'Binding affinity to human IRK4 using myelin basic protein as substrate' \u2014 a named substrate and a named enzyme, not MYC's 'Inhibition of c-MYC (unknown origin)'. The next eleven values down to 0.1 nM are likewise whole-blood or DELFIA enzymatic assays with descriptions. CHECK RUN, NOTHING FOUND.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '2c. Are approved-drug rows in the bioactivity table being read as precedent? Not applicable in the damaging direction: there are no max_phase 4 rows to mistake. Zero approved drugs of any modality exist on this accession. CHECK RUN, NOTHING FOUND.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '6. Is the accession mapping real, and are hits inherited? chembl_v.target_proteins returns FOUR targets for Q9NWZ3, not one: tid 19639 CHEMBL3778 'SINGLE PROTEIN' with n_target_components = 1, and three PROTEIN-PROTEIN INTERACTION targets with n_target_components = 2 \u2014 CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4, CHEMBL4523742 VHL/IRAK4. Those are DEGRADER TERNARY-COMPLEX targets. FOUND: 369 of the 32,838 activities (1.1%), across 169 distinct compounds, are inherited from an n_target_components > 1 target and are not direct IRAK4 binding measurements. Small, but it is the channel the DC50 numbers arrive through.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '8. Is a look-alike being counted, and is a degrader's DC50 being read as affinity? FOUND, AND IT IS THE SHARPEST RESULT OF THE SWEEP. KT-474 (CHEMBL5569030) is a clinical IRAK4 agent at max_phase 1 and its headline numbers are DC50 0.46, 1.5 and 2.0 nM \u2014 all 'CRBN-mediated IRAK4 degradation' in PBMC and OCI-Ly10 cells, all with pchembl_value NULL. Its only binding measurement is IC50 = 41 nM (pChEMBL 7.39) against GST-tagged full-length IRAK4. A DC50 is a degradation potency, not an affinity: quoting 0.46 nM would overstate the chemistry by 1.95 logs. Degrader precedent IS small-molecule precedent and it is counted as such; what it is NOT is evidence that any particular site is bindable.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '4/5. Is the structural evidence an artifact of one crystal form or one additive? The 6EGE ligand DL1 is a 379 Da N-aryl pyridine-carboxamide with a morpholine and a pyrazole \u2014 ordinary med-chem, not a detergent (contrast CD20's Y01 cholesteryl hemisuccinate and RORgt 6C1P's CHAPSO), not a bis-electrophile (contrast 2AZ5's compound 307). It is one of 92 holo entries on this accession, so the site is not a single-crystal-form artifact. No frequent-hitter or aggregator database was queried, so is_known_frequent_hitter stays null rather than being asserted false. PARTIALLY RUN.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '10/11. Is a perfect-looking result the absence of a counterexample? Watched for, and one was actively avoided: 5UIQ is titled 'Crystal structure of IRAK4 in complex with compound 9' and would read as a ninety-third holo entry, but its only heteroatom group is 8BV, 2-[(propan-2-yl)oxy]benzamide, 179.2 Da and 13 heavy atoms \u2014 a fragment. It is counted apo. The title is not the test. FOUND (a would-be false positive, excluded).' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check 'NEW \u2014 is a 'death-domain-containing' structure actually modelling the death domain? pdb_v.uniprot_alignment_ranges says TWO Q9NWZ3 entries span the death domain: 3MOP (min_uniprot_pos 4, max 106, residues_resolved 103) and 8DKS (min 1, max 460, residues_resolved 460). 8DKS would have entered a death-domain ensemble on that evidence. It must not: reading 8DKS.cif directly, its modelled auth_seq range is 164-459 \u2014 kinase domain only, 4,410 atoms, and its ligand SO9 (474.6 Da) sits in the ATP site. The view reports the CONSTRUCT's declared UniProt span, not the modelled span, and residues_resolved = 460 is simply wrong for this entry. FOUND: 3MOP is the ONLY PDB entry that models the IRAK4 death domain, and it took a coordinate-level check to establish it.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '3. Do the actives collapse to one series or one lab? Not resolvable to chemotype in this run, but bounded from above: 11,416 distinct compounds across 32,838 activities and five unrelated assay formats (AlphaScreen biochemical, monocyte TNF cell-based, U-937 inhibition, kinase activity, DELFIA enzymatic) each contributing 5-10%. A single-series artifact cannot produce that assay spread. The `GROUP BY assay_id` that would settle chemotype provenance is the query the statement timeout blocks. PARTIALLY RUN.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '5a. Does the pocket appear in one crystal form only? No: the ATP-site pocket was located in 6 of 6 measurements \u2014 three entries (one holo, two apo, three separate depositions in 2007, 2007 and 2019) at two clustering values.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      },
+      {
+        "change": "If the falsification check '7. What was tried in the clinic and why did it stop? NOT RUN \u2014 see not_found. terminated_programs is [] because no termination search was performed, NOT because none exists. Rule 7 and the falsification skill both warn that absence of terminated programs must never be read as a good sign, and an empty list produced without a search is exactly that error waiting to happen.' had found a problem",
+        "result": "the precedent/tractability claim would be weakened or withdrawn",
+        "meaning": "Falsification checks are the conditions under which the conclusion changes."
+      }
+    ],
+    "lineage": [
+      {
+        "output_path": "output.verdict",
+        "input_paths": [
+          "output.target_precedent",
+          "output.tractability"
+        ],
+        "transformation": "Two independent axes combined by rule (rules 4/4a/4b); the axes are reported separately and never averaged."
+      },
+      {
+        "output_path": "output.tractability.site_pocket_rank.fpocket",
+        "input_paths": [
+          "output.structure.pdb_id",
+          "output.tractability.site_hypothesis_basis"
+        ],
+        "transformation": "fpocket within-structure ranking at D=1.6 over the selected structure's pockets."
+      },
+      {
+        "output_path": "output.tractability.pocket_volume_a3.primary_d1_6_a3",
+        "input_paths": [
+          "output.structure.pdb_id"
+        ],
+        "transformation": "mdpocket site volume at clustering D=1.6."
+      }
+    ],
+    "extensions": {
+      "axes": {
+        "retrieved_precedent": {
+          "id": "retrieved_precedent",
+          "title": "Retrieved precedent",
+          "status": "supports",
+          "chembl_target_id": "CHEMBL3778 (tid 19639, SINGLE PROTEIN, n_target_components = 1). Three further ChEMBL targets carry this accession and are NOT this one: CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4 and CHEMBL4523742 VHL/IRAK4, all PROTEIN-PROTEIN INTERACTION with n_target_components = 2 - the degrader ternary-complex targets. 369 of the 32,838 activities on this accession (169 compounds) are inherited from those three and are not direct IRAK4 binding measurements.",
+          "best_potency_nm": 0.022,
+          "best_potency_characterised": true,
+          "distinct_actives": null,
+          "approved_small_molecules_count": 0,
+          "clinical_stage_small_molecules": 3,
+          "terminated_programs": 0
+        },
+        "computed_tractability": {
+          "id": "computed_tractability",
+          "title": "Computed tractability",
+          "status": "insufficient",
+          "site_hypothesis_basis": "holo ligand site \u2014 6EGE:DL1, auto-derived by pocket_scan as that entry's drug-like ligand (not supplied by hand). Confirmed per structure: the two holo measurements were selected by ligand_site_jaccard (0.63 at D=1.6, 0.531 at D=2.4); the four apo measurements fell back to site_signature_overlap, which is a residue-number match and is weaker. Neither entry is a homo-oligomer at the site (chain A scored alone), so the signature is not ambiguous by symmetry.",
+          "structure_pdb_id": "6EGE",
+          "fpocket_rank": 2,
+          "prank_rank": 1,
+          "n_pockets": 11,
+          "pocket_volume_d16_a3": 682.5,
+          "ligand_site_jaccard": 0.63,
+          "cryptic_pocket_risk": "low",
+          "load_bearing": false
+        },
+        "atomistic_simulation": {
+          "status": "not_run",
+          "note": "No molecular-dynamics / atomistic free-energy simulation is run by this module."
+        }
+      },
+      "trace": [
+        {
+          "stage": "graph-intake",
+          "order": 1,
+          "summary": "Resolved Q9NWZ3",
+          "status": "ok"
+        },
+        {
+          "stage": "structure-select",
+          "order": 2,
+          "summary": "holo_experimental \u2014 6EGE",
+          "status": "ok"
+        },
+        {
+          "stage": "pocket-scan",
+          "order": 3,
+          "summary": "rank 2 of 11 in 6EGE",
+          "status": "ok"
+        },
+        {
+          "stage": "precedent-lookup",
+          "order": 4,
+          "summary": "Actives not retrieved",
+          "status": "ok"
+        },
+        {
+          "stage": "falsification",
+          "order": 5,
+          "summary": "survived",
+          "status": "ok"
+        },
+        {
+          "stage": "assemble-dossier",
+          "order": 6,
+          "summary": "small_molecule_tractable / retrieved_precedent",
+          "status": "ok"
+        }
+      ],
+      "next_experiment": {
+        "description": "Nothing on the tractability axis. The question this station answers is already answered for this mechanism: a 1.40 A holo crystal, 92 holo entries, 11,416 compounds, 0.022 nM in a characterised enzymatic assay, three clinical-stage small molecules and a pre-formed non-cryptic site. If any experiment is worth running it is the one that would change the FALSIFICATION picture, not the tractability picture: a `GROUP BY assay_id` chemotype-provenance query to establish whether the potent end collapses to one series, and a terminated-programme search. Both were blocked in this run \u2014 the first by the 85 s statement timeout, the second not attempted.",
+        "rationale": "Producing more computed-tractability evidence for a target with this much retrieved precedent would add nothing a reader would act on. The residual uncertainty is entirely on the clinical and chemotype side, which other stations own.",
+        "resolves": "Whether IRAK4's small-molecule precedent is broad or is one chemotype reported many times, and what the clinical failures have been \u2014 neither of which changes the tractability verdict, and rule 7 forbids letting them."
+      },
+      "figure": {
+        "kind": "pocket_render",
+        "path": "figures/6EGE_pocket.png",
+        "caption": "6EGE ligand-anchored pocket",
+        "present": false,
+        "note": "Reference only; the image file is not packaged with this dossier."
+      },
+      "identifiers": {
+        "pdb_ids": [
+          "6EGE",
+          "2OIB",
+          "2O8Y"
+        ],
+        "chembl_target_id": "CHEMBL3778 (tid 19639, SINGLE PROTEIN, n_target_components = 1). Three further ChEMBL targets carry this accession and are NOT this one: CHEMBL4523710 cereblon/IRAK4, CHEMBL4523723 XIAP/IRAK4 and CHEMBL4523742 VHL/IRAK4, all PROTEIN-PROTEIN INTERACTION with n_target_components = 2 - the degrader ternary-complex targets. 369 of the 32,838 activities on this accession (169 compounds) are inherited from those three and are not direct IRAK4 binding measurements.",
+        "uniprot_accession": "Q9NWZ3",
+        "tools": [
+          "fpocket",
+          "fpocket",
+          "foldseek"
+        ]
+      },
+      "cache_key": "sha256:9f1da98fb5183984f225d2a168f2920e42ceb8a22d5de23a16c27216f4e7f98a"
+    }
+  }
 }

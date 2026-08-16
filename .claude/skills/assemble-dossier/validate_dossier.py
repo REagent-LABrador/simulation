@@ -727,6 +727,14 @@ def check_number_provenance(d: dict) -> list[Violation]:
             for k, val in node.items():
                 if str(k).startswith("_"):
                     continue  # notes and warnings carry no claims
+                if path == "" and k == "interpretability":
+                    # The LABrador interpretability block carries its OWN
+                    # provenance model — an `evidence` array plus per-metric
+                    # `evidence_ids`/`assumption_ids` references — validated
+                    # against schemas/interpretability.schema.json. Its numeric
+                    # leaves are DERIVED from dossier fields that already carry
+                    # provenance, so the generic sources-key sweep does not apply.
+                    continue
                 walk(val, f"{path}.{k}" if path else str(k), prov)
         elif isinstance(node, list):
             for i, val in enumerate(node):

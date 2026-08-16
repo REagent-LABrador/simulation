@@ -89,7 +89,7 @@ class EndToEndSuccess(unittest.TestCase):
             written = json.loads(out_path.read_text())
             Draft202012Validator(_schema("output.schema.json")).validate(written)
             self.assertIn("interpretability", written)
-            self.assertEqual(written["interpretability"]["module"], "simulation")
+            self.assertEqual(written["interpretability"]["schema_version"], "1.0.0")
 
 
 class MalformedInput(unittest.TestCase):
@@ -134,8 +134,11 @@ class InterpretabilityValidates(unittest.TestCase):
         dossier.pop("interpretability", None)  # strip any pre-existing block first
         interp = build_interpretability(dossier)
         Draft202012Validator(_schema("interpretability.schema.json")).validate(interp)
-        # Sanity: the two axes are present and never merged.
-        self.assertEqual([a["id"] for a in interp["axes"]], ["retrieved_precedent", "computed_tractability"])
+        # Sanity: the two evidence axes are preserved separately under extensions,
+        # never merged into one scalar (LABrador contract, section E).
+        axes = interp["extensions"]["axes"]
+        self.assertIn("retrieved_precedent", axes)
+        self.assertIn("computed_tractability", axes)
 
     def test_example_output(self):
         self._assert_valid(EXAMPLES / "output.json")

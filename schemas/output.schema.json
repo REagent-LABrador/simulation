@@ -8,7 +8,8 @@
     "input", "target", "as_of_date", "verdict", "verdict_basis", "axis_conflict",
     "target_precedent", "biologic_precedent", "family_precedent",
     "structural_neighbour_precedent", "pocket_neighbour_precedent", "structure",
-    "tractability", "affinity", "falsification", "next_experiment", "not_found"
+    "tractability", "affinity", "falsification", "next_experiment", "not_found",
+    "interpretability"
   ],
   "patternProperties": {"^_": {}},
   "additionalProperties": false,
@@ -492,20 +493,30 @@
     },
 
     "interpretability": {
-      "description": "OPTIONAL. The per-run object the orchestrator renders in its side panel — the WORKFLOW 'reasoning trace' (stages, intermediate scores, provenance, caveats), NOT LLM reasoning. Carried here so a consumer reads one output file (module contract). The authoritative shape and the full display heuristic live in schemas/interpretability.schema.json; this in-line copy pins the top-level shape so the dossier self-documents. When the module runner emits a dossier it SHOULD populate this; a dossier without it is still valid.",
+      "description": "REQUIRED for every successful or scientifically degraded/abstaining run (infrastructure failures that produce no result file are the orchestrator's responsibility). The LABrador shared interpretability contract — the WORKFLOW/decision trace (headline, metrics, derivation steps, evidence, assumptions, uncertainty, limitations, counterfactuals, lineage), NOT LLM reasoning. Carried here so a consumer reads one output file. This in-line copy pins the top-level shape; schemas/interpretability.schema.json is the authoritative deep validator. The two evidence axes are preserved separately under extensions.axes and are never averaged into a scalar.",
       "type": "object",
-      "required": ["module", "schema_version", "headline", "axes", "trace"],
+      "required": [
+        "schema_version", "headline", "metrics", "steps", "evidence",
+        "assumptions", "uncertainty", "limitations", "counterfactuals",
+        "lineage", "extensions"
+      ],
       "additionalProperties": true,
       "properties": {
-        "module": {"const": "simulation"},
-        "schema_version": {"type": "string"},
-        "headline": {"type": "object"},
-        "figure": {"type": ["object", "null"]},
-        "banner": {"type": ["object", "null"]},
-        "axes": {"type": "array", "minItems": 2, "maxItems": 2},
-        "trace": {"type": "array", "minItems": 1},
-        "not_found": {"type": "array"},
-        "provenance": {"type": ["object", "null"]}
+        "schema_version": {"const": "1.0.0"},
+        "headline": {
+          "type": "object",
+          "required": ["title", "result", "plain_language", "status", "basis"],
+          "additionalProperties": true
+        },
+        "metrics": {"type": "array"},
+        "steps": {"type": "array"},
+        "evidence": {"type": "array"},
+        "assumptions": {"type": "array"},
+        "uncertainty": {"type": "object"},
+        "limitations": {"type": "array"},
+        "counterfactuals": {"type": "array"},
+        "lineage": {"type": "array"},
+        "extensions": {"type": "object"}
       }
     }
   },

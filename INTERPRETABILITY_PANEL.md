@@ -1,5 +1,21 @@
 # Interpretability Panel — the workflow reasoning trace over a dossier
 
+> **Contract update (LABrador shared interpretability, v1.0.0).** The object at
+> `output.interpretability` now follows the **shared LABrador contract**
+> (`schemas/interpretability.schema.json`): `schema_version`, `headline`,
+> `metrics`, `steps`, `evidence`, `assumptions`, `uncertainty`, `limitations`,
+> `counterfactuals`, `lineage`, `extensions`. The module-specific shape this
+> document originally described — a HEADLINE, FIGURE, BANNER, the two AXES, a
+> per-stage TRACE, a "Not retrieved" list — is **preserved under
+> `extensions`**: `extensions.axes.{retrieved_precedent,computed_tractability}`
+> (still two columns, never merged), `extensions.trace` (the ordered stages),
+> `extensions.figure`, `extensions.next_experiment`, `extensions.identifiers`,
+> `extensions.cache_key`. The rendering guidance below still applies — read
+> "axes"/"trace"/"figure"/"not_found" as their `extensions.*` locations, and read
+> the top-level `metrics`/`steps`/`evidence`/`limitations`/`counterfactuals` as
+> the shared fields the UI renders across every LABrador module. The panel is
+> REQUIRED for every successful/abstaining run.
+
 A specification for a panel that, when a user clicks one prediction (one
 druggability dossier), shows **how that verdict was reached from the evidence**:
 which pipeline stages ran, in what order, what each computed, every intermediate
@@ -7,7 +23,7 @@ number, where each number came from, and the caveat that number cannot be shown
 without.
 
 The panel renders exactly one artifact — a dossier JSON matching
-`schema/output.schema.json` — and claims nothing that is not traceable to a field
+`schemas/output.schema.json` — and claims nothing that is not traceable to a field
 in it.
 
 ---
