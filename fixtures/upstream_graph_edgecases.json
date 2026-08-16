@@ -1,0 +1,229 @@
+{
+  "_fixture": true,
+  "_fixture_note": "SYNTHETIC FIXTURE, HAND-WRITTEN. Not a real graph and not a real biology claim. It exists to exercise the four SCHEMA.md v1.1 branches that upstream_graph.json never reaches: kind 'gene', basis 'hedged_only', state/says 'no_effect', and status != 'ok'. Every quote is invented. Never cite it.",
+  "_exercises": {
+    "kind_gene": "t1 is kind 'gene', not 'protein'. A nomination rule keyed only on 'protein' drops it silently.",
+    "basis_hedged_only": "L1 is the nominating edge AND its basis is hedged_only. Tier must be record-do-not-act, same as background_only.",
+    "no_effect": "L3 carries a no_effect finding in a third array. Code reading only yes+no loses it entirely.",
+    "status_partial": "status is 'partial', so some queries failed and the graph is under-covered. Absence proves nothing here."
+  },
+
+  "schema_version": "1.1",
+  "graph_id": "g_edge1",
+  "question": "does a small-molecule ROCK2 inhibitor reduce collagen deposition in fibrosis?",
+  "round": 1,
+  "status": "partial",
+  "generated_at": "2026-08-15T18:00:00Z",
+
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 3,
+      "outcome": "new_evidence"
+    }
+  ],
+
+  "coverage": {
+    "depth": "standard",
+    "found": 210,
+    "read": 3,
+    "used": 3,
+    "truncated": true,
+    "no_quote_discarded": 0,
+    "limits": { "max_papers": 25, "max_queries": 6 },
+    "stop_reason": "queries_exhausted"
+  },
+
+  "things": [
+    {
+      "id": "t1",
+      "name": "ROCK2",
+      "kind": "gene",
+      "aliases": ["Rho-associated kinase 2"],
+      "mentions": 9
+    },
+    {
+      "id": "t2",
+      "name": "compound A",
+      "kind": "small_molecule",
+      "aliases": [],
+      "mentions": 4
+    },
+    {
+      "id": "t3",
+      "name": "collagen deposition",
+      "kind": "process",
+      "aliases": [],
+      "mentions": 7
+    },
+    {
+      "id": "t4",
+      "name": "TGF-beta",
+      "kind": "protein",
+      "aliases": ["TGFB1"],
+      "mentions": 6
+    }
+  ],
+
+  "papers": [
+    {
+      "id": "p1",
+      "title": "A ROCK2-directed chemical probe",
+      "year": 2022,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.e1",
+      "first_author": "Adeyemi",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p2",
+      "title": "Cytokine output after ROCK inhibition",
+      "year": 2023,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.e2",
+      "first_author": "박",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p3",
+      "title": "Collagen endpoints in a fibrosis model",
+      "year": 2024,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.e3",
+      "first_author": "Haddad",
+      "study_type": "animal",
+      "is_preprint": true,
+      "retracted": false,
+      "round": 1
+    }
+  ],
+
+  "findings": [
+    {
+      "id": "f1",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "yes",
+      "quote": "compound A may inhibit ROCK2, which could account for the observed phenotype",
+      "paper": "p1",
+      "where": null,
+      "section": "discussion",
+      "is_own_result": true,
+      "hedged": true,
+      "confidence": 0.55,
+      "flags": ["hedged"],
+      "round": 1
+    },
+
+    {
+      "id": "f2",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t4",
+      "says": "yes",
+      "quote": "TGF-beta levels fell by 41% after treatment",
+      "paper": "p2",
+      "where": "fibroblast culture",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.86,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f3",
+      "from": "t1",
+      "how": "drives",
+      "to": "t3",
+      "says": "no_effect",
+      "quote": "collagen deposition was unchanged in ROCK2-null animals relative to littermate controls",
+      "paper": "p3",
+      "where": "bleomycin model, 21 days",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.81,
+      "flags": [],
+      "round": 1
+    }
+  ],
+
+  "links": [
+    {
+      "id": "L1",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "yes": ["f1"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "hedged_only",
+      "confidence": {
+        "overall": 0.31,
+        "label": "low",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+
+    {
+      "id": "L2",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t4",
+      "yes": ["f2"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.5,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+
+    {
+      "id": "L3",
+      "from": "t1",
+      "how": "drives",
+      "to": "t3",
+      "yes": [],
+      "no": [],
+      "no_effect": ["f3"],
+      "state": "no_effect",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.44,
+        "label": "medium",
+        "evidence_quality": 0.4,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    }
+  ],
+
+  "gaps": []
+}

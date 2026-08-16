@@ -1,0 +1,638 @@
+{
+  "_note": "Replaces the targets.csv named in README.md — the data is too nested for CSV. Every value here was retrieved from ChEMBL, RCSB, UniProt or a cited publication. Nothing is recalled or estimated. Values that could not be retrieved are the string NOT_FOUND.",
+  "_retrieved": "2026-08-15",
+  "_expected_output": "What a correct dossier must say. This is the grading key for the fixture run.",
+
+  "_measurement_definitions": {
+    "_why": "A grading key with no stated definition drifts. Every count below was re-measured 2026-08-15 against Paperclip (sql -s proteins) with the definitions in this block. If you change a definition, re-measure the whole file — do not patch one number.",
+    "audited": "2026-08-15",
+    "distinct_compounds": "COUNT(DISTINCT molregno) FROM chembl_v.bioactivities_by_accession WHERE accession=<ACC> AND n_target_components = 1. The n_target_components=1 predicate is LOAD-BEARING and is the single most common way to get these numbers wrong — see _audit_2026_08_15.",
+    "total_activities": "COUNT(*) over the same view with the same n_target_components = 1 predicate.",
+    "best_potency_nm": "MAX(pchembl_value) over the same filtered set, converted 10^(9-pchembl), AND THEN rejected if the source assay description is uncharacterised per CLAUDE.md rule 6 ('Inhibition of X (unknown origin)', 'Binding affinity to X (unknown origin)'). Where the raw maximum is rejected on that ground the entry says so explicitly. standard_relation must be '='.",
+    "pdb_total": "COUNT(DISTINCT entry_id) FROM pdb_v.structures_by_accession WHERE accession=<ACC>. NOTE: this view has one row per (accession, entry, entity), so COUNT(*) overcounts — KRAS is 534 rows for 522 entries.",
+
+    "_STRUCTURE_AXIS_REGENERATED_2026_08_15": "Every pdb_holo / pdb_apo / pdb_undetermined figure below was REGENERATED WHOLESALE on 2026-08-15 under the definition in `pdb_holo`. Nothing was patched. The prior values were produced by the superseded '250-1200 Da + $EXCL' MW-window rule, and before that by '>=300 Da'. Both are gone. Where a regenerated count disagrees with an earlier adjudication, the disagreement is recorded ON THE TARGET rather than reconciled away — see `_structure_regeneration_2026_08_15`.",
+
+    "pdb_holo": "CHEMISTRY CLASSIFIER, not a molecular-weight window. An entry is HOLO iff at least one of its components in pdb_v.entry_ligands classifies as `druglike` under `.claude/skills/structure-select/ligand_filter.py::classify_record`. Measured 2026-08-15. Classifier sha256 ae9ef140f3f8b8109a9384e287aa67a4a2ab130443a6144247c12def0b5216c1, 2430 lines, tunables LIPID_MIN_CHAIN=8 / TRIVIAL_MAX_HEAVY_ATOMS=9 / DRUGLIKE_MAX_MW=1200. SEE `_classifier_pin_corrected_2026_08_15` — the sha256 previously recorded here did not identify any file in this checkout. `classify_record` takes a pdb_v.entry_ligands row verbatim and does NO I/O, so every verdict here is reproducible offline from the row. THERE IS NO LOWER MW BOUND ANY MORE — that is the single biggest behavioural change and it is deliberate: the module's own comment says the old 18-heavy-atom floor 'is gone, because size was never the discriminator', and the floor was demonstrably splitting congeneric series across the holo/apo line.",
+
+    "pdb_apo": "an entry with NO `druglike` component AND NO `unknown` component. Strictly narrower than 'not holo'.",
+
+    "pdb_undetermined": "an entry with no `druglike` component but at least one component the classifier returned `unknown` for. THIS IS NOT APO AND MUST NEVER BE ADDED TO THE APO COUNT. `unknown` has two causes and both are live in this file: (a) the CCD names the component 'UNKNOWN LIGAND' / unidentified density — TYK2 5C01 carries `UNL`; (b) the component exceeds the 1200 Da ceiling and no cofactor/lipid/peptide signature fired, so the classifier refuses rather than assumes — BCL-2 8FY1 and 8FY2. A third cause, a Paperclip lookup FAILURE, carries the `lookup_failed` flag into holo_call(...)['undetermined'] and is a network fact, not a chemistry fact. pdb_total = pdb_holo + pdb_apo + pdb_undetermined, always.",
+
+    "known_limits_of_the_new_holo_rule": [
+      "FALSE POSITIVE, measured here and NOT in the classifier's own test set: TNF-alpha 5UUI's MTN (MTSL nitroxide spin label, 264 Da, covalently attached to an engineered T77C cysteine) classifies `druglike`. Its chemistry genuinely is drug-like; what disqualifies it is the entry title ('Crystal Structure of Spin-Labeled T77C TNFa'), which no chemistry test can see. The module's docstring claims 0 false positives on a 70-component held-out sample; that claim is about that sample and MTN was not in it. Chemistry alone cannot catch a covalent biophysical probe.",
+      "FALSE NEGATIVE, declared by the module and live here: nucleoside/SAM-analog inhibitors classify `cofactor`. STAT3 5AX3's 5ID (a 7-deazaadenosine, 5-iodotubercidin class) is a real nucleoside-analog inhibitor filed as a cofactor. This is why STAT3 moves 3 -> 2. The bias is deliberate and conservative: a false negative costs one holo structure, a false positive invents one.",
+      "DEGRADERS ARE ONLY HALF-CAUGHT, and the half that fails does so silently. MEASURED on BCL-2 2026-08-15, not assumed. The 1200 Da ceiling works as advertised: 8FY1's YF8 (1640 Da) returns `unknown` and lands in pdb_undetermined, visible as unresolved. But 8FY2's YFH (1682 Da) NEVER REACHES THE CEILING — rule R10 fires first, because `peptide_backbone_residues()` counts three alpha-amino-acid backbone units in the degrader's linker and amide-rich warhead, so the classifier returns `peptide_or_polymer` and the entry is counted APO with no flag and nothing for a reader to notice. PROTACs and molecular glues are amide-rich by construction, so this misfires across the whole modality and it misfires quietly. Inspect `peptide_or_polymer` verdicts above ~1000 Da by hand; filter on the `standalone_peptide_ligand` flag R10 sets. This limitation was NOT in the module's declared false-negative list.",
+      "drugbank_id is not a druglikeness signal and does not gate anything — MTN carries DB08217. The classifier reads the field but never lets it decide.",
+      "The hand-written $EXCL comp_id list is NO LONGER USED for these counts. It is reproduced by the classifier's chemistry without having been shown it, and its two documented leaks (MTN; RORgt 4NIE's DMX = NDSB-256 sulfobetaine) are now handled on chemistry — DMX is caught, MTN is not."
+    ],
+
+    "how_to_reproduce_and_the_trap_that_will_bite_you": "Pull pdb_v.entry_ligands for the accession's entries, call classify_record per distinct comp_id, and count entries. THE TRAP IS NOT CHEMISTRY, IT IS PAGING. Paperclip's documented row cap is 200 but the SERVED cap moves under load: on 2026-08-15 the identical entry-list query returned 200 rows at one moment and EXACTLY 10 at another, with no error and a well-formed table both times. A short page is therefore ambiguous between 'end of results' and 'silently truncated', and OFFSET paging under-counts without ever failing. The first run of this regeneration recorded KRAS as 10 entries against a true 522 and would have written it into this grading key as a measurement. EVERY count in this file was re-taken by paging at whatever page size RECONCILES with an independently issued COUNT aggregate, bracketed by a canary on both pdb_v tables (TNF-alpha = 52 entries; 4OBE apo / 6OIM holo on MOV per structure-select SKILL.md §1). A count that does not reconcile is not recorded.",
+    "data_validity_comment_is_NOT_usable_here": "chembl_v.bioactivities_by_accession exposes a data_validity_comment column that is NULL for EVERY row, on all 11 accessions in this file, exactly like the already-documented always-NULL `modality` column. The raw chembl.activities table does carry it (345,635 'Outside typical range' rows overall; 91 on JAK1) but the VIEW does not propagate it, and the view is not pre-filtered — JAK1 returns all 48,836 raw activity_ids. Separately, JAK1's 91 flagged raw rows carry NO pchembl_value at all, so flagged rows can never be the top-potency rows. Any fixture note claiming top potencies 'were flagged Outside typical range and excluded' is describing a filter that did nothing."
+  },
+
+  "_audit_2026_08_15": {
+    "headline": "The precedent axis is TRUSTWORTHY and does not need regeneration. The structure axis DOES — every holo count in this file was generated with a superseded rule. ChEMBL drift is not the problem and never was: all 11 compound counts and 6 of 7 activity counts re-measured EXACT.",
+    "the_challenge_that_failed": "JAK1 14,342 was reported as stale against a 'measured' 14,472. The fixture was RIGHT and the challenge was WRONG. 14,472 is the same view with the n_target_components = 1 predicate dropped, which pools inherited hits from multi-component targets (complexes, PPI pairs, PROTAC ternary complexes). Verified by reproducing the fixture value exactly on all eleven accessions with the predicate and the inflated value exactly on all eleven without it. Had this been blessed it would have silently corrupted six of the eleven targets.",
+    "the_challenge_that_succeeded": "TNF 15 -> 17 is a real DEFINITION CHANGE from the '>=300 Da' holo rule to the '250-1200 Da + $EXCL' rule. Both rules were re-run and reproduce 15 and 17 exactly. But the right answer is 16, not 17: of the two added entries, 6OOY (A7M, a real benzimidazole from an already-counted series) belongs and 5UUI (MTN = MTSL nitroxide spin label on an engineered T77C cysteine) does not.",
+    "the_second_challenge_that_succeeded": "JAK1 0.032 -> 0.010 nM is a FIXTURE QUERY DEFECT. The fixture excluded all IC50s as 'flagged Outside typical range'; the view never populates that column, and JAK1's genuinely-flagged raw rows carry no pchembl at all. The 0.010 nM value traces to a 2016 document, so data growth cannot explain it, and it is corroborated by 2 compounds x 2 independent assays with 60 compounds above the old value.",
+    "counts_that_moved_and_why": {
+      "definition_change_holo_rule": [
+        "TNF 15->17",
+        "IL-17A 19->20",
+        "RORgt 152->154",
+        "BCL-2 41->40",
+        "TYK2 domain split 29/21 -> 28/20 exclusive"
+      ],
+      "fixture_query_defect": ["JAK1 best potency 0.032->0.010 nM"],
+      "raised_on_re-measurement": [
+        "BCL-2 best potency 0.015->0.010 nM",
+        "RORgt best potency 0.1->0.017 nM"
+      ],
+      "source_mismatch_rcsb_vs_paperclip": [
+        "KRAS pdb_total 531->522",
+        "EGFR pdb_total 392->388"
+      ],
+      "unreproducible_replaced": [
+        "MYC total_activities 2768->1249",
+        "JAK1 pdb_holo 40->42"
+      ],
+      "factually_wrong_corrected": [
+        "IL-11 'ALL 15 from a single assay' -> two assays",
+        "MYC max nonpolymer 120->122 Da",
+        "EGFR and JAK1 'Outside typical range' notes removed as no-ops"
+      ],
+      "held_against_challenge": [
+        "JAK1 distinct_compounds 14342",
+        "KRAS best potency 0.1 nM (rule 6)",
+        "STAT3 best IC50 2.4 nM"
+      ]
+    },
+    "verified_exact_no_change": "distinct_compounds on all 11 targets; total_activities on KRAS/EGFR/BCL-2/TNF/IL-17A/IL-11; best potency on EGFR/MYC/TYK2/IL-17A/TNF/IL-11/STAT3; pdb_total on 9 of 11; TNF's full assay-concentration story (IRAK4 2,901 rows = 45.0%); TNF assay_type split B 5,830 / F 617; MYC holo 0; STAT3 6 entries / 3 holo; earliest-holo dates for TNF 2AZ5, JAK1 3EYG, RORgt 3KYT, IL-17A 5HI3.",
+    "known_inconsistency_left_in_place": "structure-select SKILL.md §1 asserts TNF-alpha is '17 holo / 35 apo'. That matches the rule as written but includes the 5UUI spin label. The skill was not edited (out of scope for this task) and should be corrected separately — the count is right for the rule and the rule is slightly wrong.",
+    "residual_risk": "One number in this file still reproduces from nothing: MYC total_activities, formerly 2,768. It has been replaced with the measured 1,249 but the origin of 2,768 was never explained. Treat any MYC activity count as the least reliable figure here."
+  },
+
+  "_TWO_NEW_PAPERCLIP_FAILURE_SIGNATURES_2026_08_15": {
+    "_what": "CLAUDE.md rule 15 enumerates FOUR Paperclip failure signatures. MEASURED WHILE REGENERATING KRAS AND EGFR, THERE ARE AT LEAST SIX. Both new ones are silent, both corrupt data rather than blocking it, and NEITHER is caught by reconciling row counts against a COUNT aggregate — which is what rule 14 relies on. Recorded here because the fixture counts in this file depend on them being handled. CLAUDE.md is not this fixture set's to edit; rule 15's table needs two more rows and rule 14 needs the caveat below.",
+    "signature_5_SILENT_PER_COLUMN_TRUNCATION_AT_80_CHARS": "THE DANGEROUS ONE, AND IT IS WORSE THAN THE MOVING ROW CAP. In normal full-row mode, a long column value is truncated at 80 characters with NO ellipsis, NO marker, and NO error. Caught only by selecting LENGTH(smiles) beside smiles: component A1AHB returned 80 characters against a server-side LENGTH() of 100. WHY THIS BEATS EVERY EXISTING GUARD: the row COUNT is correct, so rule 14's reconciliation passes cleanly; the truncated value is still syntactically valid SMILES, so it PARSES; and classify_record therefore returns a CONFIDENT WRONG VERDICT rather than an error or an `unknown`. A capped row set at least yields a number you can catch. This yields a wrong verdict that looks exactly like a right one. WORKAROUND USED FOR KRAS AND EGFR: fetch SMILES as five 50-character SUBSTRINGs, reassemble, and assert the reassembled length against a server-side LENGTH() for every component — done for all 527 components across both targets, all reconciled. COROLLARY THAT INVALIDATES A SHORTCUT THIS FILE AND CLAUDE.md RULE 14 BOTH RECOMMEND: `STRING_AGG(DISTINCT comp_id,' ') GROUP BY entry_id` hits the same 80-char cap and SILENTLY DROPS COMPONENTS off multi-ligand entries, which would misfile a holo entry as apo whenever its druglike component sorted late. Rule 14 clause 4 advises server-side aggregation as the way to never need reconciliation — that advice is correct about ROW caps and WRONG about this one. It was abandoned for KRAS/EGFR in favour of paging raw DISTINCT (entry_id, comp_id) pairs. CHECKED FOR THE TARGETS ALREADY MEASURED WITH IT: IL-17A's longest aggregate is 10 characters (max 3 components per entry) and RORgt's is 18 (max 5), both far below 80, so those counts are unaffected — verified rather than assumed.",
+    "signature_6_DISPLAY_PREVIEW_CAP_DISTINCT_FROM_THE_ROW_CAP": "At LIMIT 100 the CLI prints `Preview (first 5 of 100 rows)` plus a `Too many rows (100) for context` hint, while the footer STILL TRUTHFULLY READS `(100 rows, 12ms)` and the column header is complete. So len(parsed_rows) = 5 while the footer says 100. This is an output-SIZE budget, not a row count, so a WIDER select trips it at a LOWER row count — meaning a page size that worked for a narrow query will silently under-deliver for a wide one. Verify the parsed row count per page against the footer, rather than trusting a page size that worked before. Distinct from the moving 200/10 row cap in rule 14.",
+    "also_observed": "`[waiting] Too many concurrent requests (max 10). Retrying in Ns` under parallel load — benign and self-retrying, but it can push a call past its own statement timeout and surface as signature 1. And `[error] Request timed out` fired on a trivial MAX(LENGTH(...)) aggregate that had succeeded seconds earlier, confirming rule 15's note that the timeout carries no information about query cost. All transient; short-then-long retry cleared each on attempt 2."
+  },
+  "_classifier_pin_corrected_2026_08_15": {
+    "_what": "THE CLASSIFIER PIN IN `_measurement_definitions.pdb_holo` DID NOT IDENTIFY ANY FILE IN THIS CHECKOUT, and this is the same class of defect as the accuracy figures that lived only in session scratch. Recorded here rather than silently overwritten, because a pin that was wrong once is worth knowing about.",
+    "what_was_recorded": "sha256 526610951ee120f95b24731e72b33b2d2901e929626909d775ce6df65289f1f3, 1490 lines.",
+    "what_that_actually_identifies": "A file that existed ONLY at `/private/tmp/.../scratchpad/ligandfilter/ligand_filter.py` — session scratch. It is the PRE-polymer-conjugate version of the classifier: no StructureContext, no context rules, none of the polymer_conjugate verdict. It is not, and never was, the file at `.claude/skills/structure-select/ligand_filter.py`.",
+    "what_is_actually_in_the_checkout": "2,430 lines, sha256 ae9ef140f3f8b8109a9384e287aa67a4a2ab130443a6144247c12def0b5216c1. (2,423 lines / d831caa6c346f9e2d0cc263e68e374566024ce64ea264298198a1104d20d09ac immediately before the docstring edit that added the reproduce-it pointer to tests/. Neither is 1,490.)",
+    "does_it_change_any_count_in_this_file": "NO — CHECKED, NOT ASSUMED. `.claude/skills/structure-select/tests/version_diff.py` runs `classify_record` from both versions over all 346 cached CCD rows and reports every verdict that moves. Exactly TWO move, both in the conservative direction: `B3P` (bis-tris propane, 282 Da buffer) and `JEF` (Jeffamine, 598 Da precipitant), each `druglike` -> `crystallisation_additive`. Those are the two IL-17A Foldseek false positives the polymer work was written to close, so the newer classifier is the stricter one and any count could only fall. A single aggregate over `pdb_v.entry_ligands` joined to `structures_by_accession` then confirmed that NEITHER comp_id appears on ANY of the twelve fixture accessions (0 rows, canary-bracketed on TNF-alpha=52 before and after). So every regenerated figure in this file reproduces identically under the checkout classifier, and the pin was wrong without being consequential.",
+    "the_lesson": "A sha256 is only provenance if the file it names is reachable. This one pinned a scratch file, so it read as rigour while proving nothing — strictly worse than no pin, because it stops a reader looking. Re-hash the pin in the same edit that changes the classifier, and when a pin does not resolve, run `version_diff.py` rather than assuming the difference is either harmless or fatal."
+  },
+  "_structure_regeneration_2026_08_15": {
+    "_what": "The structure axis was regenerated WHOLESALE under the chemistry classifier. Read `_measurement_definitions.pdb_holo` for the definition and the classifier hash. This block records WHICH targets were re-measured, which were not, and why — because a half-regenerated grading key is worse than a stale one only when nobody can tell which half is which.",
+    "measured_and_reconciled": {
+      "_meaning": "pdb_holo / pdb_apo / pdb_undetermined below are the classifier's output, taken under a passing canary and reconciled against an independently issued COUNT aggregate.",
+      "TNF-alpha P01375": "52 total / 20 holo / 32 apo / 0 undetermined (was 17)",
+      "JAK1 P23458": "52 / 43 / 9 / 0 (was 42, before that 40)",
+      "TYK2 P29597": "52 / 46 / 5 / 1 (no holo count existed before)",
+      "MYC P01106": "25 / 0 / 25 / 0 (unchanged at 0, now under a fifth independent rule)",
+      "IL-11 P20809": "8 / 0 / 8 / 0 (no holo count existed before)",
+      "STAT3 P40763 (backup)": "6 / 2 / 4 / 0 (was 3)",
+      "BCL-2 P10415": "63 / 39 / 23 / 1 (was 40, before that 41) — was wrongly indexed as not-regenerated; see _BCL2_REMOVED_FROM_THIS_LIST_2026_08_15",
+      "IL-17A Q16552": "44 / 19 / 25 / 0 (was 20 under the MW window) — regenerated 2026-08-15, reconciled, canary-bracketed. Nothing undetermined. Note 8CDG is apo only because its sole component UTF is a 787 Da peptidomimetic.",
+      "RORgt P51449": "162 / 148 / 14 / 0 (was 154, before that 152) — regenerated 2026-08-15, reconciled at page size 40, canary-bracketed. FELL by 6: the apo bucket is the hydroxycholesterol sterol-agonist structures. NOTE structures_by_accession returns 165 ROWS for 162 entries here, so COUNT(DISTINCT entry_id) is load-bearing.",
+      "CD20 P11836 (control, not a fixture target)": "10 / 0 / 10 / 0 — run as a positive control on the classifier's headline case; pentadecane, phosphatidylcholine and cholesterol hemisuccinate all correctly filed lipid_or_detergent. Confirms the adjudicated 'CD20 true holo is 0'."
+    },
+    "NOT_regenerated_original_values_left_in_place": {
+      "_meaning": "Paperclip's sql backend failed before these could be re-measured. THEIR pdb_holo FIGURES ARE STILL THE OLD MW-WINDOW VALUES and are marked as such on each target with a _NOT_REGENERATED_2026_08_15 key. Do not read them as regenerated. Do not average them with the regenerated ones.",
+      "targets": [],
+      "_ALL_TARGETS_NOW_REGENERATED_2026_08_15": "THIS LIST IS EMPTY. All ten fixture targets plus the CD20 control are measured under the chemistry classifier, every one reconciled against an independently issued COUNT(DISTINCT) aggregate and bracketed by a canary on pdb_v before and after. KRAS: 522 / 300 / 221 / 1 (was 301). EGFR: 388 / 283 / 105 / 0 (unchanged total, different entries). The `_meaning` text above is retained as the historical record of why the gap existed; it no longer describes any target. Every pdb_holo + pdb_apo + pdb_undetermined in this file now sums to its pdb_total.",
+      "_IL17A_AND_RORGT_REGENERATED_2026_08_15": "IL-17A Q16552 and RORgt P51449 are DONE and removed from this list. IL-17A: 44 total / 19 holo / 25 apo / 0 undetermined (was 20 under the MW window; the classifier lands back on the original 19 by a different route). RORgt: 162 / 148 / 14 / 0 (was 154; it FELL by 6, the second target after BCL-2 to fall under the classifier, because the apo bucket is the hydroxycholesterol sterol-agonist structures). Both reconciled against independently issued COUNT(DISTINCT) aggregates and bracketed by a canary on TNF-alpha (52) and KRAS (522) before and after. RORgt paged at 40; IL-17A needed no paging. Only KRAS and EGFR remain.",
+      "_BCL2_REMOVED_FROM_THIS_LIST_2026_08_15": "BCL-2 P10415 was listed here and IT DOES NOT BELONG — this list said five, four targets carried the _NOT_REGENERATED_2026_08_15 flag, and the BCL-2 record itself is fully regenerated (pdb_holo 39 / apo 23 / undetermined 1, pdb_holo_measured 2026-08-15, pdb_holo_history [41, 40, 39], and a measured degrader block that explicitly replaces the earlier PREDICTION). The index and the record contradicted each other and the index was the stale half. fixtures/README.md carried the same error and is corrected with it. This is exactly the failure the _structure_regeneration_2026_08_15 block exists to prevent — a half-regenerated key is only dangerous when nobody can tell which half is which, and here the map disagreed with the territory.",
+      "_and_the_prediction_this_list_carried_was_half_wrong": "The removed text predicted that BOTH 8FY1 (YF8, 1640 Da) and 8FY2 (YFH, 1682 Da) would land in pdb_undetermined because the classifier returns `unknown` above its 1200 Da ceiling. MEASURED, that is true of 8FY1 ONLY. 8FY2's YFH never reaches the ceiling: rule R10 fires first, reading three alpha-amino-acid backbone units in the degrader's linker and amide-rich warhead, so it is filed `peptide_or_polymer` and counted APO — silently, with no flag and no `unknown` for a reader to notice. Do not restore the prediction; read pdb_holo_THE_DEGRADER_CASE_measured_not_predicted on the BCL-2 record instead.",
+      "what_is_needed": "Re-run classify_record over pdb_v.entry_ligands for these four accessions when the backend is healthy, reconciling against independently issued COUNT aggregates and bracketing with a canary on both pdb_v tables. The backend failure that stopped them was NOT the backend: it was `cli_cwd` in the Paperclip client config, which the CLI cds into before every command and which makes every query a ~15 ms no-op printing `vsh: cd: /papers/: Permission denied` ON STDOUT AT EXIT 0. Isolate with PAPERCLIP_CONFIG_DIR before re-measuring — the shared config has been observed being re-poisoned after a reset."
+    },
+    "backend_failures": {
+      "_why_recorded": "Every one of these produced a well-formed, non-empty, entirely wrong result or no result at all. They are recorded because the next person to regenerate this file will hit them and needs to know that the guards are load-bearing, not ceremony.",
+      "1_moving_row_cap": "Paperclip's documented cap is 200 rows. The SERVED cap moved to EXACTLY 10 under load, with no error and a well-formed table. The first run of this regeneration recorded KRAS as 10 entries against a true 522. Caught only by reconciling against an independent COUNT.",
+      "2_statement_timeouts": "Queries that returned in 8 ms at one moment timed out at 120 s minutes later. Multi-accession GROUP BYs and the domain-split CTE in structure-select SKILL.md section 3 both timed out; the CTE had to be replaced by fetching raw alignment ranges and doing the overlap arithmetic in Python.",
+      "3_the_endpoint_is_shared_and_capped_at_10_concurrent": "Another client on the same box held 15-21 connections for much of this task. `paperclip` handles the limit itself with up to five backoffs, so a SHORT outer timeout is actively harmful — it kills the client mid-backoff and re-launches it. Tried 20 s and throughput got worse; 150 s with few retries got through.",
+      "4_tool_level_breakage": "Late in the task every `paperclip sql` began returning `vsh: cd: /papers/: Permission denied` in ~17 ms — not a timeout, a broken tool. `paperclip search` was unaffected. This is what stopped the last five targets.",
+      "the_rule_that_saved_the_file": "A count is recorded ONLY when it reconciles with a separately issued aggregate, under a canary that checks the two pdb_v tables actually being read (TNF-alpha = 52 entries; 4OBE apo / 6OIM holo on MOV). `SELECT 1` passing tells you nothing about pdb_v. Every failure above was caught by that pair; none was caught by an error code."
+    },
+    "disagreements_with_the_prior_adjudication": {
+      "_read_this": "Three previously adjudicated numbers do not survive the new rule. In each case the adjudication was correct FOR THE RULE IT WAS MADE UNDER and is superseded by the change of rule, not overturned on the facts.",
+      "TNF-alpha 16 -> 20": "16 was (250-1200 Da window) minus the MTSL spin label, so it inherits a 250 Da floor the classifier does not have. It excluded 6X81/6X83, which are from the same J. Med. Chem. paper and the same series as three entries it counted. See the target's pdb_holo_why_the_adjudicated_16_does_not_survive.",
+      "JAK1 42 -> 43": "42 was the MW-window value. Re-derived from scratch as instructed, since 40 reproduced under no rule at all.",
+      "STAT3 3 -> 2": "The classifier files 5AX3's nucleoside-analog inhibitor as a cofactor — a false negative it declares in its own docstring.",
+      "and_one_that_CONFIRMS": "The TYK2 exclusive domain split 28 / 20 / 1 (4OLI) / 3 reproduced exactly from raw alignment ranges. The old inclusive 29/21, which summed to 54 against a real 52, stays rejected."
+    }
+  },
+
+  "_expected_output_audit_2026_08_15": {
+    "_why": "A 15-target / 67-structure / 134-measurement evaluation demoted fpocket druggability, which is the number several expected_output blocks in this file were implicitly graded on. Every expected_output was re-read against that evaluation. NOTHING IN THE LADDER'S INTENT WAS REWRITTEN — where a rung no longer tests its stated failure mode, the finding and a PROPOSED replacement are recorded here and the rung is left as it stands, for a human to accept or reject.",
+    "what_the_evaluation_established": {
+      "druggability_does_not_separate": "target-level AUC 0.720 at D=1.6, bootstrap CI 0.44-0.94 — includes chance. At D=2.4, AUC 0.520. On 37 holo structures with a drug-like ligand PHYSICALLY BOUND and the pocket anchored to it, median score 0.320, and 15 of 37 (41%) score below 0.1.",
+      "volume_separation_is_SUSPENDED_do_not_use_it_as_a_grading_value": "The volume separation (AUC 1.000, hard <=207 A^3 / druggable >=242 A^3) was WITHDRAWN on 2026-08-15, after this audit block was first drafted and before it was finalised. It is recorded here as a retraction, not as a criterion, and NO VOLUME IN THIS FILE IS A GRADING VALUE. Two agents independently found the anchors do not measure the proteins they are attributed to: MYC's 188 A^3 rests on pockets whose lining residues are entirely MAX (P61244) in 6G6J/6G6L, MAX plus DNA in 1NKP, and apo OmoMYC in 5I4Z — three of five MYC pockets contain ZERO MYC residues; IL-11's 164 A^3 was measured on 6O4P, which is not an IL-11 structure at all but a single-entity Q14626 (IL-11 receptor alpha) and is not even in structures_by_accession for P20809; KRAS's 400 A^3 is a median over two pockets, one of them the GDP site rather than switch-II, and the site-anchored figure is 226 A^3. Corrected, MYC's median moves 187.9 -> 325.7 A^3, crossing the entire band. A boundary fitted post hoc on n=15 with mis-anchored members classifies nothing. The withdrawal is upstream in CLAUDE.md rule 4a; it is mirrored here so nobody re-derives the criterion from this file.",
+      "what_this_does_to_the_two_affected_rungs": "It does not rescue them — it makes rung 6 worse and leaves rung 5 where it was. Corrected to 325.7 A^3, MYC lands in the DRUGGABLE range, so volume now joins druggability (0.75 median, the highest in the set) and the consensus criterion (MYC ranked TOP) in pointing AWAY from not_tractable. All three computed sub-measures now disagree with the expected verdict. For KRAS the site-anchored 226 A^3 sits inside the old band regardless, so 'unclassified, not low' stands and is if anything better supported.",
+      "persistence_is_chance": "AUC 0.500, and the published consensus criterion ranks MYC — the file's negative control — TOP.",
+      "_volumes_deliberately_not_recorded_here": "An earlier draft of this block listed fifteen per-target volumes as if they were retrieved facts about those targets. They are not: at least three are anchored on the wrong protein. They have been removed rather than annotated, because a number in a grading key gets used. If a volume is ever reintroduced it must carry the PDB entry it was measured on, the residues lining the scored pocket, and the accession those residues belong to."
+    },
+    "rungs_that_STILL_test_what_README_claims": {
+      "rung_1_JAK1": "Unaffected — expects small_molecule_tractable and cryptic_pocket_risk low, neither of which reads a pocket score. WORTH KNOWING ANYWAY: JAK1's measured druggability median is 0.009 across nine approved drugs. If any grader ever keys 'tractable' to a druggability threshold, the EASIEST rung in the set fails first. Volume 286 A^3 is what carries it.",
+      "rung_2_RORgt": "Unaffected in what it expects — tractable + populated terminated_programs. BUT ITS SUPPORTING EXAMPLE WAS WRONG AND IS WITHDRAWN 2026-08-15. This entry previously read 'RORgt 6C1P scores 0.009 at rank 55 of 60, so the rung now also tests that a near-zero druggability does not leak into the verdict.' 6C1P IS NOT A RORgt STRUCTURE. Verified directly against pdb_v: its sole polymer entity carries accession A8EVM5 (an ion transport protein, a NavAb sodium-channel mutant) and its only components are PX4 (DMPC, 678.9 Da phospholipid), 1N7 (CHAPSO, 631.9 Da detergent) and PO4. There is no RORgt in it and no drug-like ligand in it. A near-zero score on a detergent site in a sodium channel tests nothing about RORgt. The rung's real content is the terminated-programs expectation; the druggability-leak claim rests on nothing and must not be cited.",
+      "rung_2_RORgt_does_it_contaminate_the_count": "NO — CHECKED. `SELECT entry_id FROM pdb_v.structures_by_accession WHERE accession='P51449' AND entry_id='6C1P'` returns 0 rows, and the RORgt total is 162 entries by COUNT(DISTINCT entry_id), matching the confirmed pdb_total. So 6C1P never entered RORgt's structure count and cannot enter a regenerated one through that view. It reached the calibration set through POCKET SELECTION, not through accession mapping — selected by `ligand_site_jaccard`, the route this repo calls trustworthy, anchored on CHAPSO. That is the point worth keeping: restricting scoring to the target's chains is necessary and NOT sufficient, because a wrong PDB ID passes straight through a chain filter. 6C1P must not enter any RORgt count, and the reason it is dangerous is that nothing in the pocket pipeline would have told you.",
+      "rung_3_IL_17A": "Unaffected. Purely a modality test; no structure-score dependency.",
+      "rung_4_TNF_alpha": "Unaffected in expected_output (assay provenance, frequent hitter, occluded-not-cryptic). SEPARATE FINDING, NOT IN THIS FILE: CLAUDE.md describes TNF-alpha as having 'the strongest pocket in the fixture set'. The evaluation measures TNF at 207 A^3 — the TOP of the HARD group, and the lowest of any target here. That sentence is now contradicted and belongs to whoever owns CLAUDE.md.",
+      "rung_7_IL_11": "Unaffected. insufficient_evidence rests on precedent thinness — 2 of 15 rows carry a number — not on a pocket score, which matters because rule 4.2 now forbids druggability from carrying insufficient_evidence on its own. Volume 164 A^3 is consistent but is not load-bearing and must not become so.",
+      "retained_EGFR_BCL2_TYK2": "Unaffected. TYK2's as-of test is about a POCKET APPEARING in the PDB record, which is a retrieval fact, not a computed score."
+    },
+    "rungs_where_the_STATED_EXPECTATION_NO_LONGER_DERIVES": {
+      "rung_5_KRAS_as_of_2012": {
+        "expected_output_says": "'computed tractability LOW with cryptic_pocket_risk HIGH — must NOT assert not_tractable'",
+        "the_problem": "The 'computed tractability LOW' half was underwritten by fpocket druggability 0.000 on apo 4OBE (pocket_calibration.json). Three things now break it. (1) Rule 4.2 makes druggability non-load-bearing and forbids it from carrying a verdict. (2) Volume, which briefly replaced it as the primary number, has itself been SUSPENDED — so there is now NO computed criterion of any kind that can output 'low'. (3) Even taking the suspended band at face value the answer was never 'low': the apo switch-II pocket is 230.4 A^3 and the site-anchored KRAS figure is 226 A^3, both INSIDE the 207-242 band, i.e. explicitly unclassified. So a 2012 run under current rules cannot report 'low' by any route; it can only report 'unresolved'.",
+        "what_survives": "The rung's INTENT survives intact and is arguably sharper: must not assert not_tractable, cryptic_pocket_risk high, and 'knows what it cannot see'. Only the word LOW is unsupported.",
+        "PROPOSED_not_applied": "Replace 'computed tractability LOW' with 'computed tractability UNRESOLVED — druggability is not load-bearing (rule 4.2) and the apo switch-II volume ~230 A^3 falls inside the uncalibrated 207-242 band'. Accept either phrasing from an agent until a human rules.",
+        "knock_on_for_README": "README rung 5 asserts 'run honestly in 2012 this method says not tractable'. Under rule 4.2 the method may no longer SAY not_tractable on a low score — it would say unresolved. That is a change in what the rung DEMONSTRATES, not just how it is worded, and it is flagged rather than edited."
+      },
+      "rung_6_MYC": {
+        "expected_output_says": "not_tractable, axis_conflict populated, must not be rescued by family precedent",
+        "the_problem": "The computed axis no longer supports not_tractable — it INVERTS it, on every sub-measure without exception. MYC's D=2.4 druggability median is 0.75, the highest in the set, above KRAS 0.54, BCL-2 0.52, JAK1 0.49 and EGFR 0.44. The published consensus criterion ranks MYC TOP. Persistence is chance-level. And volume, the last sub-measure that pointed the right way, no longer does: the 188 A^3 that put MYC in the 'hard' group was measured on pockets lined entirely by MAX, by MAX plus DNA, and by apo OmoMYC, and the corrected median is 325.7 A^3 — in the DRUGGABLE range. There is nothing left on the computed axis arguing for not_tractable.",
+        "a_structural_fact_that_explains_the_inversion": "Not one of MYC's 25 PDB entries is wild-type MYC as an isolated folded chain: 8 are MYC:MAX dimers, 9 are short MYC peptides bound to partner proteins, 6 are fusion chimeras (four Cypovirus polyhedrin, two TBP/TAF1) and 2 are OmoMYC. So every pocket ever scored 'on MYC' is in fact a pocket on a partner, a chimera or a designed miniprotein. That is WHY the computed axis inverts — it is not measuring MYC. A filter that looks safe and is not: polymer_entities.uniprot_accession types a chimera as a single entity, so 'entries containing only P01106' returns 7, of which 6 are fusions. Single-entity is not a purity filter; verify at sequence level.",
+        "what_survives": "The verdict itself, on the OTHER axis. MYC's not_tractable now rests entirely on retrieved precedent and structure: 0 holo of 25 under every rule ever tried, max non-polymer component 122.1 Da (re-measured 2026-08-15, exact), and a best potency from an assay described only as 'Inhibition of c-MYC (unknown origin)'. verdict_basis must be retrieved_precedent, NOT computed_tractability or both.",
+        "PROPOSED_not_applied": "Add to expected_output: verdict_basis MUST be retrieved_precedent; and an agent that reports MYC's high druggability and top consensus rank AND STILL returns not_tractable has passed, not failed. The rung now tests something harder and better than 'can it hold two contradictory facts' — it tests whether the agent resists a computed axis that actively says DRUGGABLE. That is a strictly better test and the ladder should probably keep it, but that is a human's call."
+      }
+    },
+    "the_general_warning": "No expected_output in this file states a numeric druggability threshold, which is why the damage is limited to two rungs. Do not add one. Any future criterion phrased as 'druggability above X' is testing a quantity with a 41% false-negative rate on structures with a drug physically bound, and fpocket's score is min-max normalised across the other pockets of the SAME structure, so it is not even a property of the pocket."
+  },
+
+  "method_validation": [
+    {
+      "target": "KRAS",
+      "uniprot": "P01116",
+      "chembl_target": "CHEMBL2189121",
+      "distinct_compounds": 3158,
+      "total_activities": 17042,
+      "best_potency_nm": 0.1,
+      "best_potency_assay": "CHEMBL4845550 (KRAS G12D tracer displacement), compound CHEMBL4855757",
+      "best_potency_note": "VERIFIED 2026-08-15 and deliberately NOT raised. The raw MAX(pchembl) is 10.70 = 0.020 nM (Kd, compound CHEMBL6146469, assay_id 2615464), but that assay's whole description is 'Binding affinity to KRAS (unknown origin) assessed as dissociation constant' — uncharacterised, and CLAUDE.md rule 6 forbids a potency claim from it. 0.1 nM is the best CHARACTERISED value: assay CHEMBL4845550, 'Displacement of Cy5-labelled tracer from biotinylated GDP-loaded human recombinant KRAS', confidence 9. A second characterised 0.1 nM IC50 corroborates it (CHEMBL5741049, assay_id 2595813, 'KRas G12D Binding Assay'). An agent that reports 0.020 nM here has skipped rule 6.",
+      "approved_small_molecules": [
+        { "name": "Sotorasib", "year": 2021, "chembl": "CHEMBL4535757" },
+        { "name": "Adagrasib", "year": 2022, "chembl": "CHEMBL4594350" }
+      ],
+      "approved_biologics": [],
+      "pdb_total": 522,
+      "pdb_holo": 300,
+      "pdb_apo": 221,
+      "pdb_undetermined": 1,
+      "pdb_holo_history": [301, 300],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 282 distinct components on 522 entries; reconciled and canary-bracketed. 300 + 221 + 1 = 522.",
+      "pdb_holo_REGENERATED_2026_08_15": "REGENERATED. The _NOT_REGENERATED flag is cleared, AND THE PREDICTION IT CARRIED WAS WRONG IN DIRECTION: it said 'expect the regenerated holo count to RISE, since abolishing the 250 Da floor added entries on every target where it was measured.' It FELL, 301 -> 300. Abolishing the floor does add entries, but on KRAS the sterol/lipid and additive rules removed more than the floor admitted. Three of the four targets regenerated on this date moved DOWN (BCL-2 -1, RORgt -6, KRAS -1) and one was flat (EGFR); only the earlier batch rose. Generalising a direction from 'every target where it was measured' was extrapolation from the targets that happened to be measured first. Verdict split over the 282 distinct comp_ids: druglike 219, crystallisation_additive 24, ion_or_solvent 13, cofactor 12, lipid_or_detergent 7, peptide_or_polymer 5, sugar_or_glycan 1, unknown 1.",
+      "pdb_holo_reconciliation": "COUNT(DISTINCT entry_id) = 522 against 534 ROWS (the entity fan-out trap). COUNT(DISTINCT comp_id) = 282 -> 282 rows paged at size 25; COUNT(DISTINCT entry_id) in entry_ligands = 504 -> 504 recovered; COUNT(*) over DISTINCT (entry_id, comp_id) = 1556 -> 1556 paged at size 50. Every page reconciled exactly. 18 entries carry no entry_ligands row at all and are apo by definition; 203 apo entries do carry ligand rows; 203 + 18 = 221. Canary on TNF-alpha (52) and KRAS (522) passed BEFORE and AFTER.",
+      "pdb_undetermined_is_3GFT": "The single undetermined entry is 3GFT, whose component UNX — 'UNKNOWN ATOM OR ION', formula X, MW null — returns verdict `unknown` under rule R0. UNX is unidentified electron density by definition, so `unknown` is the correct answer and NOT a lookup failure. This is the whole undetermined bucket for KRAS. `unknown` is not apo; the invariant holds only because it is counted separately.",
+      "pdb_holo_TWO_POSSIBLE_DEGRADER_MISSES_NOT_ADJUSTED": "FLAGGED, DELIBERATELY NOT ADJUSTED — the same silent class as BCL-2's 8FY2. Two components classify `peptide_or_polymer` while being CCD-typed `non-polymer` (i.e. they are ligands, not polymer residues), demoted out of holo by the 3-alpha-amino-acid-backbone-unit rule: A1AZW (1142.423 Da, 1 entry) and A1AZZ (1170.453 Da, 1 entry). Both are over 1000 Da, both are single-entry, and both have the molecular-weight and amide-density profile of a bivalent degrader or a peptidomimetic. IF EITHER IS GENUINE SMALL-MOLECULE EVIDENCE, KRAS HOLO IS UNDERSTATED BY UP TO 2 (300 -> 302). The count was not adjusted because that would require adjudicating the chemistry, which is a human call. Grading consequence, same shape as BCL-2: accept 300, 301 or 302 from an agent that NAMES what it did with A1AZW and A1AZZ. This is now the third independent instance of the amide-rich-degrader failure mode (BCL-2 8FY2, IL-17A 8CDG's UTF, KRAS A1AZW/A1AZZ) — it is not a BCL-2 quirk, it is a modality-wide blind spot, and a >1000 Da `peptide_or_polymer` on a CCD `non-polymer` component is the signature to grep for.",
+      "pdb_total_note": "was 531 pre-audit, an RCSB-sourced figure. Re-measured 2026-08-15 as COUNT(DISTINCT entry_id) in pdb_v.structures_by_accession = 522 (the view returns 534 ROWS — one per accession/entry/entity — which is the trap). 522 is what the agent's own skill retrieves, so 522 is the grading value.",
+      "pdb_holo_note": "was an unquantified lower bound ('at least 280 of first 300 sampled have a >=300 Da nonpolymer'). Now exact: 301 holo of 522 under the structure-select §1 rule (250-1200 Da, $EXCL applied). For comparison the old >=300 Da rule gives 287 and a naive >=300 Da with NO exclusion list gives 358 — the 71-entry gap is GNP/GDP/GTP nucleotide-bound KRAS misread as holo, which is exactly why $EXCL is load-bearing.",
+      "holo_exemplar": "6OIM (sotorasib, ligand MOV, released 2019-11-06)",
+      "why_in_set": "Held undruggable ~30 years. The switch-II pocket is INVISIBLE on apo structures (see pocket_calibration.json). Tests that absence of precedent is not read as evidence against tractability.",
+      "expected_output": {
+        "verdict": "small_molecule_tractable",
+        "as_of_2012_12_31": "no approved small molecules, no G12C precedent, computed tractability LOW with cryptic_pocket_risk HIGH — must NOT assert not_tractable",
+        "cryptic_pocket_risk_on_apo": "high"
+      }
+    },
+    {
+      "target": "EGFR",
+      "uniprot": "P00533",
+      "chembl_target": "CHEMBL203",
+      "distinct_compounds": 19118,
+      "total_activities": 58847,
+      "best_potency_nm": 0.01,
+      "best_potency_assay": "CHEMBL683040 (assay_id 66580), compound CHEMBL176582, IC50 0.01 nM, pchembl 11.00",
+      "best_potency_note": "Value CONFIRMED 2026-08-15; the parenthetical justification it used to carry was wrong and has been removed. The old note said 'top IC50s carry Outside typical range flags and were excluded'. No row returned by chembl_v.bioactivities_by_accession for P00533 carries any data_validity_comment — the view never populates that column (see _measurement_definitions). The exclusion described was a no-op. It happened not to change the answer here, and it DID change the answer on JAK1.",
+      "best_potency_corroboration": "three independent compounds at pchembl 11.00 — CHEMBL176582 (assay 66580, characterised EGFR tyrosine-kinase inhibition), CHEMBL5270693 (assay 2613397) and CHEMBL4650319 (assay 2299670). The latter two are 'unknown origin' descriptions and are rule-6 unusable on their own; CHEMBL176582 carries the claim.",
+      "approved_small_molecules": [
+        { "name": "Gefitinib", "year": 2003, "chembl": "CHEMBL939" }
+      ],
+      "approved_biologics": [
+        { "name": "Cetuximab", "year": 2004, "modality": "antibody" },
+        { "name": "Panitumumab", "year": 2006, "modality": "antibody" }
+      ],
+      "pdb_total": 388,
+      "pdb_holo": 283,
+      "pdb_apo": 105,
+      "pdb_undetermined": 0,
+      "pdb_holo_history": [282, 283, 283],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 245 distinct components on 388 entries; reconciled and canary-bracketed. 283 + 105 + 0 = 388.",
+      "pdb_holo_REGENERATED_2026_08_15": "REGENERATED, AND IT DID NOT MOVE — 283 under the 250-1200 Da + $EXCL rule and 283 under the chemistry classifier. THE AGREEMENT IS A COINCIDENCE OF TOTALS, NOT A NO-OP: the two rules disagree about individual entries (the old >=300 Da rule gave 282), and they happen to land on the same total. Do not read an unchanged number as evidence that the definition change was immaterial here — read the verdict split, which the MW window could not have produced: druglike 206, crystallisation_additive 17, ion_or_solvent 14, cofactor 5, sugar_or_glycan 3, over 245 distinct comp_ids. This is the cleanest case in the file for why a count needs its definition recorded beside it: two different rules, same integer, different entries.",
+      "pdb_holo_reconciliation": "COUNT(DISTINCT entry_id) = 388 against 388 ROWS (no entity fan-out on this accession — unlike KRAS 534/522 and RORgt 165/162). COUNT(DISTINCT comp_id) = 245 -> 245 rows paged at size 25; COUNT(DISTINCT entry_id) in entry_ligands = 347 -> 347 recovered; COUNT(*) over DISTINCT (entry_id, comp_id) = 644 -> 644 paged at size 50. Every page reconciled. 41 entries carry no ligand row; 64 + 41 = 105 apo. Canary on TNF-alpha (52) and KRAS (522) passed BEFORE and AFTER.",
+      "pdb_undetermined_zero_is_a_TRUE_zero": "EGFR has NO `unknown`-verdict components at all, so pdb_undetermined = 0 is a measured zero and not a failed retrieval — the distinction rule 15 exists to protect. It is stated explicitly because a 0 that arrives by the wrong route is indistinguishable from this one in the JSON. The positive evidence: all 245 distinct comp_ids resolved in pdb_v.chemcomps, and the verdict census over those 245 assigns every one of them to a non-`unknown` bucket. Contrast KRAS, whose 1 undetermined entry (3GFT/UNX) is also correct but arrives from a component that genuinely is unidentified density. No >1000 Da peptide_or_polymer components on this target either, so the degrader blind spot does not bite here.",
+      "pdb_total_note": "was 392 pre-audit, an RCSB-sourced figure. Re-measured 2026-08-15 as COUNT(DISTINCT entry_id) in pdb_v.structures_by_accession = 388 (here rows and distinct entries both equal 388). Holo 283 of 388 under the 250-1200 Da + $EXCL rule; the old >=300 Da rule gives 282.",
+      "holo_exemplar": "1M17 (erlotinib, 390 Da, released 2002-09-04)",
+      "why_in_set": "Positive control. Classic pre-formed ATP-site kinase, drugged within ~5 years of the first co-crystal. If this is wrong, nothing else matters.",
+      "expected_output": {
+        "verdict": "small_molecule_tractable",
+        "cryptic_pocket_risk_on_apo": "low"
+      }
+    },
+    {
+      "target": "BCL-2",
+      "uniprot": "P10415",
+      "chembl_target": "CHEMBL4860",
+      "distinct_compounds": 4073,
+      "total_activities": 15736,
+      "best_potency_nm": 0.01,
+      "best_potency_assay": "Ki 0.01 nM (pchembl 11.00), compounds CHEMBL3952489 / CHEMBL5955498 / CHEMBL4228713, each measured in BOTH assay_id 2595502 and assay_id 2590280 (TR-FRET). Corroborated: 3 compounds x 2 assays.",
+      "best_potency_was": "0.015 nM (IC50, compound CHEMBL5764611, assay CHEMBL5738376 = assay_id 2595677, 'Bcl-2/Bcl-X TR-FRET Assay'). That row is REAL and still present — it simply is not the maximum. Raised to 0.01 nM 2026-08-15.",
+      "best_potency_note": "Both the old and the new value sit at or below the TR-FRET floor, so this field should be read as 'at the assay floor', not as a discriminating measurement. The caveat below is the operative statement, not the number.",
+      "approved_small_molecules": [
+        { "name": "Venetoclax", "year": 2016, "chembl": "CHEMBL3137309" }
+      ],
+      "approved_biologics": [],
+      "pdb_total": 63,
+      "pdb_holo": 39,
+      "pdb_apo": 23,
+      "pdb_undetermined": 1,
+      "pdb_holo_history": [41, 40, 39],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 42 distinct components on 63 entries; reconciled and canary-bracketed. 39 + 23 + 1 = 63.",
+      "pdb_holo_note": "REGENERATED, and it went DOWN, which no earlier rule change did. 41 was >=300 Da; 40 was 250-1200 Da + $EXCL; 39 is the chemistry classifier. Abolishing the lower MW bound added entries on TNF-alpha (+3) and JAK1 (+1), so a fall here means the classifier is REJECTING components the MW window accepted — endogenous and additive chemistry that sat inside the 250-1200 Da band and was never on $EXCL. That is the rule working as intended, in the conservative direction.",
+      "pdb_holo_THE_DEGRADER_CASE_measured_not_predicted": {
+        "_status": "MEASURED 2026-08-15. An earlier draft of this file PREDICTED that both degrader entries would land in pdb_undetermined. That prediction was HALF WRONG and has been replaced by the measurement. The half that was wrong is the more interesting half.",
+        "8FY1_YF8_1640_Da": "verdict `unknown` -> pdb_undetermined, as predicted. Rule R12: 'exceeds the 1200 Da small-molecule ceiling and no cofactor/lipid/peptide signature fired; not classified rather than assumed'. This is the good outcome — the entry is VISIBLE as unresolved rather than silently apo.",
+        "8FY2_YFH_1682_Da": "verdict `peptide_or_polymer` -> counted as APO, SILENTLY. This is the finding. YFH never reaches the size ceiling at all: rule R10 fires first because `peptide_backbone_residues()` reads THREE alpha-amino-acid backbone units in the degrader's linker and amide-rich warhead, so the classifier files a bivalent BCL-2 degrader as a peptide. It is a POSITIVE misclassification, not a refusal, so unlike 8FY1 it produces no flag, no `unknown`, and nothing for a reader to notice.",
+        "why_this_matters_beyond_BCL_2": "The 1200 Da ceiling was the known limitation and it behaves well — it refuses rather than assumes. The amide-count peptide rule is the UNKNOWN limitation and it behaves badly on exactly the compound class that ceiling was written to protect. PROTAC and molecular-glue degraders are amide-rich by construction (E3 ligand, linker, warhead), so this will misfire across the whole modality, and it will misfire QUIETLY. Any dossier that counts degrader co-crystals must inspect `peptide_or_polymer` verdicts above ~1000 Da by hand; the `standalone_peptide_ligand` flag R10 sets is the hook to filter on.",
+        "consequence_for_the_count": "39 measured / 41 defensible. The two degrader entries are real beyond-rule-of-5 precedent and a scientist counting BCL-2 small-molecule precedent should count them."
+      },
+      "pdb_holo_grading": "RESOLVED 2026-08-15: THE GRADED CRITERION ON THIS TARGET IS NOT A SCALAR. Grade the DISPOSITION OF 8FY1 AND 8FY2, not the integer. Both 39 and 41 PASS when the agent states what it did with the two degrader co-crystals; a bare integer FAILS at every value, 39 and 41 included. That is the resolution, and the argument is below.",
+      "pdb_holo_grading_the_argument": "The previous key graded 39 and 'also accepted' 39/40/41. That is a defect in two directions and both were live. (1) It penalised the better answer by relegating it to a tolerance band: 41 is the DEFENSIBLE count — 39 plus the two bivalent degrader co-crystals, which are real beyond-rule-of-5 small-molecule precedent that a scientist counting BCL-2 precedent should count — and grading 39 makes the better science merely forgiven rather than rewarded. (2) But simply flipping the graded value to 41 fails the other way: an agent that runs classify_record exactly as this file specifies GETS 39, and marking it wrong for correctly operating the specified tool would punish compliance and teach agents to hand-adjust tool output toward an expected number, which is a far worse habit than an off-by-two count. Both scalars are defensible and NEITHER is the thing worth measuring. What actually separates a good dossier from a bad one here is whether the agent SAW the two entries at all — so grade that. An agent reporting 39 'plus 8FY1 undetermined and 8FY2 misfiled peptide_or_polymer, both real degrader precedent' and an agent reporting 41 'counting both degraders' have done the SAME work and both pass. An agent reporting a bare 41 has not done better science than one reporting a bare 39; it has produced a number this key cannot distinguish from luck.",
+      "pdb_holo_grading_what_to_reject": "REJECT a bare number at any value — 39, 40, 41 — because both degraders are invisible in a bare number and 8FY2 is invisible even in its verdict, so a bare number is not evidence the agent looked. REJECT 40 outright even when the disposition is stated: 40 is the SUPERSEDED 250-1200 Da + $EXCL MW-window value and is unreachable under the chemistry classifier this file mandates. Reaching it means a retracted rule was used, and the previous key's acceptance of it was a straightforward error — it rewarded the rule the regeneration exists to abolish. REJECT any count that adds 8FY1 to pdb_apo: `unknown` is not apo, and pdb_total = pdb_holo + pdb_apo + pdb_undetermined always.",
+      "pdb_holo_grading_the_generalisable_finding": "The reason to grade the disposition rather than the integer is not special pleading for BCL-2. 8FY2 is a POSITIVE misclassification, not a refusal — no flag, no `unknown`, nothing for a reader to notice — and PROTAC and molecular-glue degraders are amide-rich by construction, so this misfires across the whole modality and it misfires QUIETLY. A key that grades the integer cannot tell an agent that inspected the peptide_or_polymer bucket from one that did not. A key that grades the disposition can. Any target whose count depends on a silent classifier limitation should be graded the same way.",
+      "earliest_holo": "1YSW 2005-06-07",
+      "holo_exemplar": "6O0K (venetoclax, 870 Da, released 2019-05-22)",
+      "why_in_set": "PPI groove called undruggable until SAR-by-NMR fragment linking revealed an induced hydrophobic cleft. Tests that target class is not used to over-penalize.",
+      "caveats": [
+        "sub-0.1 nM values sit at the TR-FRET assay floor",
+        "several P10415-mapped PDB entries are actually Bcl-xL constructs (9IGG, 9IGH) — accession mapping is not sufficient, check the entry title"
+      ],
+      "expected_output": { "verdict": "small_molecule_tractable" }
+    },
+    {
+      "target": "MYC",
+      "uniprot": "P01106",
+      "chembl_target": "CHEMBL1250348",
+      "distinct_compounds": 1079,
+      "total_activities": 1249,
+      "total_activities_was": 2768,
+      "total_activities_note": "FLAGGED — 2768 could not be reproduced by ANY query tried on 2026-08-15 and has been replaced. Measured: 1,249 activities on the clean single-protein target (tid 103481, n_target_components=1); 1,675 across all seven P01106-mapped ChEMBL targets; 1,685 through the (assay_id, molregno) fan-out join. None is 2,768. MYC is the only chembl figure in this file that reproduces from nothing, and it is the one number here I would regenerate rather than trust. Note the internal contradiction that exposed it: the old pair (1,079 compounds / 2,768 activities) implies 2.6 activities per compound, while the actual single-protein target has 1,249 activities for 1,079 compounds = 1.16.",
+      "multi_target_caveat": "P01106 maps to SEVEN ChEMBL targets: the clean single protein (103481) plus c-Myc/Max, c-Myc/c-Max, WDR5-MYC, MAP2K3/MYC, VHL/MYC and cereblon/MYC. The last two are PROTAC ternary complexes. Dropping n_target_components=1 pools all of them and inflates compounds 1,079 -> 1,249.",
+      "distinct_compounds_SETTLED_2026_08_15": "SETTLED AT 1,079. This was the open disagreement between this file and precedent-lookup/SKILL.md's sweep table, which the skill itself flagged as unreconciled ('Both may be right (different predicates) and neither has been re-derived; do not quote either as settled until it is'). Re-derived, and both ARE right — they measure different things and one of them is not a compound count under this file's definition. Measured with a single server-side GROUP BY aggregate (one row per group, so the moving row cap cannot truncate it), bracketed by canaries on pdb_v both before and after (TNF-alpha 52, KRAS 522, both passing), under an isolated PAPERCLIP_CONFIG_DIR: n_target_components=1 gives 1,079 compounds / 1,249 activities; n_target_components=2 gives 256 compounds / 426 activities; the unfiltered union gives 1,249 compounds / 1,675 activities. The activity arithmetic closes exactly (1,249 + 426 = 1,675) and the compound counts do not sum (1,079 + 256 = 1,335 against a distinct union of 1,249) because 86 compounds are measured against both a single-protein and a multi-component target — which is the overlap that makes the pooled figure a real number and still the wrong one. The authoritative definition at the head of this file mandates the n_target_components=1 predicate, so 1,079 is the compound count and 1,249 is not.",
+      "distinct_compounds_the_coincidence_that_hid_it": "THE REASON THIS PAIR LOOKED IRRECONCILABLE FOR SO LONG IS A NUMERIC COLLISION, AND IT IS WORTH NAMING BECAUSE IT WILL RECUR. 1,249 is simultaneously (a) MYC's compound count WITHOUT the n_target_components=1 predicate and (b) MYC's activity count WITH it. Two different measurements on two different axes that land on the same integer. So the sweep table's '1,249 compounds' and this file's '1,249 activities' look like the same figure filed under two names, or like one of them being a copy error — and neither is true. Both are correct measurements of different quantities. When two figures disagree, check whether they are even the same quantity before assuming one is wrong; and when they AGREE, check the same thing, because a coincidence reads exactly like a corroboration.",
+      "distinct_compounds_patch_needed_elsewhere": "precedent-lookup/SKILL.md's sweep table row for MYC reports 1,249 under a column headed `compounds`, produced by `SELECT COUNT(*) FROM chembl_v.compounds_by_accession WHERE accession = '<ACC>'` — a query shape carrying NO n_target_components predicate. The same defect inflates that table's EGFR (19,490 vs 19,118), BCL-2 (4,350 vs 4,073), JAK1 (14,472 vs 14,342), TYK2 (10,603 vs 10,499), STAT3 (2,427 vs 2,370) and KRAS (3,597 vs 3,158) rows. That file is outside this fixture set's ownership; the row is correct as a pooled count and wrong as the compound count this file defines, and the sweep's own unreconciled flag on MYC can now be cleared to 'reconciled: different predicates, both correct, 1,079 is the compound count'.",
+      "best_potency_nm": 0.2,
+      "best_potency_assay": "CHEMBL5029808, compound CHEMBL5089688 — description is only 'Inhibition of c-MYC (unknown origin)', UNCHARACTERIZED",
+      "best_potency_is_a_DELIBERATE_TRAP_keep_it": "Unlike IL-11's rejected value, this number STAYS in the file as a number. It is the whole point of rung 6: the expected_output requires the agent to reject a 0.2 nM potency because the assay description is uncharacterised. Removing it would remove the test. What the agent must not do is report it.",
+      "_UNVERIFIED_CHALLENGE_the_0_2_nM_may_be_MISATTRIBUTED_not_merely_uncharacterised": "RECORDED, NOT ADOPTED — could not be re-measured because Paperclip's sql backend failed during this task. A parallel agent reports that compound CHEMBL5089688 registers IC50 0.2 nM against P01106 (assay 2145528) AND IC50 0.6 nM against O60885/BRD4 (assay 2145529), both from doc_id 121471, 'Development of BET inhibitors as potential treatments for cancer' — and that ezobresib from the same series registers MYC 0.7, BRD4 0.8, BRD3 1.1, BRD2 1.4 nM. If that holds, the figure is not merely uncharacterised, it is a BET-inhibitor potency with MYC as a downstream transcriptional readout. That is the TNF-alpha/IRAK4 contamination pattern (rule 6) appearing on a third target, and it is a STRONGER and more useful statement than 'uncharacterised' — it makes rung 6 a second assay-provenance test rather than only an assay-quality one. VERIFY with one cross-accession query before adopting.",
+      "_MISSING_rule_6_requires_these_and_they_are_not_here": "Two gaps, both unmeasurable while the backend is down. (1) `assay_concentration`: rule 6 requires the top contributing assay and its share for any actives count, and MYC has none recorded. Reported by a parallel agent as 63.9% by description and 36.7% by assay_id — both figures should be carried, since the two groupings disagree and that disagreement is itself the finding. (2) `best_potency_characterised`: an alternative that survives rule 6, reported as Kd 0.6 nM from assay 1643455, a characterised FP assay. Without it the fixture rejects a number and offers nothing in its place, which is not what rule 6 asks for.",
+      "approved_small_molecules": [],
+      "approved_biologics": [],
+      "pdb_total": 25,
+      "pdb_holo": 0,
+      "pdb_apo": 25,
+      "pdb_undetermined": 0,
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 15 pdb_v.entry_ligands rows on 25 entries; reconciled and canary-bracketed.",
+      "pdb_holo_note": "RE-CONFIRMED UNDER THE NEW RULE AND STILL 0 — now under five independent definitions: the chemistry classifier, 250-1200+$EXCL, >=300+$EXCL, naive >=300, and naive >=250. MAX(formula_weight) over every non-polymer component on all 25 entries re-measured EXACTLY 122.143 Da on 2026-08-15, so 122 is right and the older 120 is not. Note this is the one target where abolishing the lower MW bound could not possibly change the answer, since the largest component in the entire set is less than half the smallest plausible fragment. Every entry is strict apo: nothing undetermined, nothing unclassifiable. This remains the strongest, least fragile number in the file — and see _expected_output_audit_2026_08_15, because it is now the ONLY axis still supporting MYC's not_tractable verdict.",
+      "why_in_set": "Intrinsically disordered bHLH-LZ, still undrugged. Originally the true negative control — the research revealed it is ALSO a precedent/structure conflict case: 1,079 compounds with zero holo structures means the actives are indirect or cellular, not direct binders.",
+      "expected_output": {
+        "verdict": "not_tractable",
+        "must_flag": "axis_conflict — substantial reported actives with zero holo structures and no characterized binding assay",
+        "must_not": "be rescued by family precedent"
+      }
+    }
+  ],
+
+  "immunology": [
+    {
+      "target": "TYK2",
+      "uniprot": "P29597",
+      "chembl_target": "CHEMBL3553",
+      "distinct_compounds": 10499,
+      "best_potency_nm": 0.01,
+      "best_potency_assay": "CHEMBL5365708 — TYK2 JH2 575-869 tracer displacement, compound CHEMBL5427107",
+      "approved_small_molecules": [
+        {
+          "name": "Deucravacitinib",
+          "year": 2022,
+          "chembl": "CHEMBL4435170",
+          "mechanism": "TYK2 negative allosteric modulator (JH2 pseudokinase domain)"
+        }
+      ],
+      "approved_biologics": [],
+      "pdb_total": 52,
+      "pdb_holo": 46,
+      "pdb_apo": 5,
+      "pdb_undetermined": 1,
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 76 pdb_v.entry_ligands rows on 52 entries; reconciled and canary-bracketed. NEW FIELD — TYK2 previously carried no holo count at all.",
+      "pdb_apo_entries": ["4GVJ", "4PO6", "5C03", "8EXN", "8EYC"],
+      "pdb_undetermined_note": "THE WORKED EXAMPLE OF 'unknown IS NOT apo', and the reason that rule is not theoretical. 5C01's only component is `UNL`, which the CCD names 'UNKNOWN LIGAND' — unidentified density that was never characterised. The classifier returns `unknown` (rule R0, keyed on the CCD name so a new placeholder code is caught, not on a hardcoded id list). 5C01 is therefore neither holo nor apo: 46 + 5 + 1 = 52. An implementation that coerces `unknown` to apo would report 6 apo here and be quietly wrong, and the same coercion is what produced the four historical failures the classifier was written to fix. Any agent reporting a TYK2 apo count of 6 has made that error.",
+      "domain_split": {
+        "_definition": "structure-select SKILL.md §3 overlap-fraction method (>=0.7 of the domain span), JH1 = 897-1176, JH2 = 575-869. Re-measured 2026-08-15. The counts below are EXCLUSIVE — the one JH1+JH2 tandem entry (4OLI) is reported in its own bucket and not added to either domain.",
+        "JH1_kinase_897_1176": {
+          "entries": 28,
+          "earliest": "3LXN/3LXP 2010-06-02"
+        },
+        "JH2_pseudokinase_575_869": {
+          "entries": 20,
+          "earliest": "3ZON 2013-04-10 (IK1, 261 Da, 5-phenyl-2-ureidothiophene-3-carboxamide)",
+          "first_druglike_holo": "4OLI 2014-05-28 (320 Da)"
+        },
+        "BOTH_JH1_and_JH2": { "entries": 1, "which": "4OLI 2014-05-28" },
+        "other": {
+          "entries": 3,
+          "which": "2 are the 1048-1062 fragment, 1 is FERM-through-JH2 (23-583)"
+        },
+        "_reconciles_to": "28 + 20 + 1 + 3 = 52 = pdb_total",
+        "_independently_reproduced_2026_08_15": "Re-derived from raw pdb_v.uniprot_alignment_ranges (52 rows, one span per entry) with the overlap arithmetic done in Python rather than in SQL, because the skill's CTE form times out on this backend. Result identical: JH1 28, JH2 20, BOTH 1 (4OLI), other 3 (4PO6, 8EXN, 8EYC). The corrected EXCLUSIVE split is confirmed and the old inclusive 29/21 — which summed to 54 against a real 52 — stays rejected.",
+        "_note": "was 29 / 21 pre-audit. That was the INCLUSIVE convention (4OLI counted in both domains), which is defensible on the biology — 4OLI genuinely contains both — but it double-counts and made the buckets sum to 54 against a pdb_total of 52. The exclusive numbers above are what the skill's own query returns and what the skill's documented control states. Accept either from an agent that says which convention it used; reject one that does not."
+      },
+      "why_in_set": "The non-obvious pocket. Deucravacitinib binds the pseudokinase JH2 domain, not the ATP site. The allosteric site was structurally enabled ~3 years AFTER the conventional one, and approval followed the first JH2 structure by ~9 years.",
+      "expected_output": {
+        "as_of_2012_12_31": "no allosteric precedent — JH2 structures do not exist yet",
+        "as_of_2015_12_31": "allosteric precedent EXISTS — must not report absence",
+        "note": "best as-of test in the set: it tests a POCKET appearing, not just a drug"
+      }
+    },
+    {
+      "target": "JAK1",
+      "uniprot": "P23458",
+      "chembl_target": "CHEMBL2835",
+      "distinct_compounds": 14342,
+      "total_activities": 47757,
+      "distinct_compounds_note": "HELD AT 14,342 — this value was CHALLENGED and survived. A parallel run reported 14,472 and that number is WRONG: it is the same view without the n_target_components = 1 predicate, so it pools inherited hits from multi-component JAK1 targets. 14,342 is the clean single-protein count. The identical error inflates KRAS 3,158->3,597, EGFR 19,118->19,490, BCL-2 4,073->4,350, MYC 1,079->1,249, TYK2 10,499->10,603 and STAT3 2,370->2,427. Do not bless it. (total_activities likewise: 47,757 single-protein vs 48,836 all-tid.)",
+      "best_potency_nm": 0.01,
+      "best_potency_was": 0.032,
+      "best_potency_assay": "IC50 0.01 nM (pchembl 11.00), on the single-protein target, in TWO independent assays: compound CHEMBL3896068 in assay CHEMBL3888428 (assay_id 1641705, 'HTRF Biochemical Assay', confidence 8) and compound CHEMBL5945428 in assay CHEMBL5736620 (assay_id 2593921, 'Caliper Enzyme Assay', confidence 9). Both standard_relation '=', neither flagged.",
+      "best_potency_note": "CORRECTED 2026-08-15 — the old 0.032 nM was a FIXTURE QUERY DEFECT, not data drift. The old note claimed 'Top IC50s all flagged Outside typical range — no clean IC50 retrieved'. That is false twice over: (1) the view never populates data_validity_comment at all, so nothing was flagged for it to exclude; (2) JAK1's 91 genuinely-flagged rows in raw chembl.activities carry NO pchembl_value, so they were never in contention for the maximum. The exclusion removed the entire IC50 population on a false premise and fell back to a Ki. Data growth CANNOT explain this: CHEMBL3888428 is a 2016 document ('Cyanomethylpyrazole carboxamides as janus kinase inhibitors'), so a clean 0.010 nM IC50 predated the fixture by a decade.",
+      "best_potency_is_not_an_outlier": "Explicitly checked, because a best-potency resting on one unreplicated row would be a bad grading key regardless of magnitude. It rests on 2 compounds x 2 independent assays at pchembl 11.00, 15 compounds at >=10.90, and 60 compounds at or above the OLD value of 0.032 nM. The top of the distribution is a dense congeneric series (N-methyl-deazapurine cyclobutyl sulfones), not a spike. The superseded 0.032 nM row (CHEMBL5828027, assay CHEMBL5736542 LanthaScreen Ki) is real and still present — it was simply never the maximum.",
+      "approved_small_molecules": [
+        { "name": "Ruxolitinib", "year": 2011, "chembl": "CHEMBL1789941" },
+        { "name": "Upadacitinib", "year": 2019, "note": "JAK1-selective" },
+        { "name": "Abrocitinib", "year": 2021, "note": "JAK1-selective" }
+      ],
+      "approved_biologics": [],
+      "pdb_total": 52,
+      "pdb_holo": 43,
+      "pdb_apo": 9,
+      "pdb_undetermined": 0,
+      "pdb_holo_history": [40, 42, 43],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 68 pdb_v.entry_ligands rows on 52 entries; reconciled and canary-bracketed.",
+      "pdb_holo_note": "RE-DERIVED FROM SCRATCH, as instructed, because 40 reproduced under no rule ever tried (250-1200+$EXCL gave 42, >=300+$EXCL 37, naive >=300 39, naive >=250 44, >=200+$EXCL 43). The chemistry classifier gives 43 of 52, with 9 strict apo and nothing undetermined. 42 was the MW-window value and is superseded. The direction of travel is consistent across every JAK1 revision: each time the lower bound was relaxed, the entries it admitted turned out to be genuine JAK-inhibitor chemotypes, never additives — 4EHZ (JAK, 255 Da, imidazo[4,5-d]pyrrolo[2,3-b]pyridine), 4EI4 (0Q2, 270), 5KHX (6TE, 295, the pyrrolo[2,3-d]pyrimidine tofacitinib/ruxolitinib core), 6TPE (NTW, 270), 8S85 (A1H5R, 266). A lower MW bound on a kinase with a fragment-derived chemical series discards real precedent, which is exactly why the current rule has none.",
+      "pdb_apo_entries": ["4GS0", "4L00", "4L01", "5IXD", "5IXI", "5KHW", "5L04", "6C7Y", "8EXJ"],
+      "holo_range": "earliest 3EYG 2009-02-03, latest 10PI (povorcitinib) 2026-06-10 — both confirmed 2026-08-15",
+      "why_in_set": "Immunology positive control. Pre-formed ATP-site kinase, heavily drugged.",
+      "expected_output": {
+        "verdict": "small_molecule_tractable",
+        "cryptic_pocket_risk_on_apo": "low"
+      }
+    },
+    {
+      "target": "IL-17A",
+      "uniprot": "Q16552",
+      "chembl_target": "CHEMBL3390822",
+      "distinct_compounds": 117,
+      "total_activities": 305,
+      "assay_type_note": "100% assay_type B (binding)",
+      "best_potency_nm": 0.79,
+      "best_potency_assay": "CHEMBL5038279 — HDF IL-6 release, CELLULAR readout, compound CHEMBL5091495, MW 619",
+      "approved_small_molecules": [],
+      "approved_biologics": [
+        { "name": "Secukinumab", "year": 2015, "modality": "antibody" },
+        { "name": "Ixekizumab", "year": 2016, "modality": "antibody" },
+        {
+          "name": "Bimekizumab",
+          "year": 2021,
+          "modality": "antibody, IL-17A/F"
+        }
+      ],
+      "biologic_note": "Brodalumab 2017 targets IL-17RA, the receptor, NOT the ligand — do not attribute it to Q16552",
+      "pdb_total": 44,
+      "pdb_holo": 19,
+      "pdb_apo": 25,
+      "pdb_undetermined": 0,
+      "pdb_holo_history": [19, 20, 19],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 31 distinct components on 44 entries; reconciled and canary-bracketed. 19 + 25 + 0 = 44.",
+      "pdb_holo_REGENERATED_2026_08_15": "REGENERATED. The _NOT_REGENERATED flag is cleared. 19 was >=300 Da; 20 was 250-1200 Da + $EXCL; 19 is the chemistry classifier — it lands back on the ORIGINAL value by a different route, which is worth noticing rather than glossing: the MW-window rule's extra entry (8DYG, U5Q, 279 Da) IS still called holo by the classifier, so the agreement is not the same 19 twice. Verdict split over the 31 distinct comp_ids: druglike 19, ion_or_solvent 6, crystallisation_additive 4, sugar_or_glycan 1, peptide_or_polymer 1. NOTHING undetermined.",
+      "pdb_holo_reconciliation": "COUNT(DISTINCT entry_id) = 44, independently re-issued as a GROUP BY aggregate = 44; COUNT(*) on structures_by_accession is also 44 (no entity fan-out on this accession). COUNT(DISTINCT comp_id) = 31 against 50 ligand rows on 36 entries; the server-side STRING_AGG ... GROUP BY entry_id returned exactly 36 rows unpaged, matching. The 8 entries carrying NO ligand row at all were recovered by a NOT EXISTS anti-join aggregated to a single row — 4HR9, 5HHV, 5HHX, 5N7W, 5N92, 6WIO, 6WIR, 9SG2 — and 36 + 8 = 44. Canary on TNF-alpha (52) and KRAS (522) passed BEFORE and AFTER the batch.",
+      "pdb_apo_entries": ["2VXS", "4HR9", "4HSA", "4QHU", "5HHV", "5HHX", "5N7W", "5N92", "5NAN", "5VB9", "6WIO", "6WIR", "7UWM", "7UWN", "7WKX", "7Z2M", "7ZAN", "8B7W", "8CDG", "8DY1", "8DY5", "9SFX", "9SG0", "9SG2", "9SGH"],
+      "pdb_holo_entries": ["5HI3", "5HI4", "5HI5", "7AMA", "7AMG", "8DYF", "8DYG", "8DYH", "8DYI", "8USR", "8USS", "9FKX", "9FL3", "9H4D", "9H4O", "9SQI", "9SQX", "9SR8", "9YIC"],
+      "pdb_apo_25_CONTAINS_ONE_PEPTIDOMIMETIC_MISS": "8CDG IS COUNTED APO AND A MODALITY-AWARE READER SHOULD NOT READ IT AS 'NOTHING BOUND'. Its ONLY component is UTF, 786.96 Da, CCD-typed peptide-like, so the classifier files it peptide_or_polymer and the entry buckets apo. That is the documented peptidomimetic false-negative class working exactly as designed — a false negative costs a holo structure, a false positive invents one — but 8CDG is one of the macrocycle-bound IL-17A structures and IL-17A is the target whose whole point in this set is that macrocyclic-peptide chemistry is real precedent that is not small-molecule precedent. It is below the 1000 Da hand-inspection threshold the BCL-2 degrader case established, so that guard would not have caught it either. Count it as apo; do not report it as an absence of chemistry.",
+      "five_character_comp_ids_CHECKED": "NO TRUNCATION. Length census over IL-17A + RORgt: 5 two-char, 170 three-char, ZERO four-char, 11 five-char. All 11 five-character ids were passed at FULL length and all 11 resolved in pdb_v.chemcomps and classify druglike (379-622 Da): A1BW2, A1CXF, A1IDS, A1IDT, A1ISG, A1ISH, A1JPQ, A1JPS, A1JPU, A1MAM, A1MCM. A1JPS (9SQX) specifically: C22 H24 N8 O3, 448.478 Da, non-polymer -> druglike. THE POSITIVE PROOF is the CCD lookup returning exactly 186 rows for a 186-component union, zero misses — a truncated 'A1J' would have missed the table and surfaced as verdict `unknown`, and the unknown count is 0 on both targets.",
+      "pdb_holo_note": "DEFINITION CHANGE, and the new value is right. 19 was the old >=300 Da rule; 20 is the current 250-1200 Da + $EXCL rule. The single added entry is 8DYG, ligand U5Q, 279 Da, (5P)-2-hydroxy-5-(6-methylquinolin-5-yl)benzoic acid — a genuine drug-like fragment, not an additive. The old 300 Da floor was dropping it. (8DYG is also the entry structure-select uses for its IL-17A Foldseek control, so the file was calling the same structure holo in one place and apo in another.)",
+      "holo_range": "earliest 5HI3 2016-08-31 (macrocycle) — confirmed 2026-08-15; latest 9SQX/9SR8 2025-12-17",
+      "clinical_small_molecules": [
+        {
+          "name": "LY3509754",
+          "sponsor": "Lilly",
+          "phase": 1,
+          "outcome": "TERMINATED — drug-induced liver injury, 4 participants with raised transaminases/acute hepatitis despite strong target engagement",
+          "source": "PMID 38294091, Clin Pharmacol Ther 2024"
+        },
+        {
+          "name": "DC-806",
+          "sponsor": "DICE",
+          "phase": "1c PoC psoriasis",
+          "outcome": "adjusted mean PASI reduction 43.7% (800 mg BID) vs 13.3% placebo at Day 29, well tolerated",
+          "source": "NCT05896527"
+        }
+      ],
+      "false_positive_trap": "icotrokinra / JNJ-77242113 is an oral PEPTIDE against IL-23R — not an IL-17A small molecule. Easy false positive.",
+      "why_in_set": "THE TRAP, and the highest-value row in the set. Three approved antibodies all reporting action_type INHIBITOR with NULL canonical_smiles. Verified live: an agent reading drugs_by_accession concludes 'three approved inhibitors' and is wrong.",
+      "expected_output": {
+        "approved_small_molecules": "ZERO — must be stated explicitly",
+        "biologic_precedent": "three approved antibodies, reported separately and never as small-molecule precedent",
+        "nuance_required": "potent small molecules DO exist (0.79 nM) but none approved and one Phase 1 terminated for DILI. Neither 'druggable, 3 approved drugs' nor 'no small molecules exist' is correct.",
+        "signal": "117 distinct compounds vs RORgt's 12,900 despite far greater commercial pull — the gap is itself evidence of difficulty",
+        "structural_note": "the small-molecule/macrocycle site was only elucidated in 2016 (5HI3), ~1 year AFTER the first antibody approval. Precedent and tractability are out of phase."
+      }
+    },
+    {
+      "target": "RORgt / RORC",
+      "uniprot": "P51449",
+      "chembl_target": "CHEMBL1741186",
+      "distinct_compounds": 12900,
+      "best_potency_nm": 0.017,
+      "best_potency_was": 0.1,
+      "best_potency_assay": "Kd 0.017 nM (pchembl 10.77), compound CHEMBL3929357, assay_id 1641535 'ThermoFluor(R) Assay', confidence 8. Corroborated by a tight cluster at 0.019-0.020 nM (CHEMBL5821593, CHEMBL4441287, CHEMBL5848238, CHEMBL5766445, CHEMBL5948510) across three further ThermoFluor assays (2588630, 1841433, 2589897).",
+      "best_potency_note": "RAISED 2026-08-15. The old 0.1 nM (CHEMBL4635823 IC50 in assay CHEMBL4623385, 'Binding affinity to recombinant human RORgammat transfected in HEK293T', confidence 9) is real, characterised and remains the best cell-context IC50 — it simply was not the maximum. The maximum is a thermal-shift-derived Kd. Both survive rule 6 (neither is an 'unknown origin' description), so the maximum governs. CAVEAT worth carrying: a 17 pM Kd from a ThermoFluor melt is an extrapolation well below what a thermal-shift assay resolves directly, and the same compound CHEMBL4635823 carries an even lower Kd of 0.003 nM in assay 1989649 that ChEMBL declines to assign a pchembl_value to at all. Sub-0.1 nM on this target should be read as 'at the biophysical floor'. The verdict is unaffected: sub-nanomolar either way.",
+      "approved_small_molecules": [],
+      "approved_biologics": [],
+      "pdb_total": 162,
+      "pdb_holo": 148,
+      "pdb_apo": 14,
+      "pdb_undetermined": 0,
+      "pdb_holo_history": [152, 154, 148],
+      "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 160 distinct components on 162 entries; reconciled and canary-bracketed. 148 + 14 + 0 = 162.",
+      "pdb_holo_REGENERATED_2026_08_15": "REGENERATED, and it went DOWN by 6 — the second target after BCL-2 to fall under the chemistry classifier. 152 was >=300 Da; 154 was 250-1200 Da + $EXCL; 148 is the classifier. Verdict split over the 160 distinct comp_ids: druglike 133, lipid_or_detergent 13, crystallisation_additive 10, ion_or_solvent 4. NOTHING undetermined. The fall is the sterol rule doing its job: the apo bucket is overwhelmingly the hydroxycholesterol / sterol-agonist RORgt structures, which the classifier correctly declines to call small-molecule precedent.",
+      "pdb_holo_reconciliation": "COUNT(DISTINCT entry_id) = 162, independently re-issued as a GROUP BY aggregate = 162. NOTE COUNT(*) on structures_by_accession is 165 — the view DOES fan out by entity on this accession, so COUNT(DISTINCT) is load-bearing here exactly as it is on KRAS (534 rows / 522 entries). COUNT(DISTINCT comp_id) = 160 against 255 ligand rows on 160 entries; the STRING_AGG ... GROUP BY entry_id result RECONCILED AT PAGE SIZE 40 (4 pages x 40 = 160, ORDER BY entry_id LIMIT 40 OFFSET n) after the unpaged form timed out. The 2 entries with no ligand row (5K38, 8XU5) came from a NOT EXISTS anti-join; 160 + 2 = 162. Canary on TNF-alpha (52) and KRAS (522) passed BEFORE and AFTER.",
+      "pdb_apo_entries_with_cause": {
+        "3KYT": "HC2 lipid", "3L0J": "HC9 lipid", "3L0L": "HC3 lipid", "4S14": "4D8 lipid",
+        "5K38": "no ligand row", "5K3M": "6Q5 additive (ursolic acid)", "5NTI": "C3S lipid",
+        "5NTK": "99N lipid", "5NTN": "98H lipid", "5VB3": "NA ion", "6J3N": "B8F additive",
+        "7QP4": "ACT additive + ECK lipid", "7W3Q": "97I lipid", "8XU5": "no ligand row"
+      },
+      "pdb_holo_THE_PREDICTION_THIS_FILE_MADE_WAS_WRONG": "MEASURED, AND THE _NOT_REGENERATED NOTE'S PREDICTION FAILED ON THE HALF IT WAS MOST CONFIDENT ABOUT. That note predicted 4NIE's DMX (NDSB-256) 'should now be CAUGHT' by the Good's-buffer rule. IT IS NOT. DMX classifies `druglike`. Root cause at ligand_filter.py:1941: the rule is gated `alkyl_sulfonates >= 1 AND aromatic == 0 AND heavy <= 20`. DMX satisfies the sulfonate test (S with 3 oxygens and a direct S-C bond) and the heavy-atom bound (17 <= 20), but its BENZYL group gives it one aromatic ring, so `aromatic == 0` fails and it falls through every remaining additive test to the drug-like default. The prediction reasoned from the chemistry class ('it is an alkyl sulfobetaine') without reading the rule's conjunction, which is the same mistake in miniature that this whole file is about: a rule you have not run is a hypothesis. COUNT IMPACT: NONE — DMX occurs in exactly one RORgt entry, 4NIE, which also carries NBH (464.6 Da, druglike), so 4NIE is holo either way and 148 is unaffected.",
+      "pdb_holo_DHEA_IS_COMP_ID_AND_NOT_DHEA": "The prediction's other half held, but the comp_id in it is wrong and a fixture keying on the literal string 'DHEA' will not match. There is NO component `DHEA` in this target. 29OB's steroid is comp_id `AND` — '3-BETA-HYDROXY-5-ANDROSTEN-17-ONE', C19 H28 O2, 288.424 Da — which IS dehydroepiandrosterone. It classifies `druglike` as intended: 'steroid nucleus with no aliphatic side chain (1 carbons): a steroid hormone or steroid drug, which IS evidence of a bindable site.' The deliberate steroid-hormone carve-out behaves correctly; only the label was wrong.",
+      "pdb_holo_note": "DEFINITION CHANGE with a KNOWN FALSE POSITIVE — read before grading. 152 was the old >=300 Da rule; 154 is the current 250-1200 Da + $EXCL rule. The 3 added entries are NOT all real: 5G44 (YTZ, 255 Da, 4-amino-N-(1,3-thiazol-2-yl)benzenesulfonamide = sulfathiazole) is a legitimate drug-like fragment; 29OB (AND, 288 Da, 3-beta-hydroxy-5-androsten-17-one = DHEA) is an ENDOGENOUS STEROL, the native-ligand class for this nuclear receptor, and is target validation rather than small-molecule precedent; 4NIE (DMX, 257 Da, 3-[benzyl(dimethyl)ammonio]propane-1-sulfonate = NDSB-256) is a NON-DETERGENT SULFOBETAINE CRYSTALLISATION ADDITIVE and is a straightforward false holo that $EXCL does not catch. SUPERSEDED BY THE 2026-08-15 REGENERATION — the graded value is now 148, not 154, and the three-entry analysis above describes the MW-window rule, not the classifier. What survives it: DMX is STILL a false holo (the Good's-buffer rule does not fire on it — see pdb_holo_THE_PREDICTION_THIS_FILE_MADE_WAS_WRONG) but costs nothing because 4NIE is holo on NBH anyway; and comp_id `AND` (DHEA) is STILL druglike by design. So the defensible count under the classifier is 147-148, and the grading rule is the same shape as BCL-2's: ACCEPT 147 or 148 FROM AN AGENT THAT NAMES WHAT IT DID WITH 29OB's ENDOGENOUS STEROL. The failure mode to catch is unchanged — an agent that reports a bare number without inspecting the sterol chemistry, on a nuclear receptor whose native ligand IS a sterol.",
+      "earliest_holo": "3KYT 2010-03-16 — confirmed 2026-08-15",
+      "terminated_programs": [
+        {
+          "program": "VTP-43742",
+          "sponsor": "Vitae/Allergan",
+          "phase": "2a",
+          "outcome": "clear psoriasis efficacy but REVERSIBLE TRANSAMINASE ELEVATIONS in 4 patients at 700 mg — development terminated"
+        },
+        {
+          "program": "TAK-828F",
+          "sponsor": "Takeda",
+          "phase": 1,
+          "outcome": "discontinued on preclinical toxicology and TERATOGENICITY findings"
+        },
+        {
+          "program": "GSK2981278",
+          "outcome": "NOT_FOUND — appears in reviews as a clinical RORgt agent but no specific discontinuation reason retrieved"
+        }
+      ],
+      "class_risk": "RORg1/RORgt cross-reactivity and thymic/T-cell lymphoma risk",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/pii/S2095177923000977",
+        "https://www.tandfonline.com/doi/full/10.1080/13543776.2017.1262350"
+      ],
+      "why_in_set": "Tractability != success. 152 holo structures, 12,900 compounds, 0.1 nM potency, ZERO approvals — failure was toxicity, not chemistry. Any agent scoring on pocket quality alone gets this wrong.",
+      "expected_output": {
+        "verdict": "small_molecule_tractable",
+        "must_state": "tractable AND repeatedly failed clinically for tox — these are not in tension, and clinical failure is NOT evidence against druggability",
+        "must_not": "downgrade tractability because programs failed"
+      }
+    }
+  ],
+
+  "slot_5_precedent_structure_conflict": {
+    "recommended": "TNF-alpha",
+    "target": "TNF-alpha",
+    "uniprot": "P01375",
+    "chembl_target": "CHEMBL1825",
+    "distinct_compounds": 2582,
+    "total_activities": 6447,
+    "assay_type_split": { "B": 5830, "F": 617 },
+    "_chembl_reverified": "2026-08-15 — all four figures above re-measured EXACT, and the IRAK4 concentration below re-measured exact at 2,901 rows / 45.0%. P01375 maps to only single-protein ChEMBL targets, so the n_target_components=1 predicate is a no-op here and these numbers are stable under both query forms. This is what makes TNF a clean test of the holo definition: the precedent axis did not move, only the structure count did.",
+    "THE_CONFLICT": {
+      "dominant_assay": "IRAK4 Monocyte TNFalpha Cell Based Assay",
+      "activities_from_it": 2901,
+      "fraction_of_all_tnf_bioactivity": "~45%",
+      "problem": "that assay measures a DIFFERENT TARGET (IRAK4) with TNF as the cellular readout. Naive precedent retrieval reads thousands of potent TNF actives; almost none are direct binders.",
+      "next_largest": [
+        "THP-1 TNF secretion (321)",
+        "HEK-Blue TNF-induced (312)"
+      ]
+    },
+    "best_potency_nm": 0.03,
+    "best_potency_caveat": "Ki 0.03 nM (CHEMBL3640299, assay CHEMBL3705047) description is only 'Inhibition assay using TNF-alpha' — UNCHARACTERIZED",
+    "best_credible_direct_binding": "Kd 1.3 nM (CHEMBL4793441, assay CHEMBL4775686, SPR vs biotinylated TNF-alpha trimer 77-233)",
+    "approved_small_molecules": [],
+    "approved_biologics": [
+      { "name": "Infliximab", "year": 1998, "modality": "antibody" },
+      { "name": "Etanercept", "year": 1998, "modality": "fusion protein" },
+      { "name": "Adalimumab", "year": 2002, "modality": "antibody" },
+      { "name": "Certolizumab pegol", "year": 2008, "modality": "antibody" },
+      { "name": "Golimumab", "year": 2009, "modality": "antibody" }
+    ],
+    "pdb_total": 52,
+    "pdb_holo": 20,
+    "pdb_apo": 32,
+    "pdb_undetermined": 0,
+    "pdb_holo_defensible": 19,
+    "pdb_holo_history": [15, 17, 16, 20],
+    "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 40 pdb_v.entry_ligands rows on 52 entries; reconciled against an independent COUNT and canary-bracketed.",
+    "pdb_holo_note": "REGENERATED, AND IT DISAGREES WITH THE PREVIOUS ADJUDICATION — read this before grading. History: 15 (>=300 Da rule) -> 17 (250-1200 Da + $EXCL) -> 16 (that adjudication minus the MTSL spin label) -> 20 (chemistry classifier, current). The jump 16 -> 20 is NOT drift and NOT a fourth opinion about the same entries; it is the abolition of the lower MW bound. The classifier has no floor by design.",
+    "pdb_holo_arithmetic_check_that_confirms_the_diagnosis": "The 20 and the old 17 reconcile EXACTLY, which is what rules out drift and pins the cause on the MW floor alone. Of the 20 entries the classifier calls holo, exactly three carry a ligand below 250 Da: 4TWT (38A, 210 Da), 6X83 (UTS, 208 Da) and 6X81 (UTJ, 244 Da). 20 - 3 = 17, the documented 250-1200 Da value, with no residue. Every other entry is called holo by both rules and no entry called holo by the old rule is dropped by the new one. So the entire 17 -> 20 delta is the abolished lower bound, and the entire 15 -> 17 delta before it was the 300 -> 250 relaxation. Same mechanism twice.",
+    "pdb_holo_why_the_adjudicated_16_does_not_survive": "16 was computed as (the 250-1200 Da window result) minus MTN. It therefore INHERITS the 250 Da floor, which the classifier deliberately removes. The three entries it excludes are all sub-250 Da members of real med-chem series, and excluding them contradicts the very argument that was used to ADMIT A7M. 6X81 (UTJ, 244 Da, [4-(isoquinolin-8-yl)phenyl]acetonitrile) and 6X83 (UTS, 208 Da, 1-benzyl-1H-benzimidazole) come from J. Med. Chem. 2021, doi 10.1021/acs.jmedchem.0c01280, PMID 33378180 — the SAME paper and the same deposition group as 6X82/6X85/6X86 (UTM 554 Da, UTV 317 Da, UTY 512 Da), which were counted under every rule. UTS is the minimal benzimidazole core of the very series A7M belongs to. So the 250 Da floor was splitting the 6X8x congeneric series exactly as the 300 Da floor split the 6OO/6OP series. If A7M is real — and it is — then UTS and UTJ are real, and 16 is internally inconsistent.",
+    "pdb_holo_the_entries_that_need_judgement": {
+      "_why_this_matters": "Name them and judge them by chemical identity. The count is not the deliverable; the inspection is.",
+      "5UUI": {
+        "ligand": "MTN",
+        "formula_weight": 264.4,
+        "classifier_verdict": "druglike — A FALSE POSITIVE, and the only one measured anywhere in this regeneration",
+        "identity": "S-[(1-oxyl-2,2,5,5-tetramethyl-2,5-dihydro-1H-pyrrol-3-yl)methyl] methanesulfonothioate = MTSL, the standard nitroxide spin label for EPR/DEER",
+        "entry_title": "Crystal Structure of Spin-Labeled T77C TNFa",
+        "verdict": "NOT a drug-like ligand — FALSE HOLO. A covalent biophysical probe conjugated to an ENGINEERED cysteine; the T77C mutation is in the entry title. SUBTRACT IT: 20 - 1 = 19. Note WHY the classifier misses it — MTN's chemistry genuinely IS drug-like, and nothing in the CCD row says 'spin label'. The disqualifying fact lives in the entry title, which no chemistry test can see. The classifier's docstring claims zero false positives on a 70-component held-out sample; MTN was not in that sample and this is a real counterexample. It also carries drugbank_id DB08217, which is precisely why drugbank_id must never gate holo.",
+        "compare": "CD20 was re-run as a control on 2026-08-15: 10 entries, and the classifier correctly files pentadecane, phosphatidylcholine and cholesterol hemisuccinate as lipid_or_detergent for a true holo count of 0. The lipid-additive class IS caught. The covalent-probe class is not."
+      },
+      "4TWT": {
+        "ligand": "38A",
+        "formula_weight": 210.3,
+        "classifier_verdict": "druglike",
+        "identity": "(2,4,6-trimethylbenzene-1,3,5-triyl)trimethanol",
+        "provenance": "Protein Eng. Des. Sel. 2015, doi 10.1093/protein/gzu055, PMID 25614525 — a protein-engineering journal, not a med-chem one",
+        "verdict": "UNRESOLVED and deliberately left so. A C3-symmetric triol on a C3-symmetric trimer axis is the shape of a designed probe, not of a buffer component, and no cofactor/lipid/additive signature fires. But it is a bare polyol with no nitrogen, the paper was not retrieved, and 'designed for the 3-fold axis' is an inference. Counted in the 20; an agent that rejects it and reports 18 with 38A named has NOT made an error."
+      },
+      "6OOY": {
+        "ligand": "A7M",
+        "formula_weight": 266.3,
+        "classifier_verdict": "druglike",
+        "identity": "{1-[(2,5-dimethylphenyl)methyl]-1H-benzimidazol-2-yl}methanol",
+        "verdict": "REAL — confirmed again. The des-pyridyl parent of a series deposited the same day: A6Y (343 Da, 6OOZ) and A7A (424 Da, 6OP0). Uncontested across all four rules."
+      }
+    },
+    "pdb_holo_grading": "20 is the measured value under the stated definition and is the grading value. 19 is the scientifically defensible count (20 minus the MTSL spin label). ACCEPT 18, 19 or 20 from an agent that names 5UUI/MTN and says what it did with it; 18 additionally requires naming 38A. MARK DOWN: 20 reported as a clean count with no ligand inspection; and 15, 16 or 17, all of which are artifacts of a lower MW bound this rule does not have. The failure mode to catch is an agent that reports a number without inspecting a ligand.",
+    "pdb_apo_note": "32, and this is a STRICT apo count: no drug-like component and no unclassifiable component. Zero TNF-alpha entries are undetermined. The old '17 holo / 35 apo' pair quoted in structure-select SKILL.md §1 is superseded on both halves.",
+    "earliest_holo": "2AZ5 2005-11-29, ligand comp_id 307, formula_weight 548 (stated as 550 pre-audit) — SPD304. Confirmed earliest holo under both rules 2026-08-15.",
+    "structure_caveat": "SPD304 is a bis-electrophilic compound widely regarded as a promiscuous/cytotoxic frequent hitter. There IS a holo structure and it is exactly the misleading kind.",
+    "why_in_set": "Carries THREE failure modes at once: modality trap (5 approved biologics, 0 small molecules), assay artifact (45% of bioactivity is a different target's assay), and misleading structure (holo ligand is a known frequent hitter). Also the second pocket-detection regime — a cavity PRESENT BUT SMALL in the apo trimer, versus KRAS where it is absent.",
+    "backup": "STAT3 (P40763, CHEMBL4026) — 2,370 compounds, best IC50 2.4 nM, only 6 PDB entries and 3 holo, top assays are EMSA/ChIP/reporter. Better if we want thin structural evidence rather than misleading evidence.",
+    "backup_structure_regenerated": {
+      "pdb_total": 6,
+      "pdb_holo": 2,
+      "pdb_apo": 4,
+      "pdb_undetermined": 0,
+      "pdb_holo_was": 3,
+      "measured": "2026-08-15, ligand_filter.classify_record over all 3 pdb_v.entry_ligands rows on 6 entries; reconciled and canary-bracketed.",
+      "note": "STAT3 MOVES 3 -> 2, and the delta is a DECLARED FALSE NEGATIVE of the classifier, not a data change. Only three STAT3 entries carry any component at all: 6NJS and 6NUQ both carry KQV (836 Da, druglike — counted), and 5AX3 carries 5ID, a 392 Da 7-deazaadenosine of the 5-iodotubercidin class. 5ID is a real nucleoside-analog inhibitor, but the classifier files every purine-plus-ribose as `cofactor` — its docstring names this exact class as a known false negative ('a purine plus a ribose is the nucleotide signature whether or not a medicinal chemist made it'). So 2 is what the rule produces and 3 is defensible on the chemistry. ACCEPT EITHER when 5AX3/5ID is named; the failure mode to catch is reporting 3 without noticing that one of the three is a nucleoside. This does not disturb the backup's role — 'thin structural evidence' is if anything more true at 2 than at 3.",
+      "carries_an_undetermined_component": false
+    },
+    "backup_reverified": "2026-08-15 — the three CHEMBL figures exact and unchanged: 2,370 compounds (n_target_components=1; the unfiltered view gives 2,427), best IC50 exactly 2.40 nM (compound CHEMBL5437070, assay_id 2371997, 'Inhibition of IL-23 induced STAT3 phosphorylation in human Jurkat cells', confidence 9), 6 PDB entries. The holo count moved 3 -> 2 under the regenerated structure rule — see backup_structure_regenerated. Note the phrasing 'best IC50' is doing real work and is correct as written: the best pchembl of ANY type is 8.98 = 1.05 nM, but that is an EC50 from a PubChem HTS probe campaign (assay_id 737318), and the best direct-binding value is a Kd of 4.7 nM by microscale thermophoresis (CHEMBL3392776). Do not 'correct' 2.4 to 1.05."
+  },
+
+  "slot_6_recent_orphan": {
+    "recommended": "IL-11",
+    "target": "IL-11",
+    "uniprot": "P20809",
+    "chembl_target": "CHEMBL6196073",
+    "chembl_id_note": "very high target ID, i.e. recently created",
+    "total_activities": 15,
+    "distinct_compounds": 15,
+    "assay_provenance": "TWO assays, not one: 11 rows from CHEMBL6115567 (assay_id 2636530, 'Binding affinity to CAP chip-immobilized IL-11 (unknown origin) assessed as dissociation constant by SPR analysis', all standard_type Kd) and 4 rows from CHEMBL6115571 (assay_id 2636534, 'Binding affinity to CAP chip-immobilized IL-11 (unknown origin) by SPR analysis', all standard_type Activity). Both assay_type B, both SPR on the same CAP-chip construct.",
+    "assay_provenance_was": "'ALL 15 from a single assay CHEMBL6115567' — CORRECTED 2026-08-15. The two assay descriptions are near-identical, which is presumably why they were collapsed. The single-provenance ARGUMENT is unaffected and if anything strengthened: one method, one chip, one deposition.",
+    "only_2_of_15_rows_carry_a_number": "Re-measured 2026-08-15 and NEW — this strengthens the insufficient_evidence verdict more than anything already in this entry. Thirteen of the fifteen rows have standard_value NULL and pchembl_value NULL. The ENTIRE numeric footprint of IL-11 in ChEMBL is two Kd values: 140 nM and 2,600 nM. An agent that reports '15 activities' as if 15 numbers exist has already overstated the evidence by 7.5x.",
+    "best_potency_nm": null,
+    "best_potency_nm_was": 140,
+    "second_best_nm_was": 2600,
+    "best_potency_rejected_note": "REJECTED 2026-08-15 UNDER THIS FILE'S OWN RULE, and this was an internal inconsistency, not a data change. `_measurement_definitions.best_potency_nm` says a value is rejected 'if the source assay description is uncharacterised per CLAUDE.md rule 6 (\"Inhibition of X (unknown origin)\", \"Binding affinity to X (unknown origin)\")'. IL-11's own `assay_provenance` field, three lines above, records the description as 'Binding affinity to CAP chip-immobilized IL-11 (UNKNOWN ORIGIN) assessed as dissociation constant by SPR analysis'. That is the second forbidden pattern, verbatim. The file applied rule 6 to KRAS — where it explicitly declines to raise the potency to 0.020 nM on exactly this ground — and did not apply it here. No query was needed to see this; it is provable from the file against itself. The two numbers are retained above because they are real rows and an agent WILL find them, which is the temptation this fixture exists to pose; what changes is that the grading key no longer asserts either as a potency.",
+    "_potency_reverified": "2026-08-15 — 140 nM (pchembl 6.85) and 2,600 nM (pchembl 5.58) are both exact as ROWS, both in assay 2636530, both standard_relation '='. Their existence is not in doubt; their usability is.",
+    "_UNVERIFIED_CHALLENGE_modality_of_the_two_numeric_rows": "RECORDED, NOT ADOPTED — could not be re-measured because Paperclip's sql backend failed during this task (see _structure_regeneration_2026_08_15.backend_failures). A parallel agent reports that the compound carrying 140 nM, CHEMBL6162758, is a 1,938 Da MACROCYCLIC PEPTIDE with molecule_type NULL, that the 2,600 nM compound is a 2,429 Da peptide, that 13 of the 15 compounds are cyclic peptides from doi 10.1016/j.bmc.2024.118017 ('De novo discovery of cyclic peptide inhibitors of IL-11 signaling'), and that IL-11's only two `Small molecule` ChEMBL entries carry no number at all — one of them bazedoxifene, which binds gp130 rather than IL-11 (Mol Cancer Ther 2016;15:2609-19). If true this is a second, independent reason the value cannot support a small-molecule claim, and it would make IL-11 a modality trap of the IL-17A kind rather than only a thin-data case. VERIFY BEFORE ADOPTING. It does not change the verdict either way: insufficient_evidence is the answer under all three readings.",
+    "approved_small_molecules": [],
+    "approved_biologics": [],
+    "pdb_total": 8,
+    "pdb_holo": 0,
+    "pdb_apo": 8,
+    "pdb_undetermined": 0,
+    "pdb_holo_measured": "2026-08-15, ligand_filter.classify_record over all 11 pdb_v.entry_ligands rows on 8 entries; reconciled and canary-bracketed. NEW FIELD — IL-11 previously carried pdb_total only, and README already asserted 'none holo' without a measured number behind it. Now measured: 0 holo, 8 strict apo, nothing undetermined.",
+    "why_in_set": "The right shape for insufficient_evidence: JUST enough data to tempt a confident score (a 140 nM Kd exists) while single-assay provenance, 15 compounds, and no clinical program make any confident call unjustified.",
+    "expected_output": {
+      "verdict": "insufficient_evidence",
+      "must_not": "produce a confident tractability number from a 15-compound single-assay screening series"
+    },
+    "OPEN_CAVEAT": "The 'proposed in the last 3 years' framing was NOT independently verified against a primary source. ChEMBL target-ID recency and the 15-activity footprint are retrieved; the timeline is inference. Confirm against the 2024 Nature IL-11/healthspan literature before locking this fixture.",
+    "rejected_alternatives": {
+      "TL1A / TNFSF15 (O95150)": "zero ChEMBL targets, 7 PDB entries all apo-or-DcR3, but Phase 3 antibodies (tulisokibart, duvakitug) give an agent real precedent to latch onto — it would score confidently and arguably be right, which defeats the purpose",
+      "CARD8 (Q9Y2G2)": "zero ChEMBL targets, 5 PDB entries, but the modality is agonism via DPP8/9 inhibition, which confounds the druggability question"
+    }
+  }
+}

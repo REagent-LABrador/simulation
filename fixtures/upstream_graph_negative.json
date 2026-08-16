@@ -1,0 +1,166 @@
+{
+  "_fixture": true,
+  "_fixture_note": "WHY THIS CASE IS IN THE SET -- SCHEMA.md is explicit that a negation lives in `says`, never in the verb: there is no `does_not_bind`. So a link reading `zimlovisertib inhibits IRAK4` whose findings ALL say `no` is the literature reporting that it does NOT inhibit IRAK4, and it looked identical to a positive nomination. L30 is that case. L31 is the neighbouring one that must NOT be collapsed into it: all `no_effect`, a measured null, which on a direct-action edge is real tractability evidence that the compound does not engage (SKILL.md failure mode 10). BEFORE: both produce a nomination whose `nominated_by` reason reads 'object of direct-action edge from small_molecule t2 (inhibits)' with no mention of direction. The agent hands the dossier a target on evidence that the drug does not hit it. AFTER: each nomination carries `support` {yes,no,no_effect} and a `direction_warning` naming which array is empty and what that means.",
+  "schema_version": "1.1",
+  "graph_id": "g_fuzz_negative",
+  "question": "does the compound engage IRAK4 at all?",
+  "round": 2,
+  "status": "ok",
+  "generated_at": "2026-08-15T14:20:00Z",
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 25,
+      "outcome": "new_evidence"
+    },
+    {
+      "n": 2,
+      "ask": "resolve_link",
+      "target": "L30",
+      "depth": "deep",
+      "papers_added": 18,
+      "outcome": "new_evidence"
+    }
+  ],
+  "coverage": {
+    "depth": "deep",
+    "found": 1180,
+    "read": 50,
+    "used": 41,
+    "truncated": true,
+    "no_quote_discarded": 6,
+    "limits": {
+      "max_papers": 50,
+      "max_queries": 6
+    },
+    "stop_reason": "max_papers"
+  },
+  "things": [
+    {
+      "id": "t1",
+      "name": "IRAK4",
+      "kind": "protein",
+      "aliases": [
+        "interleukin-1 receptor-associated kinase 4",
+        "IRAK-4"
+      ],
+      "mentions": 31
+    },
+    {
+      "id": "t2",
+      "name": "zimlovisertib",
+      "kind": "small_molecule",
+      "aliases": [
+        "PF-06650833"
+      ],
+      "mentions": 12
+    },
+    {
+      "id": "t6",
+      "name": "rheumatoid arthritis",
+      "kind": "disease",
+      "aliases": [
+        "RA"
+      ],
+      "mentions": 44
+    }
+  ],
+  "papers": [
+    {
+      "id": "p1",
+      "title": "Discovery of a selective IRAK4 inhibitor",
+      "year": 2018,
+      "journal": "J. Med. Chem.",
+      "doi": "10.0000/fixture.p1",
+      "first_author": "Lee",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "f30",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "no",
+      "quote": "no inhibition of IRAK4 was detected at concentrations up to 10 uM in the biochemical assay",
+      "paper": "p1",
+      "where": "biochemical assay",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1
+    },
+    {
+      "id": "f31",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "no_effect",
+      "quote": "target engagement measured by IRAK4 occupancy was indistinguishable from vehicle",
+      "paper": "p1",
+      "where": "human whole blood",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1
+    }
+  ],
+  "links": [
+    {
+      "id": "L30",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "yes": [],
+      "no": [
+        "f30"
+      ],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.6,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": 1
+    },
+    {
+      "id": "L31",
+      "from": "t2",
+      "how": "binds",
+      "to": "t1",
+      "yes": [],
+      "no": [],
+      "no_effect": [
+        "f31"
+      ],
+      "state": "no_effect",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.6,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": 1
+    }
+  ],
+  "gaps": []
+}

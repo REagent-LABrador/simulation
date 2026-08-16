@@ -1,0 +1,124 @@
+{
+  "_why_in_set": "Rheumatoid arthritis is the true-positive indication for the whole gauntlet, and it is the strongest druggability test set available anywhere: WITHIN this single disease, four targets were successfully drugged with small molecules and four were drugged only with biologics. No cross-indication confound, no disease-difficulty confound, no era confound worth speaking of. If the agent cannot separate JAK1 from TNF here, its modality rule does nothing.",
+  "_retrieved": "2026-08-15 via paperclip chembl_v.drugs_by_accession",
+  "_note_on_dates": "Every year below is `first_approval` from ChEMBL, not a recollection.",
+
+  "small_molecule_tractable": [
+    {
+      "gene": "JAK1",
+      "accession": "P23458",
+      "approved_small_molecules": [
+        { "name": "ruxolitinib phosphate", "year": 2011 },
+        { "name": "tofacitinib citrate", "year": 2012 },
+        { "name": "baricitinib", "year": 2017 },
+        { "name": "peficitinib", "year": 2019 },
+        { "name": "upadacitinib hemihydrate", "year": 2019 },
+        { "name": "filgotinib maleate", "year": 2020 }
+      ],
+      "expected_verdict": "small_molecule_tractable",
+      "why": "Pre-formed ATP site. The easy rung — if this is wrong nothing else matters."
+    },
+    {
+      "gene": "JAK3",
+      "accession": "P52333",
+      "approved_small_molecules": [
+        { "name": "tofacitinib citrate", "year": 2012 },
+        { "name": "peficitinib", "year": 2019 },
+        { "name": "upadacitinib hemihydrate", "year": 2019 },
+        { "name": "filgotinib", "year": 2020 },
+        { "name": "ritlecitinib", "year": 2023 }
+      ],
+      "expected_verdict": "small_molecule_tractable",
+      "note": "Ritlecitinib is covalent — a distinct chemistry route worth flagging if the agent reports mechanism."
+    },
+    {
+      "gene": "TYK2",
+      "accession": "P29597",
+      "approved_small_molecules": [
+        { "name": "tofacitinib citrate", "year": 2012 },
+        { "name": "upadacitinib hemihydrate", "year": 2019 },
+        { "name": "deucravacitinib", "year": 2022 }
+      ],
+      "expected_verdict": "small_molecule_tractable",
+      "why": "The non-obvious pocket. Deucravacitinib binds the JH2 pseudokinase domain allosterically, not the ATP site. JH1 structures date from 2010-06-02, JH2 from 2013-04-10.",
+      "as_of_test": {
+        "2012-12-31": "no allosteric precedent — JH2 structures do not exist yet; ATP-site precedent only",
+        "2015-12-31": "allosteric precedent EXISTS and must not be reported as absent"
+      }
+    },
+    {
+      "gene": "JAK2",
+      "accession": "O60674",
+      "approved_small_molecules": [
+        { "name": "ruxolitinib phosphate", "year": 2011 },
+        { "name": "fedratinib", "year": 2019 }
+      ],
+      "expected_verdict": "small_molecule_tractable",
+      "note": "Included for completeness of the JAK family; JAK2 selectivity is a liability in RA, which is a SAFETY finding for another station, not a tractability one."
+    }
+  ],
+
+  "biologic_only": [
+    {
+      "gene": "TNF",
+      "accession": "P01375",
+      "approved_small_molecules": [],
+      "approved_biologics": [
+        { "name": "infliximab", "year": 1998, "modality": "antibody" },
+        { "name": "etanercept", "year": 1998, "modality": "fusion protein" },
+        { "name": "adalimumab", "year": 2002, "modality": "antibody" },
+        { "name": "certolizumab pegol", "year": 2008, "modality": "antibody" },
+        { "name": "golimumab", "year": 2009, "modality": "antibody" }
+      ],
+      "expected_verdict": "axis_conflict",
+      "why": "The hardest row. Five approved biologics, zero approved small molecules, 2,582 ChEMBL compounds of which ~45% of bioactivity comes from an IRAK4 assay measuring a different protein. The one holo ligand (307, 2AZ5) is a known promiscuous frequent hitter. The site is an occluded trimer-axis cavity, present in all five apo structures — occluded, NOT cryptic.",
+      "must_not": "report 2,582 compounds as precedent, or credit the five biologics toward small-molecule tractability",
+      "live_nuance": "balinatunfib (SAR441566) is an oral small molecule in clinic that works by stabilising a receptor-incompetent trimer rather than blocking TNF/TNFR. So 'zero approved small molecules' is true and 'no small molecule can work' is false. Both belong in the dossier."
+    },
+    {
+      "gene": "IL6R",
+      "accession": "P08887",
+      "approved_small_molecules": [],
+      "approved_biologics": [
+        { "name": "tocilizumab", "year": 2005, "modality": "antibody" },
+        { "name": "sarilumab", "year": 2017, "modality": "antibody" },
+        { "name": "satralizumab", "year": 2020, "modality": "antibody" }
+      ],
+      "expected_verdict": "not_tractable OR insufficient_evidence",
+      "why": "Cytokine receptor ectodomain. Three approved antibodies, no small molecule. Tests the modality rule on a target the agent has no oncology intuition about."
+    },
+    {
+      "gene": "MS4A1 (CD20)",
+      "accession": "P11836",
+      "approved_small_molecules": [],
+      "approved_biologics": [
+        { "name": "rituximab", "year": 1997, "modality": "antibody" },
+        { "name": "ofatumumab", "year": 2009, "modality": "antibody" },
+        { "name": "obinutuzumab", "year": 2013, "modality": "antibody" }
+      ],
+      "expected_verdict": "not_tractable",
+      "why": "A four-pass transmembrane protein whose epitope is a small extracellular loop. There is nothing for a small molecule to bind. The clearest true negative in the set, and the agent should reach it from structure, not from the absence of compounds."
+    },
+    {
+      "gene": "IL1B",
+      "accession": "P01584",
+      "approved_small_molecules": [],
+      "approved_biologics": [
+        { "name": "rilonacept", "year": 2008, "modality": "fusion protein" },
+        { "name": "canakinumab", "year": 2009, "modality": "antibody" }
+      ],
+      "expected_verdict": "not_tractable OR insufficient_evidence",
+      "note": "Anakinra (IL1RN, a recombinant antagonist) targets the receptor, not the ligand — an easy false positive if the agent is loose about which entity carries the precedent."
+    }
+  ],
+
+  "THE_TEST": {
+    "primary": "Run all eight. The four JAK-family targets must return small_molecule_tractable; TNF must return axis_conflict; CD20 must return not_tractable; IL6R and IL1B must return not_tractable or insufficient_evidence. Any run that credits an approved biologic toward small-molecule tractability is a failure regardless of what else it gets right.",
+    "why_this_beats_the_ladder": "The earlier fixture ladder mixed oncology and immunology, so a wrong answer could always be blamed on domain transfer. Here every target is an RA target with an approved drug, and the ONLY thing that varies is which modality won. That isolates the one variable the agent exists to measure.",
+    "as_of_variant": {
+      "2010-12-31": "JAK1 has NO approved small molecule (ruxolitinib is 2011, tofacitinib 2012). RA at that date is a biologic-only disease across every target in this file. The agent must not retroactively credit the JAK series.",
+      "2013-12-31": "JAK1 and JAK3 now have tofacitinib; TYK2 still has no allosteric precedent. A correct run shows the JAK rows flipping and the biologic-only rows unchanged."
+    },
+    "known_confound": "The JAK inhibitors are pan-JAK to varying degrees, so the same drug appears against JAK1, JAK2, JAK3 and TYK2. Do not treat four rows of the same molecule as four independent precedents — check n_target_components and the mechanism annotation."
+  }
+}

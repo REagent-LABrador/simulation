@@ -1,0 +1,101 @@
+{
+  "_note": "Grading key for graph-intake. upstream_graph.json was conformed to the real SCHEMA.md v1.1 (LABrador managed/research-evidence-mapper) on 2026-08-15 \u2014 it previously carried an invented coverage.limits.hit_limit and omitted status, findings.section, papers.retracted and rounds[].outcome. Edge cases the RA graph never reaches live in upstream_graph_edgecases.json.",
+  "_source_graph": "upstream_graph.json (g_ra4k, round 2)",
+  "_accessions_retrieved": "2026-08-15 via paperclip uniprot_v.proteins. Not recalled.",
+  "expected_nominations": [
+    {
+      "thing": "t1",
+      "uniprot_accession": "Q9NWZ3",
+      "gene_symbol": "IRAK4",
+      "why_nominated": "object of L1, a direct-action edge (inhibits) from small_molecule t2; also named in gap g2",
+      "interaction_to_disrupt": "kinase activity (catalytic function)",
+      "mechanism_hypothesis": "unknown",
+      "must_cite": ["f1", "f5"],
+      "must_record_not_act_on": ["f4", "f3"],
+      "must_state": [
+        "kinase activity is supported by TWO independent primary papers (p1 Lee biochemical, p4 Brandt monocytes)",
+        "the two PPI statements (MyD88 signalosome, receptor complex) are background_only from one review and must not set chain selection",
+        "IRAK4 has a second, scaffolding function that a kinase inhibitor does not stop"
+      ],
+      "must_not": [
+        "set mechanism_hypothesis to orthosteric \u2014 no quote says ATP-competitive, and TYK2 is the counterexample",
+        "set interaction_to_disrupt from f4 alone"
+      ]
+    }
+  ],
+  "expected_rejections": [
+    {
+      "thing": "t5",
+      "name": "IL-6",
+      "why": "reached only by L3, a downstream-effect edge (reduces). A readout, not a target.",
+      "why_in_set": "THE key negative. L3 has the same shape as L1 \u2014 small molecule acting on a protein \u2014 and only the verb separates them. This is the same readout/target conflation that makes 45% of TNF-alpha's ChEMBL bioactivity useless, one stage earlier."
+    },
+    {
+      "thing": "t4",
+      "name": "synovial fibroblast",
+      "why": "named in gaps g1 and g2 but kind is 'process' \u2014 a cell type, not a protein",
+      "why_in_set": "Tests that gap membership alone does not nominate. Both gaps are ABOUT the fibroblast compartment, so a naive gap reader nominates it."
+    },
+    {
+      "thing": "t6",
+      "name": "rheumatoid arthritis",
+      "why": "reached only by L7, a downstream-effect edge (improves); kind is 'disease'"
+    },
+    {
+      "thing": "t2",
+      "name": "zimlovisertib",
+      "why": "named in gap g1 but kind is 'small_molecule' \u2014 the asset, not the target"
+    }
+  ],
+  "expected_asks": [
+    {
+      "ask": "resolve_link",
+      "target": "L2",
+      "depth": "deep",
+      "why": "IRAK4 activates MyD88 signalosome is basis background_only, confidence 0.38, one review. Primary evidence would make the PPI shape usable for chain selection."
+    },
+    {
+      "ask": "test_gap",
+      "target": "g2",
+      "depth": "deep",
+      "why": "g2 names IRAK4 and searched_in_round is null \u2014 nobody has looked. It is the only route to a fibroblast-compartment answer."
+    }
+  ],
+  "expected_coverage_warning": {
+    "truncated": true,
+    "stop_reason": "max_papers",
+    "why_it_matters": "Read 50 of 1,180. Only stop_reason 'complete' means the literature was exhausted; the other four mean the run ran out of budget. So 'not stated' must not be reported without an ask-back."
+  },
+  "the_test": {
+    "primary": "Exactly one nomination: IRAK4 / Q9NWZ3. Any run that also nominates IL-6 has failed the readout/target split. Any run that sets mechanism_hypothesis to anything other than 'unknown' has guessed.",
+    "resolution_trap": "The graph's IL-6 node is a live instance of failure mode 3 even though it is correctly rejected as a target. Its supporting quote f7 says 'IL-6 receptor blockade', which is P08887, while its name string resolves to P05231. If a future graph reaches IL-6 through a direct-action edge, the resolution step must read the quote.",
+    "not_covered": "The PPI branch. Deriving interaction_to_disrupt from a named partner needs t3 resolved to component accessions and needs pocket_vs_interface (pipeline stage S), which is notbuilt. This fixture grades the catalytic branch only.",
+    "schema_deltas_covered": [
+      "coverage.stop_reason replaces the invented limits.hit_limit",
+      "status is read and surfaced",
+      "kind 'gene' nominates alongside 'protein' (exercised in the edgecases fixture)",
+      "basis 'hedged_only' is non-actionable, same as background_only (edgecases)",
+      "no_effect findings are read from the third array (edgecases)",
+      "expand_node is the fourth ask verb"
+    ]
+  },
+  "_schema_source": "LABrador main:managed/research-evidence-mapper/SCHEMA.md",
+  "expected_status": {
+    "status": "ok",
+    "why_it_matters": "status is ok|empty|partial|failed. A failed graph parses cleanly and yields zero nominations, which reads exactly like 'no targets found'. Never report zero without quoting status."
+  },
+  "_fixture_set": {
+    "upstream_graph.json": "the RA graph. Catalytic branch, one nomination, the IL-6 readout negative.",
+    "upstream_graph_edgecases.json": "kind 'gene', basis 'hedged_only', a no_effect finding, status 'partial'.",
+    "upstream_graph_unknownverb.json": "unknown `how` verbs, exercising needs_adjudication in three signal states."
+  },
+  "expected_needs_adjudication": {
+    "count_for_this_graph": 0,
+    "why": "Every small_molecule edge in the RA graph uses a known verb: L1 'inhibits' (direct), L3 'reduces' and L7 'improves' (downstream). Unknown-verb handling is graded by upstream_graph_unknownverb.json.",
+    "standing_rule": "An unmatched verb is NEVER dropped. `how` has no enum in SCHEMA.md, so DIRECT_ACTION and DOWNSTREAM_EFFECT can never be complete. Anything in needs_adjudication is a target the intake could not classify, and it must be read on every run. Refusing is allowed; guessing is not."
+  },
+  "expected_retracted_papers": {
+    "count_for_this_graph": 0,
+    "why": "papers[].retracted is all false here. Any true value must block citation of that paper's findings, not merely annotate them."
+  }
+}

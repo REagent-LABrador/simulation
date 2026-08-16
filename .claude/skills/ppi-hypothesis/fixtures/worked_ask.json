@@ -1,0 +1,123 @@
+{
+ "ask": {
+  "ask": "resolve_link",
+  "target": "L4",
+  "depth": "deep",
+  "question": "The graph asserts on L4, from f10, that \"the TL1A trimer engages three DR3 protomers through a canonical TNF-superfamily interface burying 1840 A^2\", attributed to a 2.4 A crystal structure. WE CHECKED, AND NO SUCH STRUCTURE EXISTS. OUR MEASUREMENT (PDB polymer-entity census against UniProt Q93038, run 2026-08-15): DR3/TNFRSF25 has exactly three deposited entities - 5YEV, 5YGP and 5YGS - and all three are the INTRACELLULAR death domain (Q93038 residues 322-415), single-entity, no partner chain. There is no DR3 ectodomain structure of any kind and no TL1A/DR3 complex deposited anywhere. The only deposited TL1A/receptor complexes are 3K51 and 3MI8, both TL1A with the decoy receptor DcR3 (TNFRSF6B, O95407); we measure their buried surface at 2049 A^2 total / 1024 A^2 per side on the 3K51 biological assembly, which is not 1840 A^2 under either convention. SOURCES ASSERTING THE CLAIM: f10 via p8, single source, is_own_result true. SOURCES AGAINST IT: the PDB itself (5YEV, 5YGP, 5YGS, 3K51, 3MI8) plus our own cofold of TL1A(O95150 72-251, trimer) with DR3(Q93038 25-199) over 6 seeds in 2 disjoint blocks, which predicts a DIFFERENT number: 2826 A^2 total buried, ipTM median 0.8863. THIS ASK IS POST-RESOLUTION AND NOT BLOCKING: our dossier reports the TL1A/DR3 interface from our own measurement and does not depend on the answer. It exists so a wrong row does not propagate to other consumers of g_tl1a1 on the next round. WHAT WOULD SETTLE IT: retrieve p8 and check whether it reports a TL1A/DR3 co-structure at all, or whether the 1840 A^2 figure was computed on a homology model or transferred from the TL1A/DcR3 complex 3K51/3MI8. If it is a model, f10 should carry the model's provenance and L4's basis should not read as a deposited experimental structure."
+ },
+ "dossier_not_found_entry": {
+  "field": "tractability.pocket_vs_interface.partner_pdb_id",
+  "reason": "ASK[resolve_link:L4] issued to graph g_tl1a1 round 3. Not blocking: the predicted interface is reported in tractability.pocket_vs_interface from our own measurement and this entry records the residual literature question. The graph asserts on L4, from f10, that \"the TL1A trimer engages three DR3 protomers through a canonical TNF-superfamily interface burying 1840 A^2\", attributed to a 2.4 A crystal structure. WE CHECKED, AND NO SUCH STRUCTURE EXISTS. OUR MEASUREMENT (PDB polymer-entity census against UniProt Q93038, run 2026-08-15): DR3/TNFRSF25 has exactly three deposited entities - 5YEV, 5YGP and 5YGS - and all three are the INTRACELLULAR death domain (Q93038 residues 322-415), single-entity, no partner chain. There is no DR3 ectodomain structure of any kind and no TL1A/DR3 complex deposited anywhere. The only deposited TL1A/receptor complexes are 3K51 and 3MI8, both TL1A with the decoy receptor DcR3 (TNFRSF6B, O95407); we measure their buried surface at 2049 A^2 total / 1024 A^2 per side on the 3K51 biological assembly, which is not 1840 A^2 under either convention. SOURCES ASSERTING THE CLAIM: f10 via p8, single source, is_own_result true. SOURCES AGAINST IT: the PDB itself (5YEV, 5YGP, 5YGS, 3K51, 3MI8) plus our own cofold of TL1A(O95150 72-251, trimer) with DR3(Q93038 25-199) over 6 seeds in 2 disjoint blocks, which predicts a DIFFERENT number: 2826 A^2 total buried, ipTM median 0.8863. THIS ASK IS POST-RESOLUTION AND NOT BLOCKING: our dossier reports the TL1A/DR3 interface from our own measurement and does not depend on the answer. It exists so a wrong row does not propagate to other consumers of g_tl1a1 on the next round. WHAT WOULD SETTLE IT: retrieve p8 and check whether it reports a TL1A/DR3 co-structure at all, or whether the 1840 A^2 figure was computed on a homology model or transferred from the TL1A/DcR3 complex 3K51/3MI8. If it is a model, f10 should carry the model's provenance and L4's basis should not read as a deposited experimental structure."
+ },
+ "evidence": {
+  "_what_this_is": "The evidence block behind the ask. It is not part of the ask object the upstream team consumes; it is what a human on our side reads to check that the ask was earned.",
+  "predicted_interface": {
+   "pair": "TL1A (O95150 72-251, homotrimer) / DR3 (Q93038 25-199, ectodomain)",
+   "method": "Boltz-2 multimer via cofold-check.cofold_complex, use_msa=True, 6 seeds in 2 disjoint blocks (42-44, 142-144)",
+   "iptm_median": 0.8863,
+   "iptm_range": [
+    0.8603,
+    0.8986
+   ],
+   "seed_concordance_mean_jaccard": 0.789,
+   "seed_concordance_min_pairwise_jaccard": 0.708,
+   "ca_pairs_8a_median": 47.5,
+   "bsa_total_a2_median": 2826,
+   "consensus_TL1A_epitope_uniprot_O95150": [
+    100,
+    101,
+    102,
+    103,
+    112,
+    113,
+    114,
+    120,
+    123,
+    124,
+    156,
+    157,
+    170,
+    171,
+    173,
+    174,
+    175,
+    176,
+    187,
+    188,
+    189,
+    190,
+    207,
+    209,
+    221,
+    231,
+    234,
+    235,
+    238,
+    239,
+    241
+   ],
+   "_epitope_note": "residues in the predicted interface in ALL SIX seeds",
+   "footprint_transfer_coverage_vs_3K51": 0.857,
+   "_transfer_note": "fraction of the deposited DcR3 epitope on TL1A that the predicted DR3 epitope covers. This is a SITE check and NOT a specificity check - the same number is 0.75 for TL1A/TNFR2, which does not bind, and 0.84 for a composition-scrambled random string."
+  },
+  "in_run_controls": {
+   "scramble_floor_same_ligand": {
+    "case": "N9",
+    "partner": "DR3 ectodomain, residues shuffled",
+    "iptm_median": 0.7853,
+    "margin_of_U1_over_floor": 0.101,
+    "conc_mean": 0.577,
+    "ca_pairs": 166.0,
+    "bsa": 6569,
+    "note": "the scrambled string buried MORE surface than the true complex; that is why contact count and BSA are reported and never gated on"
+   },
+   "hard_negative_same_superfamily": {
+    "case": "N2",
+    "pair": "TL1A/TNFR2",
+    "iptm_median": 0.8376,
+    "conc_mean": 0.536,
+    "conc_min": 0.128
+   },
+   "deposited_positive_same_ligand": {
+    "case": "P3",
+    "pair": "TL1A/DcR3",
+    "iptm_median": 0.9021,
+    "conc_mean": 0.875,
+    "note": "3K51/3MI8 are deposited and in the training set - this is recall, not prediction"
+   }
+  },
+  "leakage_risk": true,
+  "leakage_note": "Boltz-2 trained on the PDB. TL1A/DcR3 (3K51, 3MI8) IS deposited and DR3 is a 26%-identity paralogue of DcR3 (measured, global NW/BLOSUM62 over the ectodomains). The predicted TL1A/DR3 interface is therefore not independent of a memorised complex, and its agreement with the DcR3 epitope is the expected result whether or not DR3 binds there.",
+  "pdb_census_dr3": {
+   "accession": "Q93038",
+   "date": "2026-08-15",
+   "entities": [
+    {
+     "id": "5YEV_1",
+     "desc": "TNFRSF25 death domain",
+     "uniprot_range": "322-415 (murine)"
+    },
+    {
+     "id": "5YGP_1",
+     "desc": "Human TNFRSF25 death domain mutant D412E",
+     "uniprot_range": "328-415"
+    },
+    {
+     "id": "5YGS_1",
+     "desc": "Human TNFRSF25 death domain",
+     "uniprot_range": "328-415"
+    }
+   ],
+   "ectodomain_structures": 0,
+   "complexes_with_any_ligand": 0
+  }
+ },
+ "graph": "g_tl1a1 (fixtures/upstream_graph_askback.json, _fixture: true)",
+ "_fixture_warning": "The GRAPH is the synthetic ask-back fixture, so f10/p8 are not citable and the 1840 A^2 claim is invented. THE STRUCTURAL EVIDENCE IS REAL: the PDB census, the 3K51 measurement and the cofold all ran against real data. This is the ask this loop produces when a graph carries a structural claim we can falsify.",
+ "verbs_available": [
+  "expand_node",
+  "resolve_link",
+  "test_gap",
+  "new_question"
+ ]
+}

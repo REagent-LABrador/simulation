@@ -1,0 +1,19 @@
+# Compiled bytecode must never reach the Skills API.
+#
+# scripts/deploy.ts zips each .claude/skills/<dir>/ whole, with no exclusions.
+# A .pyc embeds the compiling machine's absolute source path in co_filename, so
+# 14 of them were shipping paths like
+#   /Users/bb/repos/claude-agent-starter/managed/.../validate_dossier.py
+# and, in one case, the path to the founder's .env. Stale bytecode can also
+# shadow an edited source file.
+#
+# This file stops them being committed. It does NOT stop the zip — that needs
+# `-x "*__pycache__*" -x "*.pyc"` on the execFileSync call in scripts/deploy.ts,
+# which is shared starter infrastructure and not ours to change.
+__pycache__/
+*.pyc
+
+# Scratch output from local runs. Real fixtures live in fixtures/ and are
+# committed; anything written by a run is reproducible and is not.
+.cache/
+*.log

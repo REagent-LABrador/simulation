@@ -1,0 +1,470 @@
+data_3QN7
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_entity.id 
+_entity.type 
+_entity.src_method 
+_entity.pdbx_description 
+_entity.formula_weight 
+_entity.pdbx_number_of_molecules 
+_entity.pdbx_ec 
+_entity.pdbx_mutation 
+_entity.pdbx_fragment 
+_entity.details 
+1 polymer     man 'Urokinase-type plasminogen activator' 28442.373 1   3.4.21.73 'C122A, N145Q' 
+'Catalytic domain, Urokinase-type plasminogen activator chain B' ? 
+2 polymer     syn 'Bicyclic peptide inhibitor'           1792.998  1   ?         ?              ? ? 
+3 non-polymer syn '1,3,5-tris(bromomethyl)benzene'       356.880   1   ?         ?              ? ? 
+4 water       nat water                                  18.015    132 ?         ?              ? ? 
+#
+# 
+# 
+loop_
+_entity_poly.entity_id 
+_entity_poly.type 
+_entity_poly.nstd_linkage 
+_entity_poly.nstd_monomer 
+_entity_poly.pdbx_seq_one_letter_code 
+_entity_poly.pdbx_seq_one_letter_code_can 
+_entity_poly.pdbx_strand_id 
+_entity_poly.pdbx_target_identifier 
+1 'polypeptide(L)' no no 
+;IIGGEFTTIENQPWFAAIYRRHRGGSVTYVCGGSLISPCWVISATHCFIDYPKKEDYIVYLGRSRLNSNTQGEMKFEVEN
+LILHKDYSADTLAHHNDIALLKIRSKEGRCAQPSRTIQTIALPSMYNDPQFGTSCEITGFGKEQSTDYLYPEQLKMTVVK
+LISHRECQQPHYYGSEVTTKMLCAADPQWKTDSCQGDSGGPLVCSLQGRMTLTGIVSWGRGCALKDKPGVYTRVSHFLPW
+IRSHTKEENGLAL
+;
+;IIGGEFTTIENQPWFAAIYRRHRGGSVTYVCGGSLISPCWVISATHCFIDYPKKEDYIVYLGRSRLNSNTQGEMKFEVEN
+LILHKDYSADTLAHHNDIALLKIRSKEGRCAQPSRTIQTIALPSMYNDPQFGTSCEITGFGKEQSTDYLYPEQLKMTVVK
+LISHRECQQPHYYGSEVTTKMLCAADPQWKTDSCQGDSGGPLVCSLQGRMTLTGIVSWGRGCALKDKPGVYTRVSHFLPW
+IRSHTKEENGLAL
+;
+A ? 
+2 'polypeptide(L)' no no ACSRYEVDCRGRGSACG ACSRYEVDCRGRGSACG B ? 
+#
+# 
+# 
+loop_
+_entity_poly_seq.entity_id 
+_entity_poly_seq.num 
+_entity_poly_seq.mon_id 
+_entity_poly_seq.hetero 
+1 1   ILE n 
+1 2   ILE n 
+1 3   GLY n 
+1 4   GLY n 
+1 5   GLU n 
+1 6   PHE n 
+1 7   THR n 
+1 8   THR n 
+1 9   ILE n 
+1 10  GLU n 
+1 11  ASN n 
+1 12  GLN n 
+1 13  PRO n 
+1 14  TRP n 
+1 15  PHE n 
+1 16  ALA n 
+1 17  ALA n 
+1 18  ILE n 
+1 19  TYR n 
+1 20  ARG n 
+1 21  ARG n 
+1 22  HIS n 
+1 23  ARG n 
+1 24  GLY n 
+1 25  GLY n 
+1 26  SER n 
+1 27  VAL n 
+1 28  THR n 
+1 29  TYR n 
+1 30  VAL n 
+1 31  CYS n 
+1 32  GLY n 
+1 33  GLY n 
+1 34  SER n 
+1 35  LEU n 
+1 36  ILE n 
+1 37  SER n 
+1 38  PRO n 
+1 39  CYS n 
+1 40  TRP n 
+1 41  VAL n 
+1 42  ILE n 
+1 43  SER n 
+1 44  ALA n 
+1 45  THR n 
+1 46  HIS n 
+1 47  CYS n 
+1 48  PHE n 
+1 49  ILE n 
+1 50  ASP n 
+1 51  TYR n 
+1 52  PRO n 
+1 53  LYS n 
+1 54  LYS n 
+1 55  GLU n 
+1 56  ASP n 
+1 57  TYR n 
+1 58  ILE n 
+1 59  VAL n 
+1 60  TYR n 
+1 61  LEU n 
+1 62  GLY n 
+1 63  ARG n 
+1 64  SER n 
+1 65  ARG n 
+1 66  LEU n 
+1 67  ASN n 
+1 68  SER n 
+1 69  ASN n 
+1 70  THR n 
+1 71  GLN n 
+1 72  GLY n 
+1 73  GLU n 
+1 74  MET n 
+1 75  LYS n 
+1 76  PHE n 
+1 77  GLU n 
+1 78  VAL n 
+1 79  GLU n 
+1 80  ASN n 
+1 81  LEU n 
+1 82  ILE n 
+1 83  LEU n 
+1 84  HIS n 
+1 85  LYS n 
+1 86  ASP n 
+1 87  TYR n 
+1 88  SER n 
+1 89  ALA n 
+1 90  ASP n 
+1 91  THR n 
+1 92  LEU n 
+1 93  ALA n 
+1 94  HIS n 
+1 95  HIS n 
+1 96  ASN n 
+1 97  ASP n 
+1 98  ILE n 
+1 99  ALA n 
+1 100 LEU n 
+1 101 LEU n 
+1 102 LYS n 
+1 103 ILE n 
+1 104 ARG n 
+1 105 SER n 
+1 106 LYS n 
+1 107 GLU n 
+1 108 GLY n 
+1 109 ARG n 
+1 110 CYS n 
+1 111 ALA n 
+1 112 GLN n 
+1 113 PRO n 
+1 114 SER n 
+1 115 ARG n 
+1 116 THR n 
+1 117 ILE n 
+1 118 GLN n 
+1 119 THR n 
+1 120 ILE n 
+1 121 ALA n 
+1 122 LEU n 
+1 123 PRO n 
+1 124 SER n 
+1 125 MET n 
+1 126 TYR n 
+1 127 ASN n 
+1 128 ASP n 
+1 129 PRO n 
+1 130 GLN n 
+1 131 PHE n 
+1 132 GLY n 
+1 133 THR n 
+1 134 SER n 
+1 135 CYS n 
+1 136 GLU n 
+1 137 ILE n 
+1 138 THR n 
+1 139 GLY n 
+1 140 PHE n 
+1 141 GLY n 
+1 142 LYS n 
+1 143 GLU n 
+1 144 GLN n 
+1 145 SER n 
+1 146 THR n 
+1 147 ASP n 
+1 148 TYR n 
+1 149 LEU n 
+1 150 TYR n 
+1 151 PRO n 
+1 152 GLU n 
+1 153 GLN n 
+1 154 LEU n 
+1 155 LYS n 
+1 156 MET n 
+1 157 THR n 
+1 158 VAL n 
+1 159 VAL n 
+1 160 LYS n 
+1 161 LEU n 
+1 162 ILE n 
+1 163 SER n 
+1 164 HIS n 
+1 165 ARG n 
+1 166 GLU n 
+1 167 CYS n 
+1 168 GLN n 
+1 169 GLN n 
+1 170 PRO n 
+1 171 HIS n 
+1 172 TYR n 
+1 173 TYR n 
+1 174 GLY n 
+1 175 SER n 
+1 176 GLU n 
+1 177 VAL n 
+1 178 THR n 
+1 179 THR n 
+1 180 LYS n 
+1 181 MET n 
+1 182 LEU n 
+1 183 CYS n 
+1 184 ALA n 
+1 185 ALA n 
+1 186 ASP n 
+1 187 PRO n 
+1 188 GLN n 
+1 189 TRP n 
+1 190 LYS n 
+1 191 THR n 
+1 192 ASP n 
+1 193 SER n 
+1 194 CYS n 
+1 195 GLN n 
+1 196 GLY n 
+1 197 ASP n 
+1 198 SER n 
+1 199 GLY n 
+1 200 GLY n 
+1 201 PRO n 
+1 202 LEU n 
+1 203 VAL n 
+1 204 CYS n 
+1 205 SER n 
+1 206 LEU n 
+1 207 GLN n 
+1 208 GLY n 
+1 209 ARG n 
+1 210 MET n 
+1 211 THR n 
+1 212 LEU n 
+1 213 THR n 
+1 214 GLY n 
+1 215 ILE n 
+1 216 VAL n 
+1 217 SER n 
+1 218 TRP n 
+1 219 GLY n 
+1 220 ARG n 
+1 221 GLY n 
+1 222 CYS n 
+1 223 ALA n 
+1 224 LEU n 
+1 225 LYS n 
+1 226 ASP n 
+1 227 LYS n 
+1 228 PRO n 
+1 229 GLY n 
+1 230 VAL n 
+1 231 TYR n 
+1 232 THR n 
+1 233 ARG n 
+1 234 VAL n 
+1 235 SER n 
+1 236 HIS n 
+1 237 PHE n 
+1 238 LEU n 
+1 239 PRO n 
+1 240 TRP n 
+1 241 ILE n 
+1 242 ARG n 
+1 243 SER n 
+1 244 HIS n 
+1 245 THR n 
+1 246 LYS n 
+1 247 GLU n 
+1 248 GLU n 
+1 249 ASN n 
+1 250 GLY n 
+1 251 LEU n 
+1 252 ALA n 
+1 253 LEU n 
+2 1   ALA n 
+2 2   CYS n 
+2 3   SER n 
+2 4   ARG n 
+2 5   TYR n 
+2 6   GLU n 
+2 7   VAL n 
+2 8   ASP n 
+2 9   CYS n 
+2 10  ARG n 
+2 11  GLY n 
+2 12  ARG n 
+2 13  GLY n 
+2 14  SER n 
+2 15  ALA n 
+2 16  CYS n 
+2 17  GLY n 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_asym.id 
+_struct_asym.pdbx_blank_PDB_chainid_flag 
+_struct_asym.pdbx_modified 
+_struct_asym.entity_id 
+_struct_asym.details 
+A N N 1 ? 
+B N N 2 ? 
+C N N 3 ? 
+D N N 4 ? 
+E N N 4 ? 
+#
+# 
+loop_
+_struct_ref.id 
+_struct_ref.db_name 
+_struct_ref.db_code 
+_struct_ref.pdbx_db_accession 
+_struct_ref.entity_id 
+_struct_ref.pdbx_seq_one_letter_code 
+_struct_ref.pdbx_align_begin 
+_struct_ref.pdbx_db_isoform 
+1 UNP UROK_HUMAN P00749 1 
+;IIGGEFTTIENQPWFAAIYRRHRGGSVTYVCGGSLISPCWVISATHCFIDYPKKEDYIVYLGRSRLNSNTQGEMKFEVEN
+LILHKDYSADTLAHHNDIALLKIRSKEGRCAQPSRTIQTICLPSMYNDPQFGTSCEITGFGKENSTDYLYPEQLKMTVVK
+LISHRECQQPHYYGSEVTTKMLCAADPQWKTDSCQGDSGGPLVCSLQGRMTLTGIVSWGRGCALKDKPGVYTRVSHFLPW
+IRSHTKEENGLAL
+;
+179 ? 
+2 PDB 3QN7       3QN7   2 ? ?   ? 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_conn.id 
+_struct_conn.conn_type_id 
+_struct_conn.pdbx_leaving_atom_flag 
+_struct_conn.pdbx_PDB_id 
+_struct_conn.ptnr1_label_asym_id 
+_struct_conn.ptnr1_label_comp_id 
+_struct_conn.ptnr1_label_seq_id 
+_struct_conn.ptnr1_label_atom_id 
+_struct_conn.pdbx_ptnr1_label_alt_id 
+_struct_conn.pdbx_ptnr1_PDB_ins_code 
+_struct_conn.pdbx_ptnr1_standard_comp_id 
+_struct_conn.ptnr1_symmetry 
+_struct_conn.ptnr2_label_asym_id 
+_struct_conn.ptnr2_label_comp_id 
+_struct_conn.ptnr2_label_seq_id 
+_struct_conn.ptnr2_label_atom_id 
+_struct_conn.pdbx_ptnr2_label_alt_id 
+_struct_conn.pdbx_ptnr2_PDB_ins_code 
+_struct_conn.ptnr1_auth_asym_id 
+_struct_conn.ptnr1_auth_comp_id 
+_struct_conn.ptnr1_auth_seq_id 
+_struct_conn.ptnr2_auth_asym_id 
+_struct_conn.ptnr2_auth_comp_id 
+_struct_conn.ptnr2_auth_seq_id 
+_struct_conn.ptnr2_symmetry 
+_struct_conn.pdbx_ptnr3_label_atom_id 
+_struct_conn.pdbx_ptnr3_label_seq_id 
+_struct_conn.pdbx_ptnr3_label_comp_id 
+_struct_conn.pdbx_ptnr3_label_asym_id 
+_struct_conn.pdbx_ptnr3_label_alt_id 
+_struct_conn.pdbx_ptnr3_PDB_ins_code 
+_struct_conn.details 
+_struct_conn.pdbx_dist_value 
+_struct_conn.pdbx_value_order 
+_struct_conn.pdbx_role 
+disulf1 disulf ?   ? A CYS 31  SG ? ? ? 1_555 A CYS 47  SG ? ? A CYS 31  A CYS 47  1_555 ? ? ? ? ? ? ? 2.055 ? ? 
+disulf2 disulf ?   ? A CYS 39  SG ? ? ? 1_555 A CYS 110 SG ? ? A CYS 39  A CYS 110 1_555 ? ? ? ? ? ? ? 2.029 ? ? 
+disulf3 disulf ?   ? A CYS 135 SG ? ? ? 1_555 A CYS 204 SG ? ? A CYS 135 A CYS 204 1_555 ? ? ? ? ? ? ? 2.063 ? ? 
+disulf4 disulf ?   ? A CYS 167 SG ? ? ? 1_555 A CYS 183 SG ? ? A CYS 167 A CYS 183 1_555 ? ? ? ? ? ? ? 2.056 ? ? 
+disulf5 disulf ?   ? A CYS 194 SG ? ? ? 1_555 A CYS 222 SG ? ? A CYS 194 A CYS 222 1_555 ? ? ? ? ? ? ? 2.091 ? ? 
+covale1 covale one ? B CYS 2   SG ? ? ? 1_555 C ZBR .   C9 ? ? B CYS 2   B ZBR 18  1_555 ? ? ? ? ? ? ? 1.798 ? ? 
+covale2 covale one ? B CYS 9   SG ? ? ? 1_555 C ZBR .   C7 ? ? B CYS 9   B ZBR 18  1_555 ? ? ? ? ? ? ? 1.805 ? ? 
+covale3 covale one ? B CYS 16  SG ? ? ? 1_555 C ZBR .   C8 ? ? B CYS 16  B ZBR 18  1_555 ? ? ? ? ? ? ? 1.731 ? ? 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 

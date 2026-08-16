@@ -1,0 +1,847 @@
+data_8B9P
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_entity.id 
+_entity.type 
+_entity.src_method 
+_entity.pdbx_description 
+_entity.formula_weight 
+_entity.pdbx_number_of_molecules 
+_entity.pdbx_ec 
+_entity.pdbx_mutation 
+_entity.pdbx_fragment 
+_entity.details 
+1 polymer     man 'Processed angiotensin-converting enzyme 2'                                     70587.188 2  ? ? ? ? 
+2 polymer     syn ALA-CYS-GLY-ARG-GLN-PHE-CYS-HIS-THR-LEU-MET-PRO-ARG-HIS-LEU-CYS-ALA-NH2         1946.373  2  ? ? ? ? 
+3 non-polymer nat '1-[3,5-bis(3-bromanylpropanoyl)-1,3,5-triazinan-1-yl]-3-bromanyl-propan-1-one' 492.002   2  ? ? ? ? 
+4 water       nat water                                                                           18.015    65 ? ? ? ? 
+#
+# 
+loop_
+_entity_poly.entity_id 
+_entity_poly.type 
+_entity_poly.nstd_linkage 
+_entity_poly.nstd_monomer 
+_entity_poly.pdbx_seq_one_letter_code 
+_entity_poly.pdbx_seq_one_letter_code_can 
+_entity_poly.pdbx_strand_id 
+_entity_poly.pdbx_target_identifier 
+1 'polypeptide(L)' no no  
+;GSTIEEQAKTFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQNMNNAGDKWSAFLKEQSTLAQMYPLQEIQNLTVKLQL
+QALQQNGSSVLSEDKSKRLNTILNTMSTIYSTGKVCNPDNPQECLLLEPGLNEIMANSLDYNERLWAWESWRSEVGKQLR
+PLYEEYVVLKNEMARANHYEDYGDYWRGDYEVNGVDGYDYSRGQLIEDVEHTFEEIKPLYEHLHAYVRAKLMNAYPSYIS
+PIGCLPAHLLGDMWGRFWTNLYSLTVPFGQKPNIDVTDAMVDQAWDAQRIFKEAEKFFVSVGLPNMTQGFWENSMLTDPG
+NVQKAVCHPTAWDLGKGDFRILMCTKVTMDDFLTAHHEMGHIQYDMAYAAQPFLLRNGANEGFHEAVGEIMSLSAATPKH
+LKSIGLLSPDFQEDNETEINFLLKQALTIVGTLPFTYMLEKWRWMVFKGEIPKDQWMKKWWEMKREIVGVVEPVPHDETY
+CDPASLFHVSNDYSFIRYYTRTLYQFQFQEALCQAAKHEGPLHKCDISNSTEAGQKLFNMLRLGKSEPWTLALENVVGAK
+NMNVRPLLNYFEPLFTWLKDQNKNSFVGWSTDWSPYADSSPHHHHHHHH
+;
+;GSTIEEQAKTFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQNMNNAGDKWSAFLKEQSTLAQMYPLQEIQNLTVKLQL
+QALQQNGSSVLSEDKSKRLNTILNTMSTIYSTGKVCNPDNPQECLLLEPGLNEIMANSLDYNERLWAWESWRSEVGKQLR
+PLYEEYVVLKNEMARANHYEDYGDYWRGDYEVNGVDGYDYSRGQLIEDVEHTFEEIKPLYEHLHAYVRAKLMNAYPSYIS
+PIGCLPAHLLGDMWGRFWTNLYSLTVPFGQKPNIDVTDAMVDQAWDAQRIFKEAEKFFVSVGLPNMTQGFWENSMLTDPG
+NVQKAVCHPTAWDLGKGDFRILMCTKVTMDDFLTAHHEMGHIQYDMAYAAQPFLLRNGANEGFHEAVGEIMSLSAATPKH
+LKSIGLLSPDFQEDNETEINFLLKQALTIVGTLPFTYMLEKWRWMVFKGEIPKDQWMKKWWEMKREIVGVVEPVPHDETY
+CDPASLFHVSNDYSFIRYYTRTLYQFQFQEALCQAAKHEGPLHKCDISNSTEAGQKLFNMLRLGKSEPWTLALENVVGAK
+NMNVRPLLNYFEPLFTWLKDQNKNSFVGWSTDWSPYADSSPHHHHHHHH
+;
+A,B ? 
+2 'polypeptide(L)' no yes 'ACGRQFCHTLMPRHLCA(NH2)' ACGRQFCHTLMPRHLCAX C,D ? 
+#
+# 
+# 
+loop_
+_entity_poly_seq.entity_id 
+_entity_poly_seq.num 
+_entity_poly_seq.mon_id 
+_entity_poly_seq.hetero 
+1 1   GLY n 
+1 2   SER n 
+1 3   THR n 
+1 4   ILE n 
+1 5   GLU n 
+1 6   GLU n 
+1 7   GLN n 
+1 8   ALA n 
+1 9   LYS n 
+1 10  THR n 
+1 11  PHE n 
+1 12  LEU n 
+1 13  ASP n 
+1 14  LYS n 
+1 15  PHE n 
+1 16  ASN n 
+1 17  HIS n 
+1 18  GLU n 
+1 19  ALA n 
+1 20  GLU n 
+1 21  ASP n 
+1 22  LEU n 
+1 23  PHE n 
+1 24  TYR n 
+1 25  GLN n 
+1 26  SER n 
+1 27  SER n 
+1 28  LEU n 
+1 29  ALA n 
+1 30  SER n 
+1 31  TRP n 
+1 32  ASN n 
+1 33  TYR n 
+1 34  ASN n 
+1 35  THR n 
+1 36  ASN n 
+1 37  ILE n 
+1 38  THR n 
+1 39  GLU n 
+1 40  GLU n 
+1 41  ASN n 
+1 42  VAL n 
+1 43  GLN n 
+1 44  ASN n 
+1 45  MET n 
+1 46  ASN n 
+1 47  ASN n 
+1 48  ALA n 
+1 49  GLY n 
+1 50  ASP n 
+1 51  LYS n 
+1 52  TRP n 
+1 53  SER n 
+1 54  ALA n 
+1 55  PHE n 
+1 56  LEU n 
+1 57  LYS n 
+1 58  GLU n 
+1 59  GLN n 
+1 60  SER n 
+1 61  THR n 
+1 62  LEU n 
+1 63  ALA n 
+1 64  GLN n 
+1 65  MET n 
+1 66  TYR n 
+1 67  PRO n 
+1 68  LEU n 
+1 69  GLN n 
+1 70  GLU n 
+1 71  ILE n 
+1 72  GLN n 
+1 73  ASN n 
+1 74  LEU n 
+1 75  THR n 
+1 76  VAL n 
+1 77  LYS n 
+1 78  LEU n 
+1 79  GLN n 
+1 80  LEU n 
+1 81  GLN n 
+1 82  ALA n 
+1 83  LEU n 
+1 84  GLN n 
+1 85  GLN n 
+1 86  ASN n 
+1 87  GLY n 
+1 88  SER n 
+1 89  SER n 
+1 90  VAL n 
+1 91  LEU n 
+1 92  SER n 
+1 93  GLU n 
+1 94  ASP n 
+1 95  LYS n 
+1 96  SER n 
+1 97  LYS n 
+1 98  ARG n 
+1 99  LEU n 
+1 100 ASN n 
+1 101 THR n 
+1 102 ILE n 
+1 103 LEU n 
+1 104 ASN n 
+1 105 THR n 
+1 106 MET n 
+1 107 SER n 
+1 108 THR n 
+1 109 ILE n 
+1 110 TYR n 
+1 111 SER n 
+1 112 THR n 
+1 113 GLY n 
+1 114 LYS n 
+1 115 VAL n 
+1 116 CYS n 
+1 117 ASN n 
+1 118 PRO n 
+1 119 ASP n 
+1 120 ASN n 
+1 121 PRO n 
+1 122 GLN n 
+1 123 GLU n 
+1 124 CYS n 
+1 125 LEU n 
+1 126 LEU n 
+1 127 LEU n 
+1 128 GLU n 
+1 129 PRO n 
+1 130 GLY n 
+1 131 LEU n 
+1 132 ASN n 
+1 133 GLU n 
+1 134 ILE n 
+1 135 MET n 
+1 136 ALA n 
+1 137 ASN n 
+1 138 SER n 
+1 139 LEU n 
+1 140 ASP n 
+1 141 TYR n 
+1 142 ASN n 
+1 143 GLU n 
+1 144 ARG n 
+1 145 LEU n 
+1 146 TRP n 
+1 147 ALA n 
+1 148 TRP n 
+1 149 GLU n 
+1 150 SER n 
+1 151 TRP n 
+1 152 ARG n 
+1 153 SER n 
+1 154 GLU n 
+1 155 VAL n 
+1 156 GLY n 
+1 157 LYS n 
+1 158 GLN n 
+1 159 LEU n 
+1 160 ARG n 
+1 161 PRO n 
+1 162 LEU n 
+1 163 TYR n 
+1 164 GLU n 
+1 165 GLU n 
+1 166 TYR n 
+1 167 VAL n 
+1 168 VAL n 
+1 169 LEU n 
+1 170 LYS n 
+1 171 ASN n 
+1 172 GLU n 
+1 173 MET n 
+1 174 ALA n 
+1 175 ARG n 
+1 176 ALA n 
+1 177 ASN n 
+1 178 HIS n 
+1 179 TYR n 
+1 180 GLU n 
+1 181 ASP n 
+1 182 TYR n 
+1 183 GLY n 
+1 184 ASP n 
+1 185 TYR n 
+1 186 TRP n 
+1 187 ARG n 
+1 188 GLY n 
+1 189 ASP n 
+1 190 TYR n 
+1 191 GLU n 
+1 192 VAL n 
+1 193 ASN n 
+1 194 GLY n 
+1 195 VAL n 
+1 196 ASP n 
+1 197 GLY n 
+1 198 TYR n 
+1 199 ASP n 
+1 200 TYR n 
+1 201 SER n 
+1 202 ARG n 
+1 203 GLY n 
+1 204 GLN n 
+1 205 LEU n 
+1 206 ILE n 
+1 207 GLU n 
+1 208 ASP n 
+1 209 VAL n 
+1 210 GLU n 
+1 211 HIS n 
+1 212 THR n 
+1 213 PHE n 
+1 214 GLU n 
+1 215 GLU n 
+1 216 ILE n 
+1 217 LYS n 
+1 218 PRO n 
+1 219 LEU n 
+1 220 TYR n 
+1 221 GLU n 
+1 222 HIS n 
+1 223 LEU n 
+1 224 HIS n 
+1 225 ALA n 
+1 226 TYR n 
+1 227 VAL n 
+1 228 ARG n 
+1 229 ALA n 
+1 230 LYS n 
+1 231 LEU n 
+1 232 MET n 
+1 233 ASN n 
+1 234 ALA n 
+1 235 TYR n 
+1 236 PRO n 
+1 237 SER n 
+1 238 TYR n 
+1 239 ILE n 
+1 240 SER n 
+1 241 PRO n 
+1 242 ILE n 
+1 243 GLY n 
+1 244 CYS n 
+1 245 LEU n 
+1 246 PRO n 
+1 247 ALA n 
+1 248 HIS n 
+1 249 LEU n 
+1 250 LEU n 
+1 251 GLY n 
+1 252 ASP n 
+1 253 MET n 
+1 254 TRP n 
+1 255 GLY n 
+1 256 ARG n 
+1 257 PHE n 
+1 258 TRP n 
+1 259 THR n 
+1 260 ASN n 
+1 261 LEU n 
+1 262 TYR n 
+1 263 SER n 
+1 264 LEU n 
+1 265 THR n 
+1 266 VAL n 
+1 267 PRO n 
+1 268 PHE n 
+1 269 GLY n 
+1 270 GLN n 
+1 271 LYS n 
+1 272 PRO n 
+1 273 ASN n 
+1 274 ILE n 
+1 275 ASP n 
+1 276 VAL n 
+1 277 THR n 
+1 278 ASP n 
+1 279 ALA n 
+1 280 MET n 
+1 281 VAL n 
+1 282 ASP n 
+1 283 GLN n 
+1 284 ALA n 
+1 285 TRP n 
+1 286 ASP n 
+1 287 ALA n 
+1 288 GLN n 
+1 289 ARG n 
+1 290 ILE n 
+1 291 PHE n 
+1 292 LYS n 
+1 293 GLU n 
+1 294 ALA n 
+1 295 GLU n 
+1 296 LYS n 
+1 297 PHE n 
+1 298 PHE n 
+1 299 VAL n 
+1 300 SER n 
+1 301 VAL n 
+1 302 GLY n 
+1 303 LEU n 
+1 304 PRO n 
+1 305 ASN n 
+1 306 MET n 
+1 307 THR n 
+1 308 GLN n 
+1 309 GLY n 
+1 310 PHE n 
+1 311 TRP n 
+1 312 GLU n 
+1 313 ASN n 
+1 314 SER n 
+1 315 MET n 
+1 316 LEU n 
+1 317 THR n 
+1 318 ASP n 
+1 319 PRO n 
+1 320 GLY n 
+1 321 ASN n 
+1 322 VAL n 
+1 323 GLN n 
+1 324 LYS n 
+1 325 ALA n 
+1 326 VAL n 
+1 327 CYS n 
+1 328 HIS n 
+1 329 PRO n 
+1 330 THR n 
+1 331 ALA n 
+1 332 TRP n 
+1 333 ASP n 
+1 334 LEU n 
+1 335 GLY n 
+1 336 LYS n 
+1 337 GLY n 
+1 338 ASP n 
+1 339 PHE n 
+1 340 ARG n 
+1 341 ILE n 
+1 342 LEU n 
+1 343 MET n 
+1 344 CYS n 
+1 345 THR n 
+1 346 LYS n 
+1 347 VAL n 
+1 348 THR n 
+1 349 MET n 
+1 350 ASP n 
+1 351 ASP n 
+1 352 PHE n 
+1 353 LEU n 
+1 354 THR n 
+1 355 ALA n 
+1 356 HIS n 
+1 357 HIS n 
+1 358 GLU n 
+1 359 MET n 
+1 360 GLY n 
+1 361 HIS n 
+1 362 ILE n 
+1 363 GLN n 
+1 364 TYR n 
+1 365 ASP n 
+1 366 MET n 
+1 367 ALA n 
+1 368 TYR n 
+1 369 ALA n 
+1 370 ALA n 
+1 371 GLN n 
+1 372 PRO n 
+1 373 PHE n 
+1 374 LEU n 
+1 375 LEU n 
+1 376 ARG n 
+1 377 ASN n 
+1 378 GLY n 
+1 379 ALA n 
+1 380 ASN n 
+1 381 GLU n 
+1 382 GLY n 
+1 383 PHE n 
+1 384 HIS n 
+1 385 GLU n 
+1 386 ALA n 
+1 387 VAL n 
+1 388 GLY n 
+1 389 GLU n 
+1 390 ILE n 
+1 391 MET n 
+1 392 SER n 
+1 393 LEU n 
+1 394 SER n 
+1 395 ALA n 
+1 396 ALA n 
+1 397 THR n 
+1 398 PRO n 
+1 399 LYS n 
+1 400 HIS n 
+1 401 LEU n 
+1 402 LYS n 
+1 403 SER n 
+1 404 ILE n 
+1 405 GLY n 
+1 406 LEU n 
+1 407 LEU n 
+1 408 SER n 
+1 409 PRO n 
+1 410 ASP n 
+1 411 PHE n 
+1 412 GLN n 
+1 413 GLU n 
+1 414 ASP n 
+1 415 ASN n 
+1 416 GLU n 
+1 417 THR n 
+1 418 GLU n 
+1 419 ILE n 
+1 420 ASN n 
+1 421 PHE n 
+1 422 LEU n 
+1 423 LEU n 
+1 424 LYS n 
+1 425 GLN n 
+1 426 ALA n 
+1 427 LEU n 
+1 428 THR n 
+1 429 ILE n 
+1 430 VAL n 
+1 431 GLY n 
+1 432 THR n 
+1 433 LEU n 
+1 434 PRO n 
+1 435 PHE n 
+1 436 THR n 
+1 437 TYR n 
+1 438 MET n 
+1 439 LEU n 
+1 440 GLU n 
+1 441 LYS n 
+1 442 TRP n 
+1 443 ARG n 
+1 444 TRP n 
+1 445 MET n 
+1 446 VAL n 
+1 447 PHE n 
+1 448 LYS n 
+1 449 GLY n 
+1 450 GLU n 
+1 451 ILE n 
+1 452 PRO n 
+1 453 LYS n 
+1 454 ASP n 
+1 455 GLN n 
+1 456 TRP n 
+1 457 MET n 
+1 458 LYS n 
+1 459 LYS n 
+1 460 TRP n 
+1 461 TRP n 
+1 462 GLU n 
+1 463 MET n 
+1 464 LYS n 
+1 465 ARG n 
+1 466 GLU n 
+1 467 ILE n 
+1 468 VAL n 
+1 469 GLY n 
+1 470 VAL n 
+1 471 VAL n 
+1 472 GLU n 
+1 473 PRO n 
+1 474 VAL n 
+1 475 PRO n 
+1 476 HIS n 
+1 477 ASP n 
+1 478 GLU n 
+1 479 THR n 
+1 480 TYR n 
+1 481 CYS n 
+1 482 ASP n 
+1 483 PRO n 
+1 484 ALA n 
+1 485 SER n 
+1 486 LEU n 
+1 487 PHE n 
+1 488 HIS n 
+1 489 VAL n 
+1 490 SER n 
+1 491 ASN n 
+1 492 ASP n 
+1 493 TYR n 
+1 494 SER n 
+1 495 PHE n 
+1 496 ILE n 
+1 497 ARG n 
+1 498 TYR n 
+1 499 TYR n 
+1 500 THR n 
+1 501 ARG n 
+1 502 THR n 
+1 503 LEU n 
+1 504 TYR n 
+1 505 GLN n 
+1 506 PHE n 
+1 507 GLN n 
+1 508 PHE n 
+1 509 GLN n 
+1 510 GLU n 
+1 511 ALA n 
+1 512 LEU n 
+1 513 CYS n 
+1 514 GLN n 
+1 515 ALA n 
+1 516 ALA n 
+1 517 LYS n 
+1 518 HIS n 
+1 519 GLU n 
+1 520 GLY n 
+1 521 PRO n 
+1 522 LEU n 
+1 523 HIS n 
+1 524 LYS n 
+1 525 CYS n 
+1 526 ASP n 
+1 527 ILE n 
+1 528 SER n 
+1 529 ASN n 
+1 530 SER n 
+1 531 THR n 
+1 532 GLU n 
+1 533 ALA n 
+1 534 GLY n 
+1 535 GLN n 
+1 536 LYS n 
+1 537 LEU n 
+1 538 PHE n 
+1 539 ASN n 
+1 540 MET n 
+1 541 LEU n 
+1 542 ARG n 
+1 543 LEU n 
+1 544 GLY n 
+1 545 LYS n 
+1 546 SER n 
+1 547 GLU n 
+1 548 PRO n 
+1 549 TRP n 
+1 550 THR n 
+1 551 LEU n 
+1 552 ALA n 
+1 553 LEU n 
+1 554 GLU n 
+1 555 ASN n 
+1 556 VAL n 
+1 557 VAL n 
+1 558 GLY n 
+1 559 ALA n 
+1 560 LYS n 
+1 561 ASN n 
+1 562 MET n 
+1 563 ASN n 
+1 564 VAL n 
+1 565 ARG n 
+1 566 PRO n 
+1 567 LEU n 
+1 568 LEU n 
+1 569 ASN n 
+1 570 TYR n 
+1 571 PHE n 
+1 572 GLU n 
+1 573 PRO n 
+1 574 LEU n 
+1 575 PHE n 
+1 576 THR n 
+1 577 TRP n 
+1 578 LEU n 
+1 579 LYS n 
+1 580 ASP n 
+1 581 GLN n 
+1 582 ASN n 
+1 583 LYS n 
+1 584 ASN n 
+1 585 SER n 
+1 586 PHE n 
+1 587 VAL n 
+1 588 GLY n 
+1 589 TRP n 
+1 590 SER n 
+1 591 THR n 
+1 592 ASP n 
+1 593 TRP n 
+1 594 SER n 
+1 595 PRO n 
+1 596 TYR n 
+1 597 ALA n 
+1 598 ASP n 
+1 599 SER n 
+1 600 SER n 
+1 601 PRO n 
+1 602 HIS n 
+1 603 HIS n 
+1 604 HIS n 
+1 605 HIS n 
+1 606 HIS n 
+1 607 HIS n 
+1 608 HIS n 
+1 609 HIS n 
+2 1   ALA n 
+2 2   CYS n 
+2 3   GLY n 
+2 4   ARG n 
+2 5   GLN n 
+2 6   PHE n 
+2 7   CYS n 
+2 8   HIS n 
+2 9   THR n 
+2 10  LEU n 
+2 11  MET n 
+2 12  PRO n 
+2 13  ARG n 
+2 14  HIS n 
+2 15  LEU n 
+2 16  CYS n 
+2 17  ALA n 
+2 18  NH2 n 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_asym.id 
+_struct_asym.pdbx_blank_PDB_chainid_flag 
+_struct_asym.pdbx_modified 
+_struct_asym.entity_id 
+_struct_asym.details 
+A N N 1 ? 
+B N N 1 ? 
+C N N 2 ? 
+D N N 2 ? 
+E N N 3 ? 
+F N N 3 ? 
+G N N 4 ? 
+H N N 4 ? 
+I N N 4 ? 
+J N N 4 ? 
+#
+# 
+loop_
+_struct_ref.id 
+_struct_ref.db_name 
+_struct_ref.db_code 
+_struct_ref.pdbx_db_accession 
+_struct_ref.pdbx_db_isoform 
+_struct_ref.entity_id 
+_struct_ref.pdbx_seq_one_letter_code 
+_struct_ref.pdbx_align_begin 
+1 UNP ACE2_HUMAN Q9BYF1 ? 1 
+;STIEEQAKTFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQNMNNAGDKWSAFLKEQSTLAQMYPLQEIQNLTVKLQLQ
+ALQQNGSSVLSEDKSKRLNTILNTMSTIYSTGKVCNPDNPQECLLLEPGLNEIMANSLDYNERLWAWESWRSEVGKQLRP
+LYEEYVVLKNEMARANHYEDYGDYWRGDYEVNGVDGYDYSRGQLIEDVEHTFEEIKPLYEHLHAYVRAKLMNAYPSYISP
+IGCLPAHLLGDMWGRFWTNLYSLTVPFGQKPNIDVTDAMVDQAWDAQRIFKEAEKFFVSVGLPNMTQGFWENSMLTDPGN
+VQKAVCHPTAWDLGKGDFRILMCTKVTMDDFLTAHHEMGHIQYDMAYAAQPFLLRNGANEGFHEAVGEIMSLSAATPKHL
+KSIGLLSPDFQEDNETEINFLLKQALTIVGTLPFTYMLEKWRWMVFKGEIPKDQWMKKWWEMKREIVGVVEPVPHDETYC
+DPASLFHVSNDYSFIRYYTRTLYQFQFQEALCQAAKHEGPLHKCDISNSTEAGQKLFNMLRLGKSEPWTLALENVVGAKN
+MNVRPLLNYFEPLFTWLKDQNKNSFVGWSTDWSPYAD
+;
+19 
+2 PDB 8B9P       8B9P   ? 2 ? 1  
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_conn.id 
+_struct_conn.conn_type_id 
+_struct_conn.pdbx_leaving_atom_flag 
+_struct_conn.pdbx_PDB_id 
+_struct_conn.ptnr1_label_asym_id 
+_struct_conn.ptnr1_label_comp_id 
+_struct_conn.ptnr1_label_seq_id 
+_struct_conn.ptnr1_label_atom_id 
+_struct_conn.pdbx_ptnr1_label_alt_id 
+_struct_conn.pdbx_ptnr1_PDB_ins_code 
+_struct_conn.pdbx_ptnr1_standard_comp_id 
+_struct_conn.ptnr1_symmetry 
+_struct_conn.ptnr2_label_asym_id 
+_struct_conn.ptnr2_label_comp_id 
+_struct_conn.ptnr2_label_seq_id 
+_struct_conn.ptnr2_label_atom_id 
+_struct_conn.pdbx_ptnr2_label_alt_id 
+_struct_conn.pdbx_ptnr2_PDB_ins_code 
+_struct_conn.ptnr1_auth_asym_id 
+_struct_conn.ptnr1_auth_comp_id 
+_struct_conn.ptnr1_auth_seq_id 
+_struct_conn.ptnr2_auth_asym_id 
+_struct_conn.ptnr2_auth_comp_id 
+_struct_conn.ptnr2_auth_seq_id 
+_struct_conn.ptnr2_symmetry 
+_struct_conn.pdbx_ptnr3_label_atom_id 
+_struct_conn.pdbx_ptnr3_label_seq_id 
+_struct_conn.pdbx_ptnr3_label_comp_id 
+_struct_conn.pdbx_ptnr3_label_asym_id 
+_struct_conn.pdbx_ptnr3_label_alt_id 
+_struct_conn.pdbx_ptnr3_PDB_ins_code 
+_struct_conn.details 
+_struct_conn.pdbx_dist_value 
+_struct_conn.pdbx_value_order 
+_struct_conn.pdbx_role 
+disulf1 disulf ?    ? A CYS 116 SG ? ? ? 1_555 A CYS 124 SG  ? ? A CYS 133 A CYS 141 1_555 ? ? ? ? ? ? ? 2.028 ? ? 
+disulf2 disulf ?    ? A CYS 327 SG ? ? ? 1_555 A CYS 344 SG  ? ? A CYS 344 A CYS 361 1_555 ? ? ? ? ? ? ? 2.037 ? ? 
+disulf3 disulf ?    ? A CYS 513 SG ? ? ? 1_555 A CYS 525 SG  ? ? A CYS 530 A CYS 542 1_555 ? ? ? ? ? ? ? 2.042 ? ? 
+disulf4 disulf ?    ? B CYS 116 SG ? ? ? 1_555 B CYS 124 SG  ? ? B CYS 133 B CYS 141 1_555 ? ? ? ? ? ? ? 2.026 ? ? 
+disulf5 disulf ?    ? B CYS 327 SG ? ? ? 1_555 B CYS 344 SG  ? ? B CYS 344 B CYS 361 1_555 ? ? ? ? ? ? ? 2.028 ? ? 
+disulf6 disulf ?    ? B CYS 513 SG ? ? ? 1_555 B CYS 525 SG  ? ? B CYS 530 B CYS 542 1_555 ? ? ? ? ? ? ? 2.026 ? ? 
+covale1 covale one  ? C CYS 2   SG ? ? ? 1_555 E LFI .   C11 ? ? C CYS 2   C LFI 101 1_555 ? ? ? ? ? ? ? 1.821 ? ? 
+covale2 covale one  ? C CYS 7   SG ? ? ? 1_555 E LFI .   C12 ? ? C CYS 7   C LFI 101 1_555 ? ? ? ? ? ? ? 1.696 ? ? 
+covale3 covale one  ? C CYS 16  SG ? ? ? 1_555 E LFI .   C10 ? ? C CYS 16  C LFI 101 1_555 ? ? ? ? ? ? ? 1.616 ? ? 
+covale4 covale both ? C ALA 17  C  ? ? ? 1_555 C NH2 18  N   ? ? C ALA 17  C NH2 18  1_555 ? ? ? ? ? ? ? 1.325 ? ? 
+covale5 covale one  ? D CYS 2   SG ? ? ? 1_555 F LFI .   C12 ? ? D CYS 2   D LFI 101 1_555 ? ? ? ? ? ? ? 1.657 ? ? 
+covale6 covale one  ? D CYS 7   SG ? ? ? 1_555 F LFI .   C10 ? ? D CYS 7   D LFI 101 1_555 ? ? ? ? ? ? ? 1.831 ? ? 
+covale7 covale one  ? D CYS 16  SG ? ? ? 1_555 F LFI .   C11 ? ? D CYS 16  D LFI 101 1_555 ? ? ? ? ? ? ? 1.817 ? ? 
+covale8 covale both ? D ALA 17  C  ? ? ? 1_555 D NH2 18  N   ? ? D ALA 17  D NH2 18  1_555 ? ? ? ? ? ? ? 1.329 ? ? 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 

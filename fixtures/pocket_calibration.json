@@ -1,0 +1,373 @@
+{
+  "_why_in_set": "Ground truth for the single most dangerous failure mode of the computed-tractability axis: geometric pocket scoring is blind to cryptic pockets. Every number here was produced by running fpocket 4.2.3 and mdpocket (same conda package) on RCSB structures downloaded at the time, not retrieved from literature. READ THE NEXT FIELD BEFORE QUOTING ANY OF THEM. It also records a WITHDRAWN headline finding (the 651x TNF-alpha druggability spread) and the measurement that killed it, so a future reader knows that version was tried and was wrong. The withdrawn figure is written 651x throughout this file: it is 0.651/0.001 from the two recorded druggability values. Older documents write it 650x; the two are the same retracted claim.",
+  "_ARTIFACTS_ARE_NOT_IN_THIS_CHECKOUT_2026_08_15": "THE PHRASE 'in this repo' WAS IN THE FIELD ABOVE AND WAS FALSE — corrected 2026-08-15. NONE of the structures these numbers were measured on (4OBE, 6OIM, 1TNF, 1A8M, 2AZ5, 2E7A, 2ZJC, 5TSW, 6NPY, 3V2Y, 7ALV) are in this checkout, and neither is any fpocket or mdpocket output, .dx grid, or run log. The only structural files present anywhere in this agent's tree are the seven header-trimmed mmCIFs under .claude/skills/structure-select/tests/structures/, which are for the ligand classifier's context cases and are unrelated to these measurements. Nor is fpocket installed here. SO: every druggability, volume, alpha-sphere, hydrophobic-density, C-alpha-displacement, Jaccard and PocketMiner figure in this file is a RECORD OF A RUN, not a reproducible measurement — you can read what was measured, you cannot re-measure it or check it. That is the same defect that let the volume separation in `_4a` stand unchallenged for as long as it did, and it is the reason the ligand classifier's accuracy harness was moved into the repo on this date. This block does not retract anything; it states the epistemic status so a reader can weigh it. Regenerating these with the inputs committed alongside is the fix, and it is NOT done.",
+  "_generated": "2026-08-15",
+  "_method": {
+    "tool": "fpocket",
+    "conda_version": "4.2.3 (build hb88c64c_2, conda-forge)",
+    "binary_self_report": "fpocket 4.0 (upstream cosmetic mismatch, same build)",
+    "install": "micromamba create -y -n druggability -c conda-forge fpocket",
+    "mdpocket": {
+      "install": "none needed - mdpocket ships inside the same conda package as fpocket and was already present",
+      "exploration_mode": "micromamba run -n druggability mdpocket --pdb_list list.txt -o PREFIX",
+      "characterization_mode": "micromamba run -n druggability mdpocket --pdb_list list.txt --selected_pocket sel.pdb -o PREFIX",
+      "exploration_outputs": "PREFIX_dens.dx and PREFIX_freq.dx on a 1.0 A grid, plus isosurface PDBs",
+      "characterization_outputs": "PREFIX_descriptors.txt, ONE ROW PER SNAPSHOT, 41 columns",
+      "runtime": "0.85 s for five ~3.5k-atom TNF-alpha trimers - compute is not a factor in whether to use it",
+      "why_it_matters": "It fixes the site BY CONSTRUCTION - one grid definition applied to every superposed structure - instead of matching independently-detected pockets after the fact. That is the step that failed below."
+    },
+    "clustering_d": 1.6,
+    "clustering_note": "At the fpocket default -D 2.4 the nucleotide site and switch-II site MERGE into one 1540 A^3 mega-pocket (druggability 0.886) because they are contiguous through residues 12/16/34 once ligands are stripped. -D 1.6 resolves them FOR KRAS.",
+    "VOID_do_not_pin": "An earlier version of this file said 'Pin this parameter.' That instruction is VOID. -D 1.6 is KRAS-specific tuning and does NOT generalise: on TNF-alpha it returns druggability 0.002 at the site of a co-crystallised 570 Da ligand, a false negative on a holo structure. Sweep D over at least {1.6, 2.4} and report the range. See the TNF-alpha calibration.",
+    "prep": "chain A, protein only, altloc A, hydrogens stripped"
+  },
+  "target": {
+    "uniprot_accession": "P01116",
+    "gene_symbol": "KRAS",
+    "uniprot_annotated_binding_site_residues": [
+      13, 14, 15, 16, 17, 18, 28, 29, 30, 57, 116, 117, 118, 119, 145, 146, 147
+    ],
+    "annotation_source": "UniProt P01116 key_features, retrieved via paperclip /proteins/P01116/content.lines L5"
+  },
+  "structures": [
+    {
+      "pdb_id": "6OIM",
+      "tier": "holo",
+      "description": "human KRAS G12C covalently bound to AMG 510 (sotorasib)",
+      "resolution_a": 1.65,
+      "chains_used": "A",
+      "ligands": [
+        "MOV (sotorasib, 41 heavy atoms, covalent to Cys12)",
+        "GDP",
+        "Mg"
+      ],
+      "missing_residues": "105-107 (disordered loop)",
+      "true_ligand_contact_shell_5a": [
+        9, 10, 11, 12, 13, 16, 34, 58, 59, 60, 61, 62, 63, 68, 69, 72, 92, 95,
+        96, 99, 100, 103
+      ],
+      "pockets": [
+        {
+          "rank_by_druggability": 1,
+          "fpocket_rank": 1,
+          "site": "switch-II / sotorasib",
+          "druggability": 0.708,
+          "volume_a3": 584.6,
+          "hydrophobicity_score": 18.6,
+          "hydrophobic_density": 33.9,
+          "residues": [
+            9, 10, 12, 16, 58, 59, 60, 61, 62, 63, 68, 69, 72, 96, 99, 100, 103
+          ],
+          "recovery_of_true_site": "17/22 (Jaccard 0.77)"
+        },
+        {
+          "rank_by_druggability": 2,
+          "fpocket_rank": 2,
+          "site": "nucleotide (GDP/GTP)",
+          "druggability": 0.02,
+          "volume_a3": 251.7,
+          "hydrophobicity_score": 16.7,
+          "hydrophobic_density": 19.0,
+          "residues": [15, 18, 28, 116, 117, 119, 120, 146, 147],
+          "overlap_with_uniprot_annotation": "8/17 total (47%); 5/7 of core 116-119+145-147 (71%)"
+        }
+      ]
+    },
+    {
+      "pdb_id": "4OBE",
+      "tier": "apo",
+      "description": "GDP-bound human KRAS, no drug-like ligand",
+      "resolution_a": 1.24,
+      "chains_used": "A",
+      "ligands": ["GDP", "Mg"],
+      "apo_caveat": "nucleotide-bound, not truly ligand-free; correct control for the switch-II question specifically",
+      "missing_residues": "none, complete 1-169",
+      "pockets": [
+        {
+          "rank_by_druggability": 1,
+          "fpocket_rank": 1,
+          "site": "nucleotide (GDP/GTP)",
+          "druggability": 0.442,
+          "volume_a3": 197.2,
+          "hydrophobicity_score": 16.7,
+          "hydrophobic_density": 17.0,
+          "residues": [15, 18, 28, 116, 117, 119, 120, 146, 147],
+          "overlap_with_uniprot_annotation": "8/17 total (47%); 5/7 of core (71%)"
+        },
+        {
+          "rank_by_druggability": 4,
+          "fpocket_rank": 4,
+          "site": "switch-II (COLLAPSED)",
+          "druggability": 0.0,
+          "volume_a3": 230.4,
+          "hydrophobic_density": 3.0,
+          "residues": [60, 61, 68, 71, 72, 95, 96, 99],
+          "recovery_of_true_site": "7/22 (Jaccard 0.30)"
+        }
+      ]
+    }
+  ],
+  "THE_FINDING": {
+    "claim": "Geometric pocket scoring finds the sotorasib site only when the drug is already bound. On apo it is scored as noise.",
+    "switch_ii_druggability_holo": 0.708,
+    "switch_ii_druggability_apo": 0.0,
+    "switch_ii_rank_holo": "1 of 9",
+    "switch_ii_rank_apo": "4 of 5",
+    "volume_change": "-61%",
+    "hydrophobic_density_change": "-91%",
+    "physical_collapse_evidence": {
+      "superposition": "4OBE onto 6OIM on 128 core CA excluding both switch regions, RMSD 0.86 A",
+      "sotorasib_clashes_in_apo_frame": "6 heavy atoms within 2.0 A, 20 within 3.0 A (residues 16,59,60,61,68,71,72,95,99)",
+      "self_control_baseline": "same test against 6OIM itself: 1 atom within 2.0 A (the Cys12 covalent bond), 2 within 3.0 A",
+      "interpretation": "the clash is a real apo conformational difference, not superposition error",
+      "switch_ii_backbone_displacement_holo_vs_apo": {
+        "_protocol": "HAND CALIBRATION, NOT what the deployed pipeline outputs. These per-residue displacements come from a protocol that disabled auto-trim and residue-name matching, applied a KRAS-specific switch I / switch II exclusion, and used a fixed fit range - none of which is hardcoded in the deployed default, deliberately. Do not quote them as pipeline output.",
+        "_hand_calibration_max_ca_displacement_a": 8.83,
+        "_deployed_default_max_ca_displacement_a": 8.65,
+        "_deployed_default_note": "The deployed zero-knowledge default measures 8.65 A for KRAS and ~1.55 A for TNF-alpha, against hand figures of 8.83 A and 1.62 A - 0.1 to 0.2 A below them, because the default enables auto-trim and residue-name matching. Reproducing 8.83 additionally needs the KRAS-specific switch I / switch II exclusion and the fixed fit range. Mechanism and is_cryptic are identical under both protocols, so nothing downstream of the label changes, but the two sets of displacement figures are NOT interchangeable. pocket_scan reports the default in cryptic.max_backbone_ca_displacement_a and the calibration protocol separately in calibration_protocol; say which one you are quoting.",
+        "_precision_note": "The order-of-magnitude separation between KRAS (~8.8 A) and TNF-alpha (~1.6 A) is the finding. The decimals are not.",
+        "Gly60": "~3.1 A",
+        "Glu62": "~4.4 A",
+        "Glu63": "~8.8 A",
+        "Tyr64": "~4.3 A",
+        "Tyr68": "~3.6 A"
+      }
+    },
+    "control_site_is_stable": "The nucleotide site scores comparably in both (0.020 holo / 0.442 apo; the holo value is depressed only because ligand removal merges it with the opened switch-II site). So the method is reliable for pre-formed pockets.",
+    "consequence_for_the_agent": "When only apo structures exist, a low pocket score is an ABSENCE OF MEASUREMENT, not evidence against tractability. Set cryptic_pocket_risk=high whenever structure.tier is apo or predicted.",
+    "consequence_for_the_retrospective_eval": "Every KRAS structure before ~2013 was apo or GDP-bound. Our method run honestly in 2012 would have returned 'not tractable', reproducing the field's 30-year error. The agent must therefore NOT claim it would have found G12C early. The demonstrable claim is that it knows when it cannot see.",
+    "consequence_for_the_retrospective_eval_AMENDED_2026_08_15": "The sentence above is superseded in ONE respect and stands in every other. It no longer holds that the method 'would have returned not_tractable', because the method may no longer SAY that on a low pocket score: CLAUDE.md rule 4.2 makes fpocket druggability non-load-bearing and forbids it from carrying a not_tractable or insufficient_evidence verdict on its own, and the volume criterion that briefly replaced it has been suspended. Run honestly in 2012 the method now returns the computed axis as UNRESOLVED. Everything else survives untouched and this is not a softening: the 0.708-on-holo / 0.000-on-apo measurement is real, the pocket really is collapsed, and 'do not claim it would have found G12C early' is unchanged. If anything the honest 2012 output is now a better illustration of the point, because 'unresolved' is precisely what 'knows when it cannot see' sounds like, where 'not tractable' was the field's error being reproduced rather than recognised. See _expected_output_audit_2026_08_15 in targets.json; the ladder has NOT been rewritten and a human should rule on the wording.",
+    "what_would_be_needed_to_see_cryptic_sites": "conformational sampling in front of the pocket call: MD, mixed-solvent MD, or ensemble docking. A single-structure pocket call cannot do it."
+  },
+  "REPRODUCED_THROUGH_THE_PIPELINE_2026_08_15": {
+    "why_this_entry_exists": "The 651x claim originally came from a bespoke analysis script, NOT from the deployed system. Until same-site tracking existed, the production pipeline could not reproduce it \u2014 on an apo structure it fell back to 'most druggable pocket anywhere', which pools different pockets and measures nothing. A first attempt at re-measuring gave 7.8x precisely because of that fallback. NOTE: the tracking added here reproduced the number and was itself wrong; see tnf_result_VOID. The entry is retained as the record of that.",
+    "what_was_added_NOW_VOID_FOR_OLIGOMERS": "site_signature tracking. A holo structure anywhere in the ensemble donates its ligand-site residues as a signature; apo structures are then scored at the pocket with the highest residue-number overlap, matched chain-agnostically because the site is often inter-subunit and chain letters are not stable across depositions. THE CHAIN-AGNOSTIC PART IS THE DEFECT: on a homo-oligomer it makes a symmetric site unresolvable, and it is what produced the withdrawn TNF-alpha figure. Use mdpocket characterization mode instead whenever the assembly has more than one copy of the chain bearing the site.",
+    "kras_result": {
+      "ensemble": ["6OIM (holo, donates signature)", "4OBE (apo)"],
+      "4OBE_D1.6": {
+        "rank": 3,
+        "druggability": 0.0,
+        "volume_a3": 223.3,
+        "signature_overlap": 0.318
+      },
+      "4OBE_D2.4": {
+        "rank": 1,
+        "druggability": 0.0,
+        "volume_a3": 380.4,
+        "signature_overlap": 0.5
+      },
+      "reading": "the switch-II site is now correctly tracked into the apo structure and scores ZERO there. The original calibration, reproduced by the deployed pipeline for the first time.",
+      "why_this_one_still_stands": "KRAS was prepared as a single chain, so residue numbers are unambiguous and the chain-agnostic matching that broke on the TNF-alpha homotrimer has no symmetry to be confused by. The defect is specific to assemblies carrying more than one copy of the chain bearing the site."
+    },
+    "tnf_result_VOID": {
+      "status": "WITHDRAWN 2026-08-15. Do not cite any number in this block. It is kept only so a reader knows this version was tried and was wrong.",
+      "ensemble": [
+        "2AZ5 (holo, donates signature)",
+        "1TNF",
+        "1A8M",
+        "2E7A",
+        "2ZJC",
+        "5TSW"
+      ],
+      "withdrawn_druggability_fold_range": 651.0,
+      "withdrawn_druggability_fold_range_note": "651 = 0.651 / 0.001, the two recorded values. Some documents write it 650x; identical claim, and both are retracted. Use 651x when citing it as a retraction so the figure resolves to this record. The precision is illusory anyway - the denominator is one significant figure - but the reason for withdrawal is not precision, it is that the two values were never measured at the same site.",
+      "withdrawn_min": {
+        "structure": "2ZJC",
+        "druggability": 0.001
+      },
+      "withdrawn_max": {
+        "structure": "1A8M",
+        "druggability": 0.651
+      },
+      "withdrawn_volume_spread_pct": 84.1,
+      "withdrawn_earlier_form_of_the_same_claim": "An earlier phrasing gave volume 206.7-309.2 A^3 (+/-16%) against a 651-fold druggability swing 'at the same site'. Both halves are void, including the volume range - they came from the same matching step.",
+      "why_it_is_void": "The pockets were matched across structures on shared residue NUMBERS. mdpocket, run over the superposed ensemble, showed the matched pocket's centroid sits 7.7 A from the SPD304 site it claimed to be measuring, and that the matcher was not self-consistent: 1TNF matched a pocket 12.2 A away from where the other four matched. 'The same site' spanned 12 A across five structures. It was never a measurement of one site.",
+      "why_it_is_not_a_tuning_problem": "A 19-residue reference on a homotrimer collapses to only 11 DISTINCT residue numbers, because the three protomers triplicate them. Discarding chain identity makes a C3-symmetric site unresolvable in principle. No overlap threshold fixes this.",
+      "what_the_matcher_was_actually_tracking": {
+        "identity": "a real but DIFFERENT pocket - an on-axis cavity lined symmetrically by Q61/K98/P117/I118/Y119 from ALL THREE chains",
+        "volume_a3": 107.0,
+        "mdpocket_frequency": 1.0,
+        "note": "Well-formed and reproducible. Just not the SPD304 site. This is also the pocket the K98R mutant caveat belongs to."
+      }
+    },
+    "RESOLVED_the_matching_was_not_weak_it_was_wrong": {
+      "supersedes": "OPEN_CAVEAT_the_matching_is_weak, which framed this as thin evidence needing a minimum-overlap threshold. That framing is void: the problem is not a threshold, it is that chain-agnostic residue matching cannot resolve a C3-symmetric site at all.",
+      "observed_signature_overlaps_that_should_have_been_the_warning": {
+        "1TNF": 0.143,
+        "1A8M": 0.143,
+        "2E7A": 0.214,
+        "2ZJC": 0.071,
+        "5TSW": 0.143
+      },
+      "the_fix_that_was_applied": "mdpocket characterization mode - one grid definition applied to every superposed structure, so the site is fixed BY CONSTRUCTION and never needs matching.",
+      "measured_effect": {
+        "_precision_note": "TWO SIGNIFICANT FIGURES, NEVER THREE. The keys below are strings, not numbers, on purpose: an earlier version of this file carried 27.8 / 10.2 / 2.7 as JSON numbers, which invites a consumer to compare against them exactly. That precision does not exist. fpocket estimates volume by Monte Carlo and mdpocket inherits it - three identical reruns of one five-structure ensemble gave CVs of 12.1 / 11.3 / 10.8 %, so about ONE PERCENTAGE POINT of any CV reported here is the method's own noise. The improvement is real and survives the noise; the third digit does not. Never read a CV difference smaller than ~1 pp as a difference between sites.",
+        "cv_across_ensemble_post_hoc_matching_pct_approx": "~28",
+        "cv_across_ensemble_site_fixed_by_construction_pct_approx": "~10",
+        "inflation_factor_approx": "~2.8",
+        "as_measured": {
+          "post_hoc_matching_pct": 28.1,
+          "post_hoc_matching_conditions": "D=1.6",
+          "site_fixed_by_construction_pct": 9.9,
+          "noise_floor_pp": 1.0,
+          "rerun_cvs_pct": [12.1, 11.3, 10.8],
+          "rerun_note": "three identical reruns of one five-structure ensemble; the deployed run gave 9.9%"
+        },
+        "superseded_figures": "An earlier version of this file and of the pocket-scan skill said 27.8% to 10.2%, inflation 2.7-fold. Those figures are superseded by the pair above, and the third digit was never warranted in either form.",
+        "what_it_was_measured_on": "site_from_density, which is NOT the ligand site - its centroid sits 7.73 A from the transferred SPD304 ligand. This is a real measurement of REPRODUCIBILITY across the ensemble. It is not a measurement of the SPD304 site.",
+        "attribution": "essentially all of the inflation comes from the single structure that matched a pocket 12 A away from the others"
+      },
+      "generalised_lesson": "A pocket-matching step is itself a MEASUREMENT and needs its own controls. Report the matched centroid distance across the ensemble, not just an overlap fraction - two pockets sharing residue numbers can be 12 A apart and an overlap score will not tell you.",
+      "status": "CLOSED."
+    },
+    "also_observed": {
+      "2AZ5_at_D1.6": {
+        "rank": 13,
+        "druggability": 0.003
+      },
+      "note": "the known -D 1.6 false negative on a co-crystallised holo site, reproduced again. At D=2.4 the same site is rank 5 with druggability 0.587. Further evidence for sweeping D rather than pinning it."
+    }
+  },
+  "MDPOCKET_CALIBRATION_2026_08_15": {
+    "_why_in_set": "This is what replaces the withdrawn 651x finding. It is in the set for two reasons: it is the measurement that fixed a site by construction instead of by matching, and it is the case where the honest answer turned out to be ZERO rather than a number.",
+    "THE_FINDING": {
+      "claim": "At the true SPD304 site, in the intact apo trimer, there is no pocket. mdpocket returns 0.00 A^3 in FOUR OF FIVE apo structures.",
+      "why_that_is_the_right_answer": "Placing the ligand into each intact apo trimer gives 27-29 heavy-atom clashes under 2.0 A, minimum interatomic distance 0.28-0.53 A, attributed IDENTICALLY in all five to the third protomer (chain C: S60, Y119, L120, G121) plus the Y119 triad. SPD304 binds only after displacing a subunit. Five independent crystals, one answer.",
+      "consistency_with_the_subunit_removed_control": "Delete the third chain and all five apo structures recover the pocket at roughly 280-550 A^3 (raw values 281.8-546.0, holo dimer reference 312.5; fpocket's volume estimator is Monte Carlo, so quote this range as ~280-550 and do not carry the fourth digit downstream). Both measurements say the same thing: the site is pre-formed in the two-chain state and a protomer is standing in it. 'Pre-formed' is a statement about the subunit-removed state, NOT about the intact trimer.",
+      "the_defensibility_gain": "mdpocket returned 0.00 rather than silently substituting a nearby pocket. The residue-number matcher, handed the same five structures, returned a confident value for a cavity 7.7 A away. A refusal instead of a wrong number is the entire point of the tool change.",
+      "consequence_for_the_agent": "0.00 A^3 is a RESULT, not a failed run. Report it. It is the one geometric output that cannot be an over-claim."
+    },
+    "kras_the_richer_case_because_the_pocket_only_partially_collapses": {
+      "characterization_mode": {
+        "6OIM_holo_ligand_stripped": {
+          "volume_a3": 1152.3,
+          "alpha_spheres": 500,
+          "mean_local_hydrophobic_density": 185.8
+        },
+        "4OBE_apo": {
+          "volume_a3": 452.1,
+          "alpha_spheres": 182,
+          "mean_local_hydrophobic_density": 12.6
+        }
+      },
+      "exploration_mode_two_structure_density": {
+        "points_at_freq_1.0": 179,
+        "points_at_freq_1.0_identity": "the nucleotide-adjacent shelf - present in both structures",
+        "points_at_freq_0.5": 322,
+        "points_at_freq_0.5_identity": "the cryptic switch-II sub-pocket - ligand-bound conformer only",
+        "reading": "The site does not vanish wholesale; a specific sub-pocket does, and mdpocket localises WHICH PART collapses. That is what TNF-alpha's clean zero cannot tell you.",
+        "caveat": "With N=2, 'frequency 0.5' is presence-in-one-of-two, not a frequency. It is being used to LOCALISE, not to quantify how often the pocket is open. See failure mode 3."
+      }
+    },
+    "FAILURE_MODES": {
+      "1_silent_frame_dropping": {
+        "behaviour": "A missing file in the pdb_list prints a message and then EXITS 0.",
+        "why_it_is_dangerous": "freq.dx is normalised over the frames that ACTUALLY RAN, so a dropped structure silently inflates every frequency in the grid. The failure looks like a stronger result.",
+        "only_detector": "time.txt carries exactly one line per processed frame.",
+        "required_assertion": "len(time.txt) == len(list.txt), checked BEFORE reading any grid. Non-negotiable."
+      },
+      "2_it_does_not_superpose": {
+        "behaviour": "Unaligned input exits 0. Two DIFFERENT PROTEINS in one list also exit 0, with only a non-fatal warning.",
+        "consequence": "Superposition and site definition are the caller's job, and nothing downstream will notice if you skip them."
+      },
+      "3_frequency_is_quantised_at_1_over_N": {
+        "behaviour": "With N=5 the only attainable values are {0, 0.2, 0.4, 0.6, 0.8, 1.0}.",
+        "consequence": "A genuine 1-in-5 signal is indistinguishable from single-structure noise.",
+        "rule": "Require N >= 10 structures, or do not report a frequency at all - report presence/absence instead."
+      },
+      "4_all_atom_pdensities_uses_the_first_topology": {
+        "behaviour": "_all_atom_pdensities.pdb is written on the FIRST structure's topology only.",
+        "consequence": "Meaningless whenever atom counts differ across the ensemble, which is the normal case for crystal structures with different disordered regions."
+      },
+      "5_homo_oligomer_superposition_needs_a_permutation_search": {
+        "behaviour": "For a C3 trimer the three CYCLIC chain mappings agree within 0.03 A; the three ANTICYCLIC ones give ~22 A.",
+        "rule": "Search the permutations and reject the anticyclic solutions. Do not assume A->A, B->B, C->C."
+      }
+    },
+    "FACTUAL_CORRECTIONS_to_earlier_versions_of_this_file_and_the_skill": {
+      "residue_98_does_not_line_the_SPD304_site": {
+        "measurement": "In holo 2AZ5, the nearest Lys98 heavy atom is 8.74 A from ligand `307`; residue 56 is 7.82 A. Neither is in the 5 A contact shell.",
+        "what_was_wrong": "The K98R mutant caveat was attached to the SPD304 site. It is real, but it attaches to the OTHER pocket - the on-axis cavity lined by Q61/K98/P117/I118/Y119 from all three chains."
+      },
+      "mutant_composition_of_the_apo_ensemble": {
+        "what_was_wrong": "Earlier text said two, or three, of the apo entries differ from wild type. It is FOUR of five.",
+        "corrected": {
+          "1TNF": "wild-type at all three positions - the only one",
+          "1A8M": "R31D",
+          "2ZJC": "BOTH K98R and R31A",
+          "2E7A": "K98R",
+          "5TSW": "Y56F"
+        },
+        "rule": "Report ensemble composition, not just the spread."
+      }
+    }
+  },
+  "POCKETMINER_EVALUATED_2026_08_15": {
+    "_why_in_set": "The comparator we cited for two months, finally run. It reproduces its published accuracy and inverts on our four calibration cases. Kept as the negative control for 'a single-structure cryptic predictor could replace the ensemble'.",
+    "source": "github.com/Mickdub/gvp branch pocket_pred, released weights models/pocketminer",
+    "install": "own env required - TF pin. micromamba create -p ./env -c conda-forge python=3.11 numpy scipy pandas tqdm mdtraj 'tensorflow>=2.13'; pip install tf-keras; MUST run with TF_USE_LEGACY_KERAS=1",
+    "runtime": "0.31-0.51 s per structure, CPU only, no GPU, no Modal. Model load 4.7 s once per process.",
+    "reproduction_of_published_metric": {
+      "shipped_test_set_pooled_roc_auc": 0.868,
+      "published": 0.87,
+      "shipped_val_set_roc_auc": 0.897,
+      "note": "the install is correct and the weights are genuine; the failure below is not an installation artifact"
+    },
+    "leakage_check": "none of 4OBE/6OIM/1TNF/2AZ5/7ALV/6NPY/3V2Y appear in PocketMiner's 185-structure dataset - fully out of sample",
+    "operating_threshold": {
+      "value": 0.5362,
+      "derivation": "Youden's J on the shipped validation set, the authors' own rule (src/optimal_threshold_protein_performance.py:13-19)",
+      "fraction_of_all_residues_called_positive": "0.32 to 0.54 across our four structures - 'flagged' is nearly content-free at this threshold"
+    },
+    "THE_FINDING": {
+      "claim": "On our four calibration cases PocketMiner's signal is inverted: the only site that fails to beat its own spatial null is the only true cryptic site.",
+      "method": "2000 random same-size spatially-contiguous patches per structure; p = fraction scoring >= the real site",
+      "kras_switch_ii_apo_4OBE": {"truth": "cryptic, 8.8 A collapse", "site_mean": 0.632, "null_mean": 0.495, "p": 0.203, "beats_null": false},
+      "tnfa_spd304_apo_1TNF": {"truth": "NOT cryptic, subunit occlusion ~1.6 A", "site_mean": 0.673, "null_mean": 0.519, "p": 0.002, "beats_null": true},
+      "nlrp3_mcc950_apo_6NPY": {"truth": "NOT cryptic, pre-formed 0.95 A", "site_mean": 0.821, "null_mean": 0.483, "p": 0.006, "beats_null": true},
+      "s1pr1_orthosteric_3V2Y": {"truth": "NOT cryptic, pre-formed 1.83 A", "site_mean": 0.711, "null_mean": 0.471, "p": 0.010, "beats_null": true},
+      "kras_given_every_chance": {
+        "all_22_sotorasib_contacts_p": 0.234,
+        "switch_ii_57_76_p": 0.303,
+        "sotorasib_contacts_within_switch_ii_p": 0.088,
+        "five_measured_mobile_residues_p": 0.132,
+        "note": "no definition reaches p<0.05"
+      }
+    },
+    "MULTICHAIN_VERDICT": {
+      "refuses_multichain": false,
+      "correction": "prior_art.md said it refuses multi-chain input. That is WRONG about the released code and is withdrawn. There is no chain check anywhere in pocket_pred.",
+      "what_it_does_instead": "flattens all chains into one residue list and runs the sequence-position encoding through the chain break",
+      "order_dependence_test": {
+        "manipulation": "1TNF chains A,B,C -> C,B,A, identical coordinates",
+        "mean_abs_delta": 0.1114,
+        "max_abs_delta": 0.3852,
+        "pearson_r": 0.811,
+        "residues_crossing_threshold": "38 of 152",
+        "reading": "a multi-chain prediction is not a well-defined function of the structure"
+      },
+      "single_protomer_test": {
+        "trimer_site_mean": 0.673, "trimer_background": 0.500, "trimer_enrichment": 0.174,
+        "protomer_site_mean": 0.392, "protomer_background": 0.442, "protomer_enrichment": -0.050,
+        "site_residues_above_threshold_trimer": "34/42",
+        "site_residues_above_threshold_protomer": "2/14",
+        "same_14_residues_mean_drop": 0.291,
+        "whole_chain_A_shift_for_comparison": 0.034,
+        "reading": "the interface site is invisible on one protomer, and the drop is concentrated at the interface rather than being a global offset"
+      },
+      "consequence": "for an oligomeric interface site there is no valid way to run PocketMiner: multi-chain is order-dependent and single-chain cannot see the site"
+    },
+    "RELEASED_CODE_DEFECTS": {
+      "1_keras3_silent_partial_restore": {
+        "severity": "produces confident noise with no error",
+        "detail": "under TF>=2.16/Keras 3, tf.train.Checkpoint.restore leaves 93 of 197 model variables at random init including the final (200,1) output kernel; util.load_checkpoint prints 'CHECKPOINT RESTORED FROM ...' unconditionally and never calls assert_consumed()",
+        "measured": "two runs of the identical script differ by up to 0.41 in per-residue probability",
+        "fix": "TF_USE_LEGACY_KERAS=1 + tf-keras -> 177 variables, 0 unrestored, bit-identical across processes",
+        "detector": "tf.train.Checkpoint(model=m).restore(path).assert_existing_objects_matched() - under Keras 3 it names a real weight, under Keras 2 the only unmatched object is save_counter"
+      },
+      "2_cannot_read_incomplete_backbone": "process_strucs reshapes to (n_residues,4,3); 2AZ5 biological assembly (4x Leu157 with no backbone O) raises ValueError: cannot reshape array of size 6492 into shape (542,4,3)",
+      "3_demo_path_wrong": "xtal_predict.py points at ../data/ACE2.pdb; file is at ../data/training-data/ACE2.pdb"
+    },
+    "DECISION": "NOT WIRED IN. It changes no call we make: it cannot lower cryptic_pocket_risk (it misses the canonical cryptic site), cannot raise one (it fires on everything), and cannot change next_experiment because the backbone-collapse vs occlusion split that drives it is exactly what PocketMiner gets backwards here."
+  }
+}

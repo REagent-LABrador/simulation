@@ -1,0 +1,560 @@
+{
+ "case": "N8",
+ "ligand": "TL1A",
+ "partner": "DR3_DD",
+ "expected": "negative",
+ "class": "wrong_domain_same_protein",
+ "why_in_set": "DR3's intracellular death domain against TL1A. Same protein as the real test case, wrong domain, wrong side of the membrane. If the loop cannot tell DR3's ectodomain from DR3's death domain it is not reading the sequence, it is reading the name.",
+ "constructs": {
+  "TL1A": [
+   "O95150",
+   72,
+   251,
+   "3K51 entity 1 aligned region O95150 72-251 (secreted form)",
+   "ligand"
+  ],
+  "DR3_DD": [
+   "Q93038",
+   322,
+   415,
+   "UniProt Q93038 Death domain 332-413, extended to 322-415 to match 5YGP/5YGS. Intracellular. Cannot contact a secreted ligand. The ONLY part of DR3 that is deposited.",
+   "control"
+  ]
+ },
+ "n_seeds": 3,
+ "chains_a": [
+  "A",
+  "B",
+  "C"
+ ],
+ "chains_b": [
+  "D"
+ ],
+ "total_residues": 634,
+ "boltz2_wall_s": 99.8,
+ "structural_confidence": {
+  "_what_this_is": "Structural-confidence metrics: how sure the model is about the geometry it drew. pTM, ipTM and pLDDT are defined as measures of geometric confidence \u2014 they are not binding scores, pocket scores or druggability scores, and nothing downstream should read them as such.",
+  "per_seed": [
+   {
+    "primary_metric": "confidence_score",
+    "metric_type": "Boltz2Metrics",
+    "confidence_score": 0.8077549338340759,
+    "ptm": 0.8325287699699402,
+    "iptm": 0.7933464646339417,
+    "avg_pae": 11.163783073425293,
+    "ligand_iptm": 0.0,
+    "protein_iptm": 0.7933464646339417,
+    "complex_plddt": 0.8113569617271423,
+    "complex_iplddt": 0.7956345677375793,
+    "complex_pde": 0.7302500009536743,
+    "complex_ipde": 3.1766951084136963
+   },
+   {
+    "primary_metric": "confidence_score",
+    "metric_type": "Boltz2Metrics",
+    "confidence_score": 0.8034944534301758,
+    "ptm": 0.8369607329368591,
+    "iptm": 0.7999750375747681,
+    "avg_pae": 11.066683769226074,
+    "ligand_iptm": 0.0,
+    "protein_iptm": 0.7999750375747681,
+    "complex_plddt": 0.8043743371963501,
+    "complex_iplddt": 0.7601780891418457,
+    "complex_pde": 0.7343420386314392,
+    "complex_ipde": 3.31367564201355
+   },
+   {
+    "primary_metric": "confidence_score",
+    "metric_type": "Boltz2Metrics",
+    "confidence_score": 0.8204490542411804,
+    "ptm": 0.844158947467804,
+    "iptm": 0.8086802363395691,
+    "avg_pae": 10.695064544677734,
+    "ligand_iptm": 0.0,
+    "protein_iptm": 0.8086802363395691,
+    "complex_plddt": 0.823391318321228,
+    "complex_iplddt": 0.7917381525039673,
+    "complex_pde": 0.6691877841949463,
+    "complex_ipde": 2.7792105674743652
+   }
+  ],
+  "confidence_score": {
+   "values": [
+    0.8078,
+    0.8035,
+    0.8204
+   ],
+   "min": 0.8035,
+   "max": 0.8204
+  },
+  "complex_plddt": {
+   "values": [
+    0.8114,
+    0.8044,
+    0.8234
+   ],
+   "min": 0.8044,
+   "max": 0.8234
+  },
+  "ptm": {
+   "values": [
+    0.8325,
+    0.837,
+    0.8442
+   ],
+   "min": 0.8325,
+   "max": 0.8442
+  },
+  "iptm": {
+   "values": [
+    0.7933,
+    0.8,
+    0.8087
+   ],
+   "min": 0.7933,
+   "max": 0.8087
+  },
+  "ligand_iptm": {
+   "values": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "min": 0.0,
+   "max": 0.0
+  },
+  "avg_pae": {
+   "values": [
+    11.1638,
+    11.0667,
+    10.6951
+   ],
+   "min": 10.6951,
+   "max": 11.1638
+  }
+ },
+ "seed_dispersion": {
+  "n_seeds": 3,
+  "ligand_centroid_dispersion_a": {
+   "n_pairs": 0,
+   "median_a": null,
+   "min_a": null,
+   "max_a": null,
+   "frame": "protein-CA superposed onto seed 0 before measuring",
+   "_why": "Measured off raw un-superposed CIFs this returned 15.57 A for two seeds whose contact-residue sets were identical. Boltz-2 emits every sample in its own frame."
+  },
+  "backbone_ca_rmsd_across_seeds_a": {
+   "n_pairs": 3,
+   "median_a": 21.943,
+   "min_a": 19.908,
+   "max_a": 22.2
+  },
+  "interpretation": "Dispersion across seeds is a per-run uncertainty measure and it is measured, not assumed. It does NOT measure correctness \u2014 see converged_site, and OBSERVATIONS['seed_dispersion_and_site_convergence'] for the case where tight agreement accompanied the wrong site."
+ },
+ "cofold_interface_seed0": {
+  "n_protein_chains": 4,
+  "chains_compared": [
+   "A",
+   "B"
+  ],
+  "contacts": 74,
+  "residues_in_contact": 32,
+  "min_inter_chain_ca_a": 3.81,
+  "com_separation_a": 21.92,
+  "definition": "CA-CA pairs within 8.0 A between chains A and B"
+ },
+ "provenance": {
+  "tool": "boltz2-prediction",
+  "invocation": "proto_tools python import, in-process",
+  "device": "modal",
+  "wall_clock_s": 98.5,
+  "config": {
+   "seed": 42,
+   "use_msa": true,
+   "recycling_steps": 3,
+   "sampling_steps": 200,
+   "diffusion_samples": 1
+  },
+  "timestamp_utc": "2026-08-16T02:14:15Z"
+ },
+ "per_seed_interface": [
+  {
+   "chains_a": [
+    "A",
+    "B",
+    "C"
+   ],
+   "chains_b": [
+    "D"
+   ],
+   "n_heavy_atom_contacts_5a": 265,
+   "ca_pairs_8a": 15,
+   "_ca_pairs_note": "CA-CA PAIR count, the same quantity as the 97 in the 8DYG reference. NOT a residue count (8DYG is 29).",
+   "n_interface_res_a": 18,
+   "n_interface_res_b": 16,
+   "interface_res_a": [
+    "A:41:ASN",
+    "A:102:LYS",
+    "A:112:LYS",
+    "A:117:TYR",
+    "A:118:PRO",
+    "A:119:GLU",
+    "A:120:PRO",
+    "A:121:THR",
+    "A:148:SER",
+    "B:32:ARG",
+    "B:49:GLU",
+    "B:50:HIS",
+    "B:52:LEU",
+    "B:53:GLY",
+    "B:54:LEU",
+    "B:168:THR",
+    "B:169:LYS",
+    "B:170:GLU"
+   ],
+   "interface_res_b": [
+    "D:10:PRO",
+    "D:11:GLY",
+    "D:12:PRO",
+    "D:15:TYR",
+    "D:19:ASP",
+    "D:23:ALA",
+    "D:24:ARG",
+    "D:47:ILE",
+    "D:49:ARG",
+    "D:50:PHE",
+    "D:51:ARG",
+    "D:52:ASP",
+    "D:55:TYR",
+    "D:87:ASP",
+    "D:91:ARG",
+    "D:94:ARG"
+   ],
+   "min_heavy_dist_a": 2.44,
+   "com_separation_a": 33.65,
+   "bsa_total_a2": 1415.8,
+   "bsa_per_side_a2": 707.9,
+   "sasa_a_a2": 23514.5,
+   "sasa_b_a2": 5407.2,
+   "seed": 0
+  },
+  {
+   "chains_a": [
+    "A",
+    "B",
+    "C"
+   ],
+   "chains_b": [
+    "D"
+   ],
+   "n_heavy_atom_contacts_5a": 474,
+   "ca_pairs_8a": 40,
+   "_ca_pairs_note": "CA-CA PAIR count, the same quantity as the 97 in the 8DYG reference. NOT a residue count (8DYG is 29).",
+   "n_interface_res_a": 26,
+   "n_interface_res_b": 29,
+   "interface_res_a": [
+    "A:2:LYS",
+    "A:3:GLY",
+    "B:29:THR",
+    "B:31:VAL",
+    "B:32:ARG",
+    "B:49:GLU",
+    "B:52:LEU",
+    "B:53:GLY",
+    "B:54:LEU",
+    "B:85:ARG",
+    "B:167:TYR",
+    "B:168:THR",
+    "B:169:LYS",
+    "B:170:GLU",
+    "B:172:LYS",
+    "C:40:LYS",
+    "C:41:ASN",
+    "C:42:GLN",
+    "C:43:PHE",
+    "C:99:ARG",
+    "C:102:LYS",
+    "C:119:GLU",
+    "C:120:PRO",
+    "C:122:GLN",
+    "C:160:SER",
+    "C:161:ASP"
+   ],
+   "interface_res_b": [
+    "D:10:PRO",
+    "D:11:GLY",
+    "D:12:PRO",
+    "D:13:GLN",
+    "D:15:TYR",
+    "D:16:ASP",
+    "D:19:ASP",
+    "D:23:ALA",
+    "D:24:ARG",
+    "D:47:ILE",
+    "D:48:GLY",
+    "D:49:ARG",
+    "D:50:PHE",
+    "D:51:ARG",
+    "D:52:ASP",
+    "D:54:GLN",
+    "D:55:TYR",
+    "D:56:GLU",
+    "D:59:LYS",
+    "D:62:ARG",
+    "D:80:GLY",
+    "D:81:LEU",
+    "D:82:ASP",
+    "D:83:GLY",
+    "D:87:ASP",
+    "D:91:ARG",
+    "D:92:LEU",
+    "D:93:GLN",
+    "D:94:ARG"
+   ],
+   "min_heavy_dist_a": 1.04,
+   "com_separation_a": 31.82,
+   "bsa_total_a2": 2023.3,
+   "bsa_per_side_a2": 1011.6,
+   "sasa_a_a2": 25572.4,
+   "sasa_b_a2": 5269.5,
+   "seed": 1
+  },
+  {
+   "chains_a": [
+    "A",
+    "B",
+    "C"
+   ],
+   "chains_b": [
+    "D"
+   ],
+   "n_heavy_atom_contacts_5a": 279,
+   "ca_pairs_8a": 17,
+   "_ca_pairs_note": "CA-CA PAIR count, the same quantity as the 97 in the 8DYG reference. NOT a residue count (8DYG is 29).",
+   "n_interface_res_a": 19,
+   "n_interface_res_b": 19,
+   "interface_res_a": [
+    "B:99:ARG",
+    "B:102:LYS",
+    "B:112:LYS",
+    "B:117:TYR",
+    "B:118:PRO",
+    "B:119:GLU",
+    "B:120:PRO",
+    "B:121:THR",
+    "B:148:SER",
+    "C:32:ARG",
+    "C:49:GLU",
+    "C:52:LEU",
+    "C:53:GLY",
+    "C:54:LEU",
+    "C:55:ALA",
+    "C:85:ARG",
+    "C:168:THR",
+    "C:169:LYS",
+    "C:170:GLU"
+   ],
+   "interface_res_b": [
+    "D:11:GLY",
+    "D:12:PRO",
+    "D:15:TYR",
+    "D:16:ASP",
+    "D:19:ASP",
+    "D:23:ALA",
+    "D:24:ARG",
+    "D:47:ILE",
+    "D:49:ARG",
+    "D:50:PHE",
+    "D:51:ARG",
+    "D:52:ASP",
+    "D:55:TYR",
+    "D:83:GLY",
+    "D:87:ASP",
+    "D:90:SER",
+    "D:91:ARG",
+    "D:93:GLN",
+    "D:94:ARG"
+   ],
+   "min_heavy_dist_a": 2.1,
+   "com_separation_a": 33.53,
+   "bsa_total_a2": 1493.0,
+   "bsa_per_side_a2": 746.5,
+   "sasa_a_a2": 25921.3,
+   "sasa_b_a2": 5291.9,
+   "seed": 2
+  }
+ ],
+ "seed_concordance_ligand_side": {
+  "n_seeds_with_interface": 3,
+  "n_pairs": 3,
+  "mean_jaccard": 0.514,
+  "min_jaccard": 0.375,
+  "consensus_residues": [
+   32,
+   49,
+   52,
+   53,
+   54,
+   102,
+   119,
+   120,
+   168,
+   169,
+   170
+  ],
+  "union_residues": [
+   2,
+   3,
+   29,
+   31,
+   32,
+   40,
+   41,
+   42,
+   43,
+   49,
+   50,
+   52,
+   53,
+   54,
+   55,
+   85,
+   99,
+   102,
+   112,
+   117,
+   118,
+   119,
+   120,
+   121,
+   122,
+   148,
+   160,
+   161,
+   167,
+   168,
+   169,
+   170,
+   172
+  ]
+ },
+ "seed_concordance_partner_side": {
+  "n_seeds_with_interface": 3,
+  "n_pairs": 3,
+  "mean_jaccard": 0.634,
+  "min_jaccard": 0.552,
+  "consensus_residues": [
+   11,
+   12,
+   15,
+   19,
+   23,
+   24,
+   47,
+   49,
+   50,
+   51,
+   52,
+   55,
+   87,
+   91,
+   94
+  ],
+  "union_residues": [
+   10,
+   11,
+   12,
+   13,
+   15,
+   16,
+   19,
+   23,
+   24,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   54,
+   55,
+   56,
+   59,
+   62,
+   80,
+   81,
+   82,
+   83,
+   87,
+   90,
+   91,
+   92,
+   93,
+   94
+  ]
+ },
+ "esmfold_wall_s": 42.6,
+ "esmfold": {
+  "self_report": {
+   "avg_plddt": 0.6643015742301941,
+   "ptm": 0.6467000842094421,
+   "avg_pae": 17.12031364440918,
+   "_what_this_is": "The model's own confidence for THIS run. Returned unmodified and ungated \u2014 it is a real per-run signal and the caller judges it.",
+   "for_scale_il17a_case": {
+    "monomer": {
+     "ptm": 0.905,
+     "avg_pae": 3.66
+    },
+    "dimer": {
+     "ptm": 0.399,
+     "avg_pae": 18.26
+    },
+    "caveat": "one complex, for scale only \u2014 not a threshold"
+   }
+  },
+  "interface": {
+   "n_protein_chains": 4,
+   "chains_compared": [
+    "A",
+    "B"
+   ],
+   "contacts": 51,
+   "residues_in_contact": 23,
+   "min_inter_chain_ca_a": 4.78,
+   "com_separation_a": 23.09,
+   "definition": "CA-CA pairs within 8.0 A between chains A and B"
+  }
+ },
+ "esmfold_interface_measured": {
+  "chains_a": [
+   "A",
+   "B",
+   "C"
+  ],
+  "chains_b": [
+   "D"
+  ],
+  "n_heavy_atom_contacts_5a": 12,
+  "ca_pairs_8a": 1,
+  "_ca_pairs_note": "CA-CA PAIR count, the same quantity as the 97 in the 8DYG reference. NOT a residue count (8DYG is 29).",
+  "n_interface_res_a": 3,
+  "n_interface_res_b": 4,
+  "interface_res_a": [
+   "C:1447:VAL",
+   "C:1452:ARG",
+   "C:1456:ASP"
+  ],
+  "interface_res_b": [
+   "D:2161:PRO",
+   "D:2210:LYS",
+   "D:2214:GLN",
+   "D:2217:PRO"
+  ],
+  "min_heavy_dist_a": 3.29,
+  "com_separation_a": 42.28,
+  "bsa_total_a2": 199.4,
+  "bsa_per_side_a2": 99.7,
+  "sasa_a_a2": 29609.7,
+  "sasa_b_a2": 5939.9
+ }
+}

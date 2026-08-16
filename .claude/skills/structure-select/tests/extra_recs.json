@@ -1,0 +1,102 @@
+{
+ "0WN": {
+  "comp_id": "0WN",
+  "drugbank_id": null,
+  "formula": "C24 H27 Cl F N5 O3",
+  "formula_weight": 487.954,
+  "inchikey": null,
+  "name": "N-{4-[(3-chloro-4-fluorophenyl)amino]-7-[(3S)-tetrahydrofuran-3-yloxy]quinazolin-6-yl}-4-(dimethylamino)butanamide",
+  "smiles": "CN(C)CCCC(=O)Nc1cc2c(cc1O[C@H]3CCOC3)ncnc2Nc4ccc(c(c4)Cl)F",
+  "type": "non-polymer"
+ },
+ "260": {
+  "comp_id": "260",
+  "drugbank_id": null,
+  "formula": "C7 H5 Br F2",
+  "formula_weight": 207.015,
+  "inchikey": null,
+  "name": "2-(bromomethyl)-1,3-difluorobenzene",
+  "smiles": "c1cc(c(c(c1)F)CBr)F",
+  "type": "non-polymer"
+ },
+ "8VY": {
+  "comp_id": "8VY",
+  "drugbank_id": null,
+  "formula": "C8 H8 Br2",
+  "formula_weight": 263.957,
+  "inchikey": null,
+  "name": "1,3-bis(bromomethyl)benzene",
+  "smiles": "c1cc(cc(c1)CBr)CBr",
+  "type": "non-polymer"
+ },
+ "A1I4O": {
+  "comp_id": "A1I4O",
+  "drugbank_id": null,
+  "formula": "C9 H18 Cl3 N3 O6 S3",
+  "formula_weight": 466.81,
+  "inchikey": null,
+  "name": "1,3,5-tris(2-chloroethylsulfonyl)-1,3,5-triazinane",
+  "smiles": "C1N(CN(CN1S(=O)(=O)CCCl)S(=O)(=O)CCCl)S(=O)(=O)CCCl",
+  "type": "non-polymer"
+ },
+ "B3P": {
+  "comp_id": "B3P",
+  "drugbank_id": null,
+  "formula": "C11 H26 N2 O6",
+  "formula_weight": 282.334,
+  "inchikey": null,
+  "name": "2-[3-(2-HYDROXY-1,1-DIHYDROXYMETHYL-ETHYLAMINO)-PROPYLAMINO]-2-HYDROXYMETHYL-PROPANE-1,3-DIOL",
+  "smiles": "C(CNC(CO)(CO)CO)CNC(CO)(CO)CO",
+  "type": "non-polymer"
+ },
+ "BEN": {
+  "comp_id": "BEN",
+  "drugbank_id": null,
+  "formula": "C7 H8 N2",
+  "formula_weight": 120.152,
+  "inchikey": null,
+  "name": "BENZAMIDINE",
+  "smiles": "[H]/N=C(\\c1ccccc1)/N",
+  "type": "non-polymer"
+ },
+ "JEF": {
+  "comp_id": "JEF",
+  "drugbank_id": null,
+  "formula": "C30 H63 N O10",
+  "formula_weight": 597.822,
+  "inchikey": null,
+  "name": "O-(O-(2-AMINOPROPYL)-O'-(2-METHOXYETHYL)POLYPROPYLENE GLYCOL 500)",
+  "smiles": "C[C@@H](COC[C@@H](C)OC[C@@H](C)OC[C@H](C)OC[C@H](C)OCC(C)OC[C@@H](C)OC[C@@H](C)OC[C@H](C)OCCOC)N",
+  "type": "non-polymer"
+ },
+ "LFI": {
+  "comp_id": "LFI",
+  "drugbank_id": null,
+  "formula": "C12 H18 Br3 N3 O3",
+  "formula_weight": 492.002,
+  "inchikey": null,
+  "name": "1-[3,5-bis(3-bromanylpropanoyl)-1,3,5-triazinan-1-yl]-3-bromanyl-propan-1-one",
+  "smiles": "C1N(CN(CN1C(=O)CCBr)C(=O)CCBr)C(=O)CCBr",
+  "type": "non-polymer"
+ },
+ "MTN": {
+  "comp_id": "MTN",
+  "drugbank_id": null,
+  "formula": "C10 H18 N O3 S2",
+  "formula_weight": 264.385,
+  "inchikey": null,
+  "name": "S-[(1-oxyl-2,2,5,5-tetramethyl-2,5-dihydro-1H-pyrrol-3-yl)methyl] methanesulfonothioate",
+  "smiles": "CC1(C)C=C(CS[S](C)(=O)=O)C(C)(C)N1[O]",
+  "type": "non-polymer"
+ },
+ "ZBR": {
+  "comp_id": "ZBR",
+  "drugbank_id": null,
+  "formula": "C9 H9 Br3",
+  "formula_weight": 356.88,
+  "inchikey": null,
+  "name": "1,3,5-tris(bromomethyl)benzene",
+  "smiles": "c1c(cc(cc1CBr)CBr)CBr",
+  "type": "non-polymer"
+ }
+}

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>DRUGGABILITY DOSSIER — PIPELINE FLOW</title>
+    <style>
+    :root {
+      --bg: #d7d2ac;
+      --card: #dcd8b6;
+      --ink: #1a1a1a;
+      --ink-70: rgba(26, 26, 26, 0.7);
+      --ink-55: rgba(26, 26, 26, 0.55);
+      --ink-45: rgba(26, 26, 26, 0.45);
+      --ink-22: rgba(26, 26, 26, 0.22);
+      --ink-12: rgba(26, 26, 26, 0.12);
+      --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px 60px 20px;
+    }
+
+    /* ---------- header ---------- */
+    header {
+      padding: 16px 0 12px 0;
+      border-bottom: 2px solid var(--ink);
+    }
+    .h-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+    .h-sub {
+      max-width: 760px;
+      margin-top: 5px;
+      font-size: 11px;
+      color: var(--ink-70);
+      letter-spacing: 0.03em;
+    }
+    .h-meta {
+      margin-top: 7px;
+      font-size: 9.5px;
+      color: var(--ink-45);
+      letter-spacing: 0.09em;
+    }
+
+    /* ---------- generic section band ---------- */
+    .band-label {
+      margin: 26px 0 8px 0;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--ink-55);
+      letter-spacing: 0.2em;
+    }
+
+    /* ---------- flow node ---------- */
+    .node {
+      position: relative;
+      padding: 11px 14px 12px 14px;
+      background: var(--card);
+      border: 1px solid var(--ink);
+    }
+    .node.stage { border-left: 4px solid var(--ink); }
+    .node .n-code {
+      display: inline-block;
+      min-width: 22px;
+      margin-right: 8px;
+      padding: 1px 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--bg);
+      background: var(--ink);
+    }
+    .node .n-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .node .n-skill {
+      float: right;
+      font-size: 9px;
+      color: var(--ink-45);
+      letter-spacing: 0.08em;
+      padding-top: 3px;
+    }
+    .node .n-what {
+      margin-top: 7px;
+      font-size: 11px;
+      line-height: 1.55;
+      color: var(--ink-70);
+    }
+    .node .n-tools {
+      margin-top: 8px;
+      font-size: 9.5px;
+      color: var(--ink-55);
+      letter-spacing: 0.02em;
+    }
+    .node .n-tools code {
+      padding: 0 2px;
+      background: var(--ink-12);
+    }
+    .node .n-not {
+      margin-top: 7px;
+      font-size: 9.5px;
+      color: var(--ink-45);
+      letter-spacing: 0.02em;
+    }
+    .node .n-not b { color: var(--ink-70); font-weight: 700; }
+
+    /* ---------- connector ---------- */
+    .arrow {
+      display: block;
+      width: 100%;
+      height: 22px;
+      text-align: center;
+      color: var(--ink-45);
+      line-height: 22px;
+      font-size: 13px;
+    }
+    .arrow.sm { height: 16px; line-height: 16px; }
+
+    /* ---------- two-axis grid ---------- */
+    .axes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 26px;
+      align-items: start;
+    }
+    .axis-head {
+      padding: 9px 12px;
+      color: var(--bg);
+      background: var(--ink);
+    }
+    .axis-head .a-k { font-size: 9px; letter-spacing: 0.2em; opacity: 0.75; }
+    .axis-head .a-t { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
+    .axis-head .a-d {
+      margin-top: 3px;
+      font-size: 9.5px;
+      line-height: 1.45;
+      color: rgba(215, 210, 172, 0.85);
+      letter-spacing: 0.02em;
+    }
+    .axis-col { display: flex; flex-direction: column; }
+    .axis-col .node { margin-top: 12px; }
+    /* precedent axis marked with a solid rail, computed with a doubled rail */
+    .axis-col.precedent .node { border-left: 4px solid var(--ink); }
+    .axis-col.computed .node {
+      border-left: 4px double var(--ink);
+    }
+
+    /* ---------- off-default GPU branch ---------- */
+    .branch {
+      margin-top: 12px;
+      padding: 11px 14px 12px 14px;
+      background: repeating-linear-gradient(
+        135deg,
+        rgba(26, 26, 26, 0.04),
+        rgba(26, 26, 26, 0.04) 7px,
+        transparent 7px,
+        transparent 14px
+      );
+      border: 1px dashed var(--ink);
+    }
+    .branch .b-tag {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 2px 7px;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--bg);
+      background: var(--ink);
+    }
+    .branch .b-name { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; }
+    .branch .b-what {
+      margin-top: 6px;
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: var(--ink-70);
+    }
+    .branch .b-what code { padding: 0 2px; background: var(--ink-12); }
+    .branch ul {
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .branch li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 10px;
+      line-height: 1.55;
+      color: var(--ink-70);
+    }
+    .branch li:before {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      content: "";
+      border: 1px solid var(--ink-45);
+      transform: rotate(45deg);
+    }
+    .branch li b { color: var(--ink); }
+
+    /* ---------- converge bar ---------- */
+    .converge {
+      margin-top: 14px;
+      padding: 13px 16px;
+      text-align: center;
+      border: 2px solid var(--ink);
+    }
+    .converge .c-warn {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+    .converge .c-sub {
+      margin-top: 5px;
+      font-size: 10px;
+      line-height: 1.55;
+      color: var(--ink-70);
+      letter-spacing: 0.02em;
+    }
+    .converge .c-sub code { padding: 0 2px; background: var(--ink-12); }
+
+    /* ---------- verdict ---------- */
+    .verdict {
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: var(--bg);
+      background: var(--ink);
+    }
+    .verdict .v-k { font-size: 9px; letter-spacing: 0.2em; opacity: 0.75; }
+    .verdict .v-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 7px;
+    }
+    .verdict .chip {
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--bg);
+    }
+    .verdict .v-note {
+      margin-top: 9px;
+      font-size: 9.5px;
+      line-height: 1.55;
+      color: rgba(215, 210, 172, 0.82);
+      letter-spacing: 0.02em;
+    }
+    .verdict .v-note code {
+      padding: 0 2px;
+      background: rgba(215, 210, 172, 0.18);
+    }
+
+    /* ---------- input / output cards ---------- */
+    .io {
+      padding: 12px 14px 14px 14px;
+      background: var(--card);
+      border: 1px solid var(--ink);
+    }
+    .io .io-k { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; color: var(--ink-55); }
+    .io .io-t { margin-top: 3px; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 20px;
+      margin-top: 10px;
+    }
+    .field { font-size: 10.5px; line-height: 1.5; }
+    .field .fn { font-weight: 700; }
+    .field .req {
+      margin-left: 6px;
+      padding: 0 4px;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      color: var(--bg);
+      background: var(--ink);
+    }
+    .field .opt {
+      margin-left: 6px;
+      padding: 0 4px;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      color: var(--ink-55);
+      border: 1px solid var(--ink-45);
+    }
+    .field .fd { color: var(--ink-55); }
+
+    .keys {
+      column-count: 3;
+      column-gap: 22px;
+      margin-top: 10px;
+    }
+    .keys .key {
+      break-inside: avoid;
+      font-size: 10px;
+      line-height: 1.75;
+      color: var(--ink-70);
+    }
+    .keys .key .kn { color: var(--ink); font-weight: 700; }
+    .keys .key .kx { color: var(--ink-45); }
+
+    .out-note {
+      margin-top: 11px;
+      padding-top: 9px;
+      font-size: 9.5px;
+      line-height: 1.6;
+      color: var(--ink-55);
+      letter-spacing: 0.02em;
+      border-top: 1px solid var(--ink-22);
+    }
+    .out-note code { padding: 0 2px; background: var(--ink-12); }
+    .out-note b { color: var(--ink-70); }
+
+    /* ---------- legend ---------- */
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 30px;
+      margin-top: 30px;
+      padding-top: 14px;
+      border-top: 1px solid var(--ink-22);
+    }
+    .lg { display: flex; gap: 9px; align-items: flex-start; max-width: 320px; }
+    .lg .sw { flex: 0 0 auto; width: 26px; height: 16px; margin-top: 2px; }
+    .lg .sw.solid { border: 1px solid var(--ink); border-left: 4px solid var(--ink); background: var(--card); }
+    .lg .sw.dbl { border: 1px solid var(--ink); border-left: 4px double var(--ink); background: var(--card); }
+    .lg .sw.gpu {
+      border: 1px dashed var(--ink);
+      background: repeating-linear-gradient(135deg, rgba(26,26,26,0.06), rgba(26,26,26,0.06) 4px, transparent 4px, transparent 8px);
+    }
+    .lg .sw.ink { background: var(--ink); }
+    .lg .lt { font-size: 9.5px; line-height: 1.45; color: var(--ink-70); }
+    .lg .lt b { display: block; color: var(--ink); letter-spacing: 0.06em; }
+
+    @media (max-width: 820px) {
+      .axes { grid-template-columns: 1fr; gap: 0; }
+      .keys { column-count: 1; }
+      .fields { grid-template-columns: 1fr; }
+    }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="h-title">DRUGGABILITY DOSSIER &mdash; PIPELINE FLOW</div>
+        <div class="h-sub">
+          Small-molecule tractability station. Given a protein target, it decides
+          whether the target is druggable with a small molecule along
+          <b>two axes that are never averaged</b>: retrieved precedent (what has
+          actually been made) and computed tractability (pocket geometry on
+          structures). It reports evidence; it does not decide whether to pursue.
+        </div>
+        <div class="h-meta">
+          9 SKILLS &middot; graph-intake &rarr; precedent-lookup / terminated-programs &middot; structure-select &rarr; pocket-scan &middot; falsification-sweep &middot; assemble-dossier &middot; GPU: cofold-check &middot; ppi-hypothesis
+        </div>
+      </header>
+
+      <!-- ============ INPUT ============ -->
+      <div class="band-label">INPUT &mdash; THE REQUEST CONTRACT (arrives as prose inside one {task} string; echoed back verbatim as the dossier's first key)</div>
+      <div class="io">
+        <div class="io-k">A PROTEIN TARGET + FOUR OPTIONAL SELECTORS</div>
+        <div class="io-t">input {}</div>
+        <div class="fields">
+          <div class="field">
+            <span class="fn">uniprot_accession</span><span class="req">REQUIRED</span>
+            <div class="fd">e.g. P01116. A gene symbol is resolved to an accession first; both are recorded.</div>
+          </div>
+          <div class="field">
+            <span class="fn">as_of_date</span><span class="opt">OPTIONAL</span>
+            <div class="fd">Binding date cutoff. Every piece of evidence must have existed before it (structures and bioactivity both).</div>
+          </div>
+          <div class="field">
+            <span class="fn">interaction_to_disrupt</span><span class="opt">OPTIONAL</span>
+            <div class="fd">The partner / oligomeric state / catalytic function to stop. Helps select which chains constitute the site.</div>
+          </div>
+          <div class="field">
+            <span class="fn">mechanism_hypothesis</span><span class="opt">OPTIONAL</span>
+            <div class="fd">orthosteric | allosteric | oligomer_destabilisation | unknown. Decides which chains get scored &mdash; so it changes the answer.</div>
+          </div>
+          <div class="field">
+            <span class="fn">disease_context</span><span class="opt">OPTIONAL</span>
+            <div class="fd">Selects relevant clinical precedent only. Never adjusts a tractability number.</div>
+          </div>
+        </div>
+      </div>
+
+      <span class="arrow">&darr;</span>
+
+      <!-- ============ GRAPH INTAKE ============ -->
+      <div class="band-label">STAGE 00 &mdash; RESOLVE THE TARGET</div>
+      <div class="node stage">
+        <span class="n-skill">graph-intake &middot; graph_read.py (stdlib)</span>
+        <span class="n-code">00</span><span class="n-name">GRAPH INTAKE</span>
+        <div class="n-what">
+          Reads the upstream literature evidence graph (things, links, findings,
+          papers, gaps) and extracts the input contract from it: which node is a
+          protein target, what the molecule is meant to stop, and which UniProt
+          accession that resolves to (node names / aliases &rarr; accession). The
+          one place in the pipeline that talks <b>back</b> upstream.
+        </div>
+        <div class="n-tools">
+          Four ask verbs, no fifth &mdash; <code>expand_node</code>,
+          <code>resolve_link</code>, <code>test_gap</code>,
+          <code>new_question</code> &middot; five conjunctive gates that refuse
+          anything a local table, registry, structure or arithmetic can settle.
+        </div>
+        <div class="n-not">
+          <b>Does NOT</b> assess tractability, rank targets, decide an unstated
+          mechanism, or treat a computed result as literature evidence. A pending
+          ask never blocks a verdict and never justifies a null.
+        </div>
+      </div>
+
+      <span class="arrow">&darr;&nbsp;&nbsp;&nbsp;resolved accession splits into two independent axes&nbsp;&nbsp;&nbsp;&darr;</span>
+
+      <!-- ============ TWO AXES ============ -->
+      <div class="axes">
+        <!-- AXIS 1 -->
+        <div class="axis-col precedent">
+          <div class="axis-head">
+            <div class="a-k">AXIS 1 &middot; LOOKED UP</div>
+            <div class="a-t">RETRIEVED PRECEDENT</div>
+            <div class="a-d">What has actually been made against this target. The stronger axis when it exists. Never computed.</div>
+          </div>
+
+          <div class="node">
+            <span class="n-skill">precedent-lookup &middot; modality.py</span>
+            <span class="n-code">01</span><span class="n-name">PRECEDENT LOOKUP</span>
+            <div class="n-what">
+              Measured bioactivities, approved and clinical drugs, family activity
+              &mdash; from ChEMBL / PDB / UniProt views, joined on accession via
+              the Paperclip SQL tool. Modality first: every drug and compound is
+              classified small-molecule vs biologic before any precedent claim.
+            </div>
+            <div class="n-tools">
+              <code>chembl_v</code> / <code>pdb_v</code> / <code>uniprot_v</code>
+              views &middot; compound modality from SMILES via
+              <code>modality.py</code> (RDKit, 2D), not from <code>molecule_type</code>
+              (abstains on 59% of compounds). Splits target / family /
+              structural-neighbour / pocket-neighbour precedent, merged never.
+            </div>
+            <div class="n-not">
+              <b>Does NOT</b> compute tractability, score druggability, or merge
+              target activity with family activity. An approved antibody is not
+              evidence a small molecule is possible.
+            </div>
+          </div>
+
+          <div class="node">
+            <span class="n-skill">terminated-programs</span>
+            <span class="n-code">02</span><span class="n-name">TERMINATED PROGRAMS</span>
+            <div class="n-what">
+              Why clinical programs stopped &mdash;
+              <code>ctgov.studies.why_stopped</code> joined to full-text papers by
+              exact-string grep on drug codes (never semantic search).
+              Contradictory sources reported side by side with their dates.
+            </div>
+            <div class="n-not">
+              <b>Does NOT</b> score druggability or decide a target is dead.
+              Rule 7: clinical failure is not evidence against tractability
+              (ROR&gamma;t &mdash; sub-nM leads, zero approvals).
+            </div>
+          </div>
+        </div>
+
+        <!-- AXIS 2 -->
+        <div class="axis-col computed">
+          <div class="axis-head">
+            <div class="a-k">AXIS 2 &middot; COMPUTED</div>
+            <div class="a-t">COMPUTED TRACTABILITY</div>
+            <div class="a-d">What the structure says about whether a small molecule could bind. Computed, with declared blind spots (cryptic pockets).</div>
+          </div>
+
+          <div class="node">
+            <span class="n-skill">structure-select &middot; ligand_filter.py</span>
+            <span class="n-code">03</span><span class="n-name">STRUCTURE SELECT</span>
+            <div class="n-what">
+              Picks the structure(s) to scan, and the chains that constitute the
+              site (from <code>mechanism_hypothesis</code>). Holo vs apo is
+              classified by actual ligand chemistry, not by label. Assembles an
+              ensemble, applies the as-of cutoff, splits domains, and finds
+              structural neighbours with Foldseek.
+            </div>
+            <div class="n-tools">
+              <b>Selection order:</b>
+              (1) experimental holo &rarr; (2) experimental apo (PDB) &rarr;
+              (3) homolog-transfer anchor (<code>homolog_transfer.py</code>, three
+              guards) &rarr; (4) ESMFold predicted-structure fallback. Never
+              predict what the PDB already holds.
+            </div>
+            <div class="n-not">
+              <b>Does NOT</b> score pockets or decide tractability.
+            </div>
+          </div>
+
+          <div class="node">
+            <span class="n-skill">pocket-scan &middot; Modal CPU &middot; fpocket / mdpocket</span>
+            <span class="n-code">04</span><span class="n-name">POCKET SCAN</span>
+            <div class="n-what">
+              Pocket geometry over the ensemble. fpocket detects (clustering D
+              swept {1.6, 2.4}); PRANK ranks; mdpocket fixes one site across
+              superposed structures. Plus disorder, cryptic-pocket mechanism, and
+              pocket-vs-interface classification.
+            </div>
+            <div class="n-tools">
+              <code>modal_app.py</code> wires in <code>cryptic_analysis.py</code>,
+              <code>interface_analysis.py</code>, <code>disorder.py</code>.
+              Volume is absolute (comparable across structures) but carries no
+              verdict; druggability is a <b>within-structure rank</b> only.
+            </div>
+            <div class="n-not">
+              <b>Does NOT</b> decide druggability, rank targets, compare a
+              druggability value across structures or to a threshold, or read a
+              low score as evidence against tractability (blind to cryptic sites).
+            </div>
+          </div>
+
+          <!-- GPU off-default branch, hanging off the computed axis -->
+          <div class="branch">
+            <span class="b-tag">GPU &middot; OFF DEFAULT PATH &middot; STRUCTURE-LESS ONLY &middot; RETURNS WITH WARNINGS, NEVER NULLS</span>
+            <div class="b-name">ESMFold FALLBACK &amp; GPU PROTO-TOOLS</div>
+            <div class="b-what">
+              The only place the default pipeline touches a GPU. Reached only when
+              no experimental structure and no usable homolog exist &mdash; so the
+              computed axis still returns something instead of nulling. Rule 13:
+              in the deployed sandbox the predictor tools are unavailable, so this
+              branch is genuinely off the default path.
+            </div>
+            <ul>
+              <li><b>predicted_structure_fallback.py</b> &mdash; folds a
+                structure-less target with ESMFold and hands it to the ordinary
+                pocket scan <b>with warnings, never a null</b>. pTM &ge; 0.80 is a
+                confidence band, not a pass/fail gate; a low pTM lowers
+                <code>fold_confidence</code>, it does not refuse.</li>
+              <li><b>cofold-check &middot; predict.py</b> &mdash; four proto-tools:
+                Boltz-2 cofold (pose), Boltz-2 affinity (binder triage only),
+                ESMFold, BioEmu. <code>repack.py</code> (FASPR) rebuilds side
+                chains so BioEmu backbone frames can reach a pocket finder.</li>
+              <li><b>ppi-hypothesis</b> &mdash; cofolds the target against
+                candidate partners; a surviving, graph-absent interface earns a
+                question back upstream (issued zero asks in 15 measured cases).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <span class="arrow">&darr;&nbsp;&nbsp;&nbsp;the two axes meet &mdash; and are reported separately&nbsp;&nbsp;&nbsp;&darr;</span>
+
+      <!-- ============ FALSIFICATION ============ -->
+      <div class="node stage">
+        <span class="n-skill">falsification-sweep</span>
+        <span class="n-code">05</span><span class="n-name">FALSIFICATION SWEEP</span>
+        <div class="n-what">
+          Attacks the assembled claim before it is reported: do actives collapse
+          to one assay / series / lab; is a holo ligand a known frequent hitter;
+          does the pocket appear in one crystal form only; is it a
+          crystallisation artifact; were programs terminated and why. Records
+          checks that found nothing as well as ones that found something.
+        </div>
+        <div class="n-not">
+          <b>Does NOT</b> produce a verdict and <b>adjusts no number</b> &mdash;
+          it attaches evidence to <code>falsification{}</code> for the reader to
+          weigh.
+        </div>
+      </div>
+
+      <span class="arrow sm">&darr;</span>
+
+      <!-- ============ CONVERGE ============ -->
+      <div class="converge">
+        <div class="c-warn">THE TWO AXES ARE NEVER AVERAGED &mdash; THERE IS NO OVERALL NUMBER</div>
+        <div class="c-sub">
+          They answer different questions and are allowed to disagree. When they
+          do, the disagreement is named in <code>axis_conflict</code> and left
+          unresolved. The verdict names <b>which axis carried it</b> in
+          <code>verdict_basis</code> &mdash; a label over two axes with no basis
+          named is an average with extra steps.
+        </div>
+      </div>
+
+      <!-- ============ ASSEMBLE + VERDICT ============ -->
+      <div class="node stage" style="margin-top:14px;">
+        <span class="n-skill">assemble-dossier &middot; validate_dossier.py (stdlib)</span>
+        <span class="n-code">06</span><span class="n-name">ASSEMBLE DOSSIER</span>
+        <div class="n-what">
+          Walks the blocks from every upstream skill into the typed JSON template:
+          both axes kept separate, every number carrying provenance, anything not
+          retrieved <code>null</code> with a line in <code>not_found</code> (never
+          a zero). The <b>only</b> place the verdict is written. Ends on a machine
+          gate &mdash; <code>validate_dossier.py</code> must return zero
+          violations (18 named rule codes incl. AXES_AVERAGED, NULL_IS_NOT_ZERO,
+          DRUGGABILITY_LOAD_BEARING, VOLUME_NOT_PRIMARY) before the JSON returns.
+        </div>
+      </div>
+
+      <div class="verdict">
+        <div class="v-k">VERDICT (a label, not a number)</div>
+        <div class="v-row">
+          <span class="chip">small_molecule_tractable</span>
+          <span class="chip">not_tractable</span>
+          <span class="chip">insufficient_evidence</span>
+        </div>
+        <div class="v-k" style="margin-top:12px;">verdict_basis (which axis carried it)</div>
+        <div class="v-row">
+          <span class="chip">retrieved_precedent</span>
+          <span class="chip">computed_tractability</span>
+          <span class="chip">both</span>
+          <span class="chip">none</span>
+        </div>
+        <div class="v-note">
+          <code>insufficient_evidence</code> is a correct answer and stays
+          reachable. Druggability alone may never carry a
+          <code>not_tractable</code> or <code>insufficient_evidence</code>
+          verdict (<code>load_bearing: false</code>). When the axes disagree,
+          <code>axis_conflict</code> is populated and explained &mdash; e.g.
+          TNF-&alpha;: strong pocket, zero approved small molecules &rarr;
+          <code>both</code>, conflict declared.
+        </div>
+      </div>
+
+      <span class="arrow">&darr;</span>
+
+      <!-- ============ OUTPUT ============ -->
+      <div class="band-label">OUTPUT &mdash; THE TYPED JSON DOSSIER</div>
+      <div class="io">
+        <div class="io-k">17 REQUIRED TOP-LEVEL KEYS &middot; NONE OMITTED, EVER</div>
+        <div class="io-t">druggability-dossier.json</div>
+        <div class="keys">
+          <div class="key"><span class="kn">input</span> <span class="kx">&mdash; verbatim echo of the request</span></div>
+          <div class="key"><span class="kn">target</span> <span class="kx">&mdash; resolved identity</span></div>
+          <div class="key"><span class="kn">as_of_date</span> <span class="kx">&mdash; authoritative cutoff</span></div>
+          <div class="key"><span class="kn">verdict</span></div>
+          <div class="key"><span class="kn">verdict_basis</span></div>
+          <div class="key"><span class="kn">axis_conflict</span></div>
+          <div class="key"><span class="kn">target_precedent</span> <span class="kx">&mdash; axis 1</span></div>
+          <div class="key"><span class="kn">biologic_precedent</span> <span class="kx">&mdash; validation, not tractability</span></div>
+          <div class="key"><span class="kn">family_precedent</span></div>
+          <div class="key"><span class="kn">structural_neighbour_precedent</span> <span class="kx">&mdash; Foldseek</span></div>
+          <div class="key"><span class="kn">pocket_neighbour_precedent</span> <span class="kx">&mdash; the axis that transfers</span></div>
+          <div class="key"><span class="kn">structure</span> <span class="kx">&mdash; tier + selection</span></div>
+          <div class="key"><span class="kn">tractability</span> <span class="kx">&mdash; axis 2, pocket geometry</span></div>
+          <div class="key"><span class="kn">affinity</span> <span class="kx">&mdash; null in this deployment (rule 13)</span></div>
+          <div class="key"><span class="kn">falsification</span></div>
+          <div class="key"><span class="kn">next_experiment</span></div>
+          <div class="key"><span class="kn">not_found</span> <span class="kx">&mdash; every null, with its reason</span></div>
+        </div>
+        <div class="out-note">
+          Written to <code>/mnt/session/outputs/druggability-dossier.json</code>
+          and pasted into the reply. The output contract is the JSON template in
+          <b>CLAUDE.md</b>, enforced by
+          <b>.claude/skills/assemble-dossier/validate_dossier.py</b> &mdash; that
+          validator plus the template are the schema; there is no separate
+          <code>schema/</code> directory in this checkout.
+        </div>
+      </div>
+
+      <!-- ============ LEGEND ============ -->
+      <footer>
+        <div class="lg">
+          <div class="sw solid"></div>
+          <div class="lt"><b>PRECEDENT AXIS</b>Looked up from Paperclip databases. Solid rail.</div>
+        </div>
+        <div class="lg">
+          <div class="sw dbl"></div>
+          <div class="lt"><b>COMPUTED AXIS</b>Structure &amp; pocket geometry. Doubled rail.</div>
+        </div>
+        <div class="lg">
+          <div class="sw gpu"></div>
+          <div class="lt"><b>GPU / OFF DEFAULT PATH</b>Structure-less fallback &amp; proto-tools. Unavailable in the deployed sandbox (rule 13); returns with warnings, never nulls.</div>
+        </div>
+        <div class="lg">
+          <div class="sw ink"></div>
+          <div class="lt"><b>DECISION SURFACE</b>Verdict, verdict_basis, axis_conflict &mdash; the axes are reported separately and never averaged.</div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

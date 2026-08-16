@@ -1,0 +1,175 @@
+{
+  "_fixture": true,
+  "_fixture_note": "WHY THIS CASE IS IN THE SET -- classify() was a pure function of (subject kind, verb) and the quote never reached it, so the graded IL-6 negative passed only because `reduces` happens to sit in DOWNSTREAM_EFFECT. That is one verb away from failing, and the verb it needs is one the upstream extractor is instructed to emit: claim-extraction/SKILL.md pins `how` to a CLOSED 11-verb list (binds inhibits activates increases decreases causes treats associated_with expressed_in measured_by no_relationship_stated), and `inhibits` is what that list gives you for 'inhibited IL-6 production'. Two links here, each with the verb pointing one way and its own quote the other. L20: `inhibits` (DIRECT_ACTION) on IL-6, quote is pure readout vocabulary. L21: `attenuates` (DOWNSTREAM_EFFECT) on IRAK4, quote is a purified-enzyme IC50. BEFORE: L20 silently nominates IL-6 as a target and L21 silently rejects IRAK4 as a readout -- one false positive and one false negative, both exit 0. AFTER: both go to `needs_adjudication` with `why_contested`, `verb_class` and `quote_reading`, and neither is nominated or rejected on the verb alone.",
+  "schema_version": "1.1",
+  "graph_id": "g_fuzz_verbquote",
+  "question": "does the verb or the quote decide whether a thing is a target or a readout?",
+  "round": 2,
+  "status": "ok",
+  "generated_at": "2026-08-15T14:20:00Z",
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 25,
+      "outcome": "new_evidence"
+    },
+    {
+      "n": 2,
+      "ask": "resolve_link",
+      "target": "L20",
+      "depth": "deep",
+      "papers_added": 18,
+      "outcome": "new_evidence"
+    }
+  ],
+  "coverage": {
+    "depth": "deep",
+    "found": 1180,
+    "read": 50,
+    "used": 41,
+    "truncated": true,
+    "no_quote_discarded": 6,
+    "limits": {
+      "max_papers": 50,
+      "max_queries": 6
+    },
+    "stop_reason": "max_papers"
+  },
+  "things": [
+    {
+      "id": "t1",
+      "name": "IRAK4",
+      "kind": "protein",
+      "aliases": [
+        "interleukin-1 receptor-associated kinase 4",
+        "IRAK-4"
+      ],
+      "mentions": 31
+    },
+    {
+      "id": "t2",
+      "name": "zimlovisertib",
+      "kind": "small_molecule",
+      "aliases": [
+        "PF-06650833"
+      ],
+      "mentions": 12
+    },
+    {
+      "id": "t5",
+      "name": "IL-6",
+      "kind": "protein",
+      "aliases": [
+        "interleukin-6"
+      ],
+      "mentions": 27
+    },
+    {
+      "id": "t6",
+      "name": "rheumatoid arthritis",
+      "kind": "disease",
+      "aliases": [
+        "RA"
+      ],
+      "mentions": 44
+    }
+  ],
+  "papers": [
+    {
+      "id": "p1",
+      "title": "Discovery of a selective IRAK4 inhibitor",
+      "year": 2018,
+      "journal": "J. Med. Chem.",
+      "doi": "10.0000/fixture.p1",
+      "first_author": "Lee",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "f20",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t5",
+      "says": "yes",
+      "quote": "zimlovisertib inhibited LPS-induced IL-6 production in whole blood, with serum levels falling below the assay floor",
+      "paper": "p1",
+      "where": "LPS-stimulated whole blood",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1
+    },
+    {
+      "id": "f21",
+      "from": "t2",
+      "how": "attenuates",
+      "to": "t1",
+      "says": "yes",
+      "quote": "the compound attenuates IRAK4 enzymatic activity with an IC50 of 0.2 nM against purified kinase",
+      "paper": "p1",
+      "where": "biochemical assay, purified enzyme",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1
+    }
+  ],
+  "links": [
+    {
+      "id": "L20",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t5",
+      "yes": [
+        "f20"
+      ],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.6,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": 1
+    },
+    {
+      "id": "L21",
+      "from": "t2",
+      "how": "attenuates",
+      "to": "t1",
+      "yes": [
+        "f21"
+      ],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.6,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": 1
+    }
+  ],
+  "gaps": []
+}

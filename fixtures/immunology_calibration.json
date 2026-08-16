@@ -1,0 +1,99 @@
+{
+  "_why_in_set": "KRAS validated the method on a clean, well-behaved 2019 monomer. Running the same pipeline on immunology targets broke it three separate ways within one invocation. These are the failure modes real targets produce and the oncology fixtures never surface \u2014 recorded so a recompile knows they were found by execution, not imagined.",
+  "_generated": "2026-08-15",
+  "_how": "Deployed Modal app druggability-pocket-scan, workspace rafwiewiora, run on IL-17A holo entries 8USS / 9SQX / 8DYG.",
+  "_ARTIFACTS_ARE_NOT_IN_THIS_CHECKOUT_2026_08_15": "SAME STATUS AS pocket_calibration.json, stated for the same reason. The run above happened on a REMOTE Modal workspace and none of its outputs are in this checkout — no pocket_scan JSON for 8USS, 8DYG, 9SQX, 4OBE or 5HI3 at either clustering value. So every Jaccard, volume, rank and druggability figure below is a record of a run, not something a reader can re-measure or check. The HTTP status table IS checkable (it names live files.rcsb.org URLs) and the entry/ligand facts are checkable against pdb_v; the pocket geometry is not. Weigh it accordingly, and note the file's own warning that IL-17A pocket numbers are not validated.",
+  "FAILURE_1_no_legacy_pdb_format": {
+    "symptom": "HTTP 404 fetching https://files.rcsb.org/download/9SQX.pdb, while 9SQX.cif returns 200.",
+    "verified": {
+      "8USS.pdb": 200,
+      "8USS.cif": 200,
+      "9SQX.pdb": 404,
+      "9SQX.cif": 200,
+      "8DYG.pdb": 200,
+      "8DYG.cif": 200
+    },
+    "cause": "RCSB no longer issues legacy PDB format for newer depositions.",
+    "why_it_matters_here": "Immunology structures skew recent. IL-17A's small-molecule series begins 2016 (5HI3) and several entries are from 2025. A pdb-only fetcher fails on exactly the entries where new chemistry lives. KRAS never exposed this \u2014 6OIM is 2019 and has both formats.",
+    "fix": "Fetch mmCIF and treat it as the source of truth; convert to PDB only as fpocket's input, since fpocket accepts nothing else."
+  },
+  "FAILURE_2_five_character_ligand_codes": {
+    "symptom": "9SQX returned ligand_site_residues = 0 and ligand_site_copy = null despite being a holo structure with a bound drug-like ligand.",
+    "cause": "The ligand is `A1JPS` \u2014 FIVE characters. The PDB chemical component dictionary exhausted 3-character codes. Legacy PDB format has exactly three columns for the component ID (line[17:20]), so a 5-character code is not merely mis-parsed, it is unrepresentable in the format.",
+    "downstream_damage": "No ligand site -> no ground truth -> selection falls back to 'most druggable pocket anywhere' -> at D=2.4 it picked a 3606 A^3 merge artifact and reported it as the site.",
+    "why_it_matters": "This is silent. The run exits 0 and returns a confident-looking number for the wrong pocket.",
+    "fix": "Parse ligands from mmCIF via gemmi, never from PDB columns."
+  },
+  "FAILURE_3_site_recovery_is_worse_than_KRAS": {
+    "observed_jaccard_at_D_1.6": {
+      "8USS": 0.294,
+      "8DYG": 0.692,
+      "9SQX": 0.5
+    },
+    "kras_6OIM_comparison": 0.773,
+    "note": "Even with the ligand correctly identified, IL-17A site recovery is materially worse than KRAS. 8USS's site is only 15 residues and 8DYG's 13, against KRAS's 22 \u2014 a shallow interface groove rather than an enclosed pocket. Whether this reflects the site's real character or a prep problem is UNRESOLVED and must not be assumed either way.",
+    "status": "PARTIALLY RESOLVED by FAILURE_5. 9SQX was null only because its ligand was unparsed; with the mmCIF fix and the correct dimer assembly it is Jaccard 0.50 at rank 1. 8USS remains 0.294 and that is NOT a bug \u2014 its deposited assembly is a monomer, so half the interface site is absent. 8DYG (dimer) reaches 0.692. Residual open question: whether a dimer-interface groove is inherently harder to recover than KRAS's enclosed pocket (0.773). Do not treat IL-17A pocket numbers as validated."
+  },
+  "FAILURE_4_multichain_merge": {
+    "symptom": "9SQX prepped with chains A,B,C,D produced a 3606 A^3 pocket at D=2.4; 8DYG with A,B produced 1074 A^3.",
+    "cause": "Chain selection defaults to every chain present. On a multi-copy asymmetric unit, adjacent and crystal-contact sites fuse.",
+    "related": "The same default silently changed KRAS 4OBE numbers between the calibration (chain A only: druggability 0.442, rank 1) and the deployed run (chains A+B: 0.257, rank 6). Same structure, same clustering, different answer.",
+    "fix": "SUPERSEDED by FAILURE_5. The earlier fix said 'chain selection must be explicit per target', which made a structural-biology judgement call an unavoidable manual input. It is not: the deposited preferred biological assembly answers it. Fetch <ID>-assembly1.cif. Explicit per-target chain selection remains available as an override for a mechanistic hypothesis that disagrees with the deposited assembly, but it is no longer the default and no longer required."
+  },
+  "WHAT_KRAS_COULD_NOT_HAVE_TOLD_US": [
+    "6OIM is a 2019 entry with both file formats, a 3-character ligand code, and one relevant chain.",
+    "Every one of the four failures above requires a structure that is recent, multi-chain, or both.",
+    "A fixture set drawn only from well-studied oncology targets validates the happy path and nothing else."
+  ],
+  "il17a_context": {
+    "accession": "Q16552",
+    "site_character": "groove at the homodimer interface, not an enclosed pocket",
+    "first_small_molecule_structure": "5HI3, 2016-08-31, a macrocycle \u2014 roughly one year AFTER the first antibody approval",
+    "contrast_with_tnf_alpha": "Both are cytokines, both PPI targets, both drugged with antibodies first. TNF-alpha's site is a cavity on the trimer 3-fold axis opened by displacing a subunit; IL-17A's is a dimer-interface groove. Same class, unrelated pocket topology \u2014 the reason family-level druggability transfer does not work and pocket-level transfer might."
+  },
+  "FAILURE_5_asymmetric_unit_is_not_the_biological_unit": {
+    "symptom": "Chain selection defaulted to every chain in the file, which is the crystallographic asymmetric unit, not the biological assembly.",
+    "measured_impact": {
+      "9SQX": {
+        "asu_chains": ["A", "B", "C", "D"],
+        "preferred_assembly": "dimer",
+        "before": {
+          "site_pocket_rank": 9,
+          "jaccard": 0.48,
+          "volume_a3_D2.4": 3551
+        },
+        "after": {
+          "site_pocket_rank": 1,
+          "jaccard": 0.5,
+          "volume_a3_D1.6": 943.3
+        },
+        "reading": "the ASU holds TWO biological dimers; scoring all four fused them. With the correct dimer the ligand site becomes the TOP-ranked pocket instead of the ninth."
+      },
+      "4OBE": {
+        "preferred_assembly": "monomer",
+        "before": {
+          "chains": ["A", "B"],
+          "druggability": 0.257,
+          "rank": 6
+        },
+        "after": {
+          "chains": ["A"],
+          "note": "matches the original hand-prepped calibration again"
+        },
+        "reading": "a silent regression introduced by defaulting to all chains; the assembly annotation fixed it without guesswork."
+      },
+      "5HI3": {
+        "preferred_assembly": "heptamer",
+        "reading": "the IL-17A macrocycle site lies in the dimer groove. Neither the ASU nor a single chain is the right unit here."
+      },
+      "8USS": {
+        "preferred_assembly": "monomer",
+        "jaccard": 0.294,
+        "site_residues": 15,
+        "reading": "NOT a prep bug. This deposition genuinely contains a monomer, so a site spanning the IL-17A dimer interface is only half present. Compare 8DYG (dimer) at Jaccard 0.692 with 13 site residues."
+      }
+    },
+    "fix": "Fetch <ID>-assembly1.cif from RCSB (verified available for every entry tested) and record structure_source in the output. Falling back to the asymmetric unit is allowed but must be visible, never silent.",
+    "regression_check": "6OIM unchanged at rank 1 / Jaccard 0.773 before and after."
+  }
+}

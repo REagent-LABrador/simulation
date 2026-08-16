@@ -1,0 +1,320 @@
+data_8QFZ
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_entity.id 
+_entity.type 
+_entity.src_method 
+_entity.pdbx_description 
+_entity.formula_weight 
+_entity.pdbx_number_of_molecules 
+_entity.pdbx_ec 
+_entity.pdbx_mutation 
+_entity.pdbx_fragment 
+_entity.details 
+1 polymer     man 'Thymic stromal lymphopoietin'                                                  14583.882 1  ? ? ? ? 
+2 polymer     syn CYS-HIS-TRP-LEU-GLU-ASN-CYS-TRP-ARG-GLY-PHE-CYS                                 1555.804  1  ? ? ? ? 
+3 non-polymer syn '1-[3,5-bis(3-bromanylpropanoyl)-1,3,5-triazinan-1-yl]-3-bromanyl-propan-1-one' 492.002   1  ? ? ? ? 
+4 water       nat water                                                                           18.015    74 ? ? ? ? 
+#
+# 
+loop_
+_entity_poly.entity_id 
+_entity_poly.type 
+_entity_poly.nstd_linkage 
+_entity_poly.nstd_monomer 
+_entity_poly.pdbx_seq_one_letter_code 
+_entity_poly.pdbx_seq_one_letter_code_can 
+_entity_poly.pdbx_strand_id 
+_entity_poly.pdbx_target_identifier 
+1 'polypeptide(L)' no no 
+;MYDFTNCDFEKIKAAYLSTISKDLITYMSGTKSTEFNNTVSCSNRPHCLTEIQSLTFNPTAGCASLAKEMFAMKTKAALA
+IWCPGYSETQINATQAMKKRRKRKVTTNKCLEQVSQLQGLWRRFNRPL
+;
+;MYDFTNCDFEKIKAAYLSTISKDLITYMSGTKSTEFNNTVSCSNRPHCLTEIQSLTFNPTAGCASLAKEMFAMKTKAALA
+IWCPGYSETQINATQAMKKRRKRKVTTNKCLEQVSQLQGLWRRFNRPL
+;
+A ? 
+2 'polypeptide(L)' no no CHWLENCWRGFC CHWLENCWRGFC B ? 
+#
+# 
+# 
+loop_
+_entity_poly_seq.entity_id 
+_entity_poly_seq.num 
+_entity_poly_seq.mon_id 
+_entity_poly_seq.hetero 
+1 1   MET n 
+1 2   TYR n 
+1 3   ASP n 
+1 4   PHE n 
+1 5   THR n 
+1 6   ASN n 
+1 7   CYS n 
+1 8   ASP n 
+1 9   PHE n 
+1 10  GLU n 
+1 11  LYS n 
+1 12  ILE n 
+1 13  LYS n 
+1 14  ALA n 
+1 15  ALA n 
+1 16  TYR n 
+1 17  LEU n 
+1 18  SER n 
+1 19  THR n 
+1 20  ILE n 
+1 21  SER n 
+1 22  LYS n 
+1 23  ASP n 
+1 24  LEU n 
+1 25  ILE n 
+1 26  THR n 
+1 27  TYR n 
+1 28  MET n 
+1 29  SER n 
+1 30  GLY n 
+1 31  THR n 
+1 32  LYS n 
+1 33  SER n 
+1 34  THR n 
+1 35  GLU n 
+1 36  PHE n 
+1 37  ASN n 
+1 38  ASN n 
+1 39  THR n 
+1 40  VAL n 
+1 41  SER n 
+1 42  CYS n 
+1 43  SER n 
+1 44  ASN n 
+1 45  ARG n 
+1 46  PRO n 
+1 47  HIS n 
+1 48  CYS n 
+1 49  LEU n 
+1 50  THR n 
+1 51  GLU n 
+1 52  ILE n 
+1 53  GLN n 
+1 54  SER n 
+1 55  LEU n 
+1 56  THR n 
+1 57  PHE n 
+1 58  ASN n 
+1 59  PRO n 
+1 60  THR n 
+1 61  ALA n 
+1 62  GLY n 
+1 63  CYS n 
+1 64  ALA n 
+1 65  SER n 
+1 66  LEU n 
+1 67  ALA n 
+1 68  LYS n 
+1 69  GLU n 
+1 70  MET n 
+1 71  PHE n 
+1 72  ALA n 
+1 73  MET n 
+1 74  LYS n 
+1 75  THR n 
+1 76  LYS n 
+1 77  ALA n 
+1 78  ALA n 
+1 79  LEU n 
+1 80  ALA n 
+1 81  ILE n 
+1 82  TRP n 
+1 83  CYS n 
+1 84  PRO n 
+1 85  GLY n 
+1 86  TYR n 
+1 87  SER n 
+1 88  GLU n 
+1 89  THR n 
+1 90  GLN n 
+1 91  ILE n 
+1 92  ASN n 
+1 93  ALA n 
+1 94  THR n 
+1 95  GLN n 
+1 96  ALA n 
+1 97  MET n 
+1 98  LYS n 
+1 99  LYS n 
+1 100 ARG n 
+1 101 ARG n 
+1 102 LYS n 
+1 103 ARG n 
+1 104 LYS n 
+1 105 VAL n 
+1 106 THR n 
+1 107 THR n 
+1 108 ASN n 
+1 109 LYS n 
+1 110 CYS n 
+1 111 LEU n 
+1 112 GLU n 
+1 113 GLN n 
+1 114 VAL n 
+1 115 SER n 
+1 116 GLN n 
+1 117 LEU n 
+1 118 GLN n 
+1 119 GLY n 
+1 120 LEU n 
+1 121 TRP n 
+1 122 ARG n 
+1 123 ARG n 
+1 124 PHE n 
+1 125 ASN n 
+1 126 ARG n 
+1 127 PRO n 
+1 128 LEU n 
+2 1   CYS n 
+2 2   HIS n 
+2 3   TRP n 
+2 4   LEU n 
+2 5   GLU n 
+2 6   ASN n 
+2 7   CYS n 
+2 8   TRP n 
+2 9   ARG n 
+2 10  GLY n 
+2 11  PHE n 
+2 12  CYS n 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_asym.id 
+_struct_asym.pdbx_blank_PDB_chainid_flag 
+_struct_asym.pdbx_modified 
+_struct_asym.entity_id 
+_struct_asym.details 
+A N N 1 ? 
+B N N 2 ? 
+C N N 3 ? 
+D N N 4 ? 
+E N N 4 ? 
+#
+# 
+loop_
+_struct_ref.id 
+_struct_ref.db_name 
+_struct_ref.db_code 
+_struct_ref.pdbx_db_accession 
+_struct_ref.pdbx_db_isoform 
+_struct_ref.entity_id 
+_struct_ref.pdbx_seq_one_letter_code 
+_struct_ref.pdbx_align_begin 
+1 UNP TSLP_HUMAN Q969D9 ? 1 
+;YDFTNCDFEKIKAAYLSTISKDLITYMSGTKSTEFNNTVSCSNRPHCLTEIQSLTFNPTAGCASLAKEMFAMKTKAALAI
+WCPGYSETQINATQAMKKRRKRKVTTNKCLEQVSQLQGLWRRFNRPL
+;
+29 
+2 PDB 8QFZ       8QFZ   ? 2 ? 1  
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+loop_
+_struct_conn.id 
+_struct_conn.conn_type_id 
+_struct_conn.pdbx_leaving_atom_flag 
+_struct_conn.pdbx_PDB_id 
+_struct_conn.ptnr1_label_asym_id 
+_struct_conn.ptnr1_label_comp_id 
+_struct_conn.ptnr1_label_seq_id 
+_struct_conn.ptnr1_label_atom_id 
+_struct_conn.pdbx_ptnr1_label_alt_id 
+_struct_conn.pdbx_ptnr1_PDB_ins_code 
+_struct_conn.pdbx_ptnr1_standard_comp_id 
+_struct_conn.ptnr1_symmetry 
+_struct_conn.ptnr2_label_asym_id 
+_struct_conn.ptnr2_label_comp_id 
+_struct_conn.ptnr2_label_seq_id 
+_struct_conn.ptnr2_label_atom_id 
+_struct_conn.pdbx_ptnr2_label_alt_id 
+_struct_conn.pdbx_ptnr2_PDB_ins_code 
+_struct_conn.ptnr1_auth_asym_id 
+_struct_conn.ptnr1_auth_comp_id 
+_struct_conn.ptnr1_auth_seq_id 
+_struct_conn.ptnr2_auth_asym_id 
+_struct_conn.ptnr2_auth_comp_id 
+_struct_conn.ptnr2_auth_seq_id 
+_struct_conn.ptnr2_symmetry 
+_struct_conn.pdbx_ptnr3_label_atom_id 
+_struct_conn.pdbx_ptnr3_label_seq_id 
+_struct_conn.pdbx_ptnr3_label_comp_id 
+_struct_conn.pdbx_ptnr3_label_asym_id 
+_struct_conn.pdbx_ptnr3_label_alt_id 
+_struct_conn.pdbx_ptnr3_PDB_ins_code 
+_struct_conn.details 
+_struct_conn.pdbx_dist_value 
+_struct_conn.pdbx_value_order 
+_struct_conn.pdbx_role 
+disulf1 disulf ?   ? A CYS 7  SG ? ? ? 1_555 A CYS 83  SG  ? ? A CYS 34 A CYS 110 1_555 ? ? ? ? ? ? ? 2.190 ? ? 
+disulf2 disulf ?   ? A CYS 42 SG ? ? ? 1_555 A CYS 48  SG  ? ? A CYS 69 A CYS 75  1_555 ? ? ? ? ? ? ? 2.122 ? ? 
+disulf3 disulf ?   ? A CYS 63 SG ? ? ? 1_555 A CYS 110 SG  ? ? A CYS 90 A CYS 137 1_555 ? ? ? ? ? ? ? 2.197 ? ? 
+covale1 covale one ? B CYS 1  SG ? ? ? 1_555 C LFI .   C12 ? ? B CYS 11 B LFI 101 1_555 ? ? ? ? ? ? ? 1.715 ? ? 
+covale2 covale one ? B CYS 7  SG ? ? ? 1_555 C LFI .   C10 ? ? B CYS 17 B LFI 101 1_555 ? ? ? ? ? ? ? 1.723 ? ? 
+covale3 covale one ? B CYS 12 SG ? ? ? 1_555 C LFI .   C11 ? ? B CYS 22 B LFI 101 1_555 ? ? ? ? ? ? ? 1.777 ? ? 
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 

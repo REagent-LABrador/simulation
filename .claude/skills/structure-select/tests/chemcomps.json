@@ -1,0 +1,2414 @@
+{
+ "12P": {
+  "comp_id": "12P",
+  "drugbank_id": null,
+  "formula": "C24 H50 O13",
+  "formula_weight": 546.646,
+  "name": "DODECAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "15P": {
+  "comp_id": "15P",
+  "drugbank_id": null,
+  "formula": "C69 H140 O35",
+  "formula_weight": 1529.829,
+  "name": "POLYETHYLENE GLYCOL (N=34)",
+  "smiles": "COCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCO",
+  "type": "non-polymer"
+ },
+ "1BO": {
+  "comp_id": "1BO",
+  "drugbank_id": "DB02145",
+  "formula": "C4 H10 O",
+  "formula_weight": 74.122,
+  "name": "1-BUTANOL",
+  "smiles": "CCCCO",
+  "type": "non-polymer"
+ },
+ "1N1": {
+  "comp_id": "1N1",
+  "drugbank_id": "DB01254",
+  "formula": "C22 H26 Cl N7 O2 S",
+  "formula_weight": 488.006,
+  "name": "N-(2-CHLORO-6-METHYLPHENYL)-2-({6-[4-(2-HYDROXYETHYL)PIPERAZIN-1-YL]-2-METHYL...",
+  "smiles": "Cc1cccc(c1NC(=O)c2cnc(s2)Nc3cc(nc(n3)C)N4CCN(CC4)CCO)Cl",
+  "type": "non-polymer"
+ },
+ "1PE": {
+  "comp_id": "1PE",
+  "drugbank_id": null,
+  "formula": "C10 H22 O6",
+  "formula_weight": 238.278,
+  "name": "PENTAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "2PE": {
+  "comp_id": "2PE",
+  "drugbank_id": null,
+  "formula": "C18 H38 O10",
+  "formula_weight": 414.488,
+  "name": "NONAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "2UK": {
+  "comp_id": "2UK",
+  "drugbank_id": null,
+  "formula": "C16 H28 N7 O14 P3",
+  "formula_weight": 635.353,
+  "name": "5'-O-[(R)-hydroxy{[(S)-hydroxy(phosphonoamino)phosphoryl]oxy}phosphoryl]-N-[3...",
+  "smiles": "CCC(=O)NCCCNC1=NC(=O)c2c(n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(NP(=O)(O)O)O)O)O)N1",
+  "type": "non-polymer"
+ },
+ "307": {
+  "comp_id": "307",
+  "drugbank_id": null,
+  "formula": "C32 H32 F3 N3 O2",
+  "formula_weight": 547.611,
+  "name": "6,7-DIMETHYL-3-[(METHYL{2-[METHYL({1-[3-(TRIFLUOROMETHYL)PHENYL]-1H-INDOL-3-Y...",
+  "smiles": "Cc1cc2c(cc1C)OC=C(C2=O)CN(C)CCN(C)Cc3cn(c4c3cccc4)c5cccc(c5)C(F)(F)F",
+  "type": "non-polymer"
+ },
+ "3PG": {
+  "comp_id": "3PG",
+  "drugbank_id": "DB04510",
+  "formula": "C3 H7 O7 P",
+  "formula_weight": 186.057,
+  "name": "3-PHOSPHOGLYCERIC ACID",
+  "smiles": "C(C(C(=O)O)O)OP(=O)(O)O",
+  "type": "non-polymer"
+ },
+ "4NC": {
+  "comp_id": "4NC",
+  "drugbank_id": "DB03407",
+  "formula": "C6 H5 N O4",
+  "formula_weight": 155.108,
+  "name": "4-NITROCATECHOL",
+  "smiles": "c1cc(c(cc1[N+](=O)[O-])O)O",
+  "type": "non-polymer"
+ },
+ "4WI": {
+  "comp_id": "4WI",
+  "drugbank_id": null,
+  "formula": "C23 H34 F3 N5 O4",
+  "formula_weight": 501.542,
+  "name": "(1R,2S,5S)-N-{(1E,2S)-1-imino-3-[(3S)-2-oxopyrrolidin-3-yl]propan-2-yl}-6,6-d...",
+  "smiles": "CC1(C2C1C(N(C2)C(=O)C(C(C)(C)C)NC(=O)C(F)(F)F)C(=O)NC(CC3CCNC3=O)C=N)C",
+  "type": "non-polymer"
+ },
+ "5GP": {
+  "comp_id": "5GP",
+  "drugbank_id": "DB01972",
+  "formula": "C10 H14 N5 O8 P",
+  "formula_weight": 363.221,
+  "name": "GUANOSINE-5'-MONOPHOSPHATE",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "7PE": {
+  "comp_id": "7PE",
+  "drugbank_id": null,
+  "formula": "C14 H30 O7",
+  "formula_weight": 310.384,
+  "name": "2-(2-(2-(2-(2-(2-ETHOXYETHOXY)ETHOXY)ETHOXY)ETHOXY)ETHOXY)ETHANOL",
+  "smiles": "CCOCCOCCOCCOCCOCCOCCO",
+  "type": "non-polymer"
+ },
+ "A1JPS": {
+  "comp_id": "A1JPS",
+  "drugbank_id": null,
+  "formula": "C22 H24 N8 O3",
+  "formula_weight": 448.478,
+  "name": "~{N}-[(~{S})-cyclohexyl-[3-[(4-oxidanylidene-3~{H}-phthalazin-1-yl)methyl]-1~...",
+  "smiles": "Cc1c(non1)C(=O)NC(c2[nH]nc(n2)CC3=NNC(=O)c4c3cccc4)C5CCCCC5",
+  "type": "non-polymer"
+ },
+ "ABA": {
+  "comp_id": "ABA",
+  "drugbank_id": null,
+  "formula": "C4 H9 N O2",
+  "formula_weight": 103.12,
+  "name": "ALPHA-AMINOBUTYRIC ACID",
+  "smiles": "CCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "ACE": {
+  "comp_id": "ACE",
+  "drugbank_id": null,
+  "formula": "C2 H4 O",
+  "formula_weight": 44.053,
+  "name": "ACETYL GROUP",
+  "smiles": "CC=O",
+  "type": "non-polymer"
+ },
+ "ACO": {
+  "comp_id": "ACO",
+  "drugbank_id": null,
+  "formula": "C23 H38 N7 O17 P3 S",
+  "formula_weight": 809.571,
+  "name": "ACETYL COENZYME *A",
+  "smiles": "CC(=O)SCCNC(=O)CCNC(=O)C(C(C)(C)COP(=O)(O)OP(=O)(O)OCC1C(C(C(O1)n2cnc3c2ncnc3N)O)OP(=O)(O)O)O",
+  "type": "non-polymer"
+ },
+ "ACP": {
+  "comp_id": "ACP",
+  "drugbank_id": "DB03909",
+  "formula": "C11 H18 N5 O12 P3",
+  "formula_weight": 505.208,
+  "name": "PHOSPHOMETHYLPHOSPHONIC ACID ADENYLATE ESTER",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(CP(=O)(O)O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "ACT": {
+  "comp_id": "ACT",
+  "drugbank_id": "DB14511",
+  "formula": "C2 H3 O2",
+  "formula_weight": 59.044,
+  "name": "ACETATE ION",
+  "smiles": "CC(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "ACY": {
+  "comp_id": "ACY",
+  "drugbank_id": "DB03166",
+  "formula": "C2 H4 O2",
+  "formula_weight": 60.052,
+  "name": "ACETIC ACID",
+  "smiles": "CC(=O)O",
+  "type": "non-polymer"
+ },
+ "ADE": {
+  "comp_id": "ADE",
+  "drugbank_id": "DB00173",
+  "formula": "C5 H5 N5",
+  "formula_weight": 135.127,
+  "name": "ADENINE",
+  "smiles": "c1[nH]c2c(n1)c(ncn2)N",
+  "type": "non-polymer"
+ },
+ "ADN": {
+  "comp_id": "ADN",
+  "drugbank_id": "DB00640",
+  "formula": "C10 H13 N5 O4",
+  "formula_weight": 267.241,
+  "name": "ADENOSINE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)CO)O)O)N",
+  "type": "non-polymer"
+ },
+ "ADP": {
+  "comp_id": "ADP",
+  "drugbank_id": "DB16833",
+  "formula": "C10 H15 N5 O10 P2",
+  "formula_weight": 427.201,
+  "name": "ADENOSINE-5'-DIPHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "ADX": {
+  "comp_id": "ADX",
+  "drugbank_id": "DB03708",
+  "formula": "C10 H14 N5 O10 P S",
+  "formula_weight": 427.284,
+  "name": "ADENOSINE-5'-PHOSPHOSULFATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OS(=O)(=O)O)O)O)N",
+  "type": "RNA linking"
+ },
+ "AF3": {
+  "comp_id": "AF3",
+  "drugbank_id": null,
+  "formula": "Al F3",
+  "formula_weight": 83.977,
+  "name": "ALUMINUM FLUORIDE",
+  "smiles": "F[Al](F)F",
+  "type": "non-polymer"
+ },
+ "AGS": {
+  "comp_id": "AGS",
+  "drugbank_id": "DB02930",
+  "formula": "C10 H16 N5 O12 P3 S",
+  "formula_weight": 523.247,
+  "name": "PHOSPHOTHIOPHOSPHORIC ACID-ADENYLATE ESTER",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=S)(O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "ALA": {
+  "comp_id": "ALA",
+  "drugbank_id": "DB00160",
+  "formula": "C3 H7 N O2",
+  "formula_weight": 89.093,
+  "name": "ALANINE",
+  "smiles": "CC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "ALF": {
+  "comp_id": "ALF",
+  "drugbank_id": "DB04444",
+  "formula": "Al F4",
+  "formula_weight": 102.975,
+  "name": "TETRAFLUOROALUMINATE ION",
+  "smiles": "F[Al-](F)(F)F",
+  "type": "non-polymer"
+ },
+ "AMP": {
+  "comp_id": "AMP",
+  "drugbank_id": "DB00131",
+  "formula": "C10 H14 N5 O7 P",
+  "formula_weight": 347.221,
+  "name": "ADENOSINE MONOPHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "AND": {
+  "comp_id": "AND",
+  "drugbank_id": "DB01708",
+  "formula": "C19 H28 O2",
+  "formula_weight": 288.424,
+  "name": "3-BETA-HYDROXY-5-ANDROSTEN-17-ONE",
+  "smiles": "CC12CCC3C(C1CCC2=O)CC=C4C3(CCC(C4)O)C",
+  "type": "non-polymer"
+ },
+ "ANP": {
+  "comp_id": "ANP",
+  "drugbank_id": null,
+  "formula": "C10 H17 N6 O12 P3",
+  "formula_weight": 506.196,
+  "name": "PHOSPHOAMINOPHOSPHONIC ACID-ADENYLATE ESTER",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(NP(=O)(O)O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "APC": {
+  "comp_id": "APC",
+  "drugbank_id": "DB02596",
+  "formula": "C11 H18 N5 O12 P3",
+  "formula_weight": 505.208,
+  "name": "DIPHOSPHOMETHYLPHOSPHONIC ACID ADENOSYL ESTER",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(CP(=O)(O)OP(=O)(O)O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "APR": {
+  "comp_id": "APR",
+  "drugbank_id": null,
+  "formula": "C15 H23 N5 O14 P2",
+  "formula_weight": 559.316,
+  "name": "ADENOSINE-5-DIPHOSPHORIBOSE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OCC4C(C(C(O4)O)O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "ASD": {
+  "comp_id": "ASD",
+  "drugbank_id": "DB01536",
+  "formula": "C19 H26 O2",
+  "formula_weight": 286.409,
+  "name": "4-ANDROSTENE-3-17-DIONE",
+  "smiles": "CC12CCC(=O)C=C1CCC3C2CCC4(C3CCC4=O)C",
+  "type": "non-polymer"
+ },
+ "ATP": {
+  "comp_id": "ATP",
+  "drugbank_id": "DB00171",
+  "formula": "C10 H16 N5 O13 P3",
+  "formula_weight": 507.181,
+  "name": "ADENOSINE-5'-TRIPHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "AZI": {
+  "comp_id": "AZI",
+  "drugbank_id": null,
+  "formula": "N3",
+  "formula_weight": 42.02,
+  "name": "AZIDE ION",
+  "smiles": "[N-]=[N+]=[N-]",
+  "type": "non-polymer"
+ },
+ "B12": {
+  "comp_id": "B12",
+  "drugbank_id": null,
+  "formula": "C62 H89 Co N13 O14 P",
+  "formula_weight": 1330.356,
+  "name": "COBALAMIN",
+  "smiles": "Cc1cc2c(cc1C)n(cn2)C3C(C(C(O3)CO)OP(=O)(O)OC(C)CNC(=O)CCC4(C(C5C6(C(C(C7=[N]6[Co+2]89[N]5=C4C(=C1[NH]8C(=CC2=[N]9C(=C7C)C(C2CCC(=O)N)(C)CC(=O)N)C(C1CCC(=O)N)(C)C)C)CCC(=O)N)(C)CC(=O)N)C)CC(=O)N)C)O",
+  "type": "non-polymer"
+ },
+ "BA": {
+  "comp_id": "BA",
+  "drugbank_id": null,
+  "formula": "Ba",
+  "formula_weight": 137.327,
+  "name": "BARIUM ION",
+  "smiles": "[Ba+2]",
+  "type": "non-polymer"
+ },
+ "BCL": {
+  "comp_id": "BCL",
+  "drugbank_id": "DB01853",
+  "formula": "C55 H74 Mg N4 O6",
+  "formula_weight": 911.504,
+  "name": "BACTERIOCHLOROPHYLL A",
+  "smiles": "CCC1C(C2=CC3=C(C(=C4[N-]3[Mg+2]56[N]2=C1C=C7[N-]5C8=C(C(C(=O)C8=C7C)C(=O)OC)C9=[N]6C(=C4)C(C9CCC(=O)OCC=C(C)CCCC(C)CCCC(C)CCCC(C)C)C)C)C(=O)C)C",
+  "type": "non-polymer"
+ },
+ "BCT": {
+  "comp_id": "BCT",
+  "drugbank_id": null,
+  "formula": "C H O3",
+  "formula_weight": 61.017,
+  "name": "BICARBONATE ION",
+  "smiles": "C(=O)(O)[O-]",
+  "type": "non-polymer"
+ },
+ "BEF": {
+  "comp_id": "BEF",
+  "drugbank_id": null,
+  "formula": "Be F3",
+  "formula_weight": 66.007,
+  "name": "BERYLLIUM TRIFLUORIDE ION",
+  "smiles": "[Be-](F)(F)F",
+  "type": "non-polymer"
+ },
+ "BGC": {
+  "comp_id": "BGC",
+  "drugbank_id": "DB02379",
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "beta-D-glucopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "BIS": {
+  "comp_id": "BIS",
+  "drugbank_id": null,
+  "formula": "C15 H22 F4 N5 O12 P3",
+  "formula_weight": 633.276,
+  "name": "1,1,5,5-TETRAFLUOROPHOSPHOPENTYLPHOSPHONIC ACID ADENYLATE ESTER",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(C(CCCC(F)(F)P(=O)(O)O)(F)F)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "BMA": {
+  "comp_id": "BMA",
+  "drugbank_id": null,
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "beta-D-mannopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "BME": {
+  "comp_id": "BME",
+  "drugbank_id": "DB03345",
+  "formula": "C2 H6 O S",
+  "formula_weight": 78.133,
+  "name": "BETA-MERCAPTOETHANOL",
+  "smiles": "C(CS)O",
+  "type": "non-polymer"
+ },
+ "BOG": {
+  "comp_id": "BOG",
+  "drugbank_id": null,
+  "formula": "C14 H28 O6",
+  "formula_weight": 292.369,
+  "name": "octyl beta-D-glucopyranoside",
+  "smiles": "CCCCCCCCOC1C(C(C(C(O1)CO)O)O)O",
+  "type": "D-saccharide"
+ },
+ "BR": {
+  "comp_id": "BR",
+  "drugbank_id": null,
+  "formula": "Br",
+  "formula_weight": 79.904,
+  "name": "BROMIDE ION",
+  "smiles": "[Br-]",
+  "type": "non-polymer"
+ },
+ "BTB": {
+  "comp_id": "BTB",
+  "drugbank_id": null,
+  "formula": "C8 H19 N O5",
+  "formula_weight": 209.24,
+  "name": "2-[BIS-(2-HYDROXY-ETHYL)-AMINO]-2-HYDROXYMETHYL-PROPANE-1,3-DIOL",
+  "smiles": "C(CO)N(CCO)C(CO)(CO)CO",
+  "type": "non-polymer"
+ },
+ "BTN": {
+  "comp_id": "BTN",
+  "drugbank_id": "DB00121",
+  "formula": "C10 H16 N2 O3 S",
+  "formula_weight": 244.311,
+  "name": "BIOTIN",
+  "smiles": "C1C2C(C(S1)CCCCC(=O)O)NC(=O)N2",
+  "type": "non-polymer"
+ },
+ "BU1": {
+  "comp_id": "BU1",
+  "drugbank_id": "DB01955",
+  "formula": "C4 H10 O2",
+  "formula_weight": 90.121,
+  "name": "1,4-BUTANEDIOL",
+  "smiles": "C(CCO)CO",
+  "type": "non-polymer"
+ },
+ "BU3": {
+  "comp_id": "BU3",
+  "drugbank_id": null,
+  "formula": "C4 H10 O2",
+  "formula_weight": 90.121,
+  "name": "(R,R)-2,3-BUTANEDIOL",
+  "smiles": "CC(C(C)O)O",
+  "type": "non-polymer"
+ },
+ "C8E": {
+  "comp_id": "C8E",
+  "drugbank_id": "DB04233",
+  "formula": "C16 H34 O5",
+  "formula_weight": 306.438,
+  "name": "(HYDROXYETHYLOXY)TRI(ETHYLOXY)OCTANE",
+  "smiles": "CCCCCCCCOCCOCCOCCOCCO",
+  "type": "non-polymer"
+ },
+ "CA": {
+  "comp_id": "CA",
+  "drugbank_id": null,
+  "formula": "Ca",
+  "formula_weight": 40.078,
+  "name": "CALCIUM ION",
+  "smiles": "[Ca+2]",
+  "type": "non-polymer"
+ },
+ "CAC": {
+  "comp_id": "CAC",
+  "drugbank_id": null,
+  "formula": "C2 H6 As O2",
+  "formula_weight": 136.989,
+  "name": "CACODYLATE ION",
+  "smiles": "C[As](=O)(C)[O-]",
+  "type": "non-polymer"
+ },
+ "CD": {
+  "comp_id": "CD",
+  "drugbank_id": null,
+  "formula": "Cd",
+  "formula_weight": 112.411,
+  "name": "CADMIUM ION",
+  "smiles": "[Cd+2]",
+  "type": "non-polymer"
+ },
+ "CDL": {
+  "comp_id": "CDL",
+  "drugbank_id": "DB03429",
+  "formula": "C81 H156 O17 P2",
+  "formula_weight": 1464.043,
+  "name": "CARDIOLIPIN",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)OCC(COP(=O)([O-])OCC(COP(=O)([O-])OCC(COC(=O)CCCCCCCCCCCCCCCCC)OC(=O)CCCCCCCCCCCCCCCCC)O)OC(=O)CCCCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "CDP": {
+  "comp_id": "CDP",
+  "drugbank_id": "DB04555",
+  "formula": "C9 H15 N3 O11 P2",
+  "formula_weight": 403.176,
+  "name": "CYTIDINE-5'-DIPHOSPHATE",
+  "smiles": "C1=CN(C(=O)N=C1N)C2C(C(C(O2)COP(=O)(O)OP(=O)(O)O)O)O",
+  "type": "non-polymer"
+ },
+ "CFF": {
+  "comp_id": "CFF",
+  "drugbank_id": "DB00201",
+  "formula": "C8 H10 N4 O2",
+  "formula_weight": 194.191,
+  "name": "CAFFEINE",
+  "smiles": "Cn1cnc2c1C(=O)N(C(=O)N2C)C",
+  "type": "non-polymer"
+ },
+ "CHD": {
+  "comp_id": "CHD",
+  "drugbank_id": "DB02659",
+  "formula": "C24 H40 O5",
+  "formula_weight": 408.571,
+  "name": "CHOLIC ACID",
+  "smiles": "CC(CCC(=O)O)C1CCC2C1(C(CC3C2C(CC4C3(CCC(C4)O)C)O)O)C",
+  "type": "non-polymer"
+ },
+ "CIT": {
+  "comp_id": "CIT",
+  "drugbank_id": "DB04272",
+  "formula": "C6 H8 O7",
+  "formula_weight": 192.124,
+  "name": "CITRIC ACID",
+  "smiles": "C(C(=O)O)C(CC(=O)O)(C(=O)O)O",
+  "type": "non-polymer"
+ },
+ "CL": {
+  "comp_id": "CL",
+  "drugbank_id": null,
+  "formula": "Cl",
+  "formula_weight": 35.453,
+  "name": "CHLORIDE ION",
+  "smiles": "[Cl-]",
+  "type": "non-polymer"
+ },
+ "CLA": {
+  "comp_id": "CLA",
+  "drugbank_id": "DB02133",
+  "formula": "C55 H72 Mg N4 O5",
+  "formula_weight": 893.489,
+  "name": "CHLOROPHYLL A",
+  "smiles": "CCC1=C(C2=Cc3c(c(c4n3[Mg]56[N]2=C1C=C7N5C8=C(C(C(=O)C8=C7C)C(=O)OC)C9=[N]6C(=C4)C(C9CCC(=O)OCC=C(C)CCCC(C)CCCC(C)CCCC(C)C)C)C)C=C)C",
+  "type": "non-polymer"
+ },
+ "CLR": {
+  "comp_id": "CLR",
+  "drugbank_id": "DB04540",
+  "formula": "C27 H46 O",
+  "formula_weight": 386.654,
+  "name": "CHOLESTEROL",
+  "smiles": "CC(C)CCCC(C)C1CCC2C1(CCC3C2CC=C4C3(CCC(C4)O)C)C",
+  "type": "non-polymer"
+ },
+ "CMP": {
+  "comp_id": "CMP",
+  "drugbank_id": "DB02527",
+  "formula": "C10 H12 N5 O6 P",
+  "formula_weight": 329.206,
+  "name": "ADENOSINE-3',5'-CYCLIC-MONOPHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C4C(O3)COP(=O)(O4)O)O)N",
+  "type": "non-polymer"
+ },
+ "CO": {
+  "comp_id": "CO",
+  "drugbank_id": null,
+  "formula": "Co",
+  "formula_weight": 58.933,
+  "name": "COBALT (II) ION",
+  "smiles": "[Co+2]",
+  "type": "non-polymer"
+ },
+ "CO3": {
+  "comp_id": "CO3",
+  "drugbank_id": "DB14531",
+  "formula": "C O3",
+  "formula_weight": 60.009,
+  "name": "CARBONATE ION",
+  "smiles": "C(=O)([O-])[O-]",
+  "type": "non-polymer"
+ },
+ "COA": {
+  "comp_id": "COA",
+  "drugbank_id": "DB01992",
+  "formula": "C21 H36 N7 O16 P3 S",
+  "formula_weight": 767.534,
+  "name": "COENZYME A",
+  "smiles": "CC(C)(COP(=O)(O)OP(=O)(O)OCC1C(C(C(O1)n2cnc3c2ncnc3N)O)OP(=O)(O)O)C(C(=O)NCCC(=O)NCCS)O",
+  "type": "non-polymer"
+ },
+ "COB": {
+  "comp_id": "COB",
+  "drugbank_id": "DB03614",
+  "formula": "C63 H91 Co N13 O14 P",
+  "formula_weight": 1344.382,
+  "name": "CO-METHYLCOBALAMIN",
+  "smiles": "Cc1cc2c(cc1C)n(cn2)C3C(C(C(O3)CO)OP(=O)(O)OC(C)CNC(=O)CCC4(C(C5=[N-]6C4=C(C7=[N]8[Co+2]69([N]1=C(C=C8C(C7CCC(=O)N)(C)C)C(C(C1=C(C1=[N]9C5(C(C1CCC(=O)N)(C)CC(=O)N)C)C)(C)CC(=O)N)CCC(=O)N)C)C)CC(=O)N)C)O",
+  "type": "non-polymer"
+ },
+ "CS": {
+  "comp_id": "CS",
+  "drugbank_id": null,
+  "formula": "Cs",
+  "formula_weight": 132.905,
+  "name": "CESIUM ION",
+  "smiles": "[Cs+]",
+  "type": "non-polymer"
+ },
+ "CSX": {
+  "comp_id": "CSX",
+  "drugbank_id": "DB03382",
+  "formula": "C3 H7 N O3 S",
+  "formula_weight": 137.158,
+  "name": "S-OXY CYSTEINE",
+  "smiles": "C(C(C(=O)O)N)S=O",
+  "type": "L-peptide linking"
+ },
+ "CTP": {
+  "comp_id": "CTP",
+  "drugbank_id": "DB02431",
+  "formula": "C9 H16 N3 O14 P3",
+  "formula_weight": 483.156,
+  "name": "CYTIDINE-5'-TRIPHOSPHATE",
+  "smiles": "C1=CN(C(=O)N=C1N)C2C(C(C(O2)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O",
+  "type": "non-polymer"
+ },
+ "CU": {
+  "comp_id": "CU",
+  "drugbank_id": null,
+  "formula": "Cu",
+  "formula_weight": 63.546,
+  "name": "COPPER (II) ION",
+  "smiles": "[Cu+2]",
+  "type": "non-polymer"
+ },
+ "CXS": {
+  "comp_id": "CXS",
+  "drugbank_id": "DB02219",
+  "formula": "C9 H19 N O3 S",
+  "formula_weight": 221.317,
+  "name": "3-CYCLOHEXYL-1-PROPYLSULFONIC ACID",
+  "smiles": "C1CCC(CC1)NCCCS(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "D10": {
+  "comp_id": "D10",
+  "drugbank_id": null,
+  "formula": "C10 H22",
+  "formula_weight": 142.282,
+  "name": "DECANE",
+  "smiles": "CCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "D12": {
+  "comp_id": "D12",
+  "drugbank_id": null,
+  "formula": "C12 H26",
+  "formula_weight": 170.335,
+  "name": "DODECANE",
+  "smiles": "CCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "D1D": {
+  "comp_id": "D1D",
+  "drugbank_id": "DB02693",
+  "formula": "C4 H8 O2 S2",
+  "formula_weight": 152.235,
+  "name": "(4S,5S)-1,2-DITHIANE-4,5-DIOL",
+  "smiles": "C1C(C(CSS1)O)O",
+  "type": "non-polymer"
+ },
+ "DAO": {
+  "comp_id": "DAO",
+  "drugbank_id": "DB03017",
+  "formula": "C12 H24 O2",
+  "formula_weight": 200.318,
+  "name": "LAURIC ACID",
+  "smiles": "CCCCCCCCCCCC(=O)O",
+  "type": "non-polymer"
+ },
+ "DEP": {
+  "comp_id": "DEP",
+  "drugbank_id": "DB02811",
+  "formula": "C4 H11 O3 P",
+  "formula_weight": 138.102,
+  "name": "DIETHYL PHOSPHONATE",
+  "smiles": "CCOP(=O)OCC",
+  "type": "non-polymer"
+ },
+ "DEX": {
+  "comp_id": "DEX",
+  "drugbank_id": "DB01234",
+  "formula": "C22 H29 F O5",
+  "formula_weight": 392.461,
+  "name": "DEXAMETHASONE",
+  "smiles": "CC1CC2C3CCC4=CC(=O)C=CC4(C3(C(CC2(C1(C(=O)CO)O)C)O)F)C",
+  "type": "non-polymer"
+ },
+ "DGA": {
+  "comp_id": "DGA",
+  "drugbank_id": null,
+  "formula": "C39 H76 O5",
+  "formula_weight": 625.018,
+  "name": "DIACYL GLYCEROL",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)OCC(CO)OC(=O)CCCCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "DMS": {
+  "comp_id": "DMS",
+  "drugbank_id": "DB01093",
+  "formula": "C2 H6 O S",
+  "formula_weight": 78.133,
+  "name": "DIMETHYL SULFOXIDE",
+  "smiles": "CS(=O)C",
+  "type": "non-polymer"
+ },
+ "DTT": {
+  "comp_id": "DTT",
+  "drugbank_id": "DB04447",
+  "formula": "C4 H10 O2 S2",
+  "formula_weight": 154.251,
+  "name": "2,3-DIHYDROXY-1,4-DITHIOBUTANE",
+  "smiles": "C(C(C(CS)O)O)S",
+  "type": "non-polymer"
+ },
+ "DTU": {
+  "comp_id": "DTU",
+  "drugbank_id": "DB01692",
+  "formula": "C4 H10 O2 S2",
+  "formula_weight": 154.251,
+  "name": "(2R,3S)-1,4-DIMERCAPTOBUTANE-2,3-DIOL",
+  "smiles": "C(C(C(CS)O)O)S",
+  "type": "non-polymer"
+ },
+ "DTV": {
+  "comp_id": "DTV",
+  "drugbank_id": "DB02184",
+  "formula": "C4 H10 O2 S2",
+  "formula_weight": 154.251,
+  "name": "(2S,3S)-1,4-DIMERCAPTOBUTANE-2,3-DIOL",
+  "smiles": "C(C(C(CS)O)O)S",
+  "type": "non-polymer"
+ },
+ "EDO": {
+  "comp_id": "EDO",
+  "drugbank_id": null,
+  "formula": "C2 H6 O2",
+  "formula_weight": 62.068,
+  "name": "1,2-ETHANEDIOL",
+  "smiles": "C(CO)O",
+  "type": "non-polymer"
+ },
+ "EPE": {
+  "comp_id": "EPE",
+  "drugbank_id": "DB16872",
+  "formula": "C8 H18 N2 O4 S",
+  "formula_weight": 238.305,
+  "name": "4-(2-HYDROXYETHYL)-1-PIPERAZINE ETHANESULFONIC ACID",
+  "smiles": "C1CN(CCN1CCO)CCS(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "EST": {
+  "comp_id": "EST",
+  "drugbank_id": "DB00783",
+  "formula": "C18 H24 O2",
+  "formula_weight": 272.382,
+  "name": "ESTRADIOL",
+  "smiles": "CC12CCC3c4ccc(cc4CCC3C1CCC2O)O",
+  "type": "non-polymer"
+ },
+ "F3S": {
+  "comp_id": "F3S",
+  "drugbank_id": null,
+  "formula": "Fe3 S4",
+  "formula_weight": 295.795,
+  "name": "FE3-S4 CLUSTER",
+  "smiles": "S1[Fe]2S[Fe]3[S]2[Fe]1S3",
+  "type": "non-polymer"
+ },
+ "F6P": {
+  "comp_id": "F6P",
+  "drugbank_id": null,
+  "formula": "C6 H13 O9 P",
+  "formula_weight": 260.136,
+  "name": "6-O-phosphono-beta-D-fructofuranose",
+  "smiles": "C(C1C(C(C(O1)(CO)O)O)O)OP(=O)(O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "FAD": {
+  "comp_id": "FAD",
+  "drugbank_id": "DB03147",
+  "formula": "C27 H33 N9 O15 P2",
+  "formula_weight": 785.55,
+  "name": "FLAVIN-ADENINE DINUCLEOTIDE",
+  "smiles": "Cc1cc2c(cc1C)N(C3=NC(=O)NC(=O)C3=N2)CC(C(C(COP(=O)(O)OP(=O)(O)OCC4C(C(C(O4)n5cnc6c5ncnc6N)O)O)O)O)O",
+  "type": "non-polymer"
+ },
+ "FDA": {
+  "comp_id": "FDA",
+  "drugbank_id": null,
+  "formula": "C27 H35 N9 O15 P2",
+  "formula_weight": 787.566,
+  "name": "DIHYDROFLAVINE-ADENINE DINUCLEOTIDE",
+  "smiles": "Cc1cc2c(cc1C)N(C3=C(N2)C(=O)NC(=O)N3)CC(C(C(COP(=O)(O)OP(=O)(O)OCC4C(C(C(O4)n5cnc6c5ncnc6N)O)O)O)O)O",
+  "type": "non-polymer"
+ },
+ "FE": {
+  "comp_id": "FE",
+  "drugbank_id": null,
+  "formula": "Fe",
+  "formula_weight": 55.845,
+  "name": "FE (III) ION",
+  "smiles": "[Fe+3]",
+  "type": "non-polymer"
+ },
+ "FE2": {
+  "comp_id": "FE2",
+  "drugbank_id": null,
+  "formula": "Fe",
+  "formula_weight": 55.845,
+  "name": "FE (II) ION",
+  "smiles": "[Fe+2]",
+  "type": "non-polymer"
+ },
+ "FES": {
+  "comp_id": "FES",
+  "drugbank_id": null,
+  "formula": "Fe2 S2",
+  "formula_weight": 175.82,
+  "name": "FE2/S2 (INORGANIC) CLUSTER",
+  "smiles": "S1[Fe]S[Fe]1",
+  "type": "non-polymer"
+ },
+ "FLC": {
+  "comp_id": "FLC",
+  "drugbank_id": null,
+  "formula": "C6 H5 O7",
+  "formula_weight": 189.1,
+  "name": "CITRATE ANION",
+  "smiles": "C(C(=O)[O-])C(CC(=O)[O-])(C(=O)[O-])O",
+  "type": "non-polymer"
+ },
+ "FMN": {
+  "comp_id": "FMN",
+  "drugbank_id": "DB03247",
+  "formula": "C17 H21 N4 O9 P",
+  "formula_weight": 456.344,
+  "name": "FLAVIN MONONUCLEOTIDE",
+  "smiles": "Cc1cc2c(cc1C)N(C3=NC(=O)NC(=O)C3=N2)CC(C(C(COP(=O)(O)O)O)O)O",
+  "type": "non-polymer"
+ },
+ "FMT": {
+  "comp_id": "FMT",
+  "drugbank_id": "DB01942",
+  "formula": "C H2 O2",
+  "formula_weight": 46.025,
+  "name": "FORMIC ACID",
+  "smiles": "C(=O)O",
+  "type": "non-polymer"
+ },
+ "FUC": {
+  "comp_id": "FUC",
+  "drugbank_id": "DB04473",
+  "formula": "C6 H12 O5",
+  "formula_weight": 164.156,
+  "name": "alpha-L-fucopyranose",
+  "smiles": "CC1C(C(C(C(O1)O)O)O)O",
+  "type": "L-saccharide, alpha linking"
+ },
+ "FUL": {
+  "comp_id": "FUL",
+  "drugbank_id": "DB03283",
+  "formula": "C6 H12 O5",
+  "formula_weight": 164.156,
+  "name": "beta-L-fucopyranose",
+  "smiles": "CC1C(C(C(C(O1)O)O)O)O",
+  "type": "L-saccharide, beta linking"
+ },
+ "G1P": {
+  "comp_id": "G1P",
+  "drugbank_id": "DB02843",
+  "formula": "C6 H13 O9 P",
+  "formula_weight": 260.136,
+  "name": "1-O-phosphono-alpha-D-glucopyranose",
+  "smiles": "C(C1C(C(C(C(O1)OP(=O)(O)O)O)O)O)O",
+  "type": "D-saccharide"
+ },
+ "G2P": {
+  "comp_id": "G2P",
+  "drugbank_id": "DB03532",
+  "formula": "C11 H18 N5 O13 P3",
+  "formula_weight": 521.208,
+  "name": "PHOSPHOMETHYLPHOSPHONIC ACID GUANYLATE ESTER",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(CP(=O)(O)OP(=O)(O)O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "G6P": {
+  "comp_id": "G6P",
+  "drugbank_id": "DB02007",
+  "formula": "C6 H13 O9 P",
+  "formula_weight": 260.136,
+  "name": "6-O-phosphono-alpha-D-glucopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)OP(=O)(O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "GAL": {
+  "comp_id": "GAL",
+  "drugbank_id": null,
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "beta-D-galactopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "GCP": {
+  "comp_id": "GCP",
+  "drugbank_id": "DB03725",
+  "formula": "C11 H18 N5 O13 P3",
+  "formula_weight": 521.208,
+  "name": "PHOSPHOMETHYLPHOSPHONIC ACID GUANYLATE ESTER",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(CP(=O)(O)O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "GDP": {
+  "comp_id": "GDP",
+  "drugbank_id": "DB04315",
+  "formula": "C10 H15 N5 O11 P2",
+  "formula_weight": 443.201,
+  "name": "GUANOSINE-5'-DIPHOSPHATE",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(O)O)O)O)N=C(NC2=O)N",
+  "type": "RNA linking"
+ },
+ "GDS": {
+  "comp_id": "GDS",
+  "drugbank_id": "DB03310",
+  "formula": "C20 H32 N6 O12 S2",
+  "formula_weight": 612.631,
+  "name": "OXIDIZED GLUTATHIONE DISULFIDE",
+  "smiles": "C(CC(=O)NC(CSSCC(C(=O)NCC(=O)O)NC(=O)CCC(C(=O)O)N)C(=O)NCC(=O)O)C(C(=O)O)N",
+  "type": "non-polymer"
+ },
+ "GGL": {
+  "comp_id": "GGL",
+  "drugbank_id": "DB00142",
+  "formula": "C5 H9 N O4",
+  "formula_weight": 147.129,
+  "name": "GAMMA-L-GLUTAMIC ACID",
+  "smiles": "C(CC(=O)O)C(C(=O)O)N",
+  "type": "L-gamma-peptide, C-delta linking"
+ },
+ "GGZ": {
+  "comp_id": "GGZ",
+  "drugbank_id": null,
+  "formula": "C10 H13 N5 O12 P2 S",
+  "formula_weight": 489.249,
+  "name": "(2S,3AR,4R,6R,6AR)-4-(6-AMINO-9H-PURIN-9-YL)-6-({[(R)-HYDROXY(SULFOOXY)PHOSPH...",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C4C(C(O3)COP(=O)(O)OS(=O)(=O)O)OP(=O)(O4)O)N",
+  "type": "non-polymer"
+ },
+ "GLA": {
+  "comp_id": "GLA",
+  "drugbank_id": null,
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "alpha-D-galactopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "GLC": {
+  "comp_id": "GLC",
+  "drugbank_id": null,
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "alpha-D-glucopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "GNP": {
+  "comp_id": "GNP",
+  "drugbank_id": "DB02082",
+  "formula": "C10 H17 N6 O13 P3",
+  "formula_weight": 522.196,
+  "name": "PHOSPHOAMINOPHOSPHONIC ACID-GUANYLATE ESTER",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(NP(=O)(O)O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "GOL": {
+  "comp_id": "GOL",
+  "drugbank_id": "DB09462",
+  "formula": "C3 H8 O3",
+  "formula_weight": 92.094,
+  "name": "GLYCEROL",
+  "smiles": "C(C(CO)O)O",
+  "type": "non-polymer"
+ },
+ "GSH": {
+  "comp_id": "GSH",
+  "drugbank_id": "DB00143",
+  "formula": "C10 H17 N3 O6 S",
+  "formula_weight": 307.323,
+  "name": "Glutathione",
+  "smiles": "C(CC(=O)NC(CS)C(=O)NCC(=O)O)C(C(=O)O)N",
+  "type": "peptide-like"
+ },
+ "GSP": {
+  "comp_id": "GSP",
+  "drugbank_id": "DB01864",
+  "formula": "C10 H16 N5 O13 P3 S",
+  "formula_weight": 539.246,
+  "name": "5'-GUANOSINE-DIPHOSPHATE-MONOTHIOPHOSPHATE",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=S)(O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "GTP": {
+  "comp_id": "GTP",
+  "drugbank_id": "DB04137",
+  "formula": "C10 H16 N5 O14 P3",
+  "formula_weight": 523.18,
+  "name": "GUANOSINE-5'-TRIPHOSPHATE",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "GUN": {
+  "comp_id": "GUN",
+  "drugbank_id": "DB02377",
+  "formula": "C5 H5 N5 O",
+  "formula_weight": 151.126,
+  "name": "GUANINE",
+  "smiles": "c1[nH]c2c(n1)C(=O)NC(=N2)N",
+  "type": "non-polymer"
+ },
+ "HCY": {
+  "comp_id": "HCY",
+  "drugbank_id": "DB00741",
+  "formula": "C21 H30 O5",
+  "formula_weight": 362.46,
+  "name": "(11alpha,14beta)-11,17,21-trihydroxypregn-4-ene-3,20-dione",
+  "smiles": "CC12CCC(=O)C=C1CCC3C2C(CC4(C3CCC4(C(=O)CO)O)C)O",
+  "type": "non-polymer"
+ },
+ "HDD": {
+  "comp_id": "HDD",
+  "drugbank_id": null,
+  "formula": "C34 H32 Fe N4 O5",
+  "formula_weight": 632.487,
+  "name": "CIS-HEME D HYDROXYCHLORIN GAMMA-SPIROLACTONE",
+  "smiles": "Cc1c2n3c(c1CCC(=O)O)C=C4C5(CCC(=O)O5)C(C6=Cc7c(c(c8n7[Fe]3(N64)N9C(=C2)C(=C(C9=C8)C=C)C)C)C=C)(C)O",
+  "type": "non-polymer"
+ },
+ "HEA": {
+  "comp_id": "HEA",
+  "drugbank_id": null,
+  "formula": "C49 H56 Fe N4 O6",
+  "formula_weight": 852.837,
+  "name": "HEME-A",
+  "smiles": "Cc1c2n3c(c1C=C)C=C4C(=C(C5=[N]4[Fe]36[N]7=C(C=C8N6C(=C5)C(=C8C=O)CCC(=O)O)C(=C(C7=C2)C(CCC=C(C)CCC=C(C)CCC=C(C)C)O)C)CCC(=O)O)C",
+  "type": "non-polymer"
+ },
+ "HEC": {
+  "comp_id": "HEC",
+  "drugbank_id": "DB03317",
+  "formula": "C34 H34 Fe N4 O4",
+  "formula_weight": 618.503,
+  "name": "HEME C",
+  "smiles": "CC=C1C(=C2C=C3C(=CC)C(=C4N3[Fe]56N2C1=Cc7n5c(c(c7C)CCC(=O)O)C=C8N6C(=C4)C(=C8CCC(=O)O)C)C)C",
+  "type": "non-polymer"
+ },
+ "HEM": {
+  "comp_id": "HEM",
+  "drugbank_id": "DB18267",
+  "formula": "C34 H32 Fe N4 O4",
+  "formula_weight": 616.487,
+  "name": "PROTOPORPHYRIN IX CONTAINING FE",
+  "smiles": "Cc1c2n3c(c1CCC(=O)O)C=C4C(=C(C5=[N]4[Fe]36[N]7=C(C=C8N6C(=C5)C(=C8C)C=C)C(=C(C7=C2)C)C=C)C)CCC(=O)O",
+  "type": "non-polymer"
+ },
+ "HEX": {
+  "comp_id": "HEX",
+  "drugbank_id": null,
+  "formula": "C6 H14",
+  "formula_weight": 86.175,
+  "name": "HEXANE",
+  "smiles": "CCCCCC",
+  "type": "non-polymer"
+ },
+ "HEZ": {
+  "comp_id": "HEZ",
+  "drugbank_id": "DB02210",
+  "formula": "C6 H14 O2",
+  "formula_weight": 118.174,
+  "name": "HEXANE-1,6-DIOL",
+  "smiles": "C(CCCO)CCO",
+  "type": "non-polymer"
+ },
+ "HG": {
+  "comp_id": "HG",
+  "drugbank_id": null,
+  "formula": "Hg",
+  "formula_weight": 200.59,
+  "name": "MERCURY (II) ION",
+  "smiles": "[Hg+2]",
+  "type": "non-polymer"
+ },
+ "HTG": {
+  "comp_id": "HTG",
+  "drugbank_id": "DB04450",
+  "formula": "C13 H26 O5 S",
+  "formula_weight": 294.408,
+  "name": "heptyl 1-thio-beta-D-glucopyranoside",
+  "smiles": "CCCCCCCSC1C(C(C(C(O1)CO)O)O)O",
+  "type": "D-saccharide"
+ },
+ "HYP": {
+  "comp_id": "HYP",
+  "drugbank_id": "DB08847",
+  "formula": "C5 H9 N O3",
+  "formula_weight": 131.13,
+  "name": "4-HYDROXYPROLINE",
+  "smiles": "C1C(CNC1C(=O)O)O",
+  "type": "L-peptide linking"
+ },
+ "IDP": {
+  "comp_id": "IDP",
+  "drugbank_id": null,
+  "formula": "C10 H14 N4 O11 P2",
+  "formula_weight": 428.186,
+  "name": "INOSINE-5'-DIPHOSPHATE",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(O)O)O)O)N=CNC2=O",
+  "type": "non-polymer"
+ },
+ "IMD": {
+  "comp_id": "IMD",
+  "drugbank_id": "DB03366",
+  "formula": "C3 H5 N2",
+  "formula_weight": 69.085,
+  "name": "IMIDAZOLE",
+  "smiles": "c1c[nH+]c[nH]1",
+  "type": "non-polymer"
+ },
+ "IMP": {
+  "comp_id": "IMP",
+  "drugbank_id": "DB04566",
+  "formula": "C10 H13 N4 O8 P",
+  "formula_weight": 348.206,
+  "name": "INOSINIC ACID",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)O)O)O)N=CNC2=O",
+  "type": "non-polymer"
+ },
+ "IOD": {
+  "comp_id": "IOD",
+  "drugbank_id": null,
+  "formula": "I",
+  "formula_weight": 126.904,
+  "name": "IODIDE ION",
+  "smiles": "[I-]",
+  "type": "non-polymer"
+ },
+ "IPA": {
+  "comp_id": "IPA",
+  "drugbank_id": "DB02325",
+  "formula": "C3 H8 O",
+  "formula_weight": 60.095,
+  "name": "ISOPROPYL ALCOHOL",
+  "smiles": "CC(C)O",
+  "type": "non-polymer"
+ },
+ "IPH": {
+  "comp_id": "IPH",
+  "drugbank_id": "DB03255",
+  "formula": "C6 H6 O",
+  "formula_weight": 94.111,
+  "name": "PHENOL",
+  "smiles": "c1ccc(cc1)O",
+  "type": "non-polymer"
+ },
+ "ITP": {
+  "comp_id": "ITP",
+  "drugbank_id": "DB02942",
+  "formula": "C6 H14 O12 P2",
+  "formula_weight": 340.116,
+  "name": "PHOSPHORIC ACID MONO-(2,3,4,6-TETRAHYDROXY-5-PHOSPHONOOXY-CYCLOHEXYL) ESTER",
+  "smiles": "C1(C(C(C(C(C1O)OP(=O)(O)O)O)OP(=O)(O)O)O)O",
+  "type": "non-polymer"
+ },
+ "JAK": {
+  "comp_id": "JAK",
+  "drugbank_id": null,
+  "formula": "C14 H17 N5",
+  "formula_weight": 255.318,
+  "name": "2-methyl-1-(piperidin-4-yl)-1,6-dihydroimidazo[4,5-d]pyrrolo[2,3-b]pyridine",
+  "smiles": "Cc1nc2cnc3c(c2n1C4CCNCC4)cc[nH]3",
+  "type": "non-polymer"
+ },
+ "K": {
+  "comp_id": "K",
+  "drugbank_id": null,
+  "formula": "K",
+  "formula_weight": 39.098,
+  "name": "POTASSIUM ION",
+  "smiles": "[K+]",
+  "type": "non-polymer"
+ },
+ "KIN": {
+  "comp_id": "KIN",
+  "drugbank_id": "DB08043",
+  "formula": "C19 H14 F3 N3 O2",
+  "formula_weight": 373.329,
+  "name": "1-[4-(PYRIDIN-4-YLOXY)PHENYL]-3-[3-(TRIFLUOROMETHYL)PHENYL]UREA",
+  "smiles": "c1cc(cc(c1)NC(=O)Nc2ccc(cc2)Oc3ccncc3)C(F)(F)F",
+  "type": "non-polymer"
+ },
+ "L44": {
+  "comp_id": "L44",
+  "drugbank_id": null,
+  "formula": "C39 H76 O5",
+  "formula_weight": 625.018,
+  "name": "(2S)-1-hydroxy-3-(tetradecanoyloxy)propan-2-yl docosanoate",
+  "smiles": "CCCCCCCCCCCCCCCCCCCCCC(=O)OC(CO)COC(=O)CCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "LDA": {
+  "comp_id": "LDA",
+  "drugbank_id": "DB04147",
+  "formula": "C14 H31 N O",
+  "formula_weight": 229.402,
+  "name": "LAURYL DIMETHYLAMINE-N-OXIDE",
+  "smiles": "CCCCCCCCCCCC[N+](C)(C)[O-]",
+  "type": "non-polymer"
+ },
+ "LHG": {
+  "comp_id": "LHG",
+  "drugbank_id": "DB02043",
+  "formula": "C38 H75 O10 P",
+  "formula_weight": 722.97,
+  "name": "1,2-DIPALMITOYL-PHOSPHATIDYL-GLYCEROLE",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)OCC(CO)O)OC(=O)CCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "LMN": {
+  "comp_id": "LMN",
+  "drugbank_id": null,
+  "formula": "C47 H88 O22",
+  "formula_weight": 1005.188,
+  "name": "Lauryl Maltose Neopentyl Glycol",
+  "smiles": "CCCCCCCCCCC(CCCCCCCCCC)(COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)O)O)O)O)O)COC3C(C(C(C(O3)CO)OC4C(C(C(C(O4)CO)O)O)O)O)O",
+  "type": "non-polymer"
+ },
+ "LMT": {
+  "comp_id": "LMT",
+  "drugbank_id": null,
+  "formula": "C24 H46 O11",
+  "formula_weight": 510.615,
+  "name": "DODECYL-BETA-D-MALTOSIDE",
+  "smiles": "CCCCCCCCCCCCOC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)O)O)O)O)O",
+  "type": "D-saccharide"
+ },
+ "LP3": {
+  "comp_id": "LP3",
+  "drugbank_id": null,
+  "formula": "C26 H55 N O7 P",
+  "formula_weight": 524.691,
+  "name": "(7R)-4,7-DIHYDROXY-N,N,N-TRIMETHYL-10-OXO-3,5,9-TRIOXA-4-PHOSPHAHEPTACOSAN-1-...",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)OCC[N+](C)(C)C)O",
+  "type": "non-polymer"
+ },
+ "LPP": {
+  "comp_id": "LPP",
+  "drugbank_id": null,
+  "formula": "C35 H69 O8 P",
+  "formula_weight": 648.891,
+  "name": "2-(HEXADECANOYLOXY)-1-[(PHOSPHONOOXY)METHYL]ETHYL HEXADECANOATE",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)O)OC(=O)CCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "LYS": {
+  "comp_id": "LYS",
+  "drugbank_id": "DB00123",
+  "formula": "C6 H15 N2 O2",
+  "formula_weight": 147.195,
+  "name": "LYSINE",
+  "smiles": "C(CC[NH3+])CC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "LZ1": {
+  "comp_id": "LZ1",
+  "drugbank_id": null,
+  "formula": "C7 H6 N2",
+  "formula_weight": 118.136,
+  "name": "1H-indazole",
+  "smiles": "c1ccc2c(c1)cn[nH]2",
+  "type": "non-polymer"
+ },
+ "M2M": {
+  "comp_id": "M2M",
+  "drugbank_id": "DB02935",
+  "formula": "C6 H14 O3",
+  "formula_weight": 134.174,
+  "name": "1-METHOXY-2-(2-METHOXYETHOXY)ETHANE",
+  "smiles": "COCCOCCOC",
+  "type": "non-polymer"
+ },
+ "M3L": {
+  "comp_id": "M3L",
+  "drugbank_id": "DB03977",
+  "formula": "C9 H21 N2 O2",
+  "formula_weight": 189.275,
+  "name": "N-TRIMETHYLLYSINE",
+  "smiles": "C[N+](C)(C)CCCCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "MAN": {
+  "comp_id": "MAN",
+  "drugbank_id": null,
+  "formula": "C6 H12 O6",
+  "formula_weight": 180.156,
+  "name": "alpha-D-mannopyranose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "MCA": {
+  "comp_id": "MCA",
+  "drugbank_id": "DB04045",
+  "formula": "C25 H40 N7 O19 P3 S",
+  "formula_weight": 867.607,
+  "name": "METHYLMALONYL-COENZYME A",
+  "smiles": "CC(C(=O)O)C(=O)SCCNC(=O)CCNC(=O)C(C(C)(C)COP(=O)(O)OP(=O)(O)OCC1C(C(C(O1)n2cnc3c2ncnc3N)O)OP(=O)(O)O)O",
+  "type": "non-polymer"
+ },
+ "MES": {
+  "comp_id": "MES",
+  "drugbank_id": "DB03814",
+  "formula": "C6 H13 N O4 S",
+  "formula_weight": 195.237,
+  "name": "2-(N-MORPHOLINO)-ETHANESULFONIC ACID",
+  "smiles": "C1COCC[NH+]1CCS(=O)(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "MG": {
+  "comp_id": "MG",
+  "drugbank_id": null,
+  "formula": "Mg",
+  "formula_weight": 24.305,
+  "name": "MAGNESIUM ION",
+  "smiles": "[Mg+2]",
+  "type": "non-polymer"
+ },
+ "MGD": {
+  "comp_id": "MGD",
+  "drugbank_id": null,
+  "formula": "C20 H26 N10 O13 P2 S2",
+  "formula_weight": 740.557,
+  "name": "2-AMINO-5,6-DIMERCAPTO-7-METHYL-3,7,8A,9-TETRAHYDRO-8-OXA-1,3,9,10-TETRAAZA-A...",
+  "smiles": "c1nc2c(n1C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OCC4C(=C(C5C(O4)NC6=C(N5)C(=O)NC(=N6)N)S)S)O)O)N=C(NC2=O)N",
+  "type": "non-polymer"
+ },
+ "MGF": {
+  "comp_id": "MGF",
+  "drugbank_id": null,
+  "formula": "F3 Mg",
+  "formula_weight": 81.3,
+  "name": "TRIFLUOROMAGNESATE",
+  "smiles": "F[Mg-](F)F",
+  "type": "non-polymer"
+ },
+ "MLA": {
+  "comp_id": "MLA",
+  "drugbank_id": "DB02175",
+  "formula": "C3 H4 O4",
+  "formula_weight": 104.061,
+  "name": "MALONIC ACID",
+  "smiles": "C(C(=O)O)C(=O)O",
+  "type": "non-polymer"
+ },
+ "MLI": {
+  "comp_id": "MLI",
+  "drugbank_id": "DB02201",
+  "formula": "C3 H2 O4",
+  "formula_weight": 102.046,
+  "name": "MALONATE ION",
+  "smiles": "C(C(=O)[O-])C(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "MLY": {
+  "comp_id": "MLY",
+  "drugbank_id": "DB03362",
+  "formula": "C8 H18 N2 O2",
+  "formula_weight": 174.241,
+  "name": "N-DIMETHYL-LYSINE",
+  "smiles": "CN(C)CCCCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "MLZ": {
+  "comp_id": "MLZ",
+  "drugbank_id": "DB01714",
+  "formula": "C7 H16 N2 O2",
+  "formula_weight": 160.214,
+  "name": "N-METHYL-LYSINE",
+  "smiles": "CNCCCCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "MN": {
+  "comp_id": "MN",
+  "drugbank_id": null,
+  "formula": "Mn",
+  "formula_weight": 54.938,
+  "name": "MANGANESE (II) ION",
+  "smiles": "[Mn+2]",
+  "type": "non-polymer"
+ },
+ "MOO": {
+  "comp_id": "MOO",
+  "drugbank_id": "DB15878",
+  "formula": "Mo O4",
+  "formula_weight": 159.938,
+  "name": "MOLYBDATE ION",
+  "smiles": "[O-][Mo](=O)(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "MOV": {
+  "comp_id": "MOV",
+  "drugbank_id": null,
+  "formula": "C30 H32 F2 N6 O3",
+  "formula_weight": 562.61,
+  "name": "AMG 510 (bound form)",
+  "smiles": "CCC(=O)N1CCN(C(C1)C)C2=NC(=O)N(c3c2cc(c(n3)c4c(cccc4F)O)F)c5c(ccnc5C(C)C)C",
+  "type": "non-polymer"
+ },
+ "MPD": {
+  "comp_id": "MPD",
+  "drugbank_id": "DB03564",
+  "formula": "C6 H14 O2",
+  "formula_weight": 118.174,
+  "name": "(4S)-2-METHYL-2,4-PENTANEDIOL",
+  "smiles": "CC(CC(C)(C)O)O",
+  "type": "non-polymer"
+ },
+ "MPO": {
+  "comp_id": "MPO",
+  "drugbank_id": "DB03434",
+  "formula": "C7 H15 N O4 S",
+  "formula_weight": 209.263,
+  "name": "3[N-MORPHOLINO]PROPANE SULFONIC ACID",
+  "smiles": "C1COCCN1CCCS(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "MRD": {
+  "comp_id": "MRD",
+  "drugbank_id": null,
+  "formula": "C6 H14 O2",
+  "formula_weight": 118.174,
+  "name": "(4R)-2-METHYLPENTANE-2,4-DIOL",
+  "smiles": "CC(CC(C)(C)O)O",
+  "type": "non-polymer"
+ },
+ "MRY": {
+  "comp_id": "MRY",
+  "drugbank_id": "DB04481",
+  "formula": "C4 H10 O4",
+  "formula_weight": 122.12,
+  "name": "MESO-ERYTHRITOL",
+  "smiles": "C(C(C(CO)O)O)O",
+  "type": "non-polymer"
+ },
+ "MSE": {
+  "comp_id": "MSE",
+  "drugbank_id": "DB11142",
+  "formula": "C5 H11 N O2 Se",
+  "formula_weight": 196.106,
+  "name": "SELENOMETHIONINE",
+  "smiles": "C[Se]CCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "MTA": {
+  "comp_id": "MTA",
+  "drugbank_id": "DB02282",
+  "formula": "C11 H15 N5 O3 S",
+  "formula_weight": 297.334,
+  "name": "5'-DEOXY-5'-METHYLTHIOADENOSINE",
+  "smiles": "CSCC1C(C(C(O1)n2cnc3c2ncnc3N)O)O",
+  "type": "non-polymer"
+ },
+ "MTE": {
+  "comp_id": "MTE",
+  "drugbank_id": null,
+  "formula": "C10 H14 N5 O6 P S2",
+  "formula_weight": 395.352,
+  "name": "PHOSPHONIC ACIDMONO-(2-AMINO-5,6-DIMERCAPTO-4-OXO-3,7,8A,9,10,10A-HEXAHYDRO-4...",
+  "smiles": "C(C1C(=C(C2C(O1)NC3=C(N2)C(=O)NC(=N3)N)S)S)OP(=O)(O)O",
+  "type": "non-polymer"
+ },
+ "MYR": {
+  "comp_id": "MYR",
+  "drugbank_id": "DB08231",
+  "formula": "C14 H28 O2",
+  "formula_weight": 228.371,
+  "name": "MYRISTIC ACID",
+  "smiles": "CCCCCCCCCCCCCC(=O)O",
+  "type": "non-polymer"
+ },
+ "N5S": {
+  "comp_id": "N5S",
+  "drugbank_id": null,
+  "formula": "C14 H16 F3 N3 O4",
+  "formula_weight": 347.29,
+  "name": "N-(5-methyl-1,2-oxazol-3-yl)-N'-[(3S)-4,4,4-trifluoro-3-hydroxy-3-(5-methylfu...",
+  "smiles": "Cc1ccc(o1)C(CCNC(=O)Nc2cc(on2)C)(C(F)(F)F)O",
+  "type": "non-polymer"
+ },
+ "N64": {
+  "comp_id": "N64",
+  "drugbank_id": null,
+  "formula": "C18 H25 N5 O2",
+  "formula_weight": 343.423,
+  "name": "N-(5-methyl-1,2-oxazol-3-yl)-N'-[3-(4-phenylpiperazin-1-yl)propyl]urea",
+  "smiles": "Cc1cc(no1)NC(=O)NCCCN2CCN(CC2)c3ccccc3",
+  "type": "non-polymer"
+ },
+ "NA": {
+  "comp_id": "NA",
+  "drugbank_id": null,
+  "formula": "Na",
+  "formula_weight": 22.99,
+  "name": "SODIUM ION",
+  "smiles": "[Na+]",
+  "type": "non-polymer"
+ },
+ "NAD": {
+  "comp_id": "NAD",
+  "drugbank_id": "DB14128",
+  "formula": "C21 H27 N7 O14 P2",
+  "formula_weight": 663.425,
+  "name": "NICOTINAMIDE-ADENINE-DINUCLEOTIDE",
+  "smiles": "c1cc(c[n+](c1)C2C(C(C(O2)COP(=O)([O-])OP(=O)(O)OCC3C(C(C(O3)n4cnc5c4ncnc5N)O)O)O)O)C(=O)N",
+  "type": "non-polymer"
+ },
+ "NAG": {
+  "comp_id": "NAG",
+  "drugbank_id": "DB00141",
+  "formula": "C8 H15 N O6",
+  "formula_weight": 221.208,
+  "name": "2-acetamido-2-deoxy-beta-D-glucopyranose",
+  "smiles": "CC(=O)NC1C(C(C(OC1O)CO)O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "NAI": {
+  "comp_id": "NAI",
+  "drugbank_id": "DB00157",
+  "formula": "C21 H29 N7 O14 P2",
+  "formula_weight": 665.441,
+  "name": "1,4-DIHYDRONICOTINAMIDE ADENINE DINUCLEOTIDE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OCC4C(C(C(O4)N5C=CCC(=C5)C(=O)N)O)O)O)O)N",
+  "type": "non-polymer"
+ },
+ "NAJ": {
+  "comp_id": "NAJ",
+  "drugbank_id": "DB14128",
+  "formula": "C21 H27 N7 O14 P2",
+  "formula_weight": 663.425,
+  "name": "NICOTINAMIDE-ADENINE-DINUCLEOTIDE (ACIDIC FORM)",
+  "smiles": "c1cc(c[n+](c1)C2C(C(C(O2)COP(=O)([O-])OP(=O)([O-])OCC3C(C(C(O3)n4cnc5c4nc[nH+]c5N)O)O)O)O)C(=O)N",
+  "type": "non-polymer"
+ },
+ "NAP": {
+  "comp_id": "NAP",
+  "drugbank_id": "DB03461",
+  "formula": "C21 H28 N7 O17 P3",
+  "formula_weight": 743.405,
+  "name": "NADP NICOTINAMIDE-ADENINE-DINUCLEOTIDE PHOSPHATE",
+  "smiles": "c1cc(c[n+](c1)C2C(C(C(O2)COP(=O)([O-])OP(=O)(O)OCC3C(C(C(O3)n4cnc5c4ncnc5N)OP(=O)(O)O)O)O)O)C(=O)N",
+  "type": "non-polymer"
+ },
+ "NDG": {
+  "comp_id": "NDG",
+  "drugbank_id": "DB03740",
+  "formula": "C8 H15 N O6",
+  "formula_weight": 221.208,
+  "name": "2-acetamido-2-deoxy-alpha-D-glucopyranose",
+  "smiles": "CC(=O)NC1C(C(C(OC1O)CO)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "NDP": {
+  "comp_id": "NDP",
+  "drugbank_id": "DB02338",
+  "formula": "C21 H30 N7 O17 P3",
+  "formula_weight": 745.421,
+  "name": "NADPH DIHYDRO-NICOTINAMIDE-ADENINE-DINUCLEOTIDE PHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OCC4C(C(C(O4)N5C=CCC(=C5)C(=O)N)O)O)O)OP(=O)(O)O)N",
+  "type": "non-polymer"
+ },
+ "NH2": {
+  "comp_id": "NH2",
+  "drugbank_id": null,
+  "formula": "H2 N",
+  "formula_weight": 16.023,
+  "name": "AMINO GROUP",
+  "smiles": "[NH2]",
+  "type": "non-polymer"
+ },
+ "NH4": {
+  "comp_id": "NH4",
+  "drugbank_id": null,
+  "formula": "H4 N",
+  "formula_weight": 18.038,
+  "name": "AMMONIUM ION",
+  "smiles": "[NH4+]",
+  "type": "non-polymer"
+ },
+ "NI": {
+  "comp_id": "NI",
+  "drugbank_id": null,
+  "formula": "Ni",
+  "formula_weight": 58.693,
+  "name": "NICKEL (II) ION",
+  "smiles": "[Ni+2]",
+  "type": "non-polymer"
+ },
+ "NO3": {
+  "comp_id": "NO3",
+  "drugbank_id": "DB14049",
+  "formula": "N O3",
+  "formula_weight": 62.005,
+  "name": "NITRATE ION",
+  "smiles": "[N+](=O)([O-])[O-]",
+  "type": "non-polymer"
+ },
+ "OCS": {
+  "comp_id": "OCS",
+  "drugbank_id": "DB03661",
+  "formula": "C3 H7 N O5 S",
+  "formula_weight": 169.156,
+  "name": "CYSTEINESULFONIC ACID",
+  "smiles": "C(C(C(=O)O)N)S(=O)(=O)O",
+  "type": "L-peptide linking"
+ },
+ "OCT": {
+  "comp_id": "OCT",
+  "drugbank_id": null,
+  "formula": "C8 H18",
+  "formula_weight": 114.229,
+  "name": "N-OCTANE",
+  "smiles": "CCCCCCCC",
+  "type": "non-polymer"
+ },
+ "OGA": {
+  "comp_id": "OGA",
+  "drugbank_id": null,
+  "formula": "C4 H5 N O5",
+  "formula_weight": 147.086,
+  "name": "N-OXALYLGLYCINE",
+  "smiles": "C(C(=O)O)NC(=O)C(=O)O",
+  "type": "non-polymer"
+ },
+ "OLA": {
+  "comp_id": "OLA",
+  "drugbank_id": null,
+  "formula": "C18 H34 O2",
+  "formula_weight": 282.461,
+  "name": "OLEIC ACID",
+  "smiles": "CCCCCCCCC=CCCCCCCCC(=O)O",
+  "type": "non-polymer"
+ },
+ "OXL": {
+  "comp_id": "OXL",
+  "drugbank_id": null,
+  "formula": "C2 O4",
+  "formula_weight": 88.019,
+  "name": "OXALATE ION",
+  "smiles": "C(=O)(C(=O)[O-])[O-]",
+  "type": "non-polymer"
+ },
+ "P33": {
+  "comp_id": "P33",
+  "drugbank_id": "DB03394",
+  "formula": "C14 H30 O8",
+  "formula_weight": 326.383,
+  "name": "3,6,9,12,15,18-HEXAOXAICOSANE-1,20-DIOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "P4C": {
+  "comp_id": "P4C",
+  "drugbank_id": null,
+  "formula": "C14 H28 O8",
+  "formula_weight": 324.367,
+  "name": "O-ACETALDEHYDYL-HEXAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCC=O)O",
+  "type": "non-polymer"
+ },
+ "P6G": {
+  "comp_id": "P6G",
+  "drugbank_id": null,
+  "formula": "C12 H26 O7",
+  "formula_weight": 282.331,
+  "name": "HEXAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "PAP": {
+  "comp_id": "PAP",
+  "drugbank_id": "DB01842",
+  "formula": "C10 H16 N5 O13 P3",
+  "formula_weight": 507.181,
+  "name": "3'-PHOSPHATE-ADENOSINE-5'-DIPHOSPHATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)O)OP(=O)(O)O)O)N",
+  "type": "non-polymer"
+ },
+ "PC1": {
+  "comp_id": "PC1",
+  "drugbank_id": null,
+  "formula": "C44 H88 N O8 P",
+  "formula_weight": 790.145,
+  "name": "1,2-DIACYL-SN-GLYCERO-3-PHOSPHOCHOLINE",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)OCC(COP(=O)([O-])OCC[N+](C)(C)C)OC(=O)CCCCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "PCW": {
+  "comp_id": "PCW",
+  "drugbank_id": "DB03690",
+  "formula": "C44 H85 N O8 P",
+  "formula_weight": 787.121,
+  "name": "1,2-DIOLEOYL-SN-GLYCERO-3-PHOSPHOCHOLINE",
+  "smiles": "CCCCCCCCC=CCCCCCCCC(=O)OCC(COP(=O)(O)OCC[N+](C)(C)C)OC(=O)CCCCCCCC=CCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "PDO": {
+  "comp_id": "PDO",
+  "drugbank_id": "DB02774",
+  "formula": "C3 H8 O2",
+  "formula_weight": 76.094,
+  "name": "1,3-PROPANDIOL",
+  "smiles": "C(CO)CO",
+  "type": "non-polymer"
+ },
+ "PE4": {
+  "comp_id": "PE4",
+  "drugbank_id": null,
+  "formula": "C16 H34 O8",
+  "formula_weight": 354.436,
+  "name": "2-{2-[2-(2-{2-[2-(2-ETHOXY-ETHOXY)-ETHOXY]-ETHOXY}-ETHOXY)-ETHOXY]-ETHOXY}-ET...",
+  "smiles": "CCOCCOCCOCCOCCOCCOCCOCCO",
+  "type": "non-polymer"
+ },
+ "PE8": {
+  "comp_id": "PE8",
+  "drugbank_id": null,
+  "formula": "C16 H34 O9",
+  "formula_weight": 370.436,
+  "name": "3,6,9,12,15,18,21-HEPTAOXATRICOSANE-1,23-DIOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "PEE": {
+  "comp_id": "PEE",
+  "drugbank_id": "DB04327",
+  "formula": "C41 H78 N O8 P",
+  "formula_weight": 744.034,
+  "name": "1,2-dioleoyl-sn-glycero-3-phosphoethanolamine",
+  "smiles": "CCCCCCCCC=CCCCCCCCC(=O)OCC(COP(=O)(O)OCCN)OC(=O)CCCCCCCC=CCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "PEF": {
+  "comp_id": "PEF",
+  "drugbank_id": "DB01728",
+  "formula": "C37 H74 N O8 P",
+  "formula_weight": 691.959,
+  "name": "DI-PALMITOYL-3-SN-PHOSPHATIDYLETHANOLAMINE",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)OCCN)OC(=O)CCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "PEG": {
+  "comp_id": "PEG",
+  "drugbank_id": null,
+  "formula": "C4 H10 O3",
+  "formula_weight": 106.12,
+  "name": "DI(HYDROXYETHYL)ETHER",
+  "smiles": "C(COCCO)O",
+  "type": "non-polymer"
+ },
+ "PER": {
+  "comp_id": "PER",
+  "drugbank_id": null,
+  "formula": "O2",
+  "formula_weight": 31.999,
+  "name": "PEROXIDE ION",
+  "smiles": "[O-][O-]",
+  "type": "non-polymer"
+ },
+ "PG4": {
+  "comp_id": "PG4",
+  "drugbank_id": null,
+  "formula": "C8 H18 O5",
+  "formula_weight": 194.226,
+  "name": "TETRAETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "PGE": {
+  "comp_id": "PGE",
+  "drugbank_id": "DB02327",
+  "formula": "C6 H14 O4",
+  "formula_weight": 150.173,
+  "name": "TRIETHYLENE GLYCOL",
+  "smiles": "C(COCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "PGO": {
+  "comp_id": "PGO",
+  "drugbank_id": "DB04349",
+  "formula": "C3 H8 O2",
+  "formula_weight": 76.094,
+  "name": "S-1,2-PROPANEDIOL",
+  "smiles": "CC(CO)O",
+  "type": "non-polymer"
+ },
+ "PGR": {
+  "comp_id": "PGR",
+  "drugbank_id": "DB02159",
+  "formula": "C3 H8 O2",
+  "formula_weight": 76.094,
+  "name": "R-1,2-PROPANEDIOL",
+  "smiles": "CC(CO)O",
+  "type": "non-polymer"
+ },
+ "PGV": {
+  "comp_id": "PGV",
+  "drugbank_id": null,
+  "formula": "C40 H77 O10 P",
+  "formula_weight": 749.007,
+  "name": "(1R)-2-{[{[(2S)-2,3-DIHYDROXYPROPYL]OXY}(HYDROXY)PHOSPHORYL]OXY}-1-[(PALMITOY...",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)OCC(CO)O)OC(=O)CCCCCCCCCC=CCCCCCC",
+  "type": "non-polymer"
+ },
+ "PIN": {
+  "comp_id": "PIN",
+  "drugbank_id": null,
+  "formula": "C8 H18 N2 O6 S2",
+  "formula_weight": 302.368,
+  "name": "PIPERAZINE-N,N'-BIS(2-ETHANESULFONIC ACID)",
+  "smiles": "C1CN(CCN1CCS(=O)(=O)O)CCS(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "PLM": {
+  "comp_id": "PLM",
+  "drugbank_id": "DB03796",
+  "formula": "C16 H32 O2",
+  "formula_weight": 256.424,
+  "name": "PALMITIC ACID",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)O",
+  "type": "non-polymer"
+ },
+ "PLP": {
+  "comp_id": "PLP",
+  "drugbank_id": "DB00114",
+  "formula": "C8 H10 N O6 P",
+  "formula_weight": 247.142,
+  "name": "PYRIDOXAL-5'-PHOSPHATE",
+  "smiles": "Cc1c(c(c(cn1)COP(=O)(O)O)C=O)O",
+  "type": "non-polymer"
+ },
+ "PO4": {
+  "comp_id": "PO4",
+  "drugbank_id": "DB14523",
+  "formula": "O4 P",
+  "formula_weight": 94.971,
+  "name": "PHOSPHATE ION",
+  "smiles": "[O-]P(=O)([O-])[O-]",
+  "type": "non-polymer"
+ },
+ "POP": {
+  "comp_id": "POP",
+  "drugbank_id": null,
+  "formula": "H2 O7 P2",
+  "formula_weight": 175.959,
+  "name": "PYROPHOSPHATE 2-",
+  "smiles": "OP(=O)([O-])OP(=O)(O)[O-]",
+  "type": "non-polymer"
+ },
+ "POV": {
+  "comp_id": "POV",
+  "drugbank_id": null,
+  "formula": "C42 H82 N O8 P",
+  "formula_weight": 760.076,
+  "name": "(2S)-3-(hexadecanoyloxy)-2-[(9Z)-octadec-9-enoyloxy]propyl 2-(trimethylammoni...",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)([O-])OCC[N+](C)(C)C)OC(=O)CCCCCCCC=CCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "PPS": {
+  "comp_id": "PPS",
+  "drugbank_id": "DB02902",
+  "formula": "C10 H15 N5 O13 P2 S",
+  "formula_weight": 507.264,
+  "name": "3'-PHOSPHATE-ADENOSINE-5'-PHOSPHATE SULFATE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)COP(=O)(O)OS(=O)(=O)O)OP(=O)(O)O)O)N",
+  "type": "non-polymer"
+ },
+ "PPV": {
+  "comp_id": "PPV",
+  "drugbank_id": "DB04160",
+  "formula": "H4 O7 P2",
+  "formula_weight": 177.975,
+  "name": "PYROPHOSPHATE",
+  "smiles": "OP(=O)(O)OP(=O)(O)O",
+  "type": "non-polymer"
+ },
+ "PRD": {
+  "comp_id": "PRD",
+  "drugbank_id": "DB02583",
+  "formula": "C17 H20 N6 O2",
+  "formula_weight": 340.38,
+  "name": "N6-(2,5-DIMETHOXY-BENZYL)-N6-METHYL-PYRIDO[2,3-D]PYRIMIDINE-2,4,6-TRIAMINE",
+  "smiles": "CN(Cc1cc(ccc1OC)OC)c2cc3c(nc(nc3nc2)N)N",
+  "type": "non-polymer"
+ },
+ "PRP": {
+  "comp_id": "PRP",
+  "drugbank_id": "DB01632",
+  "formula": "C5 H13 O14 P3",
+  "formula_weight": 390.07,
+  "name": "1-O-pyrophosphono-5-O-phosphono-alpha-D-ribofuranose",
+  "smiles": "C(C1C(C(C(O1)OP(=O)(O)OP(=O)(O)O)O)O)OP(=O)(O)O",
+  "type": "D-saccharide"
+ },
+ "PSC": {
+  "comp_id": "PSC",
+  "drugbank_id": null,
+  "formula": "C42 H81 N O8 P",
+  "formula_weight": 759.068,
+  "name": "(7R,17E,20E)-4-HYDROXY-N,N,N-TRIMETHYL-9-OXO-7-[(PALMITOYLOXY)METHYL]-3,5,8-T...",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)OCC(COP(=O)(O)OCC[N+](C)(C)C)OC(=O)CCCCCCCC=CCC=CCCCCC",
+  "type": "non-polymer"
+ },
+ "PTR": {
+  "comp_id": "PTR",
+  "drugbank_id": "DB01962",
+  "formula": "C9 H12 N O6 P",
+  "formula_weight": 261.168,
+  "name": "O-PHOSPHOTYROSINE",
+  "smiles": "c1cc(ccc1CC(C(=O)O)N)OP(=O)(O)O",
+  "type": "L-peptide linking"
+ },
+ "PUT": {
+  "comp_id": "PUT",
+  "drugbank_id": "DB01917",
+  "formula": "C4 H12 N2",
+  "formula_weight": 88.151,
+  "name": "1,4-DIAMINOBUTANE",
+  "smiles": "C(CCN)CN",
+  "type": "non-polymer"
+ },
+ "Q6D": {
+  "comp_id": "Q6D",
+  "drugbank_id": null,
+  "formula": "C15 H14 N2 O4 S2",
+  "formula_weight": 350.413,
+  "name": "(2Z)-3-oxo-N-(4-sulfamoylphenyl)-2-[(thiophen-2-yl)methylidene]butanamide",
+  "smiles": "CC(=O)C(=Cc1cccs1)C(=O)Nc2ccc(cc2)S(=O)(=O)N",
+  "type": "non-polymer"
+ },
+ "R4A": {
+  "comp_id": "R4A",
+  "drugbank_id": null,
+  "formula": "C44 H61 N7 O Ru",
+  "formula_weight": 805.071,
+  "name": "BIS[1H,1'H-2,2'-BIPYRIDINATO(2-)-KAPPA~2~N~1~,N~1'~]{3-[4-(1,10-DIHYDRO-1,10-...",
+  "smiles": "CN(C)c1cccc(c1)OCCCCC2=CCN3C4=C5C(=CC=CN5[Ru]367(N8CCCCC8C9N6CCCC9)N1CCCCC1C1N7CCC=C1)C=CC24",
+  "type": "non-polymer"
+ },
+ "RAM": {
+  "comp_id": "RAM",
+  "drugbank_id": null,
+  "formula": "C6 H12 O5",
+  "formula_weight": 164.156,
+  "name": "alpha-L-rhamnopyranose",
+  "smiles": "CC1C(C(C(C(O1)O)O)O)O",
+  "type": "L-saccharide, alpha linking"
+ },
+ "RB": {
+  "comp_id": "RB",
+  "drugbank_id": null,
+  "formula": "Rb",
+  "formula_weight": 85.468,
+  "name": "RUBIDIUM ION",
+  "smiles": "[Rb+]",
+  "type": "non-polymer"
+ },
+ "SAH": {
+  "comp_id": "SAH",
+  "drugbank_id": "DB01752",
+  "formula": "C14 H20 N6 O5 S",
+  "formula_weight": 384.411,
+  "name": "S-ADENOSYL-L-HOMOCYSTEINE",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)CSCCC(C(=O)O)N)O)O)N",
+  "type": "non-polymer"
+ },
+ "SAM": {
+  "comp_id": "SAM",
+  "drugbank_id": "DB00118",
+  "formula": "C15 H22 N6 O5 S",
+  "formula_weight": 398.437,
+  "name": "S-ADENOSYLMETHIONINE",
+  "smiles": "C[S+](CCC(C(=O)[O-])N)CC1C(C(C(O1)n2cnc3c2ncnc3N)O)O",
+  "type": "non-polymer"
+ },
+ "SCN": {
+  "comp_id": "SCN",
+  "drugbank_id": null,
+  "formula": "C N S",
+  "formula_weight": 58.082,
+  "name": "THIOCYANATE ION",
+  "smiles": "C(#N)[S-]",
+  "type": "non-polymer"
+ },
+ "SDS": {
+  "comp_id": "SDS",
+  "drugbank_id": "DB03967",
+  "formula": "C12 H26 O4 S",
+  "formula_weight": 266.397,
+  "name": "DODECYL SULFATE",
+  "smiles": "CCCCCCCCCCCCOS(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "SEP": {
+  "comp_id": "SEP",
+  "drugbank_id": "DB04522",
+  "formula": "C3 H8 N O6 P",
+  "formula_weight": 185.072,
+  "name": "PHOSPHOSERINE",
+  "smiles": "C(C(C(=O)O)N)OP(=O)(O)O",
+  "type": "L-peptide linking"
+ },
+ "SF4": {
+  "comp_id": "SF4",
+  "drugbank_id": null,
+  "formula": "Fe4 S4",
+  "formula_weight": 351.64,
+  "name": "IRON/SULFUR CLUSTER",
+  "smiles": "[S]12[Fe]3[S]4[Fe]1[S]5[Fe]2[S]3[Fe]45",
+  "type": "non-polymer"
+ },
+ "SFG": {
+  "comp_id": "SFG",
+  "drugbank_id": "DB01910",
+  "formula": "C15 H23 N7 O5",
+  "formula_weight": 381.387,
+  "name": "SINEFUNGIN",
+  "smiles": "c1nc(c2c(n1)n(cn2)C3C(C(C(O3)CC(CCC(C(=O)O)N)N)O)O)N",
+  "type": "non-polymer"
+ },
+ "SIA": {
+  "comp_id": "SIA",
+  "drugbank_id": "DB03721",
+  "formula": "C11 H19 N O9",
+  "formula_weight": 309.27,
+  "name": "N-acetyl-alpha-neuraminic acid",
+  "smiles": "CC(=O)NC1C(CC(OC1C(C(CO)O)O)(C(=O)O)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "SIN": {
+  "comp_id": "SIN",
+  "drugbank_id": "DB00139",
+  "formula": "C4 H6 O4",
+  "formula_weight": 118.088,
+  "name": "SUCCINIC ACID",
+  "smiles": "C(CC(=O)O)C(=O)O",
+  "type": "non-polymer"
+ },
+ "SO4": {
+  "comp_id": "SO4",
+  "drugbank_id": "DB14546",
+  "formula": "O4 S",
+  "formula_weight": 96.063,
+  "name": "SULFATE ION",
+  "smiles": "[O-]S(=O)(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "SPD": {
+  "comp_id": "SPD",
+  "drugbank_id": "DB03566",
+  "formula": "C7 H19 N3",
+  "formula_weight": 145.246,
+  "name": "SPERMIDINE",
+  "smiles": "C(CCNCCCN)CN",
+  "type": "non-polymer"
+ },
+ "SPM": {
+  "comp_id": "SPM",
+  "drugbank_id": "DB00127",
+  "formula": "C10 H26 N4",
+  "formula_weight": 202.34,
+  "name": "SPERMINE",
+  "smiles": "C(CCNCCCN)CNCCCN",
+  "type": "non-polymer"
+ },
+ "SR": {
+  "comp_id": "SR",
+  "drugbank_id": null,
+  "formula": "Sr",
+  "formula_weight": 87.62,
+  "name": "STRONTIUM ION",
+  "smiles": "[Sr+2]",
+  "type": "non-polymer"
+ },
+ "STE": {
+  "comp_id": "STE",
+  "drugbank_id": "DB03193",
+  "formula": "C18 H36 O2",
+  "formula_weight": 284.477,
+  "name": "STEARIC ACID",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)O",
+  "type": "non-polymer"
+ },
+ "STR": {
+  "comp_id": "STR",
+  "drugbank_id": "DB00396",
+  "formula": "C21 H30 O2",
+  "formula_weight": 314.462,
+  "name": "PROGESTERONE",
+  "smiles": "CC(=O)C1CCC2C1(CCC3C2CCC4=CC(=O)CCC34C)C",
+  "type": "non-polymer"
+ },
+ "STU": {
+  "comp_id": "STU",
+  "drugbank_id": "DB02010",
+  "formula": "C28 H26 N4 O3",
+  "formula_weight": 466.531,
+  "name": "STAUROSPORINE",
+  "smiles": "CC12C(C(CC(O1)n3c4ccccc4c5c3c6n2c7ccccc7c6c8c5C(=O)NC8)NC)OC",
+  "type": "non-polymer"
+ },
+ "TAR": {
+  "comp_id": "TAR",
+  "drugbank_id": "DB01694",
+  "formula": "C4 H6 O6",
+  "formula_weight": 150.087,
+  "name": "D(-)-TARTARIC ACID",
+  "smiles": "C(C(C(=O)O)O)(C(=O)O)O",
+  "type": "non-polymer"
+ },
+ "TES": {
+  "comp_id": "TES",
+  "drugbank_id": "DB00624",
+  "formula": "C19 H28 O2",
+  "formula_weight": 288.424,
+  "name": "TESTOSTERONE",
+  "smiles": "CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C",
+  "type": "non-polymer"
+ },
+ "THM": {
+  "comp_id": "THM",
+  "drugbank_id": "DB04485",
+  "formula": "C10 H14 N2 O5",
+  "formula_weight": 242.229,
+  "name": "THYMIDINE",
+  "smiles": "CC1=CN(C(=O)NC1=O)C2CC(C(O2)CO)O",
+  "type": "DNA OH 5 prime terminus"
+ },
+ "TLA": {
+  "comp_id": "TLA",
+  "drugbank_id": "DB09459",
+  "formula": "C4 H6 O6",
+  "formula_weight": 150.087,
+  "name": "L(+)-TARTARIC ACID",
+  "smiles": "C(C(C(=O)O)O)(C(=O)O)O",
+  "type": "non-polymer"
+ },
+ "TMP": {
+  "comp_id": "TMP",
+  "drugbank_id": "DB01643",
+  "formula": "C10 H15 N2 O8 P",
+  "formula_weight": 322.208,
+  "name": "THYMIDINE-5'-PHOSPHATE",
+  "smiles": "CC1=CN(C(=O)NC1=O)C2CC(C(O2)COP(=O)(O)O)O",
+  "type": "non-polymer"
+ },
+ "TPO": {
+  "comp_id": "TPO",
+  "drugbank_id": null,
+  "formula": "C4 H10 N O6 P",
+  "formula_weight": 199.099,
+  "name": "PHOSPHOTHREONINE",
+  "smiles": "CC(C(C(=O)O)N)OP(=O)(O)O",
+  "type": "L-peptide linking"
+ },
+ "TPP": {
+  "comp_id": "TPP",
+  "drugbank_id": null,
+  "formula": "C12 H19 N4 O7 P2 S",
+  "formula_weight": 425.314,
+  "name": "THIAMINE DIPHOSPHATE",
+  "smiles": "Cc1c(sc[n+]1Cc2cnc(nc2N)C)CCOP(=O)(O)OP(=O)(O)O",
+  "type": "non-polymer"
+ },
+ "TRS": {
+  "comp_id": "TRS",
+  "drugbank_id": "DB03754",
+  "formula": "C4 H12 N O3",
+  "formula_weight": 122.143,
+  "name": "2-AMINO-2-HYDROXYMETHYL-PROPANE-1,3-DIOL",
+  "smiles": "C(C(CO)(CO)[NH3+])O",
+  "type": "non-polymer"
+ },
+ "TTP": {
+  "comp_id": "TTP",
+  "drugbank_id": "DB02452",
+  "formula": "C10 H17 N2 O14 P3",
+  "formula_weight": 482.168,
+  "name": "THYMIDINE-5'-TRIPHOSPHATE",
+  "smiles": "CC1=CN(C(=O)NC1=O)C2CC(C(O2)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O",
+  "type": "non-polymer"
+ },
+ "TWT": {
+  "comp_id": "TWT",
+  "drugbank_id": null,
+  "formula": "C22 H46",
+  "formula_weight": 310.601,
+  "name": "DOCOSANE",
+  "smiles": "CCCCCCCCCCCCCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "UD1": {
+  "comp_id": "UD1",
+  "drugbank_id": "DB03397",
+  "formula": "C17 H27 N3 O17 P2",
+  "formula_weight": 607.354,
+  "name": "URIDINE-DIPHOSPHATE-N-ACETYLGLUCOSAMINE",
+  "smiles": "CC(=O)NC1C(C(C(OC1OP(=O)(O)OP(=O)(O)OCC2C(C(C(O2)N3C=CC(=O)NC3=O)O)O)CO)O)O",
+  "type": "non-polymer"
+ },
+ "UDP": {
+  "comp_id": "UDP",
+  "drugbank_id": "DB03435",
+  "formula": "C9 H14 N2 O12 P2",
+  "formula_weight": 404.161,
+  "name": "URIDINE-5'-DIPHOSPHATE",
+  "smiles": "C1=CN(C(=O)NC1=O)C2C(C(C(O2)COP(=O)(O)OP(=O)(O)O)O)O",
+  "type": "RNA linking"
+ },
+ "UMP": {
+  "comp_id": "UMP",
+  "drugbank_id": "DB03800",
+  "formula": "C9 H13 N2 O8 P",
+  "formula_weight": 308.182,
+  "name": "2'-DEOXYURIDINE 5'-MONOPHOSPHATE",
+  "smiles": "C1C(C(OC1N2C=CC(=O)NC2=O)COP(=O)(O)O)O",
+  "type": "non-polymer"
+ },
+ "UND": {
+  "comp_id": "UND",
+  "drugbank_id": null,
+  "formula": "C11 H24",
+  "formula_weight": 156.308,
+  "name": "UNDECANE",
+  "smiles": "CCCCCCCCCCC",
+  "type": "non-polymer"
+ },
+ "UNK": {
+  "comp_id": "UNK",
+  "drugbank_id": null,
+  "formula": "C4 H9 N O2",
+  "formula_weight": 103.12,
+  "name": "UNKNOWN",
+  "smiles": "CCC(C(=O)O)N",
+  "type": "L-peptide linking"
+ },
+ "UNL": {
+  "comp_id": "UNL",
+  "drugbank_id": null,
+  "formula": null,
+  "formula_weight": null,
+  "name": "Unknown ligand",
+  "smiles": "NULLNULLNULLNULL",
+  "type": "non-polymer"
+ },
+ "UNX": {
+  "comp_id": "UNX",
+  "drugbank_id": null,
+  "formula": "X",
+  "formula_weight": null,
+  "name": "UNKNOWN ATOM OR ION",
+  "smiles": "*",
+  "type": "non-polymer"
+ },
+ "UPG": {
+  "comp_id": "UPG",
+  "drugbank_id": "DB01861",
+  "formula": "C15 H24 N2 O17 P2",
+  "formula_weight": 566.302,
+  "name": "URIDINE-5'-DIPHOSPHATE-GLUCOSE",
+  "smiles": "C1=CN(C(=O)NC1=O)C2C(C(C(O2)COP(=O)(O)OP(=O)(O)OC3C(C(C(C(O3)CO)O)O)O)O)O",
+  "type": "non-polymer"
+ },
+ "URA": {
+  "comp_id": "URA",
+  "drugbank_id": "DB03419",
+  "formula": "C4 H4 N2 O2",
+  "formula_weight": 112.087,
+  "name": "URACIL",
+  "smiles": "C1=CNC(=O)NC1=O",
+  "type": "non-polymer"
+ },
+ "URE": {
+  "comp_id": "URE",
+  "drugbank_id": "DB03904",
+  "formula": "C H4 N2 O",
+  "formula_weight": 60.055,
+  "name": "UREA",
+  "smiles": "C(=O)(N)N",
+  "type": "non-polymer"
+ },
+ "UTP": {
+  "comp_id": "UTP",
+  "drugbank_id": "DB04005",
+  "formula": "C9 H15 N2 O15 P3",
+  "formula_weight": 484.141,
+  "name": "URIDINE 5'-TRIPHOSPHATE",
+  "smiles": "C1=CN(C(=O)NC1=O)C2C(C(C(O2)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O",
+  "type": "non-polymer"
+ },
+ "VO4": {
+  "comp_id": "VO4",
+  "drugbank_id": null,
+  "formula": "O4 V",
+  "formula_weight": 114.939,
+  "name": "VANADATE ION",
+  "smiles": "[O-][V](=O)([O-])[O-]",
+  "type": "non-polymer"
+ },
+ "WO4": {
+  "comp_id": "WO4",
+  "drugbank_id": null,
+  "formula": "O4 W",
+  "formula_weight": 247.838,
+  "name": "TUNGSTATE(VI)ION",
+  "smiles": "[O-][W](=O)(=O)[O-]",
+  "type": "non-polymer"
+ },
+ "X2R": {
+  "comp_id": "X2R",
+  "drugbank_id": null,
+  "formula": "C13 H25 N3 O7 S2",
+  "formula_weight": 399.484,
+  "name": "(2~{S})-2-azanyl-6-[[(2~{R})-1-[[(1~{R})-2-methyl-1-sulfo-propyl]amino]-1-oxi...",
+  "smiles": "CC(C)C(NC(=O)C(CS)NC(=O)CCCC(C(=O)O)N)S(=O)(=O)O",
+  "type": "non-polymer"
+ },
+ "XPE": {
+  "comp_id": "XPE",
+  "drugbank_id": null,
+  "formula": "C20 H42 O11",
+  "formula_weight": 458.541,
+  "name": "3,6,9,12,15,18,21,24,27-NONAOXANONACOSANE-1,29-DIOL",
+  "smiles": "C(COCCOCCOCCOCCOCCOCCOCCOCCOCCO)O",
+  "type": "non-polymer"
+ },
+ "XYL": {
+  "comp_id": "XYL",
+  "drugbank_id": "DB11195",
+  "formula": "C5 H12 O5",
+  "formula_weight": 152.146,
+  "name": "Xylitol",
+  "smiles": "C(C(C(C(CO)O)O)O)O",
+  "type": "D-saccharide"
+ },
+ "XYP": {
+  "comp_id": "XYP",
+  "drugbank_id": null,
+  "formula": "C5 H10 O5",
+  "formula_weight": 150.13,
+  "name": "beta-D-xylopyranose",
+  "smiles": "C1C(C(C(C(O1)O)O)O)O",
+  "type": "D-saccharide, beta linking"
+ },
+ "XYS": {
+  "comp_id": "XYS",
+  "drugbank_id": "DB03389",
+  "formula": "C5 H10 O5",
+  "formula_weight": 150.13,
+  "name": "alpha-D-xylopyranose",
+  "smiles": "C1C(C(C(C(O1)O)O)O)O",
+  "type": "D-saccharide, alpha linking"
+ },
+ "Y01": {
+  "comp_id": "Y01",
+  "drugbank_id": null,
+  "formula": "C31 H50 O4",
+  "formula_weight": 486.726,
+  "name": "CHOLESTEROL HEMISUCCINATE",
+  "smiles": "CC(C)CCCC(C)C1CCC2C1(CCC3C2CC=C4C3(CCC(C4)OC(=O)CCC(=O)O)C)C",
+  "type": "non-polymer"
+ },
+ "ZN": {
+  "comp_id": "ZN",
+  "drugbank_id": null,
+  "formula": "Zn",
+  "formula_weight": 65.409,
+  "name": "ZINC ION",
+  "smiles": "[Zn+2]",
+  "type": "non-polymer"
+ }
+}

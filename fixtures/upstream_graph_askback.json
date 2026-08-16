@@ -1,0 +1,546 @@
+{
+  "_fixture": true,
+  "_fixture_note": "SYNTHETIC FIXTURE. Marked _fixture so graph_read.py refuses it without --allow-fixture. It exercises the post-intake ask-back trigger: which findings become an ask back to the graph, and — more importantly — which must not. Conformed to SCHEMA.md v1.1 (LABrador managed/research-evidence-mapper). Never cite a quote from this file in a dossier.",
+
+  "_quote_provenance": {
+    "_why": "This fixture mixes two kinds of quote and you must not confuse them. Both are unciteable from here; the distinction exists so a reader can check the trigger against the real case it was derived from.",
+    "verbatim_retrieved": {
+      "f1": "PMC10762860, retrieved 2026-08-15 via paperclip grep. Real sentence, real paper. Reproduced here because the ask-back rule was derived from this exact sentence and a paraphrase would hide why the trap works.",
+      "f2": "PMC11642585, retrieved 2026-08-15 via paperclip grep. Same.",
+      "f4": "PMC11858795, retrieved 2026-08-15 via paperclip grep."
+    },
+    "invented": ["f3", "f5", "f6", "f7", "f8", "f9"],
+    "invented_things": ["t5 AVX-7719", "t7 VXP-8814", "t9 KLT-3300"],
+    "invented_papers": ["p3", "p5", "p6", "p7", "p8"]
+  },
+
+  "_exercises": {
+    "POSITIVE_1_true_ask": "L3 — a review class-table asserts an oral small-molecule TL1A antagonist reached Phase 2. If true it fills target_precedent.clinical_stage_small_molecules. basis is background_only, the compound has no ChEMBL drug_mechanism row and no registry record, and coverage.stop_reason is max_papers so more literature exists. All five gates pass. Fires: resolve_link on L3.",
+    "POSITIVE_2_post_resolution_ask": "L1 — obefazimod asserted to act on TL1A by two reviews. We settle this OURSELVES (chembl.drug_mechanism molregno 2335315 = 'Cap binding complex modulator'), so it never blocks us. The ask is issued anyway, after resolution, because L1 is a wrong row in the graph that will otherwise propagate. Fires: resolve_link on L1, carrying our answer.",
+    "NEGATIVE_1_efficacy": "L5 — an efficacy claim. Per dossier rule 7 a clinical-outcome argument does not touch a tractability number, so it fails gate 1 (dossier-affecting). Must not fire.",
+    "NEGATIVE_2_registry_settleable": "L6 — a contested clinical status, one source says Phase 3, one says terminated. ctgov settles it. Fails gate 3 (within our own reach). Must not fire.",
+    "NEGATIVE_3_already_asked": "L7 — would pass every judgment gate, but rounds[1] already issued resolve_link on L7. Re-asking burns a round and returns the same evidence. Fails gate 4. Must not fire.",
+    "NEGATIVE_4_primary_basis": "L2 — basis is primary. A primary-supported claim is never an ask; it is either usable or it is contradicted by something we can measure. Fails gate 2. Must not fire.",
+    "NEGATIVE_5_exhausted": "Not expressible in this file, because coverage.stop_reason is a single global value and this graph needs max_papers for POSITIVE_1. Set coverage.stop_reason to 'complete' and every ask above must stop firing — the graph has exhausted the literature and another round returns the same evidence. Test it by editing the value and re-running --ask-context."
+  },
+
+  "schema_version": "1.1",
+  "graph_id": "g_tl1a1",
+  "question": "is there a small-molecule route to blocking TL1A/DR3 signalling in ulcerative colitis, or is the pathway antibody-only?",
+  "round": 3,
+  "status": "ok",
+  "generated_at": "2026-08-15T18:40:00Z",
+
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 22,
+      "outcome": "new_evidence"
+    },
+    {
+      "n": 2,
+      "ask": "expand_node",
+      "target": "t1",
+      "depth": "deep",
+      "papers_added": 31,
+      "outcome": "new_evidence"
+    },
+    {
+      "n": 3,
+      "ask": "resolve_link",
+      "target": "L7",
+      "depth": "deep",
+      "papers_added": 9,
+      "outcome": "unchanged"
+    }
+  ],
+
+  "coverage": {
+    "depth": "deep",
+    "found": 1640,
+    "read": 62,
+    "used": 48,
+    "truncated": true,
+    "no_quote_discarded": 11,
+    "limits": { "max_papers": 62, "max_queries": 8 },
+    "stop_reason": "max_papers"
+  },
+
+  "things": [
+    {
+      "id": "t1",
+      "name": "TL1A",
+      "kind": "protein",
+      "aliases": ["TNFSF15", "TNF superfamily member 15"],
+      "mentions": 58
+    },
+    {
+      "id": "t2",
+      "name": "obefazimod",
+      "kind": "small_molecule",
+      "aliases": ["ABX464"],
+      "mentions": 24
+    },
+    {
+      "id": "t3",
+      "name": "miR-124",
+      "kind": "process",
+      "aliases": ["microRNA-124"],
+      "mentions": 13
+    },
+    {
+      "id": "t4",
+      "name": "ulcerative colitis",
+      "kind": "disease",
+      "aliases": ["UC"],
+      "mentions": 71
+    },
+    {
+      "id": "t5",
+      "name": "AVX-7719",
+      "kind": "small_molecule",
+      "aliases": [],
+      "mentions": 3
+    },
+    {
+      "id": "t6",
+      "name": "DR3",
+      "kind": "protein",
+      "aliases": ["TNFRSF25", "death receptor 3"],
+      "mentions": 29
+    },
+    {
+      "id": "t7",
+      "name": "VXP-8814",
+      "kind": "small_molecule",
+      "aliases": [],
+      "mentions": 6
+    },
+    {
+      "id": "t9",
+      "name": "KLT-3300",
+      "kind": "small_molecule",
+      "aliases": [],
+      "mentions": 4
+    }
+  ],
+
+  "papers": [
+    {
+      "id": "p1",
+      "title": "Oral small molecule agents in management of ulcerative colitis: fact or fancy?",
+      "year": 2023,
+      "journal": "Turk. J. Med. Sci.",
+      "doi": "10.55730/1300-0144.5722",
+      "first_author": "Kasapoglu",
+      "study_type": "review",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p2",
+      "title": "Optimal Management of Patients with Moderate-to-Severe Inflammatory Bowel Disease",
+      "year": 2024,
+      "journal": "J. Clin. Med.",
+      "doi": "10.3390/jcm13237026",
+      "first_author": "Purnak",
+      "study_type": "review",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p3",
+      "title": "Specific and selective induction of miR-124 in immune cells by a quinoline",
+      "year": 2021,
+      "journal": "Fixture Drug Discov. Today",
+      "doi": "10.0000/fixture.ab1",
+      "first_author": "Vautrin",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    },
+    {
+      "id": "p4",
+      "title": "Emerging therapies in inflammatory bowel disease: a systematic review",
+      "year": 2025,
+      "journal": "Fixture Rev. Gastroenterol.",
+      "doi": "10.0000/fixture.ab2",
+      "first_author": "Marchetti",
+      "study_type": "review",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    },
+    {
+      "id": "p5",
+      "title": "A phase 3 trial of obefazimod in moderately to severely active ulcerative colitis",
+      "year": 2025,
+      "journal": "Fixture J. Gastroenterol.",
+      "doi": "10.0000/fixture.ab3",
+      "first_author": "Sandborn",
+      "study_type": "clinical_trial",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    },
+    {
+      "id": "p6",
+      "title": "Small-molecule antagonists of the TL1A/DR3 axis: a patent and pipeline review",
+      "year": 2024,
+      "journal": "Fixture Expert Opin.",
+      "doi": "10.0000/fixture.ab4",
+      "first_author": "Ibarra",
+      "study_type": "review",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    },
+    {
+      "id": "p7",
+      "title": "Discontinuation of an oral TL1A programme after hepatic signal",
+      "year": 2025,
+      "journal": "Fixture Clin. Pharmacol.",
+      "doi": "10.0000/fixture.ab5",
+      "first_author": "Ozturk",
+      "study_type": "clinical_trial",
+      "is_preprint": false,
+      "round": 3,
+      "retracted": false
+    },
+    {
+      "id": "p8",
+      "title": "Structural basis of TL1A recognition by death receptor 3",
+      "year": 2019,
+      "journal": "Fixture Struct. Biol.",
+      "doi": "10.0000/fixture.ab6",
+      "first_author": "Hendriks",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    }
+  ],
+
+  "findings": [
+    {
+      "id": "f1",
+      "from": "t2",
+      "how": "targets",
+      "to": "t1",
+      "says": "yes",
+      "quote": "One prototype of TL1A, ABX464, is an oral small molecule that upregulates a single micro-RNA and down-regulates proinflammatory cytokines as well as TH17+ cells.",
+      "paper": "p1",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.84,
+      "flags": ["background"],
+      "round": 1,
+      "section": "discussion"
+    },
+    {
+      "id": "f2",
+      "from": "t2",
+      "how": "targets",
+      "to": "t1",
+      "says": "yes",
+      "quote": "ABX464, a prototype of TL1A, is an oral small molecule that modulates a specific microRNA, leading to the downregulation of proinflammatory cytokines and TH17+ cells.",
+      "paper": "p2",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.86,
+      "flags": ["background"],
+      "round": 1,
+      "section": "discussion"
+    },
+    {
+      "id": "f3",
+      "from": "t2",
+      "how": "induces",
+      "to": "t3",
+      "says": "yes",
+      "quote": "the quinoline selectively induced miR-124 in immune cells, with no measurable activity at any TNF-superfamily ligand tested",
+      "paper": "p3",
+      "where": "primary human PBMC",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.93,
+      "flags": [],
+      "round": 2,
+      "section": "results"
+    },
+    {
+      "id": "f4",
+      "from": "t2",
+      "how": "improves",
+      "to": "t4",
+      "says": "yes",
+      "quote": "small molecules and monoclonal antibodies currently under investigation (e.g., anti-TL1A, obefazimod, NX-13, RIPK-inhibitors)",
+      "paper": "p4",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.7,
+      "flags": ["background"],
+      "round": 2,
+      "section": "abstract"
+    },
+    {
+      "id": "f5",
+      "from": "t5",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "yes",
+      "quote": "an oral small-molecule TL1A antagonist, AVX-7719, has advanced into phase 2 evaluation in ulcerative colitis",
+      "paper": "p6",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.71,
+      "flags": ["background"],
+      "round": 2,
+      "section": "discussion"
+    },
+    {
+      "id": "f6",
+      "from": "t2",
+      "how": "improves",
+      "to": "t4",
+      "says": "yes",
+      "quote": "clinical remission at week 44 was reached by 33.6% of patients receiving 50 mg once daily versus 12.4% receiving placebo",
+      "paper": "p5",
+      "where": "phase 3 RCT, n=1275",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.94,
+      "flags": [],
+      "round": 2,
+      "section": "abstract"
+    },
+    {
+      "id": "f7",
+      "from": "t7",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "yes",
+      "quote": "VXP-8814 is currently being evaluated in a phase 3 programme in ulcerative colitis",
+      "paper": "p6",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.68,
+      "flags": ["background"],
+      "round": 2,
+      "section": "discussion"
+    },
+    {
+      "id": "f8",
+      "from": "t7",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "no",
+      "quote": "development of VXP-8814 was stopped after transaminase elevations were observed in the phase 2 cohort",
+      "paper": "p7",
+      "where": "phase 2, safety population",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.89,
+      "flags": [],
+      "round": 3,
+      "section": "results"
+    },
+    {
+      "id": "f9",
+      "from": "t9",
+      "how": "binds",
+      "to": "t1",
+      "says": "yes",
+      "quote": "KLT-3300 has been described as a direct binder of the TL1A trimer",
+      "paper": "p6",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.66,
+      "flags": ["background"],
+      "round": 2,
+      "section": "discussion"
+    },
+    {
+      "id": "f10",
+      "from": "t1",
+      "how": "binds",
+      "to": "t6",
+      "says": "yes",
+      "quote": "the TL1A trimer engages three DR3 protomers through a canonical TNF-superfamily interface burying 1840 A^2",
+      "paper": "p8",
+      "where": "crystal structure, 2.4 A",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.95,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    }
+  ],
+
+  "links": [
+    {
+      "id": "L1",
+      "from": "t2",
+      "how": "targets",
+      "to": "t1",
+      "yes": ["f1", "f2"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.41,
+        "label": "medium",
+        "evidence_quality": 0.2,
+        "agreement": 1.0,
+        "independence": 0.5
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L2",
+      "from": "t2",
+      "how": "induces",
+      "to": "t3",
+      "yes": ["f3"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.72,
+        "label": "high",
+        "evidence_quality": 0.9,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": 2
+    },
+    {
+      "id": "L3",
+      "from": "t5",
+      "how": "inhibits",
+      "to": "t1",
+      "yes": ["f5"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.33,
+        "label": "low",
+        "evidence_quality": 0.2,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L4",
+      "from": "t1",
+      "how": "binds",
+      "to": "t6",
+      "yes": ["f10"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.8,
+        "label": "high",
+        "evidence_quality": 1.0,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L5",
+      "from": "t2",
+      "how": "improves",
+      "to": "t4",
+      "yes": ["f6", "f4"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "mixed",
+      "confidence": {
+        "overall": 0.76,
+        "label": "high",
+        "evidence_quality": 0.85,
+        "agreement": 1.0,
+        "independence": 1.0
+      },
+      "changed_in_round": 2
+    },
+    {
+      "id": "L6",
+      "from": "t7",
+      "how": "inhibits",
+      "to": "t1",
+      "yes": ["f7"],
+      "no": ["f8"],
+      "no_effect": [],
+      "state": "disagreed",
+      "why": "a 2024 pipeline review reports a phase 3 programme; a 2025 trial report says development stopped after a phase 2 hepatic signal",
+      "basis": "mixed",
+      "confidence": {
+        "overall": 0.45,
+        "label": "medium",
+        "evidence_quality": 0.6,
+        "agreement": 0.5,
+        "independence": 1.0
+      },
+      "changed_in_round": 3
+    },
+    {
+      "id": "L7",
+      "from": "t9",
+      "how": "binds",
+      "to": "t1",
+      "yes": ["f9"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.3,
+        "label": "low",
+        "evidence_quality": 0.2,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    }
+  ],
+
+  "gaps": [
+    {
+      "id": "g1",
+      "missing": ["t1", "t5"],
+      "implied_by": ["L3"],
+      "note": "no primary report of any small molecule binding TL1A was retrieved; every small-molecule claim on this node rests on one pipeline review",
+      "confidence": 0.52,
+      "searched_in_round": null
+    }
+  ]
+}

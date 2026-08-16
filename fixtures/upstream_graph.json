@@ -1,0 +1,555 @@
+{
+  "_fixture": true,
+  "_fixture_note": "SYNTHETIC FIXTURE. Papers, DOIs and quotes are illustrative and were NOT retrieved from any corpus. Do not cite. Conformed to SCHEMA.md v1.1 (LABrador managed/research-evidence-mapper) on 2026-08-15.",
+  "schema_version": "1.1",
+  "graph_id": "g_ra4k",
+  "question": "can a small-molecule IRAK4 inhibitor suppress synovial fibroblast-driven inflammation in rheumatoid arthritis, or is its effect confined to the myeloid compartment?",
+  "round": 2,
+  "status": "ok",
+  "generated_at": "2026-08-15T14:20:00Z",
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 25,
+      "outcome": "new_evidence"
+    },
+    {
+      "n": 2,
+      "ask": "resolve_link",
+      "target": "L3",
+      "depth": "deep",
+      "papers_added": 18,
+      "outcome": "contradicted"
+    }
+  ],
+  "coverage": {
+    "depth": "deep",
+    "found": 1180,
+    "read": 50,
+    "used": 41,
+    "truncated": true,
+    "no_quote_discarded": 6,
+    "limits": {
+      "max_papers": 50,
+      "max_queries": 6
+    },
+    "stop_reason": "max_papers"
+  },
+  "things": [
+    {
+      "id": "t1",
+      "name": "IRAK4",
+      "kind": "protein",
+      "aliases": ["interleukin-1 receptor-associated kinase 4", "IRAK-4"],
+      "mentions": 31
+    },
+    {
+      "id": "t2",
+      "name": "zimlovisertib",
+      "kind": "small_molecule",
+      "aliases": ["PF-06650833"],
+      "mentions": 12
+    },
+    {
+      "id": "t3",
+      "name": "MyD88 signalosome",
+      "kind": "process",
+      "aliases": ["Myddosome"],
+      "mentions": 18
+    },
+    {
+      "id": "t4",
+      "name": "synovial fibroblast",
+      "kind": "process",
+      "aliases": ["fibroblast-like synoviocyte", "FLS"],
+      "mentions": 22
+    },
+    {
+      "id": "t5",
+      "name": "IL-6",
+      "kind": "protein",
+      "aliases": ["interleukin-6"],
+      "mentions": 27
+    },
+    {
+      "id": "t6",
+      "name": "rheumatoid arthritis",
+      "kind": "disease",
+      "aliases": ["RA"],
+      "mentions": 44
+    },
+    {
+      "id": "t7",
+      "name": "TLR/IL-1R signaling",
+      "kind": "process",
+      "aliases": ["Toll-like receptor signaling"],
+      "mentions": 20
+    },
+    {
+      "id": "t8",
+      "name": "macrophage TNF release",
+      "kind": "process",
+      "aliases": ["monocyte TNF-alpha secretion"],
+      "mentions": 16
+    }
+  ],
+  "papers": [
+    {
+      "id": "p1",
+      "title": "Discovery of a selective IRAK4 inhibitor",
+      "year": 2018,
+      "journal": "J. Med. Chem.",
+      "doi": "10.0000/fixture.p1",
+      "first_author": "Lee",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p2",
+      "title": "Target engagement of IRAK4 inhibition in human whole blood",
+      "year": 2019,
+      "journal": "Clin. Pharmacol. Ther.",
+      "doi": "10.0000/fixture.p2",
+      "first_author": "Okafor",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p3",
+      "title": "The Myddosome in innate immune signaling",
+      "year": 2016,
+      "journal": "Nat. Rev. Immunol.",
+      "doi": "10.0000/fixture.p3",
+      "first_author": "Verma",
+      "study_type": "review",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p4",
+      "title": "IRAK4 kinase activity controls monocyte TNF output",
+      "year": 2020,
+      "journal": "J. Immunol.",
+      "doi": "10.0000/fixture.p4",
+      "first_author": "Brandt",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p5",
+      "title": "Fibroblast-like synoviocytes as a source of IL-6 in RA",
+      "year": 2017,
+      "journal": "Arthritis Rheumatol.",
+      "doi": "10.0000/fixture.p5",
+      "first_author": "Iwasaki",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p6",
+      "title": "IL-6 pathway blockade in rheumatoid arthritis: a meta-analysis",
+      "year": 2021,
+      "journal": "Lancet Rheumatol.",
+      "doi": "10.0000/fixture.p6",
+      "first_author": "Duarte",
+      "study_type": "meta_analysis",
+      "is_preprint": false,
+      "round": 1,
+      "retracted": false
+    },
+    {
+      "id": "p7",
+      "title": "IRAK4 inhibition spares TNF-driven fibroblast activation",
+      "year": 2023,
+      "journal": "Ann. Rheum. Dis.",
+      "doi": "10.0000/fixture.p7",
+      "first_author": "Nowak",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    },
+    {
+      "id": "p8",
+      "title": "A phase 2 trial of zimlovisertib in active rheumatoid arthritis",
+      "year": 2022,
+      "journal": "Arthritis Rheumatol.",
+      "doi": "10.0000/fixture.p8",
+      "first_author": "Chen",
+      "study_type": "clinical_trial",
+      "is_preprint": false,
+      "round": 2,
+      "retracted": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "f1",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "yes",
+      "quote": "compound 12 inhibited IRAK4 kinase activity with an IC50 of 0.2 nM",
+      "paper": "p1",
+      "where": "biochemical assay",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.95,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    },
+    {
+      "id": "f2",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "says": "yes",
+      "quote": "PF-06650833 produced dose-dependent target engagement in human whole blood",
+      "paper": "p2",
+      "where": "human whole blood",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    },
+    {
+      "id": "f3",
+      "from": "t7",
+      "how": "activates",
+      "to": "t1",
+      "says": "yes",
+      "quote": "ligation of TLR and IL-1R receptors recruits IRAK4 to the receptor complex",
+      "paper": "p3",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.85,
+      "flags": ["background"],
+      "round": 1,
+      "section": "discussion"
+    },
+    {
+      "id": "f4",
+      "from": "t1",
+      "how": "activates",
+      "to": "t3",
+      "says": "yes",
+      "quote": "IRAK4 nucleates assembly of the MyD88 signalosome",
+      "paper": "p3",
+      "where": null,
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.88,
+      "flags": ["background"],
+      "round": 1,
+      "section": "discussion"
+    },
+    {
+      "id": "f5",
+      "from": "t1",
+      "how": "drives",
+      "to": "t8",
+      "says": "yes",
+      "quote": "loss of IRAK4 kinase activity reduced TNF secretion by 78% in stimulated monocytes",
+      "paper": "p4",
+      "where": "LPS-stimulated human monocytes",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.92,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    },
+    {
+      "id": "f6",
+      "from": "t4",
+      "how": "secretes",
+      "to": "t5",
+      "says": "yes",
+      "quote": "RA fibroblast-like synoviocytes were the dominant source of IL-6 in explant culture",
+      "paper": "p5",
+      "where": "RA synovial explant",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.9,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    },
+    {
+      "id": "f7",
+      "from": "t5",
+      "how": "drives",
+      "to": "t6",
+      "says": "yes",
+      "quote": "IL-6 receptor blockade reduced ACR20 non-response across 14 randomized trials",
+      "paper": "p6",
+      "where": "pooled RCTs",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.93,
+      "flags": [],
+      "round": 1,
+      "section": "abstract"
+    },
+    {
+      "id": "f8",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t5",
+      "says": "yes",
+      "quote": "IRAK4 inhibition suppressed LPS-induced IL-6 release in a concentration-dependent manner",
+      "paper": "p2",
+      "where": "LPS-stimulated whole blood",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.88,
+      "flags": [],
+      "round": 1,
+      "section": "results"
+    },
+    {
+      "id": "f9",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t5",
+      "says": "no",
+      "quote": "IL-6 output from TNF-stimulated synovial fibroblasts was unchanged by IRAK4 inhibition",
+      "paper": "p7",
+      "where": "TNF-stimulated RA synovial fibroblasts",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.8,
+      "flags": [],
+      "round": 2,
+      "section": "results"
+    },
+    {
+      "id": "f10",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t5",
+      "says": "yes",
+      "quote": "serum IL-6 trended lower in the treatment arm, which may reflect target engagement",
+      "paper": "p8",
+      "where": "phase 2, serum",
+      "is_own_result": true,
+      "hedged": true,
+      "confidence": 0.6,
+      "flags": ["hedged"],
+      "round": 2,
+      "section": "results"
+    },
+    {
+      "id": "f11",
+      "from": "t2",
+      "how": "improves",
+      "to": "t6",
+      "says": "yes",
+      "quote": "ACR50 at week 12 was 32% versus 18% for placebo",
+      "paper": "p8",
+      "where": "phase 2 RCT, n=269",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.87,
+      "flags": [],
+      "round": 2,
+      "section": "abstract"
+    }
+  ],
+  "links": [
+    {
+      "id": "L1",
+      "from": "t2",
+      "how": "inhibits",
+      "to": "t1",
+      "yes": ["f1", "f2"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.88,
+        "label": "high",
+        "evidence_quality": 0.5,
+        "agreement": 1.0,
+        "independence": 1.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L2",
+      "from": "t1",
+      "how": "activates",
+      "to": "t3",
+      "yes": ["f4"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.38,
+        "label": "low",
+        "evidence_quality": 0.2,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L3",
+      "from": "t2",
+      "how": "reduces",
+      "to": "t5",
+      "yes": ["f8", "f10"],
+      "no": ["f9"],
+      "no_effect": [],
+      "state": "disagreed",
+      "why": "different conditions \u2014 myeloid stimulation (LPS, whole blood) versus fibroblast stimulation (TNF)",
+      "basis": "mixed",
+      "confidence": {
+        "overall": 0.42,
+        "label": "medium",
+        "evidence_quality": 0.55,
+        "agreement": 0.5,
+        "independence": 0.67
+      },
+      "changed_in_round": 2
+    },
+    {
+      "id": "L4",
+      "from": "t1",
+      "how": "drives",
+      "to": "t8",
+      "yes": ["f5"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.52,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L5",
+      "from": "t4",
+      "how": "secretes",
+      "to": "t5",
+      "yes": ["f6"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.55,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L6",
+      "from": "t5",
+      "how": "drives",
+      "to": "t6",
+      "yes": ["f7"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.78,
+        "label": "high",
+        "evidence_quality": 1.0,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    },
+    {
+      "id": "L7",
+      "from": "t2",
+      "how": "improves",
+      "to": "t6",
+      "yes": ["f11"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.6,
+        "label": "medium",
+        "evidence_quality": 0.8,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": 2
+    },
+    {
+      "id": "L8",
+      "from": "t7",
+      "how": "activates",
+      "to": "t1",
+      "yes": ["f3"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.35,
+        "label": "low",
+        "evidence_quality": 0.2,
+        "agreement": 1.0,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    }
+  ],
+  "gaps": [
+    {
+      "id": "g1",
+      "missing": ["t2", "t4"],
+      "implied_by": ["L1", "L3", "L5"],
+      "note": "nobody states that zimlovisertib acts directly on synovial fibroblasts; the myeloid path is covered, the fibroblast path is inferred",
+      "confidence": 0.34,
+      "searched_in_round": null
+    },
+    {
+      "id": "g2",
+      "missing": ["t1", "t4"],
+      "implied_by": ["L2", "L5"],
+      "note": "IRAK4 dependence of the fibroblast compartment is never stated; f9 implies it may be absent but tests the inhibitor, not the target",
+      "confidence": 0.41,
+      "searched_in_round": null
+    }
+  ]
+}

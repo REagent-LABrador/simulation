@@ -1,0 +1,632 @@
+{
+ "A1LXR": {
+  "comp_id": "A1LXR",
+  "type": "non-polymer",
+  "formula": "C38 H77 N O3",
+  "formula_weight": 596.023,
+  "drugbank_id": null,
+  "smiles": "CCCCCCCCCCCCCCCCCCCC(=O)NC(CO)C(CCCCCCCCCCCCCCC)O",
+  "name": "Cer(d18:0/20:0)"
+ },
+ "C95": {
+  "comp_id": "C95",
+  "type": "non-polymer",
+  "formula": "C15 H10 N2 O4 S",
+  "formula_weight": 314.316,
+  "drugbank_id": "DB07539",
+  "smiles": "[H]N=C1NC(=O)C(=Cc2ccc(o2)c3ccc(cc3)C(=O)O)S1",
+  "name": "4-{5-[(Z)-(2-IMINO-4-OXO-1,3-THIAZOLIDIN-5-YLIDENE)METHYL]FURAN-2-YL}BENZOIC ..."
+ },
+ "OOX": {
+  "comp_id": "OOX",
+  "type": "non-polymer",
+  "formula": "C18 H21 N O4",
+  "formula_weight": 315.364,
+  "drugbank_id": "DB00497",
+  "smiles": "CN1CCC23c4c5ccc(c4OC2C(=O)CCC3(C1C5)O)OC",
+  "name": "14-hydroxy-3-methoxy-17-methyl-5beta-4,5-epoxymorphinan-6-one"
+ },
+ "YNK": {
+  "comp_id": "YNK",
+  "type": "non-polymer",
+  "formula": "C23 H26 F3 N6 O P",
+  "formula_weight": 490.461,
+  "drugbank_id": "DB17099",
+  "smiles": "CC1(CCC(CN1)Nc2ncc(c(n2)c3c[nH]c4c3ccc(c4P(=O)(C)C)C#N)C(F)(F)F)C",
+  "name": "7-dimethylphosphoryl-3-[2-[[(3~{S})-6,6-dimethylpiperidin-3-yl]amino]-5-(trif..."
+ },
+ "A80": {
+  "comp_id": "A80",
+  "type": "non-polymer",
+  "formula": "C22 H25 N O3",
+  "formula_weight": 351.439,
+  "drugbank_id": "DB04942",
+  "smiles": "CC1(CCC(c2c1ccc(c2)NC(=O)c3ccc(cc3)C(=O)O)(C)C)C",
+  "name": "4-[(5,5,8,8-tetramethyl-5,6,7,8-tetrahydronaphthalen-2-yl)carbamoyl]benzoic acid"
+ },
+ "91D": {
+  "comp_id": "91D",
+  "type": "non-polymer",
+  "formula": "C26 H30 Cl F N6 O2",
+  "formula_weight": 513.007,
+  "drugbank_id": null,
+  "smiles": "CCC(=O)N1CCN(CC1)c2c3cc(c(cc3nc(n2)NCCC(=O)N(C)C)c4ccccc4F)Cl",
+  "name": "N~3~-[6-chloro-7-(2-fluorophenyl)-4-(4-propanoylpiperazin-1-yl)quinazolin-2-y..."
+ },
+ "6B5": {
+  "comp_id": "6B5",
+  "type": "non-polymer",
+  "formula": "C16 H12 O6",
+  "formula_weight": 300.263,
+  "drugbank_id": null,
+  "smiles": "COc1cc(c2c(c1)OC(=CC2=O)c3ccc(c(c3)O)O)O",
+  "name": "2-(3,4-dihydroxyphenyl)-5-hydroxy-7-methoxy-4H-1-chromen-4-one"
+ },
+ "SM7": {
+  "comp_id": "SM7",
+  "type": "non-polymer",
+  "formula": "C23 H20 N6",
+  "formula_weight": 380.445,
+  "drugbank_id": null,
+  "smiles": "c1cnccc1c2c(cn(n2)C3CCNCC3)C4=CC5=CC6=CN=NC6=C5C=C4",
+  "name": "6-[1-(piperidin-4-yl)-3-(pyridin-4-yl)-1H-pyrazol-4-yl]indeno[1,2-c]pyrazole"
+ },
+ "5XP": {
+  "comp_id": "5XP",
+  "type": "non-polymer",
+  "formula": "C15 H17 N7 O4",
+  "formula_weight": 359.34,
+  "drugbank_id": null,
+  "smiles": "c1cc(cc(c1)Cn2nc(nn2)c3c(c(no3)O)CC(C(=O)O)N)CN",
+  "name": "(2~{S})-3-[5-[2-[[3-(aminomethyl)phenyl]methyl]-1,2,3,4-tetrazol-5-yl]-3-oxid..."
+ },
+ "A1JNZ": {
+  "comp_id": "A1JNZ",
+  "type": "non-polymer",
+  "formula": "C48 H72 O14",
+  "formula_weight": 873.077,
+  "drugbank_id": null,
+  "smiles": "CCC(C)C1C(C=CC2(O1)CC3CC(O2)CC=C(C(C(C=CC=C4COC5C4(C(C=C(C5O)C)C(=O)O3)O)C)OC6CC(C(C(O6)C)OC7CC(C(C(O7)C)O)OC)OC)C)C",
+  "name": "Abamectin"
+ },
+ "AH6": {
+  "comp_id": "AH6",
+  "type": "non-polymer",
+  "formula": "C13 H17 N O3",
+  "formula_weight": 235.279,
+  "drugbank_id": null,
+  "smiles": "CCOc1cc2c(cc1OC)CN(CC2)C=O",
+  "name": "6-ethoxy-7-methoxy-3,4-dihydroisoquinoline-2(1H)-carbaldehyde"
+ },
+ "MXP": {
+  "comp_id": "MXP",
+  "type": "non-polymer",
+  "formula": "C23 H31 N O6",
+  "formula_weight": 417.495,
+  "drugbank_id": "DB08226",
+  "smiles": "CCCCC(=CC=C(C)C(=O)C1=C(C=C(OC1=O)CCCC=CNC(=O)OC)O)C",
+  "name": "Myxopyronin B"
+ },
+ "LSF": {
+  "comp_id": "LSF",
+  "type": "non-polymer",
+  "formula": "C17 H17 N3 O3",
+  "formula_weight": 311.335,
+  "drugbank_id": null,
+  "smiles": "Cc1ccncc1NC(=O)Cc2cccc(c2)OC3CC(=O)N3",
+  "name": "N-(4-methylpyridin-3-yl)-2-(3-{[(2R)-4-oxoazetidin-2-yl]oxy}phenyl)acetamide"
+ },
+ "KJM": {
+  "comp_id": "KJM",
+  "type": "non-polymer",
+  "formula": "C11 H13 Cl N2",
+  "formula_weight": 208.687,
+  "drugbank_id": null,
+  "smiles": "c1cc(cc(c1)Cl)C2(CCC2)C(=N)N",
+  "name": "1-(3-chlorophenyl)cyclobutane-1-carboximidamide"
+ },
+ "ULL": {
+  "comp_id": "ULL",
+  "type": "non-polymer",
+  "formula": "C26 H24 Br N3 O3",
+  "formula_weight": 506.391,
+  "drugbank_id": null,
+  "smiles": "CC(C)OC(=O)Nc1ccc(cc1)C2=NN(C(C2)c3ccccc3)C(=O)c4ccc(cc4)Br",
+  "name": "propan-2-yl {4-[(5S)-1-(4-bromobenzoyl)-5-phenyl-4,5-dihydro-1H-pyrazol-3-yl]..."
+ },
+ "HT1": {
+  "comp_id": "HT1",
+  "type": "non-polymer",
+  "formula": "C27 H28 N6 O",
+  "formula_weight": 452.551,
+  "drugbank_id": null,
+  "smiles": "CCOc1ccc(cc1)c2[nH]c3cc(ccc3n2)c4[nH]c5cc(ccc5n4)N6CCN(CC6)C",
+  "name": "2'-(4-ETHOXYPHENYL)-5-(4-METHYL-1-PIPERAZINYL)-2,5'-BI-BENZIMIDAZOLE"
+ },
+ "H80": {
+  "comp_id": "H80",
+  "type": "non-polymer",
+  "formula": "C21 H24 N2 O3 S",
+  "formula_weight": 384.492,
+  "drugbank_id": null,
+  "smiles": "COc1ccc2c(c1)c(c3cc(cc(c3n2)CO)OC)SCC4CCNC4",
+  "name": "[2,7-dimethoxy-9-[[(3S)-pyrrolidin-3-yl]methylsulfanyl]acridin-4-yl]methanol"
+ },
+ "V47": {
+  "comp_id": "V47",
+  "type": "non-polymer",
+  "formula": "C19 H19 N5 O6",
+  "formula_weight": 413.384,
+  "drugbank_id": null,
+  "smiles": "c1cc(cc(c1)C(=O)O)C(=O)CCC2C(C(C(O2)n3cnc4c3ncnc4N)O)O",
+  "name": "9-[7-(3-carboxyphenyl)-5,6-dideoxy-beta-D-ribo-heptodialdo-1,4-furanosyl]-9H-..."
+ },
+ "ZNE": {
+  "comp_id": "ZNE",
+  "type": "non-polymer",
+  "formula": "C28 H41 N O3 S",
+  "formula_weight": 471.695,
+  "drugbank_id": null,
+  "smiles": "CC(CCCC(c1nccs1)O)C2CCC3C2(CCCC3=CC=C4CC(CC(C4=C)O)O)C",
+  "name": "(1R,3S,5Z)-5-[(2E)-2-{(1R,3aS,7aR)-1-[(1R,5S)-5-hydroxy-1-methyl-5-(1,3-thiaz..."
+ },
+ "NCG": {
+  "comp_id": "NCG",
+  "type": "non-polymer",
+  "formula": "C45 H52 N4 O18 S",
+  "formula_weight": 968.975,
+  "drugbank_id": null,
+  "smiles": "Cc1cc(cc2c1ccc(c2C(=O)OC3C(c4cc5c(cc4C3SCC(C(=O)NCC(=O)O)NC(=O)CCC(C(=O)O)N)C(C=C5)(C6COC(=O)O6)O)OC7C(C(C(C(O7)C)O)O)NC)O)OC",
+  "name": "[(R)-4-((1,3-DIOXOLANE-2-OXY)-4-(S)-YL)-4-HYDROXY]-(R)-10-(2-METHYLAMINO-5-ME..."
+ },
+ "BD9": {
+  "comp_id": "BD9",
+  "type": "non-polymer",
+  "formula": "C40 H55 N9 O5",
+  "formula_weight": 741.922,
+  "drugbank_id": null,
+  "smiles": "CCCCCCCCCCC(=O)NC(Cc1cnc[nH]1)C(=O)NC(Cc2c[nH]cn2)C(=O)NC(Cc3ccc(cc3)O)C(=O)N(C)CCc4ccccn4",
+  "name": "N-undecanoyl-L-histidyl-L-histidyl-N-methyl-N-(2-pyridin-2-ylethyl)-L-tyrosin..."
+ },
+ "C52": {
+  "comp_id": "C52",
+  "type": "non-polymer",
+  "formula": "C21 H15 F3 N4 O",
+  "formula_weight": 396.365,
+  "drugbank_id": "DB07528",
+  "smiles": "CC1=C(C(=O)N(C=C1)c2cccc(c2)C(F)(F)F)c3ccc4c(c3)cnc(n4)N",
+  "name": "3-(2-aminoquinazolin-6-yl)-4-methyl-1-[3-(trifluoromethyl)phenyl]pyridin-2(1H..."
+ },
+ "FE2": {
+  "comp_id": "FE2",
+  "type": "non-polymer",
+  "formula": "Fe",
+  "formula_weight": 55.845,
+  "drugbank_id": null,
+  "smiles": "[Fe+2]",
+  "name": "FE (II) ION"
+ },
+ "9CP": {
+  "comp_id": "9CP",
+  "type": "non-polymer",
+  "formula": "C8 H13 N3 O6 S",
+  "formula_weight": 279.27,
+  "drugbank_id": null,
+  "smiles": "CC1=CC(N(CC1NOS(=O)(=O)O)C=O)C(=O)N",
+  "name": "(2S,5R)-1-formyl-4-methyl-5-[(sulfooxy)amino]-1,2,5,6-tetrahydropyridine-2-ca..."
+ },
+ "1W2": {
+  "comp_id": "1W2",
+  "type": "non-polymer",
+  "formula": "C18 H15 F2 N5 O",
+  "formula_weight": 355.341,
+  "drugbank_id": null,
+  "smiles": "c1cc(c(nc1)N2CCC3C(C2)(N=C(O3)N)c4ccc(cc4F)F)C#N",
+  "name": "2-[(3aS,7aR)-2-amino-3a-(2,4-difluorophenyl)-3a,6,7,7a-tetrahydro[1,3]oxazolo..."
+ },
+ "P6J": {
+  "comp_id": "P6J",
+  "type": "non-polymer",
+  "formula": "C22 H21 F2 N5 O3 S",
+  "formula_weight": 473.496,
+  "drugbank_id": null,
+  "smiles": "CC1(C2CC2(SC(=N1)N)COC)c3cc(cc(c3F)F)NC(=O)c4cnc(cn4)OCC#C",
+  "name": "N-{3-[(1S,5S,6S)-3-amino-1-(methoxymethyl)-5-methyl-2-thia-4-azabicyclo[4.1.0..."
+ },
+ "LE5": {
+  "comp_id": "LE5",
+  "type": "non-polymer",
+  "formula": "C18 H14 Cl N5 O",
+  "formula_weight": 351.79,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)c2nc3n(n2)C(=O)C=C(N3)CNc4ccc(cc4)Cl",
+  "name": "(8S)-5-[(4-chloroanilino)methyl]-2-phenyl[1,2,4]triazolo[1,5-a]pyrimidin-7(4H..."
+ },
+ "MES": {
+  "comp_id": "MES",
+  "type": "non-polymer",
+  "formula": "C6 H13 N O4 S",
+  "formula_weight": 195.237,
+  "drugbank_id": "DB03814",
+  "smiles": "C1COCC[NH+]1CCS(=O)(=O)[O-]",
+  "name": "2-(N-MORPHOLINO)-ETHANESULFONIC ACID"
+ },
+ "A1H3R": {
+  "comp_id": "A1H3R",
+  "type": "non-polymer",
+  "formula": "C21 H24 N4 O S",
+  "formula_weight": 380.506,
+  "drugbank_id": null,
+  "smiles": "CC1COCCN1c2nc3c(c(n2)c4csc5c4cccc5)CCNCC3",
+  "name": "(3~{S})-4-[4-(1-benzothiophen-3-yl)-6,7,8,9-tetrahydro-5~{H}-pyrimido[4,5-d]a..."
+ },
+ "G8B": {
+  "comp_id": "G8B",
+  "type": "non-polymer",
+  "formula": "C23 H26 N6 O4 S",
+  "formula_weight": 482.555,
+  "drugbank_id": null,
+  "smiles": "CN1CCN(CC1)S(=O)(=O)c2ccc(cc2)c3cnc(c(n3)C(=O)Nc4ccccc4OC)N",
+  "name": "3-azanyl-~{N}-(2-methoxyphenyl)-6-[4-(4-methylpiperazin-1-yl)sulfonylphenyl]p..."
+ },
+ "YB0": {
+  "comp_id": "YB0",
+  "type": "non-polymer",
+  "formula": "C29 H42 N8 O3 S",
+  "formula_weight": 582.761,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)CCCNc2c3c(ncn2)n(cn3)C4C(C(C(O4)CSCCNC(=N)NCC5CCCCC5)O)O",
+  "name": "5'-S-{2-[N'-(cyclohexylmethyl)carbamimidamido]ethyl}-N-(3-phenylpropyl)-5'-th..."
+ },
+ "VV6": {
+  "comp_id": "VV6",
+  "type": "non-polymer",
+  "formula": "H12 O17 V6",
+  "formula_weight": 589.734,
+  "drugbank_id": null,
+  "smiles": "O[V](O[V](=O)[V](O)(O)O[V](O)(O)O[V](O)(O)O)O[V](O)(O)(O)O",
+  "name": "[[[[bis(oxidanyl)-[tris(oxidanyl)vanadiooxy]vanadio]oxy-bis(oxidanyl)vanadio]..."
+ },
+ "AG2": {
+  "comp_id": "AG2",
+  "type": "non-polymer",
+  "formula": "C5 H14 N4",
+  "formula_weight": 130.191,
+  "drugbank_id": "DB08838",
+  "smiles": "C(CCNC(=N)N)CN",
+  "name": "AGMATINE"
+ },
+ "LK0": {
+  "comp_id": "LK0",
+  "type": "peptide-like",
+  "formula": "C39 H53 N5 O7",
+  "formula_weight": 703.867,
+  "drugbank_id": null,
+  "smiles": "CC(C)(C)C(C(=O)NC(Cc1ccccc1)CC(C(Cc2ccc(cc2)c3cccnc3)NC(=O)C(C(C)(C)C)NC(=O)OC)O)NC(=O)OC",
+  "name": "methyl N-[(2S)-1-[[(2S,3S,5S)-5-[[(2S)-2-(methoxycarbonylamino)-3,3-dimethyl-..."
+ },
+ "L57": {
+  "comp_id": "L57",
+  "type": "non-polymer",
+  "formula": "C15 H11 Cl2 N O3",
+  "formula_weight": 324.159,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)C(=NOCC(=O)O)c2ccc(c(c2)Cl)Cl",
+  "name": "({(Z)-[(3,4-dichlorophenyl)(phenyl)methylidene]amino}oxy)acetic acid"
+ },
+ "M9N": {
+  "comp_id": "M9N",
+  "type": "non-polymer",
+  "formula": "C9 H11 Cl N2 O2 S2",
+  "formula_weight": 278.779,
+  "drugbank_id": null,
+  "smiles": "Cc1c(c2c(s1)NCNC2SCC(=O)O)Cl",
+  "name": "2-[[(4~{S})-5-chloranyl-6-methyl-1,2,3,4-tetrahydrothieno[2,3-d]pyrimidin-4-y..."
+ },
+ "LD3": {
+  "comp_id": "LD3",
+  "type": "non-polymer",
+  "formula": "C5 H8 B10 N O2 S",
+  "formula_weight": 254.298,
+  "drugbank_id": null,
+  "smiles": "B1234B567B189B212B33%10B454B656B787C911B232B715C4%1062CCCS(=O)(=O)N",
+  "name": "meta-carboran-propylsulfonamid"
+ },
+ "YQY": {
+  "comp_id": "YQY",
+  "type": "non-polymer",
+  "formula": "C17 H15 F3 I N3 O2",
+  "formula_weight": 477.22,
+  "drugbank_id": null,
+  "smiles": "c1cc(c(cc1I)F)Nc2c(ccc(c2F)F)C(=O)N3CC(C3)(CN)O",
+  "name": "[3-(AMINOMETHYL)-3-OXIDANYL-AZETIDIN-1-YL]-[3,4-BIS(FLUORANYL)-2-[(2-FLUORANY..."
+ },
+ "27N": {
+  "comp_id": "27N",
+  "type": "non-polymer",
+  "formula": "C14 H11 Cl3 O2",
+  "formula_weight": 317.595,
+  "drugbank_id": null,
+  "smiles": "c1cc(ccc1C(c2ccc(cc2)O)C(Cl)(Cl)Cl)O",
+  "name": "4,4'-(2,2,2-trichloroethane-1,1-diyl)diphenol"
+ },
+ "XNU": {
+  "comp_id": "XNU",
+  "type": "non-polymer",
+  "formula": "C26 H29 F2 N5 O2 S",
+  "formula_weight": 513.603,
+  "drugbank_id": null,
+  "smiles": "CCCCCCSc1nnc(n1c2cccnc2)COc3cc(c(cc3F)C#CCNC(=O)CC)F",
+  "name": "N-[3-(2,5-difluoro-4-{[(4M)-5-(hexylsulfanyl)-4-(pyridin-3-yl)-4H-1,2,4-triaz..."
+ },
+ "KGW": {
+  "comp_id": "KGW",
+  "type": "non-polymer",
+  "formula": "C22 H25 N7 O3",
+  "formula_weight": 435.479,
+  "drugbank_id": null,
+  "smiles": "CNC(=O)c1ccccc1Nc2ncnc(n2)Nc3ccc(cc3OC)N4CCOCC4",
+  "name": "2-(4-(2-methoxy-4-morpholinophenylamino)-1,3,5-triazin-2-ylamino)-N-methylben..."
+ },
+ "SOG": {
+  "comp_id": "SOG",
+  "type": "D-saccharide",
+  "formula": "C14 H28 O5 S",
+  "formula_weight": 308.434,
+  "drugbank_id": "DB08558",
+  "smiles": "CCCCCCCCSC1C(C(C(C(O1)CO)O)O)O",
+  "name": "octyl 1-thio-beta-D-glucopyranoside"
+ },
+ "A1CMG": {
+  "comp_id": "A1CMG",
+  "type": "non-polymer",
+  "formula": "C40 H43 Cl F N5 O5 S",
+  "formula_weight": 760.316,
+  "drugbank_id": null,
+  "smiles": "Cc1c2c3ccc(c2-c4c(nn(c4CSCc5cc(n(n5)C)CCc6cc7cc(ccc7c(c6)OCCCn3c1C(=O)O)F)CCOCCOC)C)Cl",
+  "name": "17-chloranyl-33-fluoranyl-12-[2-(2-methoxyethoxy)ethyl]-5,14,22-trimethyl-28-..."
+ },
+ "A1JD4": {
+  "comp_id": "A1JD4",
+  "type": "non-polymer",
+  "formula": "C23 H23 N3 O5",
+  "formula_weight": 421.446,
+  "drugbank_id": null,
+  "smiles": "Cc1ccc2ccc(cc2n1)C(C)OC3=CN4CC5COCCN5C(=O)C4=C(C3=O)O",
+  "name": "(3~{S})-13-[(1~{S})-1-(2-methylquinolin-7-yl)ethoxy]-11-oxidanyl-5-oxa-1,8-di..."
+ },
+ "A6N": {
+  "comp_id": "A6N",
+  "type": "non-polymer",
+  "formula": "C15 H16 N4 O3 S",
+  "formula_weight": 332.378,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)n2cc(nn2)COc3ccc(cc3)S(N)(O)O",
+  "name": "4-[[4-[azanyl-bis(oxidanyl)-$l^{4}-sulfanyl]phenoxy]methyl]-1-phenyl-1,2,3-tr..."
+ },
+ "U5U": {
+  "comp_id": "U5U",
+  "type": "non-polymer",
+  "formula": "C15 H15 N4 Pd S",
+  "formula_weight": 389.791,
+  "drugbank_id": null,
+  "smiles": "CN(C)C1=N[N]2=C(C3=CC=CC=[N]3[Pd]2S1)c4ccccc4",
+  "name": "~{N},~{N}-dimethyl-7-phenyl-3-thia-1$l^{4},5,6$l^{4}-triaza-2$l^{3}-palladatr..."
+ },
+ "4B2": {
+  "comp_id": "4B2",
+  "type": "non-polymer",
+  "formula": "C15 H14 F2 N4 S",
+  "formula_weight": 320.36,
+  "drugbank_id": "DB13065",
+  "smiles": "CC1(CCSC(=N1)N)c2cc(c(cc2F)F)c3cncnc3",
+  "name": "(4S)-4-[2,4-difluoro-5-(pyrimidin-5-yl)phenyl]-4-methyl-5,6-dihydro-4H-1,3-th..."
+ },
+ "A1D9X": {
+  "comp_id": "A1D9X",
+  "type": "non-polymer",
+  "formula": "C13 H19 Cl N4 O4 S",
+  "formula_weight": 362.832,
+  "drugbank_id": null,
+  "smiles": "CC(C)(C)CN(c1c(cnc(n1)Cl)[N+](=O)[O-])C2CCS(=O)(=O)C2",
+  "name": "~{N}-[(3~{R})-1,1-bis(oxidanylidene)thiolan-3-yl]-2-chloranyl-~{N}-(2,2-dimet..."
+ },
+ "29I": {
+  "comp_id": "29I",
+  "type": "non-polymer",
+  "formula": "C33 H31 Br N4 O6",
+  "formula_weight": 659.526,
+  "drugbank_id": null,
+  "smiles": "CNC(=O)c1ccc2c(c1)nc(n2C(CNC(=O)OCc3ccccc3)c4ccc(c(c4)OC)OC)c5ccc(c(c5)O)Br",
+  "name": "(phenylmethyl) N-[(2R)-2-[2-(4-bromanyl-3-oxidanyl-phenyl)-5-(methylcarbamoyl..."
+ },
+ "D5I": {
+  "comp_id": "D5I",
+  "type": "non-polymer",
+  "formula": "C17 H21 N3 O2",
+  "formula_weight": 299.368,
+  "drugbank_id": null,
+  "smiles": "c1cnccc1C(=O)NNC(=O)C23CC4CC(C2)CC(C4)C3",
+  "name": "N'-(1-adamantylcarbonyl)pyridine-4-carbohydrazide"
+ },
+ "RNW": {
+  "comp_id": "RNW",
+  "type": "non-polymer",
+  "formula": "C15 H15 N O3 S",
+  "formula_weight": 289.35,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)C(c2ccccc2)S(=O)CC(=O)NO",
+  "name": "2-[(diphenylmethyl)-oxidanyl-$l^{3}-sulfanyl]-~{N}-oxidanyl-ethanamide"
+ },
+ "363": {
+  "comp_id": "363",
+  "type": "non-polymer",
+  "formula": "C9 H7 N5",
+  "formula_weight": 185.185,
+  "drugbank_id": null,
+  "smiles": "c1c[nH]c2c1nc(cn2)c3c[nH]nc3",
+  "name": "2-(1H-pyrazol-4-yl)-5H-pyrrolo[2,3-b]pyrazine"
+ },
+ "U19": {
+  "comp_id": "U19",
+  "type": "non-polymer",
+  "formula": "C10 H7 F3 N6",
+  "formula_weight": 268.198,
+  "drugbank_id": "DB08671",
+  "smiles": "[H]N=C1C(=C(N=N1)N)N=Nc2ccccc2C(F)(F)F",
+  "name": "5-IMINO-4-(2-TRIFLUOROMETHYL-PHENYLAZO)-5H-PYRAZOL-3-YLAMINE"
+ },
+ "B38": {
+  "comp_id": "B38",
+  "type": "non-polymer",
+  "formula": "C22 H21 N3 O3",
+  "formula_weight": 375.42,
+  "drugbank_id": null,
+  "smiles": "Cc1ccc2c(c1)C(=O)CC3(O2)CCN(CC3)C(=O)c4cccc5c4[nH]nc5",
+  "name": "1'-(1H-indazol-7-ylcarbonyl)-6-methylspiro[chromene-2,4'-piperidin]-4(3H)-one"
+ },
+ "DHK": {
+  "comp_id": "DHK",
+  "type": "non-polymer",
+  "formula": "C7 H10 O5",
+  "formula_weight": 174.151,
+  "drugbank_id": null,
+  "smiles": "C1C(C=C(C(C1O)O)O)C(=O)O",
+  "name": "3-DEHYDROSHIKIMATE"
+ },
+ "3C3": {
+  "comp_id": "3C3",
+  "type": "non-polymer",
+  "formula": "C9 H15 N9 O2",
+  "formula_weight": 281.275,
+  "drugbank_id": null,
+  "smiles": "CCCn1c(nc(n1)C2=C(NON2)N)C3=C(NON3)N",
+  "name": "4,4'-(1-PROPYL-1H-1,2,4-TRIAZOLE-3,5-DIYL)BIS(2,5-DIHYDRO-1,2,5-OXADIAZOL-3-A..."
+ },
+ "1IR": {
+  "comp_id": "1IR",
+  "type": "non-polymer",
+  "formula": "C18 H17 N5 O S",
+  "formula_weight": 351.425,
+  "drugbank_id": null,
+  "smiles": "COc1nc2cccnc2n1C3CC(C3)Nc4nc5ccccc5s4",
+  "name": "N-[cis-3-(2-methoxy-3H-imidazo[4,5-b]pyridin-3-yl)cyclobutyl]-1,3-benzothiazo..."
+ },
+ "T4T": {
+  "comp_id": "T4T",
+  "type": "non-polymer",
+  "formula": "C16 H32 O2 S",
+  "formula_weight": 288.489,
+  "drugbank_id": "DB18802",
+  "smiles": "CCCCCCCCCCCCCCSCC(=O)O",
+  "name": "2-tetradecylsulfanylethanoic acid"
+ },
+ "0HD": {
+  "comp_id": "0HD",
+  "type": "non-polymer",
+  "formula": "C16 H16 N4 O",
+  "formula_weight": 280.324,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)CCNC(=O)Nc2ccc3c(c2)cn[nH]3",
+  "name": "1-(1H-indazol-5-yl)-3-(2-phenylethyl)urea"
+ },
+ "7CG": {
+  "comp_id": "7CG",
+  "type": "non-polymer",
+  "formula": "C16 H14 Br2 N2 O3 S",
+  "formula_weight": 474.167,
+  "drugbank_id": null,
+  "smiles": "c1cc(cc(c1)N2CCCC2=O)NS(=O)(=O)c3cc(ccc3Br)Br",
+  "name": "2,5-dibromo-N-[3-(2-oxopyrrolidin-1-yl)phenyl]benzene-1-sulfonamide"
+ },
+ "5J6": {
+  "comp_id": "5J6",
+  "type": "non-polymer",
+  "formula": "C20 H18 Br F N4 O3 S",
+  "formula_weight": 493.349,
+  "drugbank_id": null,
+  "smiles": "COC(=O)c1c(nc(nc1c2ccc(cc2Br)F)c3nccs3)CN4CCOCC4",
+  "name": "methyl 4-(2-bromo-4-fluorophenyl)-6-(morpholin-4-ylmethyl)-2-(1,3-thiazol-2-y..."
+ },
+ "A1BTU": {
+  "comp_id": "A1BTU",
+  "type": "non-polymer",
+  "formula": "C23 H17 N3 O3 S",
+  "formula_weight": 415.464,
+  "drugbank_id": null,
+  "smiles": "c1ccc(c(c1)OCCN2C=CC(=S)NC2=O)Oc3cccc4c3ccc(c4)C#N",
+  "name": "5-{2-[2-(2-oxo-4-sulfanylidene-3,4-dihydropyrimidin-1(2H)-yl)ethoxy]phenoxy}n..."
+ },
+ "XIH": {
+  "comp_id": "XIH",
+  "type": "non-polymer",
+  "formula": "C20 H23 N7 O2",
+  "formula_weight": 393.442,
+  "drugbank_id": "DB08743",
+  "smiles": "CN1c2c(n(c(n2)N3CCCC(C3)N)Cc4ccccc4C#N)C(=O)N(C1=O)C",
+  "name": "2-({8-[(3R)-3-AMINOPIPERIDIN-1-YL]-1,3-DIMETHYL-2,6-DIOXO-1,2,3,6-TETRAHYDRO-..."
+ },
+ "3JD": {
+  "comp_id": "3JD",
+  "type": "non-polymer",
+  "formula": "C19 H20 N4 O",
+  "formula_weight": 320.388,
+  "drugbank_id": "DB11793",
+  "smiles": "c1cc2cn(nc2c(c1)C(=O)N)c3ccc(cc3)C4CCCNC4",
+  "name": "2-{4-[(3S)-piperidin-3-yl]phenyl}-2H-indazole-7-carboxamide"
+ },
+ "WAS": {
+  "comp_id": "WAS",
+  "type": "non-polymer",
+  "formula": "C18 H31 N7 O9",
+  "formula_weight": 489.48,
+  "drugbank_id": null,
+  "smiles": "c1cc(c(cc1NNN)[N+](=O)[O-])NCCOC(=O)NCCNC2CC(C(C(C2O)O)O)(CO)O",
+  "name": "2-{[2-nitro-4-(triazan-1-yl)phenyl]amino}ethyl (2-{[(1S,2S,3R,4S,5S)-2,3,4,5-..."
+ },
+ "AGJ": {
+  "comp_id": "AGJ",
+  "type": "non-polymer",
+  "formula": "C18 H20 N2 O4",
+  "formula_weight": 328.362,
+  "drugbank_id": null,
+  "smiles": "c1ccc(cc1)CC(=O)N(CCO)Cc2ccc(cc2)C(=O)NO",
+  "name": "N-hydroxy-4-{[(2-hydroxyethyl)(phenylacetyl)amino]methyl}benzamide"
+ },
+ "XLJ": {
+  "comp_id": "XLJ",
+  "type": "non-polymer",
+  "formula": "C11 H14 N2",
+  "formula_weight": 174.242,
+  "drugbank_id": null,
+  "smiles": "CC(CN)c1c[nH]c2c1cccc2",
+  "name": "(2S)-2-(1H-indol-3-yl)propan-1-amine"
+ },
+ "A1AX6": {
+  "comp_id": "A1AX6",
+  "type": "non-polymer",
+  "formula": "C10 H10 Br N O",
+  "formula_weight": 240.096,
+  "drugbank_id": null,
+  "smiles": "CC1(c2cc(ccc2NC1=O)Br)C",
+  "name": "5-bromo-3,3-dimethyl-1,3-dihydro-2H-indol-2-one"
+ },
+ "8N3": {
+  "comp_id": "8N3",
+  "type": "non-polymer",
+  "formula": "C15 H23 N3 O3",
+  "formula_weight": 293.361,
+  "drugbank_id": null,
+  "smiles": "Cc1cccc(c1)CNC(=O)NC(CC(C)C)C(=O)NO",
+  "name": "(2R)-4-methyl-2-[(3-methylphenyl)methylcarbamoylamino]-N-oxidanyl-pentanamide"
+ },
+ "LC2": {
+  "comp_id": "LC2",
+  "type": "non-polymer",
+  "formula": "C25 H33 N O7",
+  "formula_weight": 459.532,
+  "drugbank_id": null,
+  "smiles": "CC1C2CC(C=CC(=CCC(C=CC(=CC(C(C1=O)(C(=O)O2)C)NC(=O)C(=O)C)C)O)C)O",
+  "name": "N-[(1S,2R,3E,5E,7S,9E,11E,13S,15R,19R)-7,13-dihydroxy-1,4,10,19-tetramethyl-1..."
+ }
+}

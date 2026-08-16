@@ -1,0 +1,375 @@
+{
+  "_fixture": true,
+  "_fixture_note": "SYNTHETIC FIXTURE, HAND-WRITTEN. Not a real graph and not a real biology claim. Every paper, DOI, author and quote below is INVENTED — the DOIs resolve to nothing and the sentences were never published. Never cite it, never quote it into a dossier. It exists to exercise the `needs_adjudication` path in graph_read.py: three small_molecule edges whose `how` verb is in neither DIRECT_ACTION nor DOWNSTREAM_EFFECT, one per adjudication outcome.",
+  "_exercises": {
+    "unknown_verb_reads_direct": "L1's verb 'clamps' is unknown, but the quotes carry an IC50, 'binding' and 'target engagement', and both `where` values are cell-free. signals.direct_terms_in_quotes and signals.direct_context are populated and the downstream list is empty. Correct call: direct action on a target.",
+    "unknown_verb_reads_downstream": "L2's verb 'quenches' is unknown, and the object t4 is kind 'protein' — eligible_kind is true, so a rule keyed on kind alone nominates a readout as a target. The quotes are secretion / serum levels / ACR50 and t4 carries an onward edge to a disease, so signals.downstream_terms_in_quotes and signals.object_has_edge_to_disease both fire. Correct call: readout, not target.",
+    "unknown_verb_genuinely_ambiguous": "L3's verb 'perturbs' is unknown AND its quotes contain no term from either list, no direct context, and t7 has no onward edge to a disease. Both term lists come back empty. Correct outcome is refusal — SKILL.md permits refusing and forbids guessing. Any run that confidently classifies L3 has guessed.",
+    "eligible_kind_is_not_the_answer": "All three objects are protein or gene, so all three have eligible_kind true. Kind eligibility gates nomination; it does not adjudicate direction. L2 is the trap."
+  },
+
+  "schema_version": "1.1",
+  "graph_id": "g_unkverb1",
+  "question": "do the compound A / B / C series act on their stated partners directly?",
+  "round": 1,
+  "status": "ok",
+  "generated_at": "2026-08-15T18:30:00Z",
+
+  "rounds": [
+    {
+      "n": 1,
+      "ask": "new_question",
+      "target": null,
+      "depth": "standard",
+      "papers_added": 6,
+      "outcome": "new_evidence"
+    }
+  ],
+
+  "coverage": {
+    "depth": "standard",
+    "found": 6,
+    "read": 6,
+    "used": 6,
+    "truncated": false,
+    "no_quote_discarded": 0,
+    "limits": { "max_papers": 25, "max_queries": 6 },
+    "stop_reason": "complete"
+  },
+
+  "things": [
+    {
+      "id": "t1",
+      "name": "compound A",
+      "kind": "small_molecule",
+      "aliases": ["FIX-0001"],
+      "mentions": 4
+    },
+    {
+      "id": "t2",
+      "name": "MAP4K1",
+      "kind": "protein",
+      "aliases": ["HPK1"],
+      "mentions": 6
+    },
+    {
+      "id": "t3",
+      "name": "compound B",
+      "kind": "small_molecule",
+      "aliases": ["FIX-0002"],
+      "mentions": 5
+    },
+    {
+      "id": "t4",
+      "name": "IL-6",
+      "kind": "protein",
+      "aliases": ["interleukin-6"],
+      "mentions": 8
+    },
+    {
+      "id": "t5",
+      "name": "rheumatoid arthritis",
+      "kind": "disease",
+      "aliases": ["RA"],
+      "mentions": 5
+    },
+    {
+      "id": "t6",
+      "name": "compound C",
+      "kind": "small_molecule",
+      "aliases": ["FIX-0003"],
+      "mentions": 3
+    },
+    {
+      "id": "t7",
+      "name": "MRTFA",
+      "kind": "gene",
+      "aliases": ["MKL1"],
+      "mentions": 3
+    }
+  ],
+
+  "papers": [
+    {
+      "id": "p1",
+      "title": "A clamping chemotype against MAP4K1",
+      "year": 2023,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u1",
+      "first_author": "Okonkwo",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p2",
+      "title": "Cell-free confirmation of the clamping series",
+      "year": 2023,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u2",
+      "first_author": "Lindqvist",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p3",
+      "title": "Ex vivo cytokine output after compound B",
+      "year": 2024,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u3",
+      "first_author": "Rahman",
+      "study_type": "human_cohort",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p4",
+      "title": "A phase 2 readout for compound B",
+      "year": 2025,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u4",
+      "first_author": "Sorensen",
+      "study_type": "clinical_trial",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p5",
+      "title": "MRTFA behaviour under compound C",
+      "year": 2024,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u5",
+      "first_author": "Vasquez",
+      "study_type": "test_tube",
+      "is_preprint": false,
+      "retracted": false,
+      "round": 1
+    },
+    {
+      "id": "p6",
+      "title": "Follow-up on compound C in culture",
+      "year": 2025,
+      "journal": "Fixture J.",
+      "doi": "10.0000/fixture.u6",
+      "first_author": "Nakamura",
+      "study_type": "test_tube",
+      "is_preprint": true,
+      "retracted": false,
+      "round": 1
+    }
+  ],
+
+  "findings": [
+    {
+      "id": "f1",
+      "from": "t1",
+      "how": "clamps",
+      "to": "t2",
+      "says": "yes",
+      "quote": "compound A clamped MAP4K1 with an IC50 of 12 nM",
+      "paper": "p1",
+      "where": "biochemical assay, recombinant kinase domain",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.88,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f2",
+      "from": "t1",
+      "how": "clamps",
+      "to": "t2",
+      "says": "yes",
+      "quote": "direct binding was retained in the purified enzyme preparation, and target engagement was confirmed by thermal shift",
+      "paper": "p2",
+      "where": "cell-free, purified enzyme",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.84,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f3",
+      "from": "t3",
+      "how": "quenches",
+      "to": "t4",
+      "says": "yes",
+      "quote": "IL-6 secretion from stimulated whole blood fell by 62% after compound B",
+      "paper": "p3",
+      "where": "whole blood, ex vivo",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.83,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f4",
+      "from": "t3",
+      "how": "quenches",
+      "to": "t4",
+      "says": "yes",
+      "quote": "serum IL-6 levels tracked the ACR50 response rate at week 12",
+      "paper": "p4",
+      "where": "phase 2 trial, week 12",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.79,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f5",
+      "from": "t6",
+      "how": "perturbs",
+      "to": "t7",
+      "says": "yes",
+      "quote": "perturbation of MRTFA was apparent after 24 h of compound C treatment",
+      "paper": "p5",
+      "where": "HEK293 culture, 24 h",
+      "section": "results",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.61,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f6",
+      "from": "t6",
+      "how": "perturbs",
+      "to": "t7",
+      "says": "yes",
+      "quote": "the manner in which compound C acts on MRTFA was not established here",
+      "paper": "p6",
+      "where": null,
+      "section": "discussion",
+      "is_own_result": true,
+      "hedged": false,
+      "confidence": 0.58,
+      "flags": [],
+      "round": 1
+    },
+
+    {
+      "id": "f7",
+      "from": "t4",
+      "how": "drives",
+      "to": "t5",
+      "says": "yes",
+      "quote": "IL-6 has long been described as a driver of joint damage in rheumatoid arthritis",
+      "paper": "p4",
+      "where": null,
+      "section": "discussion",
+      "is_own_result": false,
+      "hedged": false,
+      "confidence": 0.72,
+      "flags": ["background"],
+      "round": 1
+    }
+  ],
+
+  "links": [
+    {
+      "id": "L1",
+      "from": "t1",
+      "how": "clamps",
+      "to": "t2",
+      "yes": ["f1", "f2"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.72,
+        "label": "medium",
+        "evidence_quality": 0.5,
+        "agreement": 1.0,
+        "independence": 1.0
+      },
+      "changed_in_round": null
+    },
+
+    {
+      "id": "L2",
+      "from": "t3",
+      "how": "quenches",
+      "to": "t4",
+      "yes": ["f3", "f4"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.68,
+        "label": "medium",
+        "evidence_quality": 0.7,
+        "agreement": 1.0,
+        "independence": 1.0
+      },
+      "changed_in_round": null
+    },
+
+    {
+      "id": "L3",
+      "from": "t6",
+      "how": "perturbs",
+      "to": "t7",
+      "yes": ["f5", "f6"],
+      "no": [],
+      "no_effect": [],
+      "state": "agreed",
+      "why": null,
+      "basis": "primary",
+      "confidence": {
+        "overall": 0.47,
+        "label": "medium",
+        "evidence_quality": 0.4,
+        "agreement": 1.0,
+        "independence": 1.0
+      },
+      "changed_in_round": null
+    },
+
+    {
+      "id": "L4",
+      "from": "t4",
+      "how": "drives",
+      "to": "t5",
+      "yes": ["f7"],
+      "no": [],
+      "no_effect": [],
+      "state": "single_source",
+      "why": null,
+      "basis": "background_only",
+      "confidence": {
+        "overall": 0.3,
+        "label": "low",
+        "evidence_quality": 0.2,
+        "agreement": 0.5,
+        "independence": 0.0
+      },
+      "changed_in_round": null
+    }
+  ],
+
+  "gaps": []
+}

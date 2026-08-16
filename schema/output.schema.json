@@ -1,0 +1,525 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/REagent-LABrador/simulation/schema/output.schema.json",
+  "title": "Druggability dossier",
+  "description": "The dossier the simulation station emits for one target. Authoritative shape is CLAUDE.md's '## Output template'; enum vocabularies are authoritative in assemble-dossier/validate_dossier.py (this schema and that validator are cross-checked by schema/test_schema.py). Two rules of the contract are encoded structurally: (1) all 17 top-level keys are present — never omitted, null when unretrieved; (2) every enum field is present and non-null, because each enum carries an explicit unknown-member (none/undetermined/unknown) that is used instead of null. Doc keys beginning with '_' are permitted anywhere. This schema enforces types, enums, and the presence of consumer-critical fields; it is intentionally NOT stricter than a validator-passing dossier.",
+  "type": "object",
+  "required": [
+    "input", "target", "as_of_date", "verdict", "verdict_basis", "axis_conflict",
+    "target_precedent", "biologic_precedent", "family_precedent",
+    "structural_neighbour_precedent", "pocket_neighbour_precedent", "structure",
+    "tractability", "affinity", "falsification", "next_experiment", "not_found"
+  ],
+  "patternProperties": {"^_": {}},
+  "additionalProperties": false,
+  "properties": {
+    "input": {
+      "description": "Verbatim echo of the request. Never inferred, never back-filled.",
+      "type": "object",
+      "required": ["uniprot_accession", "as_of_date", "disease_context", "interaction_to_disrupt", "mechanism_hypothesis"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "uniprot_accession": {"type": ["string", "null"]},
+        "as_of_date": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "disease_context": {"type": ["string", "null"]},
+        "interaction_to_disrupt": {"type": ["string", "null"]},
+        "mechanism_hypothesis": {"type": ["string", "null"], "enum": ["orthosteric", "allosteric", "oligomer_destabilisation", "unknown", null]}
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["uniprot_accession"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "uniprot_accession": {"type": "string", "minLength": 1},
+        "gene_symbol": {"$ref": "#/$defs/str"},
+        "protein_name": {"$ref": "#/$defs/str"},
+        "organism": {"$ref": "#/$defs/str"},
+        "sequence_length": {"$ref": "#/$defs/count"},
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+    "as_of_date": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "verdict": {"enum": ["small_molecule_tractable", "not_tractable", "insufficient_evidence"]},
+    "verdict_basis": {"enum": ["retrieved_precedent", "computed_tractability", "both", "none"]},
+    "axis_conflict": {"$ref": "#/$defs/str"},
+
+    "target_precedent": {
+      "type": "object",
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "chembl_target_id": {"$ref": "#/$defs/str"},
+        "distinct_actives": {"$ref": "#/$defs/count"},
+        "compound_modality_split": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "small_molecule": {"$ref": "#/$defs/count"},
+            "peptide": {"$ref": "#/$defs/count"},
+            "macrocyclic_peptide": {"$ref": "#/$defs/count"},
+            "oligonucleotide": {"$ref": "#/$defs/count"},
+            "oligosaccharide": {"$ref": "#/$defs/count"},
+            "protein_or_antibody": {"$ref": "#/$defs/count"},
+            "modality_unknown": {"$ref": "#/$defs/count"}
+          }
+        },
+        "modality_unknown_count": {"$ref": "#/$defs/count"},
+        "assay_concentration": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "top_assay_description": {"$ref": "#/$defs/str"},
+            "top_assay_share_pct": {"$ref": "#/$defs/pct"},
+            "measures_a_different_target": {"$ref": "#/$defs/bool"},
+            "assay_type_split": {
+              "type": "object",
+              "patternProperties": {"^_": {}},
+              "additionalProperties": true,
+              "properties": {
+                "binding_B": {"$ref": "#/$defs/count"},
+                "functional_F": {"$ref": "#/$defs/count"}
+              }
+            }
+          }
+        },
+        "best_potency_nm": {"$ref": "#/$defs/num"},
+        "best_potency_modality": {"$ref": "#/$defs/str"},
+        "best_potency_assay": {"$ref": "#/$defs/str"},
+        "best_potency_characterised": {"$ref": "#/$defs/bool"},
+        "approved_small_molecules_count": {"$ref": "#/$defs/count"},
+        "approved_small_molecules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "name": {"$ref": "#/$defs/str"},
+              "year": {"$ref": "#/$defs/year"},
+              "modality": {"$ref": "#/$defs/str"},
+              "source": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "clinical_stage_small_molecules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "name": {"$ref": "#/$defs/str"},
+              "phase": {"type": ["number", "string", "null"]},
+              "modality": {"$ref": "#/$defs/str"},
+              "source": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "patents": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {"count": {"$ref": "#/$defs/count"}, "source": {"$ref": "#/$defs/str"}}
+        },
+        "terminated_programs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "program": {"$ref": "#/$defs/str"},
+              "year": {"$ref": "#/$defs/year"},
+              "stated_reason": {"$ref": "#/$defs/str"},
+              "source": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "as_of_leakage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "field": {"$ref": "#/$defs/str"},
+              "leakage_risk": {"$ref": "#/$defs/str"},
+              "note": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "biologic_precedent": {
+      "type": "object",
+      "required": ["note"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "approved_biologics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "name": {"$ref": "#/$defs/str"},
+              "modality": {"$ref": "#/$defs/str"},
+              "year": {"$ref": "#/$defs/year"},
+              "source": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "note": {"type": "string", "minLength": 1}
+      }
+    },
+
+    "family_precedent": {
+      "type": "object",
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "pfam": {"$ref": "#/$defs/str"},
+        "family_actives": {"$ref": "#/$defs/count"},
+        "best_family_potency_nm": {"$ref": "#/$defs/num"},
+        "best_family_potency_modality": {"$ref": "#/$defs/str"},
+        "best_family_target": {"$ref": "#/$defs/str"},
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "structural_neighbour_precedent": {
+      "type": "object",
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "method": {"$ref": "#/$defs/str"},
+        "query_structure": {"$ref": "#/$defs/str"},
+        "neighbours": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "pdb_id": {"$ref": "#/$defs/str"},
+              "tm_score": {"$ref": "#/$defs/fraction"},
+              "evalue": {"$ref": "#/$defs/num"},
+              "has_druglike_holo": {"$ref": "#/$defs/bool"},
+              "ligand": {"$ref": "#/$defs/str"}
+            }
+          }
+        },
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "pocket_neighbour_precedent": {
+      "type": "object",
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "patternProperties": {"^_": {}},
+            "additionalProperties": true,
+            "properties": {
+              "source_target": {"$ref": "#/$defs/str"},
+              "source_accession": {"$ref": "#/$defs/str"},
+              "source_pdb_id": {"$ref": "#/$defs/str"},
+              "source_ligand": {"$ref": "#/$defs/str"},
+              "source_best_potency_nm": {"$ref": "#/$defs/num"},
+              "descriptor_similarity": {"$ref": "#/$defs/num"},
+              "descriptor_basis": {"$ref": "#/$defs/str"},
+              "cofold_transfer": {
+                "type": "object",
+                "patternProperties": {"^_": {}},
+                "additionalProperties": true,
+                "properties": {
+                  "placed_in_our_pocket": {"$ref": "#/$defs/bool"},
+                  "confidence": {"$ref": "#/$defs/num"},
+                  "leakage_risk": {"$ref": "#/$defs/str"},
+                  "leakage_note": {"$ref": "#/$defs/str"}
+                }
+              }
+            }
+          }
+        },
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "structure": {
+      "type": "object",
+      "required": ["tier"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "tier": {"enum": ["holo_experimental", "apo_experimental", "cofolded", "predicted", "sampled_ensemble", "none"]},
+        "pdb_id": {"$ref": "#/$defs/str"},
+        "resolution_a": {"$ref": "#/$defs/num"},
+        "biological_unit_used": {"$ref": "#/$defs/str"},
+        "bound_ligand": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "comp_id": {"$ref": "#/$defs/str"},
+            "heavy_atoms": {"$ref": "#/$defs/count"},
+            "is_druglike": {"$ref": "#/$defs/bool"},
+            "is_known_frequent_hitter": {"$ref": "#/$defs/bool"}
+          }
+        },
+        "total_pdb_structures": {"$ref": "#/$defs/count"},
+        "holo_count": {"$ref": "#/$defs/count"},
+        "apo_count": {"$ref": "#/$defs/count"},
+        "ensemble_used": {"type": "array", "items": {"type": "string"}},
+        "predicted_plddt": {"$ref": "#/$defs/num"},
+        "cofold_control": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "reference_pdb_id": {"$ref": "#/$defs/str"},
+            "cofold_rmsd_a": {"$ref": "#/$defs/num"},
+            "reproduces_reference": {"$ref": "#/$defs/bool"},
+            "trusted": {"$ref": "#/$defs/bool"}
+          }
+        },
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "tractability": {
+      "type": "object",
+      "required": ["cryptic_pocket_risk", "cryptic_mechanism", "mdpocket_site_definition_used"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "pocket_volume_a3": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "min": {"$ref": "#/$defs/num"},
+            "max": {"$ref": "#/$defs/num"},
+            "spread_pct": {"$ref": "#/$defs/num"},
+            "clustering_d": {"type": ["number", "array", "null"], "items": {"type": "number"}},
+            "primary_d1_6_a3": {"$ref": "#/$defs/num"},
+            "site_pocket_selected_by": {"$ref": "#/$defs/selectionBasis"}
+          }
+        },
+        "pocket_druggability": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "min": {"$ref": "#/$defs/fraction"},
+            "max": {"$ref": "#/$defs/fraction"},
+            "fold_range": {"$ref": "#/$defs/num"},
+            "site_pocket_selected_by": {"$ref": "#/$defs/selectionBasis"},
+            "load_bearing": {"type": "boolean"}
+          }
+        },
+        "site_pocket_rank": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "fpocket": {"$ref": "#/$defs/count"},
+            "prank": {"$ref": "#/$defs/count"},
+            "n_pockets": {"$ref": "#/$defs/count"},
+            "structure_pdb_id": {"$ref": "#/$defs/str"}
+          }
+        },
+        "ensemble_consensus_fraction": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "n_structures": {"$ref": "#/$defs/count"},
+            "n_measurements": {"$ref": "#/$defs/count"},
+            "fraction_with_strong_pocket": {"$ref": "#/$defs/fraction"},
+            "meets_consensus_criterion": {"$ref": "#/$defs/bool"}
+          }
+        },
+        "pocket_hydrophobic_density": {"$ref": "#/$defs/num"},
+        "pocket_residues": {"type": "array"},
+        "site_hypothesis_basis": {"$ref": "#/$defs/str"},
+        "mdpocket_site_definition_used": {"enum": ["site_from_ligand", "site_from_density", "none"]},
+        "site_centroid_to_ligand_distance_a": {"$ref": "#/$defs/num"},
+        "site_centroid_to_ligand_note": {"$ref": "#/$defs/str"},
+        "annotated_binding_site_overlap": {"$ref": "#/$defs/num"},
+        "ligand_site_jaccard": {"$ref": "#/$defs/fraction"},
+        "disorder_fraction": {"$ref": "#/$defs/fraction"},
+        "cryptic_pocket_risk": {"enum": ["low", "medium", "high", "undetermined"]},
+        "cryptic_mechanism": {"enum": ["loop_or_backbone_motion", "sidechain_occlusion", "subunit_occlusion", "none", "undetermined"]},
+        "cryptic_evidence": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "is_cryptic": {"$ref": "#/$defs/bool"},
+            "n_apo_examined": {"$ref": "#/$defs/count"},
+            "n_apo_site_absent": {"$ref": "#/$defs/count"},
+            "site_present_in_apo_ensemble": {"$ref": "#/$defs/bool"},
+            "basis": {"$ref": "#/$defs/str"},
+            "definition": {"$ref": "#/$defs/str"},
+            "source": {"$ref": "#/$defs/str"}
+          }
+        },
+        "cryptic_potency_prior": {
+          "type": "object",
+          "required": ["expected_ceiling"],
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "expected_ceiling": {"enum": ["nanomolar", "micromolar_at_best", "unknown"]},
+            "basis": {"$ref": "#/$defs/str"}
+          }
+        },
+        "pocket_vs_interface": {
+          "type": "object",
+          "required": ["classification"],
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "classification": {"enum": ["orthosteric_candidate", "allosteric_candidate", "destabiliser_candidate", "no_partner_structure", "mixed", "no_pocket_to_classify", "numbering_mismatch_not_interpretable"]},
+            "interface_residues": {"type": "array"},
+            "pocket_interface_overlap": {"$ref": "#/$defs/num"},
+            "partner_pdb_id": {"$ref": "#/$defs/str"},
+            "matches_mechanism_hypothesis": {"$ref": "#/$defs/bool"}
+          }
+        },
+        "max_backbone_ca_displacement_a": {"$ref": "#/$defs/num"},
+        "clash_attribution": {"$ref": "#/$defs/str"},
+        "caveat": {"$ref": "#/$defs/str"},
+        "sources": {"$ref": "#/$defs/sources"},
+        "method": {
+          "type": "object",
+          "patternProperties": {"^_": {}},
+          "additionalProperties": true,
+          "properties": {
+            "tool": {"$ref": "#/$defs/str"},
+            "version": {"$ref": "#/$defs/str"},
+            "clustering_d_swept": {"type": "array", "items": {"type": "number"}},
+            "ensemble_pdb_ids": {"type": "array", "items": {"type": "string"}},
+            "chains_used": {"type": ["string", "array", "null"]}
+          }
+        }
+      }
+    },
+
+    "affinity": {
+      "type": "object",
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "positive_control_ligand": {"$ref": "#/$defs/str"},
+        "positive_control_measured_nm": {"$ref": "#/$defs/num"},
+        "positive_control_predicted_nm": {"$ref": "#/$defs/num"},
+        "reliable": {"$ref": "#/$defs/bool"},
+        "predictions": {"type": "array"},
+        "sources": {"$ref": "#/$defs/sources"}
+      }
+    },
+
+    "falsification": {
+      "type": "object",
+      "required": ["checks_run", "findings", "survived"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "checks_run": {"type": "array", "minItems": 1},
+        "findings": {"type": "array"},
+        "survived": {"$ref": "#/$defs/bool"}
+      }
+    },
+
+    "next_experiment": {
+      "type": "object",
+      "required": ["description", "rationale", "resolves"],
+      "patternProperties": {"^_": {}},
+      "additionalProperties": true,
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "rationale": {"$ref": "#/$defs/str"},
+        "resolves": {"$ref": "#/$defs/str"}
+      }
+    },
+
+    "not_found": {
+      "type": "array",
+      "description": "One entry per axis/field that could not be retrieved, quoting the failure signature verbatim. A retrieval that failed belongs here as null-with-reason, never as a 0 or [] elsewhere.",
+      "items": {
+        "oneOf": [
+          {"type": "string"},
+          {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "field": {"$ref": "#/$defs/str"},
+              "reason": {"$ref": "#/$defs/str"},
+              "signature": {"$ref": "#/$defs/str"}
+            }
+          }
+        ]
+      }
+    },
+
+    "follow_up_questions": {
+      "description": "OPTIONAL, and a FUTURE CAPABILITY — not required of any producer or consumer yet. The graph-intake stage can already emit structured follow-up asks back to the upstream knowledge graph (verbs expand_node | resolve_link | test_gap, each with a target node/link id and a human-readable question); ppi-hypothesis carries a worked example. This field is the place to surface those asks in the dossier so the orchestrator could, in a later iteration, route them back upstream and re-run with more evidence. It is DELIBERATELY not in `required`: leaving it out is valid, and a consumer is not obliged to act on it. The pipeline assembler should know the channel exists and can be wired when wanted. See schema/README.md.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "ask": {"enum": ["expand_node", "resolve_link", "test_gap"]},
+          "target": {"$ref": "#/$defs/str"},
+          "question": {"$ref": "#/$defs/str"},
+          "depth": {"$ref": "#/$defs/str"}
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "str": {"type": ["string", "null"]},
+    "bool": {"type": ["boolean", "null"]},
+    "num": {"type": ["number", "null"]},
+    "count": {"type": ["integer", "null"], "minimum": 0},
+    "year": {"type": ["integer", "null"], "minimum": 1800, "maximum": 2100},
+    "fraction": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "pct": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+    "sources": {"type": "array", "items": {"type": ["string", "null"]}},
+    "selectionBasis": {
+      "description": "How the scored pocket was chosen. Only ligand_site_jaccard is same-site without qualification; the last five values do NOT identify a site and must not be pooled as one. May be a single basis, a LIST of bases (more than one applied across the ensemble), or null when no selection was made.",
+      "anyOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/selectionValue"},
+        {"type": "array", "items": {"$ref": "#/$defs/selectionValue"}}
+      ]
+    },
+    "selectionValue": {
+      "type": "string",
+      "enum": [
+        "ligand_site_jaccard",
+        "site_signature_overlap",
+        "site_signature_unreliable_homooligomer",
+        "max_druggability_no_ligand_site",
+        "no_pocket_matched_site_signature",
+        "no_pocket_overlapped_ligand_site",
+        "site_signature_unreliable_foreign_polymer"
+      ]
+    }
+  }
+}
