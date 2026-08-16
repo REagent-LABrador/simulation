@@ -600,8 +600,7 @@
         ],
         "result": {
           "value": "not_tractable",
-          "unit": null,
-          "basis": "both"
+          "unit": null
         },
         "evidence_ids": [
           "evidence.best_potency_assay",

@@ -1,8 +1,8 @@
 """`python -m simulation` entrypoint.
 
-The ONE documented command:
+The documented command:
 
-    python -m simulation run --input input.json --output output.json
+    python -m simulation run --mode live|replay --input input.json --output output.json
 
 Exit code 0 for success, nonzero for failure. All machine-readable results are
 written to the --output file. Human-facing logging goes to STDERR; STDOUT stays
@@ -86,14 +86,19 @@ def _run(args: argparse.Namespace) -> int:
 
     # --- (b) Produce the dossier via the managed agent. Fail loudly, never fabricate.
     try:
-        dossier = run_pipeline(request)
+        dossier = run_pipeline(request, mode=args.mode)
     except PipelineError as exc:
-        log.error("dossier production failed: %s", exc)
-        log.error("nothing written to %s", output_path)
+        _write_execution_error(output_path, mode=args.mode, error=exc)
+        log.error("CANNOT_COMPLETE %s: %s", exc.code, exc)
+        log.error("terminal execution error written to %s", output_path)
         return EXIT_PIPELINE_FAILED
     except Exception as exc:  # noqa: BLE001 - surface any unexpected pipeline error to stderr
-        log.error("unexpected error producing dossier: %s: %s", type(exc).__name__, exc)
-        log.error("nothing written to %s", output_path)
+        terminal_error = PipelineError(
+            f"{type(exc).__name__}: {exc}", code="INTERNAL_ERROR"
+        )
+        _write_execution_error(output_path, mode=args.mode, error=terminal_error)
+        log.error("CANNOT_COMPLETE INTERNAL_ERROR: %s", terminal_error)
+        log.error("terminal execution error written to %s", output_path)
         return EXIT_PIPELINE_FAILED
 
     if not isinstance(dossier, dict):
@@ -109,9 +114,12 @@ def _run(args: argparse.Namespace) -> int:
         try:
             dossier["interpretability"] = build_interpretability(dossier)
         except Exception as exc:  # noqa: BLE001
-            log.error("failed to build interpretability object: %s: %s", type(exc).__name__, exc)
-            # Still write the dossier below so it can be inspected; then fail.
-            _write_output(dossier, output_path)
+            error = PipelineError(
+                f"failed to build interpretability object: {type(exc).__name__}: {exc}",
+                code="INVALID_OUTPUT",
+            )
+            _write_execution_error(output_path, mode=args.mode, error=error)
+            log.error("CANNOT_COMPLETE INVALID_OUTPUT: %s", error)
             return EXIT_VALIDATION_FAILED
 
     # --- (d) Validate the dossier and its interpretability object; write regardless.
@@ -128,25 +136,27 @@ def _run(args: argparse.Namespace) -> int:
         output_errors = []
         interp_errors = []
 
-    _write_output(dossier, output_path)
-
-    ok = True
     if output_errors:
-        ok = False
         log.error("dossier does not satisfy schemas/output.schema.json:")
         for line in output_errors:
             log.error("%s", line)
     if interp_errors:
-        ok = False
         log.error("interpretability object does not satisfy schemas/interpretability.schema.json:")
         for line in interp_errors:
             log.error("%s", line)
 
-    if not ok:
-        log.error("dossier written to %s for inspection, but validation FAILED", output_path)
+    if output_errors or interp_errors:
+        detail = "; ".join([*output_errors, *interp_errors])
+        error = PipelineError(
+            f"managed/replayed dossier failed published schema validation: {detail}",
+            code="INVALID_OUTPUT",
+        )
+        _write_execution_error(output_path, mode=args.mode, error=error)
+        log.error("CANNOT_COMPLETE INVALID_OUTPUT: terminal error written to %s", output_path)
         return EXIT_VALIDATION_FAILED
 
     # --- (e) Success.
+    _write_output(dossier, output_path)
     log.info("dossier written to %s; output and interpretability both valid", output_path)
     return EXIT_OK
 
@@ -154,6 +164,25 @@ def _run(args: argparse.Namespace) -> int:
 def _write_output(dossier: dict, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(dossier, indent=2, ensure_ascii=False))
+
+
+def _write_execution_error(
+    output_path: Path,
+    *,
+    mode: str,
+    error: PipelineError,
+) -> None:
+    """Write the small terminal envelope the orchestrator can consume on failure."""
+
+    terminal = {
+        "schemaVersion": "simulation.execution-error.v1",
+        "status": "CANNOT_COMPLETE",
+        "reasonCode": error.code,
+        "message": str(error),
+        "executionMode": mode.upper(),
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(terminal, indent=2, ensure_ascii=False))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -169,6 +198,12 @@ def main(argv: list[str] | None = None) -> int:
     )
     sub = parser.add_subparsers(dest="command", required=True)
     run_parser = sub.add_parser("run", help="produce a dossier for one target")
+    run_parser.add_argument(
+        "--mode",
+        choices=("live", "replay"),
+        required=True,
+        help="live invokes the configured provider; replay uses only the bundled cache",
+    )
     run_parser.add_argument("--input", required=True, help="path to the request JSON (input.schema.json)")
     run_parser.add_argument("--output", required=True, help="path to write the dossier JSON")
     run_parser.set_defaults(func=_run)

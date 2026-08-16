@@ -5,6 +5,16 @@
   "invocation": "outcome",
   "session_policy": "fresh",
   "max_iterations": 3,
+  "local_cli": {
+    "command": "python -m simulation run --mode live|replay --input <path> --output <path>",
+    "live_runtime_root_env": "LABRADOR_RUNTIME_ROOT",
+    "managed_agent_names": [
+      "small-molecule-tractability-review",
+      "druggability-dossier"
+    ],
+    "deploys_agent": false,
+    "orchestrator_timeout_seconds": 5400
+  },
   "mcp_servers": [],
   "runtime_notes": [
     "Custom-tool handlers run in the calling process, not the sandbox (lib/claude-managed-agent.ts consumeUntilEndTurn -> executeCustomTool). That is what lets this agent reach the paperclip binary and the fpocket/mdpocket conda stack, neither of which the sandbox can install.",

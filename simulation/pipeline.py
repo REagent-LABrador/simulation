@@ -1,9 +1,8 @@
-"""Produce a druggability dossier LOCALLY, dependency-light, from a bundled cache.
+"""Produce a druggability dossier in one explicit execution mode.
 
-DEFAULT RUN — no cloud deploy, no Modal, no Paperclip, no managed agent, no API
-key. The default ``run_pipeline`` needs only Python's stdlib + ``jsonschema``. It
-resolves the request against a BUNDLED CACHE of REAL dossiers shipped inside this
-module at ``simulation/cache/``, keyed on the documented tuple
+``replay`` is dependency-light and resolves the request against a BUNDLED CACHE
+of REAL dossiers shipped inside this module at ``simulation/cache/``, keyed on
+the documented tuple
 
     (uniprot_accession, mechanism_hypothesis, as_of_date)
 
@@ -27,13 +26,12 @@ STAMPS ``interpretability.extensions`` with ``runtime_maturity: "LOCAL"`` and a
 labrador-demo-orchestrator module-lock.json and store.py). A cache miss builds
 its interpretability via the deterministic ``build_interpretability``.
 
-THE MANAGED-AGENT PATH IS RETAINED BUT NON-DEFAULT. The original cloud route
-(vendored bun runner against the deployed Claude Managed Agent) is preserved as
-``_run_via_agent`` and reached ONLY when the environment flag
-``SIMULATION_USE_AGENT=1`` is set. The default run does not import, launch or
-require any of it — no bun, no ``simulation/runtime`` install, no
-``ANTHROPIC_API_KEY``, no network. The vendored runtime is left in place; the
-default path simply does not depend on it.
+``live`` calls the already-configured managed-agent checkout named by
+``LABRADOR_RUNTIME_ROOT``.  The split station never deploys or mutates that
+checkout.  It only runs its supported ``scripts/console.ts`` entrypoint and
+fails with a stable reason code when the runtime, deployment, credential, or
+provider is unavailable.  There is deliberately no fallback from ``live`` to
+``replay``.
 """
 
 from __future__ import annotations
@@ -58,27 +56,39 @@ _STATION_ROOT = Path(__file__).resolve().parent.parent
 _SCHEMA_DIR = _STATION_ROOT / "schemas"
 _CACHE_DIR = Path(__file__).resolve().parent / "cache"
 
-# Env flag that opts INTO the non-default managed-agent path. Absent/anything
-# other than "1" keeps the dependency-light local resolver.
-_AGENT_FLAG = "SIMULATION_USE_AGENT"
-
-# The vendored agent runner lives beside this file, under runtime/. Only touched
-# on the guarded agent path.
-_RUNTIME_DIR = Path(__file__).resolve().parent / "runtime"
-_RUN_ONCE = _RUNTIME_DIR / "run-once.ts"
+# The live path uses the full LABrador checkout because the split repository
+# contains the station contract but not the managed-agent client/runtime.
+_RUNTIME_ROOT_ENV = "LABRADOR_RUNTIME_ROOT"
+_LIVE_TIMEOUT_SECONDS_ENV = "SIMULATION_LIVE_TIMEOUT_SECONDS"
+_DEFAULT_LIVE_TIMEOUT_SECONDS = 90 * 60
+_AGENT_NAMES = (
+    "small-molecule-tractability-review",
+    "druggability-dossier",
+)
 _BUN_FALLBACK = Path("/opt/homebrew/bin/bun")
 
 
 class PipelineError(RuntimeError):
     """Base class for pipeline failures."""
 
+    code = "PIPELINE_FAILED"
+
+    def __init__(self, message: str, *, code: str | None = None) -> None:
+        super().__init__(message)
+        if code is not None:
+            self.code = code
+
 
 class PipelineUnavailableError(PipelineError):
     """The pipeline cannot run: invalid request, or (agent path) missing tooling."""
 
+    code = "LIVE_UNAVAILABLE"
+
 
 class PipelineInvocationError(PipelineError):
     """The agent was invoked but did not return a parseable dossier."""
+
+    code = "PROVIDER_FAILED"
 
 
 # --------------------------------------------------------------------------- #
@@ -433,29 +443,30 @@ def _resolve_local(request: dict) -> dict:
 # --------------------------------------------------------------------------- #
 # Public entrypoint.
 # --------------------------------------------------------------------------- #
-def run_pipeline(request: dict) -> dict:
-    """Return a schema-valid druggability dossier for one request.
+def run_pipeline(request: dict, *, mode: str) -> dict:
+    """Return a schema-valid dossier from exactly one requested execution mode.
 
-    DEFAULT (dependency-light, offline): resolve against the bundled cache; on a
-    miss return an honest insufficient-evidence dossier. Never fabricates a
-    scientific value.
-
-    OPT-IN (``SIMULATION_USE_AGENT=1``): drive the vendored managed-agent runner
-    instead. That path needs bun, the vendored runtime and ANTHROPIC_API_KEY and
-    is NOT used by the default run.
+    ``replay`` resolves the bundled cache and never makes a provider call.
+    ``live`` invokes the configured managed-agent runtime and never falls back.
     """
     _validate_request(request)
 
-    if os.environ.get(_AGENT_FLAG) == "1":
-        log.info("%s=1 set — using the non-default managed-agent path", _AGENT_FLAG)
+    if mode == "live":
+        log.info("live mode selected — invoking the configured managed-agent runtime")
         return _run_via_agent(request)
 
-    return _resolve_local(request)
+    if mode == "replay":
+        log.info("replay mode selected — resolving the bundled dossier cache")
+        return _resolve_local(request)
+
+    raise PipelineUnavailableError(
+        f"unsupported execution mode {mode!r}; expected 'live' or 'replay'",
+        code="INVALID_MODE",
+    )
 
 
 # --------------------------------------------------------------------------- #
-# NON-DEFAULT managed-agent path (guarded by SIMULATION_USE_AGENT=1).
-# The default run never reaches this code.
+# Live managed-agent bridge. It never deploys or modifies the runtime checkout.
 # --------------------------------------------------------------------------- #
 def _resolve_bun() -> str | None:
     bun = shutil.which("bun")
@@ -464,6 +475,79 @@ def _resolve_bun() -> str | None:
     if _BUN_FALLBACK.is_file():
         return str(_BUN_FALLBACK)
     return None
+
+
+def _runtime_root() -> Path:
+    configured = os.environ.get(_RUNTIME_ROOT_ENV, "").strip()
+    if not configured:
+        raise PipelineUnavailableError(
+            f"{_RUNTIME_ROOT_ENV} is not set; point it at a LABrador checkout "
+            "that already contains the deployed tractability managed agent",
+            code="RUNTIME_NOT_CONFIGURED",
+        )
+    root = Path(configured).expanduser().resolve()
+    if not root.is_dir():
+        raise PipelineUnavailableError(
+            f"{_RUNTIME_ROOT_ENV} does not name a directory: {root}",
+            code="RUNTIME_NOT_FOUND",
+        )
+    if not (root / "scripts" / "console.ts").is_file():
+        raise PipelineUnavailableError(
+            f"LABrador headless runner not found at {root / 'scripts' / 'console.ts'}",
+            code="RUNTIME_INCOMPLETE",
+        )
+    return root
+
+
+def _managed_agent(root: Path) -> tuple[str, dict]:
+    for name in _AGENT_NAMES:
+        path = root / "managed" / name / "manifest.json"
+        if not path.is_file():
+            continue
+        try:
+            manifest = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError) as exc:
+            raise PipelineUnavailableError(
+                f"managed-agent manifest is unreadable at {path}: {exc}",
+                code="MANIFEST_INVALID",
+            ) from exc
+        if not isinstance(manifest, dict):
+            raise PipelineUnavailableError(
+                f"managed-agent manifest is not a JSON object: {path}",
+                code="MANIFEST_INVALID",
+            )
+        deployment = manifest.get("deployment")
+        if not isinstance(deployment, dict) or not deployment.get("agent_id"):
+            raise PipelineUnavailableError(
+                f"managed agent {name!r} has no existing deployment.agent_id; "
+                "this runner will not deploy it",
+                code="DEPLOYMENT_NOT_CONFIGURED",
+            )
+        return name, manifest
+    expected = ", ".join(str(root / "managed" / name / "manifest.json") for name in _AGENT_NAMES)
+    raise PipelineUnavailableError(
+        f"no tractability managed-agent manifest found; checked {expected}",
+        code="MANAGED_AGENT_NOT_INSTALLED",
+    )
+
+
+def _live_timeout_seconds() -> int:
+    raw = os.environ.get(_LIVE_TIMEOUT_SECONDS_ENV, "").strip()
+    if not raw:
+        return _DEFAULT_LIVE_TIMEOUT_SECONDS
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise PipelineUnavailableError(
+            f"{_LIVE_TIMEOUT_SECONDS_ENV} must be a positive integer",
+            code="RUNTIME_CONFIGURATION_INVALID",
+        ) from exc
+    if value <= 0:
+        raise PipelineUnavailableError(
+            f"{_LIVE_TIMEOUT_SECONDS_ENV} must be a positive integer",
+            code="RUNTIME_CONFIGURATION_INVALID",
+        )
+    return value
 
 
 def _build_task_prose(request: dict) -> str:
@@ -482,7 +566,10 @@ def _build_task_prose(request: dict) -> str:
 def _extract_dossier_json(stdout: str) -> dict:
     text = stdout.strip()
     if not text:
-        raise PipelineInvocationError("agent produced no stdout to parse a dossier from")
+        raise PipelineInvocationError(
+            "agent produced no stdout to parse a dossier from",
+            code="INVALID_OUTPUT",
+        )
     try:
         parsed = json.loads(text)
         if isinstance(parsed, dict):
@@ -493,7 +580,8 @@ def _extract_dossier_json(stdout: str) -> dict:
     if obj is None:
         raise PipelineInvocationError(
             "could not find a JSON object in the agent reply; the agent must paste the "
-            "complete dossier JSON into its final reply (see CLAUDE.md)"
+            "complete dossier JSON into its final reply (see CLAUDE.md)",
+            code="INVALID_OUTPUT",
         )
     return obj
 
@@ -534,38 +622,61 @@ def _last_json_object(text: str) -> dict | None:
 
 
 def _run_via_agent(request: dict) -> dict:
-    """Invoke the deployed Claude Managed Agent via the vendored bun runner.
+    """Invoke the existing managed agent through its supported headless CLI."""
 
-    Reached only when SIMULATION_USE_AGENT=1. Requires bun on PATH, the vendored
-    runner present, ANTHROPIC_API_KEY, network access, and a deployed agent.
-    Raises PipelineUnavailableError / PipelineInvocationError; never fabricates.
-    """
-    if not _RUN_ONCE.is_file():
-        raise PipelineUnavailableError(
-            f"vendored runner not found at {_RUN_ONCE} — the agent path is unavailable."
-        )
+    root = _runtime_root()
+    agent_name, _manifest = _managed_agent(root)
     bun = _resolve_bun()
     if bun is None:
         raise PipelineUnavailableError(
-            "`bun` is not on PATH — the vendored runner cannot be launched. Install "
-            "bun, then `cd simulation/runtime && bun install`."
+            "`bun` is not on PATH, so the LABrador managed-agent runner cannot start",
+            code="BINARY_MISSING",
+        )
+    if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
+        raise PipelineUnavailableError(
+            "ANTHROPIC_API_KEY is not set for live managed-agent execution",
+            code="CREDENTIAL_MISSING",
         )
 
     task = _build_task_prose(request)
-    cmd = [bun, str(_RUN_ONCE), "--once", task]
-    log.info("invoking vendored runner (task for %s)", request.get("uniprot_accession"))
+    timeout_seconds = _live_timeout_seconds()
+    cmd = [
+        bun,
+        "scripts/console.ts",
+        agent_name,
+        "--",
+        "--once",
+        task,
+        "--quiet",
+        "--timeout",
+        str(timeout_seconds),
+    ]
+    log.info(
+        "invoking managed agent %s for %s",
+        agent_name,
+        request.get("uniprot_accession"),
+    )
 
     try:
         proc = subprocess.run(
             cmd,
-            cwd=str(_RUNTIME_DIR),
+            cwd=str(root),
             capture_output=True,
             text=True,
             check=False,
             env=os.environ.copy(),
+            timeout=timeout_seconds + 30,
         )
+    except subprocess.TimeoutExpired as exc:
+        raise PipelineInvocationError(
+            f"managed-agent execution exceeded {timeout_seconds} seconds",
+            code="PROVIDER_TIMEOUT",
+        ) from exc
     except OSError as exc:
-        raise PipelineInvocationError(f"failed to launch the vendored runner: {exc}")
+        raise PipelineInvocationError(
+            f"failed to launch the managed-agent runner: {exc}",
+            code="RUNTIME_LAUNCH_FAILED",
+        ) from exc
 
     if proc.stderr:
         for line in proc.stderr.splitlines():
@@ -573,14 +684,52 @@ def _run_via_agent(request: dict) -> dict:
 
     if proc.returncode != 0:
         tail = proc.stderr[-2000:].strip()
-        if proc.returncode == 3 or "deployment.agent_id" in proc.stderr:
+        stderr_lower = proc.stderr.lower()
+        if "deployment.agent_id" in proc.stderr or "not deployed" in stderr_lower:
             raise PipelineUnavailableError(
-                "the managed agent has not been deployed (no deployment.agent_id in "
-                "manifest.json). Deployment is the integrator's job — deploy it "
-                "(run: bun run deploy), then re-run. Runner stderr:\n" + tail
+                "the configured managed agent has no usable deployment; this runner "
+                "will not deploy it. Runner stderr:\n" + tail,
+                code="DEPLOYMENT_NOT_CONFIGURED",
+            )
+        if "api key" in stderr_lower or "credential" in stderr_lower or "unauthorized" in stderr_lower:
+            raise PipelineUnavailableError(
+                "the live provider rejected or could not find a required credential. "
+                "Runner stderr:\n" + tail,
+                code="CREDENTIAL_MISSING",
+            )
+        if "timed out" in stderr_lower or "timeout" in stderr_lower:
+            raise PipelineInvocationError(
+                "the live provider timed out. Runner stderr:\n" + tail,
+                code="PROVIDER_TIMEOUT",
+            )
+        if any(
+            marker in stderr_lower
+            for marker in (
+                "not on path",
+                "command not found",
+                "no such file or directory",
+                "enoent",
+                "missing binary",
+                "missing dependency",
+            )
+        ):
+            raise PipelineUnavailableError(
+                "the managed-agent runtime is missing a required dependency. "
+                "Runner stderr:\n" + tail,
+                code="DEPENDENCY_MISSING",
             )
         raise PipelineInvocationError(
-            f"vendored runner exited {proc.returncode}. Runner stderr:\n{tail}"
+            f"managed-agent runner exited {proc.returncode}. Runner stderr:\n{tail}",
+            code="PROVIDER_FAILED",
         )
 
-    return _extract_dossier_json(proc.stdout)
+    dossier = _extract_dossier_json(proc.stdout)
+    interp = dossier.get("interpretability")
+    if isinstance(interp, dict):
+        _stamp_extensions(
+            interp,
+            runtime_maturity="MANAGED_AGENT",
+            qualifiers=["LIVE"],
+            output_origin="live_provider",
+        )
+    return dossier

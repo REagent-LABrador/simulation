@@ -5,10 +5,10 @@ Run standalone:
 or:
     micromamba run -n druggability python -m unittest simulation.test_module
 
-The DEFAULT run is now the dependency-light LOCAL resolver over the bundled
-cache in simulation/cache/ (Python + jsonschema only — no cloud, no Modal, no
-Paperclip, no managed agent, no API key). So the end-to-end tests exercise the
-REAL default path with NO monkeypatch: a cache hit on examples/input.json (the
+Replay is the dependency-light LOCAL resolver over the bundled cache in
+simulation/cache/ (Python + jsonschema only — no cloud, no Modal, no Paperclip,
+no managed agent, no API key). The end-to-end tests exercise that explicit path
+with NO monkeypatch: a cache hit on examples/input.json (the
 real IRAK4 dossier) and a cache miss on an unknown accession (an honest,
 schema-valid insufficient-evidence dossier). The managed-agent behaviours are
 still covered by monkeypatching run_pipeline, since that path is non-default and
@@ -18,6 +18,7 @@ requires tooling absent offline.
 from __future__ import annotations
 
 import io
+import hashlib
 import json
 import logging
 import sys
@@ -36,6 +37,7 @@ if str(STATION_ROOT) not in sys.path:
     sys.path.insert(0, str(STATION_ROOT))
 
 import simulation.__main__ as cli  # noqa: E402
+import simulation.pipeline as pipeline  # noqa: E402
 from simulation.interpretability import build_interpretability  # noqa: E402
 from simulation.pipeline import PipelineUnavailableError  # noqa: E402
 
@@ -67,14 +69,17 @@ def _run_cli(argv: list[str]) -> tuple[int, str, str]:
     return code, out_buf.getvalue(), log_buf.getvalue()
 
 
-class EndToEndDefaultPathCacheHit(unittest.TestCase):
-    """The REAL default path: no monkeypatch, offline, resolves from the cache."""
+class EndToEndReplayCacheHit(unittest.TestCase):
+    """The real replay path: no monkeypatch, offline, resolves from the cache."""
 
     def test_examples_input_is_a_real_cache_hit(self):
         with tempfile.TemporaryDirectory() as tmp:
             out_path = Path(tmp) / "o.json"
             code, stdout, stderr = _run_cli(
-                ["run", "--input", str(EXAMPLES / "input.json"), "--output", str(out_path)]
+                [
+                    "run", "--mode", "replay", "--input", str(EXAMPLES / "input.json"),
+                    "--output", str(out_path),
+                ]
             )
             self.assertEqual(code, cli.EXIT_OK, msg=stderr)
             self.assertEqual(stdout, "", "stdout must stay empty; results go to --output")
@@ -97,7 +102,30 @@ class EndToEndDefaultPathCacheHit(unittest.TestCase):
             ext = written["interpretability"]["extensions"]
             self.assertEqual(ext["runtime_maturity"], "LOCAL")
             self.assertIn("CACHED_DOSSIER", ext["qualifiers"])
+            self.assertEqual(ext["output_origin"], "cached_dossier")
             self.assertEqual(ext["cache_hit"]["kind"], "exact")
+
+
+class SharedContractLock(unittest.TestCase):
+    def test_vendored_interpretability_schema_matches_platform_contract(self):
+        lock = json.loads((SCHEMA_DIR / "contract.lock.json").read_text())
+        contract = SCHEMA_DIR / "interpretability.schema.json"
+        self.assertEqual(
+            lock["sourceCommit"],
+            "755499b42ab65d3b01f959b11624dd4e61bdd561",
+        )
+        self.assertEqual(
+            hashlib.sha256(contract.read_bytes()).hexdigest(),
+            lock["contracts"][contract.name]["sha256"],
+        )
+
+    def test_every_bundled_dossier_conforms_to_shared_interpretability_schema(self):
+        validator = Draft202012Validator(_schema("interpretability.schema.json"))
+        cache_dir = STATION_ROOT / "simulation" / "cache"
+        for path in sorted(cache_dir.glob("*.json")):
+            with self.subTest(path=path.name):
+                dossier = json.loads(path.read_text())
+                validator.validate(dossier["interpretability"])
 
 
 class EndToEndUnknownTargetHonest(unittest.TestCase):
@@ -115,7 +143,7 @@ class EndToEndUnknownTargetHonest(unittest.TestCase):
             }))
             out_path = Path(tmp) / "o.json"
             code, stdout, stderr = _run_cli(
-                ["run", "--input", str(inp), "--output", str(out_path)]
+                ["run", "--mode", "replay", "--input", str(inp), "--output", str(out_path)]
             )
             self.assertEqual(code, cli.EXIT_OK, msg=stderr)
             self.assertEqual(stdout, "", "stdout must stay empty")
@@ -151,31 +179,230 @@ class MalformedInput(unittest.TestCase):
                 cli, "run_pipeline", side_effect=AssertionError("pipeline reached on bad input")
             ):
                 code, stdout, stderr = _run_cli(
-                    ["run", "--input", str(bad_input), "--output", str(out_path)]
+                    [
+                        "run", "--mode", "replay", "--input", str(bad_input),
+                        "--output", str(out_path),
+                    ]
                 )
             self.assertNotEqual(code, cli.EXIT_OK)
             self.assertFalse(out_path.exists(), "nothing must be written on invalid input")
             self.assertIn("input.schema.json", stderr)
 
 
-class PipelineRaises(unittest.TestCase):
-    """The non-default agent path fails loudly and writes nothing (monkeypatched)."""
+class LiveModeFailures(unittest.TestCase):
+    """Live mode fails terminally and never substitutes a cached dossier."""
 
-    def test_pipeline_failure_is_loud_and_writes_nothing(self):
+    def test_pipeline_failure_writes_machine_readable_terminal_error(self):
         with tempfile.TemporaryDirectory() as tmp:
             out_path = Path(tmp) / "o.json"
             with mock.patch.object(
                 cli,
                 "run_pipeline",
-                side_effect=PipelineUnavailableError("ANTHROPIC_API_KEY is not set"),
+                side_effect=PipelineUnavailableError(
+                    "ANTHROPIC_API_KEY is not set", code="CREDENTIAL_MISSING"
+                ),
             ):
                 code, stdout, stderr = _run_cli(
-                    ["run", "--input", str(EXAMPLES / "input.json"), "--output", str(out_path)]
+                    [
+                        "run", "--mode", "live", "--input", str(EXAMPLES / "input.json"),
+                        "--output", str(out_path),
+                    ]
                 )
             self.assertNotEqual(code, cli.EXIT_OK)
-            self.assertFalse(out_path.exists(), "no dossier means nothing to write")
-            self.assertIn("failed", stderr.lower())
+            terminal = json.loads(out_path.read_text())
+            self.assertEqual(terminal["status"], "CANNOT_COMPLETE")
+            self.assertEqual(terminal["reasonCode"], "CREDENTIAL_MISSING")
+            self.assertEqual(terminal["executionMode"], "LIVE")
+            self.assertIn("CANNOT_COMPLETE CREDENTIAL_MISSING", stderr)
             self.assertIn("ANTHROPIC_API_KEY", stderr)
+
+    def test_unconfigured_live_mode_does_not_touch_replay_cache(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(
+            "os.environ", {"LABRADOR_RUNTIME_ROOT": ""}, clear=False
+        ):
+            out_path = Path(tmp) / "o.json"
+            code, stdout, stderr = _run_cli(
+                [
+                    "run", "--mode", "live", "--input", str(EXAMPLES / "input.json"),
+                    "--output", str(out_path),
+                ]
+            )
+            self.assertEqual(code, cli.EXIT_PIPELINE_FAILED)
+            self.assertEqual(stdout, "")
+            terminal = json.loads(out_path.read_text())
+            self.assertEqual(terminal["reasonCode"], "RUNTIME_NOT_CONFIGURED")
+            self.assertNotIn("CACHED_DOSSIER", out_path.read_text())
+            self.assertIn("RUNTIME_NOT_CONFIGURED", stderr)
+
+    def test_missing_existing_deployment_is_terminal_and_does_not_deploy(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "scripts").mkdir()
+            (root / "scripts" / "console.ts").write_text("// test")
+            manifest_dir = root / "managed" / "small-molecule-tractability-review"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "manifest.json").write_text(json.dumps({}))
+            with mock.patch.dict(
+                "os.environ", {"LABRADOR_RUNTIME_ROOT": str(root)}, clear=False
+            ):
+                with self.assertRaises(PipelineUnavailableError) as raised:
+                    pipeline.run_pipeline(
+                        json.loads((EXAMPLES / "input.json").read_text()),
+                        mode="live",
+                    )
+            self.assertEqual(raised.exception.code, "DEPLOYMENT_NOT_CONFIGURED")
+            self.assertIn("will not deploy", str(raised.exception))
+
+    def test_missing_provider_credential_is_exact(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "scripts").mkdir()
+            (root / "scripts" / "console.ts").write_text("// test")
+            manifest_dir = root / "managed" / "small-molecule-tractability-review"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "manifest.json").write_text(
+                json.dumps({"deployment": {"agent_id": "agent-test"}})
+            )
+            with (
+                mock.patch.dict(
+                    "os.environ",
+                    {
+                        "LABRADOR_RUNTIME_ROOT": str(root),
+                        "ANTHROPIC_API_KEY": "",
+                    },
+                    clear=False,
+                ),
+                mock.patch.object(pipeline, "_resolve_bun", return_value="/usr/bin/bun"),
+            ):
+                with self.assertRaises(PipelineUnavailableError) as raised:
+                    pipeline.run_pipeline(
+                        json.loads((EXAMPLES / "input.json").read_text()),
+                        mode="live",
+                    )
+            self.assertEqual(raised.exception.code, "CREDENTIAL_MISSING")
+            self.assertIn("ANTHROPIC_API_KEY", str(raised.exception))
+
+    def test_live_runner_stamps_provider_origin(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "scripts").mkdir()
+            (root / "scripts" / "console.ts").write_text("// test")
+            manifest_dir = root / "managed" / "small-molecule-tractability-review"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "manifest.json").write_text(
+                json.dumps({"deployment": {"agent_id": "agent-test"}})
+            )
+            dossier = json.loads((EXAMPLES / "output.json").read_text())
+            completed = mock.Mock(returncode=0, stdout=json.dumps(dossier), stderr="")
+            with (
+                mock.patch.dict(
+                    "os.environ",
+                    {
+                        "LABRADOR_RUNTIME_ROOT": str(root),
+                        "ANTHROPIC_API_KEY": "test-key",
+                    },
+                    clear=False,
+                ),
+                mock.patch.object(pipeline, "_resolve_bun", return_value="/usr/bin/bun"),
+                mock.patch.object(pipeline.subprocess, "run", return_value=completed),
+            ):
+                result = pipeline.run_pipeline(
+                    json.loads((EXAMPLES / "input.json").read_text()), mode="live"
+                )
+            ext = result["interpretability"]["extensions"]
+            self.assertEqual(ext["runtime_maturity"], "MANAGED_AGENT")
+            self.assertEqual(ext["output_origin"], "live_provider")
+            self.assertIn("LIVE", ext["qualifiers"])
+
+    def test_provider_timeout_has_exact_terminal_reason(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "scripts").mkdir()
+            (root / "scripts" / "console.ts").write_text("// test")
+            manifest_dir = root / "managed" / "small-molecule-tractability-review"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "manifest.json").write_text(
+                json.dumps({"deployment": {"agent_id": "agent-test"}})
+            )
+            with (
+                mock.patch.dict(
+                    "os.environ",
+                    {
+                        "LABRADOR_RUNTIME_ROOT": str(root),
+                        "ANTHROPIC_API_KEY": "test-key",
+                    },
+                    clear=False,
+                ),
+                mock.patch.object(pipeline, "_resolve_bun", return_value="/usr/bin/bun"),
+                mock.patch.object(
+                    pipeline.subprocess,
+                    "run",
+                    side_effect=pipeline.subprocess.TimeoutExpired("runner", 5400),
+                ),
+            ):
+                with self.assertRaises(pipeline.PipelineInvocationError) as raised:
+                    pipeline.run_pipeline(
+                        json.loads((EXAMPLES / "input.json").read_text()),
+                        mode="live",
+                    )
+            self.assertEqual(raised.exception.code, "PROVIDER_TIMEOUT")
+
+    def test_missing_runtime_dependency_has_exact_reason(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "scripts").mkdir()
+            (root / "scripts" / "console.ts").write_text("// test")
+            manifest_dir = root / "managed" / "small-molecule-tractability-review"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "manifest.json").write_text(
+                json.dumps({"deployment": {"agent_id": "agent-test"}})
+            )
+            completed = mock.Mock(
+                returncode=1,
+                stdout="",
+                stderr="paperclip: command not found",
+            )
+            with (
+                mock.patch.dict(
+                    "os.environ",
+                    {
+                        "LABRADOR_RUNTIME_ROOT": str(root),
+                        "ANTHROPIC_API_KEY": "test-key",
+                    },
+                    clear=False,
+                ),
+                mock.patch.object(pipeline, "_resolve_bun", return_value="/usr/bin/bun"),
+                mock.patch.object(pipeline.subprocess, "run", return_value=completed),
+            ):
+                with self.assertRaises(PipelineUnavailableError) as raised:
+                    pipeline.run_pipeline(
+                        json.loads((EXAMPLES / "input.json").read_text()),
+                        mode="live",
+                    )
+            self.assertEqual(raised.exception.code, "DEPENDENCY_MISSING")
+
+    def test_invalid_provider_output_becomes_terminal_error_not_a_dossier(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_path = Path(tmp) / "o.json"
+            with mock.patch.object(cli, "run_pipeline", return_value={"unexpected": True}):
+                code, stdout, stderr = _run_cli(
+                    [
+                        "run",
+                        "--mode",
+                        "live",
+                        "--input",
+                        str(EXAMPLES / "input.json"),
+                        "--output",
+                        str(out_path),
+                    ]
+                )
+            self.assertEqual(code, cli.EXIT_VALIDATION_FAILED)
+            self.assertEqual(stdout, "")
+            terminal = json.loads(out_path.read_text())
+            self.assertEqual(terminal["status"], "CANNOT_COMPLETE")
+            self.assertEqual(terminal["reasonCode"], "INVALID_OUTPUT")
+            self.assertEqual(terminal["executionMode"], "LIVE")
+            self.assertIn("INVALID_OUTPUT", stderr)
 
 
 class InterpretabilityValidates(unittest.TestCase):
